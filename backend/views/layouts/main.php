@@ -35,7 +35,6 @@ AppAsset::register($this);
 </div>
 
 <?php elseif (!Yii::$app->user->isGuest): ?>
-<!-- Этот блок добавлен в целях тестирования, удалить его перед запуском проекта -->
 <?=
     Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -44,7 +43,7 @@ AppAsset::register($this);
             )
             . Html::endForm();
  ?>
-<!--  конец блока -->
+<?= $content ?>
 <a href="http://print4you.ru"> Вернуться на главную</a>
 <?php endif; ?>
 

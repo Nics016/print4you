@@ -167,6 +167,16 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Returns empty string. Required for Update action.
+     * 
+     * @return string $password
+     */
+    public function getPassword()
+    {
+        return '';
+    }
+
+    /**
      * Generates "remember me" authentication key
      */
     public function generateAuthKey()

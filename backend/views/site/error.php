@@ -19,10 +19,10 @@ $this->context->layout = 'main';
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        Ошибка выше появилась при обработке вашего запроса.
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        Пожалуйста, сообщите нам, если вы считаете, что это недоработка.
     </p>
 
 </div>

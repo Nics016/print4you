@@ -23,6 +23,7 @@ class SiteController extends Controller
      * так как эти страницы доступны неавторизованным пользователям.
      */
     public $layout = 'adminPanel';
+    
     /**
      * @inheritdoc
      */
