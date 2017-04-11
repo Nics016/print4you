@@ -85,31 +85,14 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        if ($model->load(Yii::$app->request->post()) && $model->validate) {
+        if ($model->load(Yii::$app->request->post())) {
             $data = Yii::$app->request->post("User");
-            switch ($data['role']){
-                case 'client':
-                    $data['role'] = User::ROLE_CLIENT;
-                    break;
-
-                case 'manager':
-                    $data['role'] = User::ROLE_MANAGER;
-                    break;
-
-                case 'administrator':
-                    $data['role'] = User::ROLE_ADMIN;
-                    break;
-
-                default:
-                    $data['role'] = User::ROLE_CLIENT;
-                    break;
-            }
-            $model->role = $data['role'];
             $model->setPassword($data['password']);
             $model->generateAuthKey();
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+            else 
+                print_r($model->getErrors());
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -126,32 +109,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->validate) {
+        if ($model->load(Yii::$app->request->post())) {
             $data = Yii::$app->request->post("User");
-            switch ($data['role']){
-                case 'client':
-                    $data['role'] = User::ROLE_CLIENT;
-                    break;
-
-                case 'manager':
-                    $data['role'] = User::ROLE_MANAGER;
-                    break;
-
-                case 'administrator':
-                    $data['role'] = User::ROLE_ADMIN;
-                    break;
-
-                default:
-                    $data['role'] = User::ROLE_CLIENT;
-                    break;
-            }
-            $model->role = $data['role'];
-            if ($data['password'] != '')
-                $model->setPassword($data['password']);
+            $model->setPassword($data['password']);
             $model->generateAuthKey();
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+            else 
+                print_r($model->getErrors());
         } else {
             return $this->render('update', [
                 'model' => $model,
