@@ -84,8 +84,8 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $newUser = new User();
-        if (Yii::$app->request->post("User")) {
+        $model = new User();
+        if ($model->load(Yii::$app->request->post()) && $model->validate) {
             $data = Yii::$app->request->post("User");
             switch ($data['role']){
                 case 'client':
@@ -104,17 +104,15 @@ class UserController extends Controller
                     $data['role'] = User::ROLE_CLIENT;
                     break;
             }
-            $newUser->username = $data['username'];
-            $newUser->email = $data['email'];
-            $newUser->role = $data['role'];
-            $newUser->setPassword($data['password']);
-            $newUser->generateAuthKey();
-            $newUser->save();
+            $model->role = $data['role'];
+            $model->setPassword($data['password']);
+            $model->generateAuthKey();
+            $model->save();
 
-            return $this->redirect(['view', 'id' => $newUser->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $newUser,
+                'model' => $model,
             ]);
         }
     }
@@ -127,8 +125,8 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $newUser = $this->findModel($id);
-        if (Yii::$app->request->post("User")) {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->validate) {
             $data = Yii::$app->request->post("User");
             switch ($data['role']){
                 case 'client':
@@ -147,18 +145,16 @@ class UserController extends Controller
                     $data['role'] = User::ROLE_CLIENT;
                     break;
             }
-            $newUser->username = $data['username'];
-            $newUser->email = $data['email'];
-            $newUser->role = $data['role'];
+            $model->role = $data['role'];
             if ($data['password'] != '')
-                $newUser->setPassword($data['password']);
-            $newUser->generateAuthKey();
-            $newUser->save();
+                $model->setPassword($data['password']);
+            $model->generateAuthKey();
+            $model->save();
 
-            return $this->redirect(['view', 'id' => $newUser->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $newUser,
+                'model' => $model,
             ]);
         }
     }
