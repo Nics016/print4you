@@ -28,8 +28,9 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_CLIENT = 10;
     const ROLE_MANAGER = 20;
     const ROLE_ADMIN = 30;
+    const CREATE_SCENARIO = 'create';
 
-
+    public $password;
     /**
      * @inheritdoc
      */
@@ -54,13 +55,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'password'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'role', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
             [['username'], 'unique'],
+            [['password'], 'required', 'on' => self::CREATE_SCENARIO],
         ];
     }
 
@@ -73,7 +75,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritd
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -162,23 +164,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates password hash from password and sets it to the model
+     * Generates password hash and assigns it to a variable
      *
      * @param string $password
      */
-    public function setPassword($password)
+    public function generatePasswordHash($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
-    }
-
-    /**
-     * Returns empty string. Required for Update action.
-     * 
-     * @return string $password
-     */
-    public function getPassword()
-    {
-        return '12345';
     }
 
     /**

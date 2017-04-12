@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use common\components\AccessRule;
 use yii\filters\AccessControl;
 use common\models\User;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -85,9 +87,15 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $model->scenario = User::CREATE_SCENARIO;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
-            $data = Yii::$app->request->post("User");
-            $model->setPassword($data['password']);
+            $model->generatePasswordHash($model['password']);
             $model->generateAuthKey();
             if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -109,10 +117,18 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
-            $data = Yii::$app->request->post("User");
-            $model->setPassword($data['password']);
-            $model->generateAuthKey();
+            if ($model['password'] != ''){
+                $model->generatePasswordHash($model['password']);
+                $model->generateAuthKey();
+            }
+            
             if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
             else 
