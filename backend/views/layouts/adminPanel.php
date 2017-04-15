@@ -5,6 +5,8 @@
 	use yii\bootstrap\NavBar;
 	use yii\widgets\Breadcrumbs;
 	use common\widgets\Alert;
+
+    AppAsset::register($this);
  ?>
 
 <?=
@@ -15,15 +17,30 @@
             )
             . Html::endForm();
  ?>
-<link rel="icon" href="assets/images/favicon.ico">
-<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
-<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-<link rel="stylesheet" href="assets/css/bootstrap.css">
-<link rel="stylesheet" href="assets/css/neon-core.css">
-<link rel="stylesheet" href="assets/css/neon-theme.css">
-<link rel="stylesheet" href="assets/css/neon-forms.css">
-<link rel="stylesheet" href="assets/css/custom.css">
+ <!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<?php $this->beginPage() ?>
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <?php $this->head() ?>
+    <link rel="icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/neon-core.css">
+    <link rel="stylesheet" href="assets/css/neon-theme.css">
+    <link rel="stylesheet" href="assets/css/neon-forms.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+
+<body class="page-body  page-fade">
+<?php $this->beginBody() ?>
+
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
     <div class="sidebar-menu">
 
