@@ -44,7 +44,6 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['price', 'manager_id', 'created_at', 'updated_at'], 'integer'],
-            [['manager_id'], 'required'],
             [['order_status'], 'string', 'max' => 32],
             [['comment'], 'string', 'max' => 1000],
         ];

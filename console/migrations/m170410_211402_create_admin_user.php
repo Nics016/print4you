@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use common\models\User;
+use backend\models\User;
 
 class m170410_211402_create_admin_user extends Migration
 {
@@ -11,15 +11,15 @@ class m170410_211402_create_admin_user extends Migration
         $testUser->username = 'admin';
         $testUser->email = 'nics009@yandex.ru';
         $testUser->role = User::ROLE_ADMIN;
-        $testUser->setPassword('333777');
+        $testUser->generatePasswordHash('333777');
         $testUser->generateAuthKey();
         $testUser->save();
 
         $testUser = new User();
-        $testUser->username = 'client';
+        $testUser->username = 'manager';
         $testUser->email = 'nics016@yandex.ru';
-        $testUser->role = User::ROLE_CLIENT;
-        $testUser->setPassword('333777');
+        $testUser->role = User::ROLE_MANAGER;
+        $testUser->generatePasswordHash('333777');
         $testUser->generateAuthKey();
         $testUser->save();
     }

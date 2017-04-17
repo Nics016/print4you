@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\data\ActiveDataProvider;
+
+use common\models\Office;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -65,6 +68,21 @@ $this->params['breadcrumbs'][] = $this->title;
                             return "Администратор";
                             break;
                     }
+                }
+            ],
+            [
+                'label' => 'Офис',
+                'attribute' => 'office_id',
+                'value' => function($model){
+                    $records = Office::Find()
+                        ->all();
+
+                    foreach ($records as $record){
+                        if ($record['id'] == $model['office_id'])
+                            return $record['address'];                        
+                    }
+                    
+                    return "Офис не задан";
                 }
             ],
             // 'created_at',

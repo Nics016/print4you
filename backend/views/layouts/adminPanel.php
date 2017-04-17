@@ -119,11 +119,20 @@
                     <ul>
                         <li class="has-sub">
                             <a href="layout-api.html">
-                                <span class="title">Пользователи</span>
+                                <span class="title">Менеджеры</span>
                             </a>
                             <ul>
                                 <li><a href="<?= Url::toRoute(['user/index']) ?>"><span class="title">Все</span></a></li>
                                 <li><a href="<?= Url::toRoute(['user/create']) ?>"><span class="title">Создать нового</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a href="layout-api.html">
+                                <span class="title">Офисы</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['office/index']) ?>"><span class="title">Все</span></a></li>
+                                <li><a href="<?= Url::toRoute(['office/create']) ?>"><span class="title">Создать новый</span></a></li>
                             </ul>
                         </li>
                         <li>

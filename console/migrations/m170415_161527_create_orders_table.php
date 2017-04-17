@@ -22,7 +22,7 @@ class m170415_161527_create_orders_table extends Migration
             'id' => $this->primaryKey(),
             'order_status' => $this->string(32)->notNull()->defaultValue("new"),
             'price' => $this->integer()->notNull()->defaultValue(0),
-            'manager_id' => $this->integer()->notNull(),
+            'manager_id' => $this->integer(),
             'comment' => $this->string(1000)->notNull()->defaultValue(""),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

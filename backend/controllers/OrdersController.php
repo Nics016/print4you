@@ -33,7 +33,7 @@ class OrdersController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['view', 'update', 'new', 'proccessing', 'completed', ],
+                        'actions' => ['view', 'new', 'proccessing', 'completed', 'accept', 'complete'],
                         'allow' => true,
                         // Allow manager and admin
                         'roles' => [
@@ -42,7 +42,8 @@ class OrdersController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['create', 'delete', 'cancelled', 'index', 'deleted', ],
+                        // TODO: убрать "delete" - админ не может удалять заказы
+                        'actions' => ['create', 'delete', 'cancelled', 'index', 'deleted', 'update', 'cancel'],
                         'allow' => true,
                         // Allow only admin
                         'roles' => [
@@ -145,6 +146,61 @@ class OrdersController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ordersTitle' => 'Отмененные заказы',
+        ]);
+    }
+
+    /**
+     * Заказу присваивается статус "Отменен"
+     * и рендерится страница orders/view
+     * @param integer $id
+     */
+    public function actionCancel($id)
+    {
+        $model = $this->findModel($id);
+        $model->order_status = Orders::STATUS_CANCELLED;
+        $model->save();
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Заказу присваивается статус "В обработке",
+     * менеджером присваивается текущий пользователь
+     * и рендерится страница orders/view
+     * @param integer $id
+     */
+    public function actionAccept($id, $comment)
+    {
+        $model = $this->findModel($id);
+        $model->order_status = Orders::STATUS_PROCCESSING;
+        $model->comment = $comment;
+        $model->manager_id = Yii::$app->user->identity->id;
+        $model->save();
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Заказу присваивается статус "Завершен",
+     * если менеджер - текущий пользователь
+     * @param integer $id
+     */
+    public function actionComplete($id)
+    {
+        $model = $this->findModel($id);
+        if ($model['manager_id'] != Yii::$app->user->identity->id){
+            return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
+        } else {
+            $model->order_status = Orders::STATUS_COMPLETED;
+            $model->save();
+        }
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
         ]);
     }
 

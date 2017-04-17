@@ -1,7 +1,9 @@
 <?php
 
+use Yii;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
@@ -13,25 +15,39 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены, что хотите удалить этот заказ?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    
+    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
+        <p>
+            <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        </p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            [
+             [
                 'label' => 'Статус заказа',
                 'attribute' => 'order_status',
+                'value' => function($model){
+                    switch($model['order_status']){
+                        case $model::STATUS_NEW:
+                            return 'Новый';
+                            break;
+
+                        case $model::STATUS_PROCCESSING:
+                            return 'В обработке';
+                            break;
+
+                        case $model::STATUS_COMPLETED:
+                            return 'Завершен';
+                            break;
+
+                        case $model::STATUS_CANCELLED:
+                            return 'Отменен';
+                            break;
+                    }
+                }
             ],
             [
                 'label' => 'Цена (руб.)',

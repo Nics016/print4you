@@ -14,6 +14,7 @@ use common\models\Orders;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php // TODO: убрать этот ddlist - нельзя задавать статус таким способом ?>
     <?= $form->field($model, 'order_status')->dropDownList([
             Orders::STATUS_NEW => 'Новый',
             Orders::STATUS_PROCCESSING => 'В обработке',
