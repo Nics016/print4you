@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use common\models\Orders;
+
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,16 +14,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'order_status')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'order_status')->dropDownList([
+            Orders::STATUS_NEW => 'Новый',
+            Orders::STATUS_PROCCESSING => 'В обработке',
+            Orders::STATUS_COMPLETED => 'Завершен',
+            Orders::STATUS_CANCELLED => 'Отменен',
+        ])->label('Статус') ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'price')->textInput()->label('Цена') ?>
 
-    <?= $form->field($model, 'manager_id')->textInput() ?>
+    <?= $form->field($model, 'manager_id')->textInput()->label('ID менеджера') ?>
 
-    <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'comment')->textInput(['maxlength' => true])->label('Комментарий') ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

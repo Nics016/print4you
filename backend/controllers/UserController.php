@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 
 use common\components\AccessRule;
 use yii\filters\AccessControl;
-use common\models\User;
+use backend\models\User;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 

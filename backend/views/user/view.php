@@ -39,11 +39,33 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'label' => 'Статус',
-                'value' => $model->status,
+                'attribute' => 'status',
+                'value' => function($model){
+                    switch($model['status']){
+                        case $model::STATUS_ACTIVE:
+                            return "Активный";
+                            break;
+
+                        case $model::STATUS_DELETED:
+                            return "Удален";
+                            break;
+                    }
+                }
             ],
             [
                 'label' => 'Роль',
-                'value' => $model->role,
+                'attribute' => 'role',
+                'value' => function($model){
+                    switch($model['role']){
+                        case $model::ROLE_MANAGER:
+                            return "Менеджер";
+                            break;
+
+                        case $model::ROLE_ADMIN:
+                            return "Администратор";
+                            break;
+                    }
+                }
             ],
             // 'created_at',
             // 'updated_at',

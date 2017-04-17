@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\NotSupportedException;
@@ -25,7 +25,6 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-    const ROLE_CLIENT = 10;
     const ROLE_MANAGER = 20;
     const ROLE_ADMIN = 30;
     const CREATE_SCENARIO = 'create';

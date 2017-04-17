@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use common\models\User;
+use backend\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model backend\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="user-form">
@@ -23,7 +23,6 @@ use common\models\User;
         ])->label('Статус') ?>
 
         <?= $form->field($model, 'role')->dropDownList([
-            User::ROLE_CLIENT => 'Клиент',
             User::ROLE_MANAGER => 'Менеджер',
             User::ROLE_ADMIN => 'Администратор',
         ])->label('Роль') ?>

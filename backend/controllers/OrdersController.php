@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 
 use common\components\AccessRule;
 use yii\filters\AccessControl;
-use common\models\User;
+use backend\models\User;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -33,7 +33,16 @@ class OrdersController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['view', 'update', 'new', 'proccessing', 'completed', ],
+                        'allow' => true,
+                        // Allow manager and admin
+                        'roles' => [
+                            User::ROLE_MANAGER,
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                    [
+                        'actions' => ['create', 'delete', 'cancelled', 'index', 'deleted', ],
                         'allow' => true,
                         // Allow only admin
                         'roles' => [
@@ -63,6 +72,79 @@ class OrdersController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'ordersTitle' => 'Все заказы',
+        ]);
+    }
+
+    /**
+     * Lists only Orders with status "new"
+     */
+    public function actionNew()
+    {
+        $records = Orders::find()
+            ->where("order_status='new'");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $records,
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'ordersTitle' => 'Новые заказы',
+        ]);
+    }
+
+    /**
+     * Lists only Orders with status "proccessing"
+     */
+    public function actionProccessing()
+    {
+        $records = Orders::find()
+            ->where("order_status='proccessing'");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $records,
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'ordersTitle' => 'Заказы в обработке',
+        ]);
+    }
+
+    /**
+     * Lists only Orders with status "new"
+     */
+    public function actionCompleted()
+    {
+        $records = Orders::find()
+            ->where("order_status='completed'");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $records,
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'ordersTitle' => 'Завершенные заказы',
+        ]);
+    }
+
+    /**
+     * Lists only Orders with status "new"
+     */
+    public function actionCancelled()
+    {
+        $records = Orders::find()
+            ->where("order_status='cancelled'");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $records,
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'ordersTitle' => 'Отмененные заказы',
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 
 use yii\db\ActiveRecord;
+use backend\models\User;
 
 /**
  * This is the model class for table "orders".
@@ -19,6 +20,15 @@ use yii\db\ActiveRecord;
  */
 class Orders extends \yii\db\ActiveRecord
 {
+    /**
+     * Константы статусов заказа. 
+     * Используются в backend\controllers\OrdersController.php
+     */
+    const STATUS_NEW = 'new';
+    const STATUS_PROCCESSING = 'proccessing';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELLED = 'cancelled';
+
     /**
      * @inheritdoc
      */
@@ -67,5 +77,12 @@ class Orders extends \yii\db\ActiveRecord
                 ],
             ],
         ];
+    }
+
+    public function getManager($id)
+    { 
+        $manager = User::findIdentity($id);
+
+        return $manager;
     }
 }

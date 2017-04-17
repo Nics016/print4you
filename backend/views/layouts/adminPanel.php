@@ -6,6 +6,8 @@
 	use yii\widgets\Breadcrumbs;
 	use common\widgets\Alert;
 
+    use yii\helpers\Url;
+
     AppAsset::register($this);
  ?>
 
@@ -75,74 +77,64 @@
             <ul id="main-menu" class="main-menu">
                 <!-- add class "multiple-expanded" to allow multiple submenus to open -->
                 <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-                <li class="active opened active has-sub">
-                    <a href="index.html">
-                        <i class="entypo-gauge"></i>
-                        <span class="title">Главная</span>
-                    </a>
-                    <ul class="visible">
-                        <li class="active">
-                            <a href="index.html">
-                                <span class="title">Пункт 1</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="dashboard-2.html">
-                                <span class="title">Пункт 2</span>
-                            </a>
-                        </li>
-                        <li class="has-sub">
-                            <a href="skin-black.html">
-                                <span class="title">Цветовые схемы</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="skin-black.html">
-                                        <span class="title">Черная схема</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="skin-white.html">
-                                        <span class="title">Белая схема</span>
-                                    </a>
-                                </li>                    
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="has-sub">
+                <li class="has-sub opened active">
                     <a href="layout-api.html">
                         <i class="entypo-layout"></i>
                         <span class="title">Заказы</span>
                     </a>
                     <ul>
-                        <li>
-                            <a href="layout-api.html">
+                        <li class="active">
+                            <a href="<?= Url::toRoute(['orders/index']) ?>">
                                 <span class="title">Все</span>
                             </a>
                         </li>
                         <li>
-                            <a href="layout-api.html">
+                            <a href="<?= Url::toRoute(['orders/new']) ?>">
                                 <span class="title">Новые</span>
                             </a>
                         </li>
                         <li>
-                            <a href="layout-collapsed-sidebar.html">
-                                <span class="title">На обработке</span>
+                            <a href="<?= Url::toRoute(['orders/proccessing']) ?>">
+                                <span class="title">В обработке</span>
                             </a>
                         </li>
                         <li>
-                            <a href="layout-collapsed-sidebar.html">
+                            <a href="<?= Url::toRoute(['orders/completed']) ?>">
                                 <span class="title">Завершенные</span>
                             </a>
                         </li>     
                         <li>
-                            <a href="layout-collapsed-sidebar.html">
+                            <a href="<?= Url::toRoute(['orders/cancelled']) ?>">
                                 <span class="title">Отмененные</span>
                             </a>
                         </li>                       
                     </ul>
                 </li>
+
+                <li class="has-sub">
+                    <a href="layout-api.html">
+                        <i class="entypo-monitor"></i>
+                        <span class="title">Управление</span>
+                    </a>
+                    <ul>
+                        <li class="has-sub">
+                            <a href="layout-api.html">
+                                <span class="title">Пользователи</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['user/index']) ?>"><span class="title">Все</span></a></li>
+                                <li><a href="<?= Url::toRoute(['user/create']) ?>"><span class="title">Создать нового</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="layout-api.html">
+                                <span class="title">Отменить заказ</span>
+                            </a>
+                        </li>             
+                    </ul>
+                </li>
+
+
             </ul>
         </div>
     </div>

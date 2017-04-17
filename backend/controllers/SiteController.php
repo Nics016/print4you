@@ -8,7 +8,7 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 
 use common\components\AccessRule;
-use common\models\User;
+use backend\models\User;
 
 /**
  * Site controller
@@ -41,17 +41,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        // Allow clients, managers and admin
-                        'roles' => [
-                            User::ROLE_CLIENT,
-                            User::ROLE_MANAGER,
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                    [
-                        'actions' => ['index', 'test'],
+                        'actions' => ['index', 'test', 'logout'],
                         'allow' => true,
                         // Allow managers and admin
                         'roles' => [
