@@ -7,6 +7,7 @@
 	use common\widgets\Alert;
 
     use yii\helpers\Url;
+    use backend\models\User;
 
     AppAsset::register($this);
  ?>
@@ -27,10 +28,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <!-- <script src="assets/js/jquery-1.11.3.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <?php $this->head() ?>
     <link rel="icon" href="assets/images/favicon.ico">
-    <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <!-- <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css"> -->
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -38,6 +40,13 @@
     <link rel="stylesheet" href="assets/css/neon-theme.css">
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- MORRIS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
 </head>
 
 <body class="page-body  page-fade">
@@ -83,11 +92,13 @@
                         <span class="title">Заказы</span>
                     </a>
                     <ul>
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
                         <li class="active">
                             <a href="<?= Url::toRoute(['orders/index']) ?>">
                                 <span class="title">Все</span>
                             </a>
                         </li>
+                    <?php endif; ?>
                         <li>
                             <a href="<?= Url::toRoute(['orders/new']) ?>">
                                 <span class="title">Новые</span>
@@ -98,6 +109,7 @@
                                 <span class="title">В обработке</span>
                             </a>
                         </li>
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
                         <li>
                             <a href="<?= Url::toRoute(['orders/completed']) ?>">
                                 <span class="title">Завершенные</span>
@@ -107,10 +119,12 @@
                             <a href="<?= Url::toRoute(['orders/cancelled']) ?>">
                                 <span class="title">Отмененные</span>
                             </a>
-                        </li>                       
+                        </li>  
+                    <?php endif; ?>                     
                     </ul>
                 </li>
-
+                
+            <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
                 <li class="has-sub">
                     <a href="layout-api.html">
                         <i class="entypo-monitor"></i>
@@ -136,13 +150,13 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="layout-api.html">
-                                <span class="title">Отменить заказ</span>
+                            <a href="<?= Url::toRoute(['user/statistics']) ?>">
+                                <span class="title">Статистика</span>
                             </a>
                         </li>             
                     </ul>
                 </li>
-
+            <?php endif; ?>
 
             </ul>
         </div>
@@ -158,7 +172,7 @@
         </footer>
     </div>
 </div>
-
+    <!-- NEON SCRIPTS -->
     <!-- Imported styles on this page -->
     <link rel="stylesheet" href="assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
     <link rel="stylesheet" href="assets/js/rickshaw/rickshaw.min.css">
@@ -187,9 +201,43 @@
     <!-- JavaScripts initializations and stuff -->
     <script src="assets/js/neon-custom.js"></script>
 
-
     <!-- Demo Settings -->
     <script src="assets/js/neon-demo.js"></script>
+    <!-- END OF NEON-SCRIPTS -->
+
+    <script>
+        ///////////////////////////////////////////////////////////
+        // Скрипт подсветки текущей страницы белым цветом в меню //
+        ///////////////////////////////////////////////////////////
+
+        // Убираем все классы "active" и "opened"
+        $('.active').removeClass("active");
+        $('.opened').removeClass("opened");
+
+        // Получаем URL текущей открытой страницы без параметров
+        var curHref = window.location.href.toString()
+            .split(window.location.host)[1]
+                .split('&')[0];
+
+        // Проходим по каждой ссылке в меню. Если она = открытой, 
+        // помечаем её классом "active", а все li над ней, которые имеют 
+        // класс has-sub, помечаем классами "active" и "opened"
+        $('.sidebar-menu a').each(function(){
+            var curMenuLinkURL = $(this).attr('href');
+            if (curMenuLinkURL == curHref){
+                $(this).parent().addClass("active");
+                var parentLi = $(this).parent().parent().parent();
+                while (parentLi.is(".has-sub")){
+                    parentLi.addClass("active opened");
+                    parentLi = parentLi.parent().parent();
+                    if (parentLi.is("div"))
+                        break;
+                }
+                return false;
+            }
+        });
+
+    </script>
 
 <?php $this->endBody() ?>
 </body>

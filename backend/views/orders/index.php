@@ -14,17 +14,23 @@ $this->title = $ordersTitle;
 $this->params['breadcrumbs'][] = $this->title;
 
 // Получаем список заказов, чтобы использовать их id в ссылках внутри модалок
-$orders = Orders::find()
-    ->all();
+$orders = $dataProvider->getModels();
 
 ?>
 <div class="orders-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
+        <p>
+            <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php endif; ?>
+    <?php 
+        $allowedActions = '{view}';
+        if (Yii::$app->user->identity->role == User::ROLE_ADMIN){
+            $allowedActions .= ' {update}';
+        }
+     ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -93,7 +99,7 @@ $orders = Orders::find()
                         return $cancelBtn;
                     } elseif ($model->order_status == Orders::STATUS_PROCCESSING 
                             && Yii::$app->user->identity->role == User::ROLE_MANAGER
-                            && $model['id'] == Yii::$app->user->identity->id){
+                            && $model['manager_id'] == Yii::$app->user->identity->id){
                         return $completeBtn;
                     } else {
                         return '';
@@ -102,10 +108,9 @@ $orders = Orders::find()
             ],
             // 'created_at',
             // 'updated_at',
-
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update}'
+                'template' => $allowedActions,
             ],
         ],
     ]); ?>
@@ -125,9 +130,9 @@ $orders = Orders::find()
       </div>
       <div class="modal-body">
         <?php $form = ActiveForm::begin(); ?>
-            <?= Html::textInput('comment-name', 'привет', ['class' => '', 'id' => 'comment-id'.$order['id']]); ?>
+            <?= Html::textInput('comment-name', '', ['class' => 'form-control', 'id' => 'comment-id'.$order['id']]); ?>
         <?php ActiveForm::end(); ?>
-        <a href="<?= Yii::$app->urlManager->createUrl(['orders/accept', 'id' => $order['id'], 'comment' => '']) ?>" class="btn btn-info accept-link">Принять заказ</a>
+        <a href="<?= Yii::$app->urlManager->createUrl(['orders/accept', 'id' => $order['id'], 'comment' => '']) ?>" class="btn btn-info" id="accept-link<?= $order['id'] ?>">Принять заказ</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
       </div>
       <div class="modal-footer">
@@ -163,3 +168,27 @@ $orders = Orders::find()
   </div>
 </div>
 <?php endforeach; ?>
+
+<script>
+    // Скрипт добавления текста комментария в ссылку (GET-запрос)
+    // при нажатии на кнопку "принять"
+    var ordersIds = [];
+    var allowSubmit = false;
+
+    <?php foreach ($orders as $order): ?>
+        ordersIds.push(<?= $order['id'] ?>)
+    <?php endforeach; ?>
+    $(document).ready(function(){
+        for(var i = 0; i < ordersIds.length; i++){
+            jQuery('#accept-link' + ordersIds[i]).bind('click', function (event) {
+                $("#click-me-id").click();
+                event.preventDefault();
+                var oldHref = $(this).attr('href');
+                var commentText = $(this).parent().children("form").children("input[type=text]").val();
+                var newHref = oldHref + commentText;
+                window.location = newHref;
+            });
+        }
+    });
+    
+</script>

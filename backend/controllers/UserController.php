@@ -40,7 +40,7 @@ class UserController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'statistics'],
                         'allow' => true,
                         // Allow only admin
                         'roles' => [
@@ -66,6 +66,17 @@ class UserController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Отображает статистику по
+     * - приросту пользователей
+     * - список ничего не заказавших пользователей
+     * - возможность отсылки им сообщений
+     */
+    public function actionStatistics()
+    {
+        return $this->render('statistics');
     }
 
     /**

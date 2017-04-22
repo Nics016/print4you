@@ -171,7 +171,7 @@ class OrdersController extends Controller
      * и рендерится страница orders/view
      * @param integer $id
      */
-    public function actionAccept($id, $comment)
+    public function actionAccept($id, $comment='нет')
     {
         $model = $this->findModel($id);
         $model->order_status = Orders::STATUS_PROCCESSING;
