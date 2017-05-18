@@ -13,7 +13,7 @@ class m170410_211402_create_admin_user extends Migration
         $testUser->role = User::ROLE_ADMIN;
         $testUser->generatePasswordHash('333777');
         $testUser->generateAuthKey();
-        $testUser->save();
+        $testUser->save(false);
 
         $testUser = new User();
         $testUser->username = 'manager';
@@ -21,7 +21,7 @@ class m170410_211402_create_admin_user extends Migration
         $testUser->role = User::ROLE_MANAGER;
         $testUser->generatePasswordHash('333777');
         $testUser->generateAuthKey();
-        $testUser->save();
+        $testUser->save(false);
     }
 
     public function down()

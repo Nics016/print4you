@@ -1,0 +1,883 @@
+// settings
+$dark-bgc: #181818
+$top-text-color: #999999
+$top-bold-text-color: #959595
+$menu-text-color: #333333
+$border-under-menu-color: #a7a7a7
+$top-menu-link-bg-color: #eb4441
+
+$subheader-color: #fa413d
+$description-color: #4f4f4f
+
+$light-text-color: #666666
+$text-color: #5c5c5c
+$dark-text-color: #3e3e3e
+$black-color: #191919
+$unactive-dots-color: #c1c1c1
+
+$line3-bgc: #f4f4f4
+$line3-leaveReview-bgc: #191919
+$line3-name-color: #383838
+
+$line4-text1-color: #4f4f4f
+$line4-text2-color: #5c5c5c
+$line4-text2-strong-color: #656565
+$line4-right-makeOrder-hover-color: #f69392
+
+$footer-bgc: #1e1e1e
+$footer-number-color: #f24841
+
+$before-title-padding: 100px
+$line5-before-title-padding: 200px
+
+@font-face
+	src: url('../fonts/akrobatBold.otf')
+	font-family: 'akrobatBold'
+@font-face
+	src: url('../fonts/proximaNovaBold.ttf')
+	font-family: 'proximaNovaBold'
+@font-face
+	src: url('../fonts/proximaNovaLight.otf')
+	font-family: 'proximaNovaLight'
+@font-face
+	src: url('../fonts/proximaNovaRegular.otf')
+	font-family: 'proximaNovaRegular'
+@font-face
+	src: url('../fonts/proximaNovaSemibold.otf')
+	font-family: 'proximaNovaSemibold'
+@font-face
+	src: url('../fonts/sportsWorldRegular.otf')
+	font-family: 'sportsWorldRegular'
+@font-face
+	src: url('../fonts/helveticaNeueCyrRoman.otf')
+	font-family: 'helveticaNeueCyrRoman'
+
+body
+	margin: 0
+#main-wrap
+	font-family: proximaNovaRegular
+	width: 100%
+	min-width: 1140px
+.container
+	display: block
+	width: 1140px
+	margin: 0 auto
+	overflow: hidden
+.clearfix:after
+	content: ''
+	display: table
+	clear: both
+a
+	text-decoration: none
+	transition: .25s
+.title
+	margin: 0
+	font-family: sportsWorldRegular
+	font-size: 40px
+	color: $dark-text-color
+.underline
+	display: block
+	margin: 0px auto
+	width: 60px
+	height: 2px
+	background-color: #787875
+
+// MAIN
+.topline
+	background-color: $dark-bgc
+	color: $top-text-color
+	font-size: 14px
+	padding: 10px 0
+	a:hover
+		color: $text-color
+		strong
+			color: $text-color
+	a
+		span
+			margin-left: 15px
+	a
+		color: $top-text-color
+	&-elem1
+		display: block
+		float: left
+	&-elem2
+		display: block
+		float: left
+		margin-left: 55px
+		strong
+			color: $top-bold-text-color
+			transition: .25s
+	&-elem3
+		display: block
+		float: left
+		margin-left: 20px
+	&-elem4
+		display: block
+		float: right
+
+.topmenu
+	margin-top: 15px
+	border-bottom: 2px solid $border-under-menu-color
+	&-left
+		display: block
+		float: left
+		width: 135px
+		span
+			display: block
+			margin-top: 10px
+			color: #0f0000
+			font-family: helveticaNeueCyrRoman
+			text-transform: uppercase
+			padding-left: 35px
+			font-size: 10px
+			text-align: right
+	&-right
+		display: block
+		float: left
+		width: 945px
+		margin-left: 60px
+		&-above
+			display: block
+			color: $light-text-color
+			font-size: 15px
+			line-height: 20px
+			padding-bottom: 25px
+			border-bottom: 1px solid #d9d9d9
+			a:hover
+				color: $top-text-color
+			a
+				color: $light-text-color
+			&-elem1
+				display: block
+				float: left
+				width: 220px
+			&-elem2
+				display: block
+				float: left
+				width: 200px
+				margin-left: 45px
+				span
+					width: 170px
+			&-elem3
+				display: block
+				float: left
+				width: 175px
+				margin-left: 35px
+				span
+					width: 140px
+			&-elem2, &-elem3
+				img
+					display: block
+					float: left
+					width: 11px
+					padding-top: 5px
+				span
+					display: block
+					float: left
+					margin-left: 15px
+			&-elem4
+				display: block
+				float: right
+				width: 55px
+				padding-top: 5px
+				a:first-child
+					margin-right: 10px 
+		&-below
+			display: block
+			margin-top: 10px
+			nav
+				display: block
+				float: left
+				width: 800px
+				a:hover
+					color: white
+					background-color: $top-menu-link-bg-color
+				a:first-child
+					margin-left: 0
+				a
+					display: inline-block
+					padding: 15px 10px
+					margin-left: 10px
+					font-size: 13px
+					text-transform: uppercase
+					color: $menu-text-color
+					font-family: proximaNovaSemibold
+					font-weight: bold
+					border-radius: 2px
+					&.active
+						border-bottom: 4px solid $top-menu-link-bg-color
+			&-vk
+				display: block
+				float: right
+				width: 30px
+				margin-top: 15px
+			&-in
+				display: block
+				float: right
+				width: 30px
+				margin-top: 15px
+.main
+	.line1
+		margin-top: 75px
+		h2
+			padding-top: 45px
+			padding-bottom: 15px
+			font-size: 23px
+			background-image: url("../img/line1-shelk-bg.png")
+			background-size: cover
+			background-repeat: no-repeat
+			font-family: akrobatBold
+			font-size: 23px
+			color: $subheader-color
+			text-transform: uppercase
+			letter-spacing: 5px
+		&-left
+			display: block
+			float: left
+			margin-top: -60px
+			width: 550px
+			&-description
+				h1
+					font-family: sportsWorldRegular
+					font-size: 40px
+					color: $dark-text-color
+				p
+					display: block
+					margin-top: 25px
+					font-family: proximaNovaBold
+					font-size: 18px
+					color: $description-color
+			&-elements
+				img
+					display: block
+				h3
+					display: block
+					margin-top: 20px
+					font-family: sportsWorldRegular
+					font-size: 17px
+					color: $dark-text-color
+				p
+					display: block
+					margin-top: 10px
+					font-size: 15px
+					font-family: proximaNovaLight
+					color: $text-color
+				&-top
+					margin-top: 60px
+					&-el1
+						display: block
+						float: left
+						width: 200px
+					&-el2	
+						display: block
+						float: left
+						width: 200px
+						margin-left: 90px
+				&-bottom
+					&-el3
+						display: block
+						margin-top: 40px				
+		&-right
+			display: block
+			float: right
+			width: 550px
+			margin-top: 170px
+			img
+				margin-left: -15px		
+			span
+				display: block
+				margin-top: 35px
+				font-family: proximaNovaLight
+				font-size: 15px
+				color: $text-color
+
+	.line2
+		margin-bottom: $before-title-padding
+		&-video:hover
+			background-image: url("../img/line2-video-pic-hover.jpg")
+		&-video
+			margin-top: 80px
+			background-image: url("../img/line2-video-pic.jpg")
+			background-size: cover
+			background-repeat: no-repeat
+			width: 1140px
+			height: 590px
+			cursor: pointer
+			transition: .3s
+
+	.line3
+		padding-top: $before-title-padding
+		padding-bottom: $before-title-padding
+		background-color: $line3-bgc
+		&-title
+			h3
+				display: block
+				font-size: 23px
+				font-family: akrobatBold
+				color: $subheader-color
+				letter-spacing: 5px
+				text-align: center
+				-webkit-margin-before: 0em
+				-webkit-margin-after: 0em
+				-webkit-margin-start: 0px
+				-webkit-margin-end: 0px
+				text-transform: uppercase
+			&-reviews
+				margin-top: 5px
+				background-image: url("../img/line3-reviews.png")
+				background-repeat: no-repeat
+				background-size: contain
+				background-position: center
+				padding-bottom: 25px
+				h2
+					display: block
+					font-size: 40px
+					font-family: sportsWorldRegular
+					color: $dark-text-color
+					text-align: center
+					padding-top: 20px
+					-webkit-margin-before: 0em
+					-webkit-margin-after: 0em
+					-webkit-margin-start: 0px
+					-webkit-margin-end: 0px
+				&-underline
+					display: block
+					margin: 25px auto
+					margin-bottom: 0
+					width: 60px
+					height: 2px
+					background-color: #787875
+		&-carousel
+			&-portraits
+				display: block
+				width: 279px
+				margin: 60px auto
+				margin-bottom: 30px
+				img:first-child
+					margin-left: 0
+				img
+					display: block
+					float: left
+					border-radius: 50%
+					margin-left: 45px
+					height: 57px
+					width: 57px
+					padding-top: 9px
+					-webkit-filter: opacity(.5)
+					filter: opacity(.5)
+					cursor: pointer
+					&.active
+						padding-top: 0
+						height: 75px
+						width: 75px
+						-webkit-filter: opacity(1)
+						filter: opacity(1)
+					&.hidden
+						display: none
+			&-info
+				section
+					display: none
+					h4
+						display: block
+						text-align: center
+						color: $line3-name-color
+						font-size: 17px
+						font-family: proximaNovaBold
+					p
+						display: block
+						margin: 30px auto
+						width: 690px
+						font-family: proximaNovaLight
+						color: $text-color
+						text-align: center
+					&.active
+						display: block
+			&-circles
+				display: block
+				margin: 30px auto
+				width: 90px
+				img:first-child
+					margin-left: 0
+				img
+					margin-left: 2px
+					cursor: pointer
+		&-leaveReview:hover
+			background-color: $line3-name-color
+		&-leaveReview
+			display: block
+			margin: 75px auto
+			margin-bottom: 0
+			padding: 15px 25px
+			width: 150px
+			background-color: $line3-leaveReview-bgc
+			font-family: proximaNovaSemibold
+			color: white
+			font-size: 16px
+			letter-spacing: 3px
+
+	.line4
+		padding-top: $before-title-padding
+		&-left
+			display: block
+			float: left		
+			width: 524px
+		&-right
+			display: block
+			float: right
+			margin-left: 46px
+			width: 560px
+			h3
+				display: block
+				font-size: 23px
+				font-family: akrobatBold
+				color: $subheader-color
+				letter-spacing: 5px
+				-webkit-margin-before: 0em
+				-webkit-margin-after: 0em
+				-webkit-margin-start: 0px
+				-webkit-margin-end: 0px
+				text-transform: uppercase
+			h2
+				display: block
+				font-size: 40px
+				font-family: sportsWorldRegular
+				color: $dark-text-color
+				padding-top: 10px
+				-webkit-margin-before: 0em
+				-webkit-margin-after: 0em
+				-webkit-margin-start: 0px
+				-webkit-margin-end: 0px
+			&-text1
+				display: block
+				font-size: 18px
+				font-family: proximaNovaBold
+				color: $line4-text1-color
+				padding-top: 10px
+			&-text2
+				display: block
+				margin-top: 50px
+				p:nth-child(3)
+					padding-top: 40px
+				p
+					display: block
+					font-size: 16px
+					font-family: proximaNovaLight
+					color: $line4-text2-color
+					padding-top: 10px
+					letter-spacing: 1px
+					strong
+						font-size: 17px
+						font-family: sportsWorldRegular
+						color: $line4-text2-strong-color
+				&-number:hover
+					color: $line4-right-makeOrder-hover-color
+				&-number
+					display: block
+					width: 200px
+					font-size: 35px
+					font-family: proximaNovaRegular
+					color: $top-menu-link-bg-color
+					transition: .3s
+			&-makeOrder:hover
+				background-color: $line3-name-color
+			&-makeOrder
+				display: block
+				margin: 75px 0
+				margin-bottom: 0
+				padding: 15px 25px
+				width: 150px
+				background-color: $line3-leaveReview-bgc
+				font-family: proximaNovaSemibold
+				color: white
+				font-size: 16px
+				letter-spacing: 2px
+				text-transform: uppercase
+				text-align: center
+
+	.line5
+		&-tshirt
+			display: block
+			margin: 0 auto
+			margin-top: 40px
+			width: 111px
+		h2
+			display: block
+			text-align: center
+			font-size: 40px
+			font-family: sportsWorldRegular
+			color: $dark-text-color
+			-webkit-margin-before: 0em
+			-webkit-margin-after: 0em
+			-webkit-margin-start: 0px
+			-webkit-margin-end: 0px
+			margin-top: 70px
+		&-underline
+			display: block
+			margin: 25px auto
+			margin-bottom: 0
+			width: 60px
+			height: 2px
+			background-color: #787875
+		&-slider
+			margin-top: 60px
+	.bx-wrapper
+		box-shadow: none !important
+	.bx-pager-link
+		background: #c1c1c1 !important
+	.bx-pager-link.active
+		background: #f24841 !important
+	.bx-controls
+		margin-top: 30px !important
+
+footer
+	margin-top: 50px
+	padding: 50px 0
+	background-color: $footer-bgc
+.footer
+	&-left
+		display: block
+		float: left
+		width: 250px
+		&-contacts
+			p
+				font-family: proximaNovaBold
+				font-size: 16px
+				color: white
+				margin: 0
+				padding: 0
+				padding-bottom: 5px
+			p.with-margin
+				margin-top: 20px
+			a
+				display: block
+				text-decoration: none
+				font-family: proximaNovaRegular
+				color: white
+				font-size: 20px
+				strong:hover
+					color: $line4-right-makeOrder-hover-color
+				strong
+					font-family: proximaNovaBold
+					color: $footer-number-color
+					transition: .3s
+			.footer-left-callMe:hover
+				background-color: $line3-name-color
+			.footer-left-callMe
+				display: block
+				margin: 30px 0
+				margin-bottom: 0
+				padding: 15px 25px
+				width: 160px
+				background-color: $line3-leaveReview-bgc
+				font-family: proximaNovaSemibold
+				color: white
+				font-size: 16px
+				letter-spacing: 3px	
+				border: 2px solid white	
+				text-align: center
+	&-center
+		display: block
+		float: left
+		margin-left: 250px
+		width: 143px
+		span
+			display: block
+			margin-top: 10px
+			color: white
+			font-family: helveticaNeueCyrRoman
+			text-transform: uppercase
+			padding-left: 35px
+			font-size: 10px
+			text-align: right
+		&-socials
+			display: block
+			margin: 35px auto
+			width: 50px
+			a:first-child
+				margin-left: 0
+			a
+				margin-left: 10px
+	&-right
+		display: block
+		float: right
+		width: 270px
+		span
+			display: block
+			text-align: center
+			font-family: proximaNovaBold
+			font-size: 16px
+			color: white
+		&-photos
+			display: block
+			margin-top: 20px
+			a:first-child img
+				margin-left: 0
+			a img
+				margin-left: 20px
+				border-radius: 50%
+// END OF MAIN
+
+// ASSORTY
+.assorty
+	.title
+		text-align: center
+		margin-top: 20px
+		padding: 20px
+		color: #222222
+		background-image: url("../img/assorty-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+	.underline
+		margin-top: 0
+	.assorty-category
+		margin: 0 auto
+		margin-top: 70px
+		width: 220px
+		padding-left: 30px
+		padding-bottom: 30px
+		a:first-child
+			border-right: none
+		a.active
+			background-color: #191919
+			color: #fff
+			box-shadow: -4px 4px 20px #aaa
+		a
+			display: block
+			float: left
+			width: 70px
+			font-family: 'helveticaNeueCyrRoman'
+			color: #191919
+			font-weight: bold
+			border: 1px solid #626262
+			padding: 15px
+			text-align: center
+			font-size: 15px
+			letter-spacing: 1px
+	.assorty-row:first-child
+		margin-top: 30px
+	.assorty-row
+		margin-top: 50px
+		img:hover
+			box-shadow: -4px 4px 20px #aaa
+		img
+			display: block
+			float: left
+			margin-left: 20px
+			margin-bottom: 20px
+			width: 260px
+			height: 350px
+			border: 1px solid #b9b9b9
+			transition: .3s
+		&-description
+			display: block
+			float: right
+			width: 730px
+			min-height: 270px
+			padding: 40px
+			border: 1px solid #b9b9b9
+			&-title
+				display: block
+				float: left
+				width: 235px
+				margin: 0
+				font-family: 'sportsWorldRegular'
+				font-size: 18px
+				color: #383838
+			&-price
+				&-link:hover
+					.assorty-row-description-price
+						color: #eb4441
+						font-weight: bold
+					.assorty-row-description-rub
+						background-image: url(../img/assorty-rub-active.png)
+						transition: .3s
+				display: block
+				float: left
+				margin-left: 35px
+				margin-top: -10px
+				width: 60px
+				color: #7d7d7d
+				font-size: 29px
+				font-family: 'helveticaNeueCyrRoman'
+				text-transform: uppercase
+				transition: .3s
+			&-rub
+				display: block
+				float: left
+				margin-left: -8px
+				width: 16px
+				height: 21px
+				margin-top: -5px
+				background-image: url("../img/assorty-rub.png")
+				background-repeat: no-repeat
+				background-size: cover
+			&-text
+				display: block
+				margin-top: 25px
+				font-family: 'proximaNovaLight'
+				font-size: 15px
+				color: #656565
+				line-height: 25px
+			&-btn:hover
+				color: #fff
+				background-color: #191919
+			&-btn
+				display: block
+				margin-top: 35px
+				width: 170px
+				padding: 10px 0
+				text-align: center
+				font-family: 'proximaNovaSemibold'
+				font-size: 15px
+				color: #383838
+				border: 1px solid #4d4d4d
+				font-weight: bold
+
+// END OF ASSORTY
+
+// CONTACTS
+.contacts
+	h1
+		text-align: center
+		margin-top: 90px
+		padding-top: 60px
+		background-image: url("../img/contacts-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		background-position: center center
+	&-map:first-child
+		margin-top: 100px
+	&-map
+		margin-top: 80px
+		&-google
+			display: block
+			float: left
+			width: 615px
+			&.graymap
+				-webkit-filter: grayscale(100%)
+				filter: grayscale(100%)
+		&-info
+			display: block
+			float: right
+			width: 450px
+			h2
+				margin: 0
+				padding-top: 40px
+				font-family: "sportsWorldRegular"
+				font-size: 21px
+				color: #4f4f4f
+			span
+				display: block
+				margin-top: 35px
+				font-family: "proximaNovaLight"
+				font-size: 18px
+				color: #4a4a4a
+				line-height: 25px
+			&-element
+				&.info-element1
+					margin-top: 40px
+					img
+						width: 18px
+				display: block
+				margin-top: 20px
+				&.info-element2
+					img
+						width: 13px
+						margin-right: 5px
+				img
+					display: block
+					float: left
+				span
+					display: block
+					float: left
+					width: 350px
+					margin-top: -4px
+					margin-left: 15px
+	.line2
+		margin-top: 110px
+		padding: 130px 0
+		background-color: #f4f4f4
+	&-questions		
+		h2
+			padding: 30px 0
+			font-size: 40px
+			text-align: center
+			background-image: url("../img/contacts-request-title-bg.png")
+			background-repeat: no-repeat
+			background-size: contain
+			background-position: center center
+		h3
+			margin: 0
+			margin-top: 35px
+			font-family: "proximaNovaBold"
+			font-size: 17px
+			color: #5a5a5a
+			text-align: center
+			font-weight: bold
+			letter-spacing: 1px
+		&-form
+			&-wrapper
+				margin: 0 auto
+				margin-top: 75px
+				width: 948px
+				height: 286px
+				padding: 12px
+				background-image: url("../img/contacts-questions-form-wrapper-bg.png")
+			padding: 50px 65px
+			background-color: #d8d8d8
+			overflow: hidden
+			height: 182px
+			&-left
+				display: block
+				float: left
+				width: 400px
+				&-line:first-child
+					margin-top: 0
+				&-line
+					input
+						width: 350px
+						font-family: "proximaNovaRegular"
+						font-size: 16px
+						color: #676767
+						padding: 10px 20px
+					img
+						margin-left: -40px
+					margin-top: 20px
+			&-right
+				display: block
+				float: right
+				width: 405px
+				margin-right: -10px
+				textarea
+					display: block
+					float: left
+					font-family: "proximaNovaRegular"
+					padding: 10px 20px
+					font-size: 16px
+					color: #676767
+					width: 90%
+					height: 80px
+					resize: none
+				img
+					display: block
+					float: left
+					margin-left: -30px
+					margin-top: 10px
+				input[type="submit"]:hover
+					background-color: #555555
+				input[type="submit"]
+					display: block
+					margin-top: 20px
+					width: 100%
+					padding: 11px 0
+					text-align: center
+					background-color: #353535
+					font-family: "proximaNovaRegular"
+					font-size: 16px
+					text-transform: uppercase
+					color: white
+					border: none
+					outline: none
+					cursor: pointer
+					transition: .3s
+// END OF CONTACTS

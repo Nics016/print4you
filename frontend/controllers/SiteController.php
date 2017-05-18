@@ -76,6 +76,14 @@ class SiteController extends Controller
     }
 
     /**
+     * Ассортимент
+     */
+    public function actionAssorty()
+    {
+        return $this->render('assorty');
+    }
+
+    /**
      * Logs in a user.
      *
      * @return mixed
@@ -113,7 +121,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionContact()
+    public function actionContacts()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -125,7 +133,7 @@ class SiteController extends Controller
 
             return $this->refresh();
         } else {
-            return $this->render('contact', [
+            return $this->render('contacts', [
                 'model' => $model,
             ]);
         }
