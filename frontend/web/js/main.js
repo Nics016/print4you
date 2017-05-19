@@ -15,6 +15,31 @@ $(document).ready(function(){
  		slideWidth: 360,
   		slideMargin: 10
 	});
+
+    ///////////////////////////////////////////////////////////
+    // Скрипт подсветки текущей страницы белым цветом в меню //
+    ///////////////////////////////////////////////////////////
+
+    // Убираем все классы "active"
+    $('nav a.active').removeClass("active");
+
+    // Получаем URL текущей открытой страницы без параметров
+    var curHref = window.location.href.toString()
+        .split(window.location.host)[1]
+            .split('&')[0];
+
+    // Проходим по каждой ссылке в меню. Если она = открытой, 
+    // помечаем её классом "active", а все li над ней, которые имеют 
+    // класс has-sub, помечаем классами "active" и "opened"
+    $('nav a').each(function(){
+        var curMenuLinkURL = $(this).attr('href');
+        if (curMenuLinkURL == curHref){
+            $(this).addClass("active");
+            
+            return false;
+        }
+    });
+
 });
 
 /**

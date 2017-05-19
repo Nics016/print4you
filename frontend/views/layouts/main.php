@@ -22,10 +22,10 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <!-- BXSLIDER -->
-    <link rel="stylesheet" href="css/jquery.bxslider.css">
+    <link rel="stylesheet" href="/css/jquery.bxslider.css">
     <!-- END OF BXSLIDER -->
     <!-- STYLES -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <!-- END OF STYLES -->
 </head>
 <body id=#main-wrap>
@@ -33,9 +33,9 @@ AppAsset::register($this);
     <!-- SCRIPTS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- BXSLIDER -->
-    <script src="js/jquery.bxslider.min.js"></script>
+    <script src="/js/jquery.bxslider.min.js"></script>
     <!-- END OF BXSLIDER -->
-    <script src="js/main.js"></script>  
+    <script src="/js/main.js"></script>  
     <!-- END OF SCRIPTS -->
 
     <header>
@@ -43,20 +43,20 @@ AppAsset::register($this);
         <div class="topline">
             <div class="container clearfix">        
                 <a href="#" class="topline-elem1">
-                    <img src="img/topline-mail.png" alt="">
+                    <img src="/img/topline-mail.png" alt="">
                     <span>
                         info@print4you.su
                     </span>
                 </a>
                 <a href="#" class="topline-elem2">
-                    <img src="img/topline-phone.png" alt="">
+                    <img src="/img/topline-phone.png" alt="">
                     <span>
                         +7 (963) <strong>332 56 32</strong>
                     </span>
                 </a>
                 <a href="#" class="topline-elem3">Заказать звонок</a>
                 <a href="#" class="topline-elem4">      
-                    <img src="img/topline-lk.png" alt=""><span>Личный кабинет</span>
+                    <img src="/img/topline-lk.png" alt=""><span>Личный кабинет</span>
                 </a>
             </div>
         </div>
@@ -66,7 +66,7 @@ AppAsset::register($this);
         <div class="topmenu">
             <div class="container clearfix">
                 <a href="#" class="topmenu-left">
-                    <img src="img/header-logo.png">
+                    <img src="/img/header-logo.png">
                     <span>Печатаем и шьем <br> для вас</span>
                 </a>
                 <div class="topmenu-right">
@@ -76,14 +76,14 @@ AppAsset::register($this);
                             Футболки Cанкт-Петербурга с принтом – дело наших рук!
                         </span>
                         <a href="#" class="topmenu-right-above-elem2 clearfix">
-                            <img src="img/header-pin.png" alt="">
+                            <img src="/img/header-pin.png" alt="">
                             <span>
                                 Наб. реки Фонтанки, 38 
 Гостиный двор (в арке)
                             </span>
                         </a>
                         <a href="#" class="topmenu-right-above-elem3 clearfix">
-                            <img src="img/header-pin.png" alt="">
+                            <img src="/img/header-pin.png" alt="">
                             <span>
                                 Площадь Восстания 
 Гончарная, 2
@@ -91,10 +91,10 @@ AppAsset::register($this);
                         </a>
                         <div class="topmenu-right-above-elem4">
                             <a href="#">
-                                <img src="img/header-search.png" alt="">
+                                <img src="/img/header-search.png" alt="">
                             </a>
                             <a href="#">
-                                <img src="img/header-menu.png" alt="">
+                                <img src="/img/header-menu.png" alt="">
                             </a>
                         </div>
                     </div>
@@ -102,19 +102,19 @@ AppAsset::register($this);
 
                     <div class="topmenu-right-below clearfix">
                         <nav>
-                            <a href="<?= Url::base(true) ?>" class='active'>Главная</a>
-                            <a href="#">О нас</a>
-                            <a href="?r=site/assorty">Услуги</a>
-                            <a href="#">Оплата и доставка</a>
-                            <a href="#">Калькулятор</a>
-                            <a href="#">Франшиза</a>
-                            <a href="?r=site/contacts">Контакты</a>
-                        </nav>                      
+                            <a href="<?= Url::home() ?>" class='active'>Главная</a>
+                            <a href="<?= Url::to(['site/about']) ?>">О нас</a>
+                            <a href="<?= Url::to(['site/services']) ?>">Услуги</a>
+                            <a href="<?= Url::to(['site/dostavka']) ?>">Оплата и доставка</a>
+                            <a href="<?= Url::to(['site/calculator']) ?>">Конструктор</a>
+                            <a href="<?= Url::to(['site/franchise']) ?>">Франшиза</a>
+                            <a href="<?= Url::to(['site/contacts']) ?>">Контакты</a>
+                        </nav>        
                         <a href="#" class="topmenu-right-below-in">
-                            <img src="img/header-in.png" alt="">
+                            <img src="/img/header-in.png" alt="">
                         </a>
                         <a href="#" class="topmenu-right-below-vk">
-                            <img src="img/header-vk.png" alt="">
+                            <img src="/img/header-vk.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -139,20 +139,20 @@ AppAsset::register($this);
             </div>
             <div class="footer-center">
                 <a href="#">
-                    <img src="img/footer-logo.png" alt="" class="footer-center-print">
+                    <img src="/img/footer-logo.png" alt="" class="footer-center-print">
                 </a>
                 <span>Печатаем и шьем <br> для вас</span>
                 <div class="footer-center-socials">
-                    <a href="#"><img src="img/footer-vk.png" alt=""></a>
-                    <a href="#"><img src="img/footer-in.png" alt=""></a>
+                    <a href="#"><img src="/img/footer-vk.png" alt=""></a>
+                    <a href="#"><img src="/img/footer-in.png" alt=""></a>
                 </div>
             </div>
             <div class="footer-right">
                 <span>Последние фотографии</span>
                 <div class="footer-right-photos">
-                    <a href="#"><img src="img/footer-photo1.png" alt=""></a>
-                    <a href="#"><img src="img/footer-photo2.png" alt=""></a>
-                    <a href="#"><img src="img/footer-photo3.png" alt=""></a>
+                    <a href="#"><img src="/img/footer-photo1.png" alt=""></a>
+                    <a href="#"><img src="/img/footer-photo2.png" alt=""></a>
+                    <a href="#"><img src="/img/footer-photo3.png" alt=""></a>
                 </div>
             </div>
         </div>

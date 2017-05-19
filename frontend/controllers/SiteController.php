@@ -84,6 +84,38 @@ class SiteController extends Controller
     }
 
     /**
+     * Услуги
+     */
+    public function actionServices()
+    {
+        return $this->render('services');
+    }
+
+    /**
+     * Оплата и доставка
+     */
+    public function actionDostavka()
+    {
+        return $this->render('dostavka');
+    }
+
+    /**
+     * Франшиза
+     */
+    public function actionFranchise()
+    {
+        return $this->render('franchise');
+    }
+
+    /**
+     * Калькулятор
+     */
+    public function actionCalculator()
+    {
+        return $this->render('calculator');
+    }
+
+    /**
      * Logs in a user.
      *
      * @return mixed

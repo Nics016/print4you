@@ -75,12 +75,33 @@ a
 	font-family: sportsWorldRegular
 	font-size: 40px
 	color: $dark-text-color
+.subtitle
+	font-size: 23px
+	font-family: akrobatBold
+	font-size: 23px
+	color: $subheader-color
+	text-transform: uppercase
+	letter-spacing: 5px
 .underline
 	display: block
 	margin: 0px auto
 	width: 60px
 	height: 2px
 	background-color: #787875
+.whiteBtn:hover
+	color: #fff
+	background-color: #191919
+.whiteBtn
+	display: block
+	margin-top: 35px
+	width: 170px
+	padding: 10px 0
+	text-align: center
+	font-family: 'proximaNovaSemibold'
+	font-size: 15px
+	color: #383838
+	border: 1px solid #4d4d4d
+	font-weight: bold
 
 // MAIN
 .topline
@@ -415,86 +436,8 @@ a
 			font-size: 16px
 			letter-spacing: 3px
 
-	.line4
-		padding-top: $before-title-padding
-		&-left
-			display: block
-			float: left		
-			width: 524px
-		&-right
-			display: block
-			float: right
-			margin-left: 46px
-			width: 560px
-			h3
-				display: block
-				font-size: 23px
-				font-family: akrobatBold
-				color: $subheader-color
-				letter-spacing: 5px
-				-webkit-margin-before: 0em
-				-webkit-margin-after: 0em
-				-webkit-margin-start: 0px
-				-webkit-margin-end: 0px
-				text-transform: uppercase
-			h2
-				display: block
-				font-size: 40px
-				font-family: sportsWorldRegular
-				color: $dark-text-color
-				padding-top: 10px
-				-webkit-margin-before: 0em
-				-webkit-margin-after: 0em
-				-webkit-margin-start: 0px
-				-webkit-margin-end: 0px
-			&-text1
-				display: block
-				font-size: 18px
-				font-family: proximaNovaBold
-				color: $line4-text1-color
-				padding-top: 10px
-			&-text2
-				display: block
-				margin-top: 50px
-				p:nth-child(3)
-					padding-top: 40px
-				p
-					display: block
-					font-size: 16px
-					font-family: proximaNovaLight
-					color: $line4-text2-color
-					padding-top: 10px
-					letter-spacing: 1px
-					strong
-						font-size: 17px
-						font-family: sportsWorldRegular
-						color: $line4-text2-strong-color
-				&-number:hover
-					color: $line4-right-makeOrder-hover-color
-				&-number
-					display: block
-					width: 200px
-					font-size: 35px
-					font-family: proximaNovaRegular
-					color: $top-menu-link-bg-color
-					transition: .3s
-			&-makeOrder:hover
-				background-color: $line3-name-color
-			&-makeOrder
-				display: block
-				margin: 75px 0
-				margin-bottom: 0
-				padding: 15px 25px
-				width: 150px
-				background-color: $line3-leaveReview-bgc
-				font-family: proximaNovaSemibold
-				color: white
-				font-size: 16px
-				letter-spacing: 2px
-				text-transform: uppercase
-				text-align: center
-
 	.line5
+		margin-bottom: 60px
 		&-tshirt
 			display: block
 			margin: 0 auto
@@ -528,9 +471,86 @@ a
 		background: #f24841 !important
 	.bx-controls
 		margin-top: 30px !important
+.line4
+	padding-top: $before-title-padding
+	&-left
+		display: block
+		float: left		
+		width: 524px
+	&-right
+		display: block
+		float: right
+		margin-left: 46px
+		width: 560px
+		h3
+			display: block
+			font-size: 23px
+			font-family: akrobatBold
+			color: $subheader-color
+			letter-spacing: 5px
+			-webkit-margin-before: 0em
+			-webkit-margin-after: 0em
+			-webkit-margin-start: 0px
+			-webkit-margin-end: 0px
+			text-transform: uppercase
+		h2
+			display: block
+			font-size: 40px
+			font-family: sportsWorldRegular
+			color: $dark-text-color
+			padding-top: 10px
+			-webkit-margin-before: 0em
+			-webkit-margin-after: 0em
+			-webkit-margin-start: 0px
+			-webkit-margin-end: 0px
+		&-text1
+			display: block
+			font-size: 18px
+			font-family: proximaNovaBold
+			color: $line4-text1-color
+			padding-top: 10px
+		&-text2
+			display: block
+			margin-top: 50px
+			p:nth-child(3)
+				padding-top: 40px
+			p
+				display: block
+				font-size: 16px
+				font-family: proximaNovaLight
+				color: $line4-text2-color
+				padding-top: 10px
+				letter-spacing: 1px
+				strong
+					font-size: 17px
+					font-family: sportsWorldRegular
+					color: $line4-text2-strong-color
+			&-number:hover
+				color: $line4-right-makeOrder-hover-color
+			&-number
+				display: block
+				width: 200px
+				font-size: 35px
+				font-family: proximaNovaRegular
+				color: $top-menu-link-bg-color
+				transition: .3s
+		&-makeOrder:hover
+			background-color: $line3-name-color
+		&-makeOrder
+			display: block
+			margin: 75px 0
+			margin-bottom: 0
+			padding: 15px 25px
+			width: 150px
+			background-color: $line3-leaveReview-bgc
+			font-family: proximaNovaSemibold
+			color: white
+			font-size: 16px
+			letter-spacing: 2px
+			text-transform: uppercase
+			text-align: center
 
 footer
-	margin-top: 50px
 	padding: 50px 0
 	background-color: $footer-bgc
 .footer
@@ -619,6 +639,7 @@ footer
 
 // ASSORTY
 .assorty
+	margin-top: 100px
 	.title
 		text-align: center
 		margin-top: 20px
@@ -641,6 +662,9 @@ footer
 			background-color: #191919
 			color: #fff
 			box-shadow: -4px 4px 20px #aaa
+		a:hover
+			background-color: #333
+			color: #fff
 		a
 			display: block
 			float: left
@@ -881,3 +905,298 @@ footer
 					cursor: pointer
 					transition: .3s
 // END OF CONTACTS
+
+// ABOUT
+.about
+	margin-bottom: 100px
+	h1
+		margin-top: 75px
+		background-image: url("../img/about-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		padding-top: 70px
+	h2
+		margin-top: -80px
+		margin-bottom: 80px
+	.info
+		margin-top: 40px
+		line-height: 1.5em
+		&-left
+			display: block
+			float: left
+			width: 540px
+			strong
+				font-family: "proximaNovaBold"
+				font-size: 18px
+				color: #4f4f4f			
+			span
+				display: block
+				margin-top: 65px
+				font-family: "proximaNovaLight"
+				font-size: 16px
+				color: #404040
+				line-height: 1.8em
+			.whiteBtn
+				width: 225px
+				text-transform: uppercase
+				letter-spacing: 3px
+		&-right
+			display: block
+			float: right
+			width: 540px
+	.tshirt
+		display: block
+		margin: 100px 0
+		height: 120px
+		background-image: url("../img/line5-tshirt.png")
+		background-repeat: no-repeat
+		background-position: center center
+	.slider
+		&-pics
+			&-left
+				display: block
+				float: left
+				width: 750px
+				&-bot
+					margin-top: 25px
+			&-right
+				display: block
+				float: right
+				width: 350px
+			&-pic1
+				display: block
+				width: 750px
+				height: 225px
+			&-pic2, &-pic3
+				display: block
+				float: left
+				width: 360px
+				height: 260px
+			&-pic3
+				margin-left: 30px
+			&-pic4
+				width: 360px
+				height: 510px
+		&-dots
+			display: block
+			margin: 0 auto
+			margin-top: 45px
+			width: 110px
+			&-dot
+				cursor: pointer
+// END OF ABOUT
+
+// SERVICES
+.services
+	h1
+		text-align: center
+		margin: 0
+		margin-top: 100px
+		padding-top: 10px
+		padding-bottom: 65px
+		background-image: url("../img/services-title-bg.png")
+		background-repeat: no-repeat
+		background-position: center
+		background-size: contain
+	.underline
+		margin-top: -40px
+	.elements
+		&-item:nth-child(4n+1)
+			margin-left: 12px
+		&-item
+			display: block
+			float: left
+			margin-top: 100px
+			margin-left: 20px
+			width: 266px
+			img:hover
+				box-shadow: -4px 4px 20px #aaa
+			img
+				width: 100%
+			&-title:hover
+				color: #515151
+			&-title
+				display: block
+				margin-top: 20px
+				text-align: center
+				font-family: "sportsWorldRegular"
+				font-size: 18px
+				color: #383838
+				text-transform: uppercase
+			&-text:hover
+				color: #8d8d8d
+			&-text
+				display: block
+				margin-top: 0px
+				text-align: center
+				font-family: "proximaNovaSemibold"
+				font-size: 19px
+				color: #686868
+			.whiteBtn
+				margin: 0 auto
+				margin-top: 25px
+	.bigBtn
+		display: block
+		margin: 100px auto
+		padding: 20px 0
+		width: 560px
+		letter-spacing: 3px
+		text-transform: uppercase
+		font-weight: bold
+		strong
+			color: #4e4e4e
+			margin-left: 30px
+// END OF SERVICES
+
+// DOSTAVKA
+.dostavka
+	margin-top: 100px
+	margin-bottom: 100px
+	h1
+		padding-top: 40px
+		padding-bottom: 20px
+		background-image: url("../img/dostavka-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		background-position: center center
+	.moneybag
+		display: block
+		margin-top: 80px
+	.schedule
+		margin-top: 20px
+		&-title
+			font-family: "sportsWorldRegular"
+			font-size: 25px
+			color: #4b4b4b
+		&-num
+			margin-left: 20px
+			font-family: "helveticaNeueCyrRoman"
+			font-size: 36px
+			color: #606060
+			font-weight: bold
+		&-info
+			display: block
+			margin-top: 30px
+			margin-bottom: 50px
+			font-family: "proximaNovaBold"
+			font-size: 20px
+			color: #4f4f4f
+			font-weight: bold
+// END OF DOSTAVKA
+
+// FRANCHISE
+.franchise
+	margin-top: 100px
+	.title-line-bg
+		height: 120px
+		background-image: url("../img/franchise-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		background-position: center
+	.title-line
+		width: 950px
+		margin: 0 auto
+		margin-top: -80px
+		margin-bottom: 80px
+		&-left
+			display: block
+			float: left
+			width: 450px
+			text-align: right
+			h1
+				margin-top: -10px
+		&-right
+			display: block
+			float: left
+			margin-left: 30px
+			width: 350px
+			h3
+				margin: 0
+				margin-top: 20px
+				font-family: "proximaNovaBold"
+				font-size: 18px
+				color: #3d3d3d
+				font-weight: bolder
+			&-item:first-child
+				margin-top: 20px
+			&-item
+				margin-top: 7px
+				span
+					margin-left: 10px
+					font-family: "proximaNovaBold"
+					font-size: 18px
+					color: #4f4f4f
+	.banner
+		display: block
+		width: 100%
+		margin-top: 20px
+	.pluses
+		margin-top: 70px
+		&-plus:first-child
+			margin-left: 30px
+		&-plus
+			display: block
+			float: left
+			width: 550px
+			margin-left: 0px			
+			&-title-line
+				img
+					display: block
+					float: left
+				h3
+					display: block
+					float: left
+					margin: 0
+					margin-top: -5px
+					margin-left: 30px
+					font-size: 17px
+					color: #383838
+					line-height: 1.3em
+			&-info
+				ul
+					margin: 0
+					margin-top: 30px
+					margin-left: 40px
+					list-style-type: none
+					li
+						margin-top: 10px
+						background-image: url("../img/franchise-dot.png")
+						background-repeat: no-repeat
+						background-position: left center
+						padding-left: 25px
+						font-family: "proximaNovaLight"
+						font-size: 16px
+						color: #414141
+	.line2
+		margin-top: 120px
+		background-color: #f4f4f4
+		padding: 110px 0
+		.request
+			h2
+				padding: 35px 0
+				background-image: url("../img/franchise-request-bg.png")
+				background-repeat: no-repeat
+				background-position: center 
+				background-size: contain
+				text-align: center
+			.underline
+				margin-top: -10px
+			h3
+				margin: 0
+				margin-top: 35px
+				font-family: "proximaNovaBold"
+				font-size: 17px
+				font-weight: bold
+				text-align: center
+				color: #5a5a5a
+// END OF FRANCHISE
+
+// 
+
+// END OF 
+
+// 
+
+// END OF
+
+

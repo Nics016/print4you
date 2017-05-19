@@ -25,7 +25,7 @@ $this->title = 'Print4you - Контакты';
                             Набережная реки Фонтанки,38
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
-                            <img src="img/contacts-alarm.png" alt="">
+                            <img src="/img/contacts-alarm.png" alt="">
                             <span>
                                 Часы работы: <br>
                                 ПН-ВС - с 11:00 до 21:00 <br>
@@ -33,7 +33,7 @@ $this->title = 'Print4you - Контакты';
                             </span>
                         </div>
                         <div class="contacts-map-info-element clearfix info-element2">
-                            <img src="img/contacts-phone.png" alt="">
+                            <img src="/img/contacts-phone.png" alt="">
                             <span>
                                 Телефон - 309 28 48 (Добавочный 122) <br>
                                 Почта - info@print4you.su
@@ -55,7 +55,7 @@ $this->title = 'Print4you - Контакты';
                             ул. Гончарная,2
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
-                            <img src="img/contacts-alarm.png" alt="">
+                            <img src="/img/contacts-alarm.png" alt="">
                             <span>
                                 Часы работы: <br>
                                 ПН-ВС - с 11:00 до 21:00 <br>
@@ -63,7 +63,7 @@ $this->title = 'Print4you - Контакты';
                             </span>
                         </div>
                         <div class="contacts-map-info-element clearfix info-element2">
-                            <img src="img/contacts-phone.png" alt="">
+                            <img src="/img/contacts-phone.png" alt="">
                             <span>
                                 Телефон - 309 28 48 <br>
                                 Почта - info@print4you.su
@@ -74,7 +74,7 @@ $this->title = 'Print4you - Контакты';
 
                 <div class="contacts-map clearfix">
                     <div class="contacts-map-google">
-                        <img src="img/contacts-othercity-map.png" alt="">
+                        <img src="/img/contacts-othercity-map.png" alt="">
                     </div>
                     <div class="contacts-map-info">
                         <h2>Студия печати PRINT4YOU!</h2>
@@ -83,7 +83,7 @@ $this->title = 'Print4you - Контакты';
                             ул.Мерецкова-Волосова 5 (У Кремля)
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
-                            <img src="img/contacts-alarm.png" alt="">
+                            <img src="/img/contacts-alarm.png" alt="">
                             <span>
                                 Часы работы: <br>
                                 Пн-Пв - с 10:00 до 20:00 <br>
@@ -92,7 +92,7 @@ $this->title = 'Print4you - Контакты';
                             </span>
                         </div>
                         <div class="contacts-map-info-element clearfix info-element2">
-                            <img src="img/contacts-phone.png" alt="">
+                            <img src="/img/contacts-phone.png" alt="">
                             <span>
                                 Телефон - +7 963 332 56 32 <br>
                                 Почта - info@print4you.su
@@ -119,21 +119,21 @@ $this->title = 'Print4you - Контакты';
                             <div class="contacts-questions-form-left">
                                 <div class="contacts-questions-form-left-line">
                                     <input type="text" name="client_name" placeholder="Ваше имя">
-                                    <img src="img/topline-lk.png" alt="">
+                                    <img src="/img/topline-lk.png" alt="">
                                 </div>
                                 <div class="contacts-questions-form-left-line">
                                     <input type="text" name="client_phone" placeholder="Ваш телефон">
-                                    <img src="img/topline-phone.png" alt="">
+                                    <img src="/img/topline-phone.png" alt="">
                                 </div>
                                 <div class="contacts-questions-form-left-line">
                                     <input type="text" name="client_email" placeholder="Ваш Email">
-                                    <img src="img/topline-mail.png" alt="">
+                                    <img src="/img/topline-mail.png" alt="">
                                 </div>
                             </div>
                             <div class="contacts-questions-form-right">
                                 <div class="clearfix">
                                     <textarea name="client_msg" placeholder="Ваш вопрос"></textarea>
-                                    <img src="img/contacts-questions-form-msg.png" alt="">
+                                    <img src="/img/contacts-questions-form-msg.png" alt="">
                                 </div>
                                 <input type="submit" value="Отправить">
                             </div>

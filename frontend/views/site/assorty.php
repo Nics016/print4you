@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Print4you - Контакты';
+$this->title = 'Print4you - Ассортимент';
 ?>
 
 <main class="assorty">
@@ -22,7 +22,7 @@ $this->title = 'Print4you - Контакты';
 			<div class="container">
 				<div class="assorty-row clearfix">
 					<a href="#">
-						<img src="img/assorty-pic1.png" alt="">
+						<img src="/img/assorty-pic1.png" alt="">
 					</a>
 					<div class="assorty-row-description">
 						<div class="clearfix">
@@ -40,7 +40,7 @@ $this->title = 'Print4you - Контакты';
 
 				<div class="assorty-row clearfix">
 					<a href="#">
-						<img src="img/assorty-pic2.png" alt="">
+						<img src="/img/assorty-pic2.png" alt="">
 					</a>
 					<div class="assorty-row-description">
 						<div class="clearfix">
@@ -58,7 +58,7 @@ $this->title = 'Print4you - Контакты';
 
 				<div class="assorty-row clearfix">
 					<a href="#">
-						<img src="img/assorty-pic3.png" alt="">
+						<img src="/img/assorty-pic3.png" alt="">
 					</a>
 					<div class="assorty-row-description">
 						<div class="clearfix">
@@ -76,7 +76,7 @@ $this->title = 'Print4you - Контакты';
 
 				<div class="assorty-row clearfix">
 					<a href="#">
-						<img src="img/assorty-pic4.png" alt="">
+						<img src="/img/assorty-pic4.png" alt="">
 					</a>
 					<div class="assorty-row-description">
 						<div class="clearfix">

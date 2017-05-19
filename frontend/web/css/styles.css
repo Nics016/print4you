@@ -48,12 +48,36 @@ a {
   font-size: 40px;
   color: #3e3e3e; }
 
+.subtitle {
+  font-size: 23px;
+  font-family: akrobatBold;
+  font-size: 23px;
+  color: #fa413d;
+  text-transform: uppercase;
+  letter-spacing: 5px; }
+
 .underline {
   display: block;
   margin: 0px auto;
   width: 60px;
   height: 2px;
   background-color: #787875; }
+
+.whiteBtn:hover {
+  color: #fff;
+  background-color: #191919; }
+
+.whiteBtn {
+  display: block;
+  margin-top: 35px;
+  width: 170px;
+  padding: 10px 0;
+  text-align: center;
+  font-family: "proximaNovaSemibold";
+  font-size: 15px;
+  color: #383838;
+  border: 1px solid #4d4d4d;
+  font-weight: bold; }
 
 .topline {
   background-color: #181818;
@@ -376,18 +400,54 @@ a {
     color: white;
     font-size: 16px;
     letter-spacing: 3px; }
-.main .line4 {
+.main .line5 {
+  margin-bottom: 60px; }
+  .main .line5-tshirt {
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 111px; }
+  .main .line5 h2 {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    font-family: sportsWorldRegular;
+    color: #3e3e3e;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    margin-top: 70px; }
+  .main .line5-underline {
+    display: block;
+    margin: 25px auto;
+    margin-bottom: 0;
+    width: 60px;
+    height: 2px;
+    background-color: #787875; }
+  .main .line5-slider {
+    margin-top: 60px; }
+.main .bx-wrapper {
+  box-shadow: none !important; }
+.main .bx-pager-link {
+  background: #c1c1c1 !important; }
+.main .bx-pager-link.active {
+  background: #f24841 !important; }
+.main .bx-controls {
+  margin-top: 30px !important; }
+
+.line4 {
   padding-top: 100px; }
-  .main .line4-left {
+  .line4-left {
     display: block;
     float: left;
     width: 524px; }
-  .main .line4-right {
+  .line4-right {
     display: block;
     float: right;
     margin-left: 46px;
     width: 560px; }
-    .main .line4-right h3 {
+    .line4-right h3 {
       display: block;
       font-size: 23px;
       font-family: akrobatBold;
@@ -398,7 +458,7 @@ a {
       -webkit-margin-start: 0px;
       -webkit-margin-end: 0px;
       text-transform: uppercase; }
-    .main .line4-right h2 {
+    .line4-right h2 {
       display: block;
       font-size: 40px;
       font-family: sportsWorldRegular;
@@ -408,40 +468,40 @@ a {
       -webkit-margin-after: 0em;
       -webkit-margin-start: 0px;
       -webkit-margin-end: 0px; }
-    .main .line4-right-text1 {
+    .line4-right-text1 {
       display: block;
       font-size: 18px;
       font-family: proximaNovaBold;
       color: #4f4f4f;
       padding-top: 10px; }
-    .main .line4-right-text2 {
+    .line4-right-text2 {
       display: block;
       margin-top: 50px; }
-      .main .line4-right-text2 p:nth-child(3) {
+      .line4-right-text2 p:nth-child(3) {
         padding-top: 40px; }
-      .main .line4-right-text2 p {
+      .line4-right-text2 p {
         display: block;
         font-size: 16px;
         font-family: proximaNovaLight;
         color: #5c5c5c;
         padding-top: 10px;
         letter-spacing: 1px; }
-        .main .line4-right-text2 p strong {
+        .line4-right-text2 p strong {
           font-size: 17px;
           font-family: sportsWorldRegular;
           color: #656565; }
-      .main .line4-right-text2-number:hover {
+      .line4-right-text2-number:hover {
         color: #f69392; }
-      .main .line4-right-text2-number {
+      .line4-right-text2-number {
         display: block;
         width: 200px;
         font-size: 35px;
         font-family: proximaNovaRegular;
         color: #eb4441;
         transition: 0.3s; }
-    .main .line4-right-makeOrder:hover {
+    .line4-right-makeOrder:hover {
       background-color: #383838; }
-    .main .line4-right-makeOrder {
+    .line4-right-makeOrder {
       display: block;
       margin: 75px 0;
       margin-bottom: 0;
@@ -454,39 +514,6 @@ a {
       letter-spacing: 2px;
       text-transform: uppercase;
       text-align: center; }
-.main .line5-tshirt {
-  display: block;
-  margin: 0 auto;
-  margin-top: 40px;
-  width: 111px; }
-.main .line5 h2 {
-  display: block;
-  text-align: center;
-  font-size: 40px;
-  font-family: sportsWorldRegular;
-  color: #3e3e3e;
-  -webkit-margin-before: 0em;
-  -webkit-margin-after: 0em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  margin-top: 70px; }
-.main .line5-underline {
-  display: block;
-  margin: 25px auto;
-  margin-bottom: 0;
-  width: 60px;
-  height: 2px;
-  background-color: #787875; }
-.main .line5-slider {
-  margin-top: 60px; }
-.main .bx-wrapper {
-  box-shadow: none !important; }
-.main .bx-pager-link {
-  background: #c1c1c1 !important; }
-.main .bx-pager-link.active {
-  background: #f24841 !important; }
-.main .bx-controls {
-  margin-top: 30px !important; }
 
 footer {
   padding: 50px 0;
@@ -573,118 +600,123 @@ footer {
       margin-left: 20px;
       border-radius: 50%; }
 
-.assorty .title {
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px;
-  color: #222222;
-  background-image: url("../img/assorty-title-bg.png");
-  background-repeat: no-repeat;
-  background-size: contain; }
-.assorty .underline {
-  margin-top: 0; }
-.assorty .assorty-category {
-  margin: 0 auto;
-  margin-top: 70px;
-  width: 220px;
-  padding-left: 30px;
-  padding-bottom: 30px; }
-  .assorty .assorty-category a:first-child {
-    border-right: none; }
-  .assorty .assorty-category a.active {
-    background-color: #191919;
-    color: #fff;
-    box-shadow: -4px 4px 20px #aaa; }
-  .assorty .assorty-category a {
-    display: block;
-    float: left;
-    width: 70px;
-    font-family: "helveticaNeueCyrRoman";
-    color: #191919;
-    font-weight: bold;
-    border: 1px solid #626262;
-    padding: 15px;
+.assorty {
+  margin-top: 100px; }
+  .assorty .title {
     text-align: center;
-    font-size: 15px;
-    letter-spacing: 1px; }
-.assorty .assorty-row:first-child {
-  margin-top: 30px; }
-.assorty .assorty-row {
-  margin-top: 50px; }
-  .assorty .assorty-row img:hover {
-    box-shadow: -4px 4px 20px #aaa; }
-  .assorty .assorty-row img {
-    display: block;
-    float: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    width: 260px;
-    height: 350px;
-    border: 1px solid #b9b9b9;
-    transition: 0.3s; }
-  .assorty .assorty-row-description {
-    display: block;
-    float: right;
-    width: 730px;
-    min-height: 270px;
-    padding: 40px;
-    border: 1px solid #b9b9b9; }
-    .assorty .assorty-row-description-title {
-      display: block;
-      float: left;
-      width: 235px;
-      margin: 0;
-      font-family: "sportsWorldRegular";
-      font-size: 18px;
-      color: #383838; }
-    .assorty .assorty-row-description-price {
-      display: block;
-      float: left;
-      margin-left: 35px;
-      margin-top: -10px;
-      width: 60px;
-      color: #7d7d7d;
-      font-size: 29px;
-      font-family: "helveticaNeueCyrRoman";
-      text-transform: uppercase;
-      transition: 0.3s; }
-      .assorty .assorty-row-description-price-link:hover .assorty-row-description-price {
-        color: #eb4441;
-        font-weight: bold; }
-      .assorty .assorty-row-description-price-link:hover .assorty-row-description-rub {
-        background-image: url(../img/assorty-rub-active.png);
-        transition: 0.3s; }
-    .assorty .assorty-row-description-rub {
-      display: block;
-      float: left;
-      margin-left: -8px;
-      width: 16px;
-      height: 21px;
-      margin-top: -5px;
-      background-image: url("../img/assorty-rub.png");
-      background-repeat: no-repeat;
-      background-size: cover; }
-    .assorty .assorty-row-description-text {
-      display: block;
-      margin-top: 25px;
-      font-family: "proximaNovaLight";
-      font-size: 15px;
-      color: #656565;
-      line-height: 25px; }
-    .assorty .assorty-row-description-btn:hover {
+    margin-top: 20px;
+    padding: 20px;
+    color: #222222;
+    background-image: url("../img/assorty-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain; }
+  .assorty .underline {
+    margin-top: 0; }
+  .assorty .assorty-category {
+    margin: 0 auto;
+    margin-top: 70px;
+    width: 220px;
+    padding-left: 30px;
+    padding-bottom: 30px; }
+    .assorty .assorty-category a:first-child {
+      border-right: none; }
+    .assorty .assorty-category a.active {
+      background-color: #191919;
       color: #fff;
-      background-color: #191919; }
-    .assorty .assorty-row-description-btn {
+      box-shadow: -4px 4px 20px #aaa; }
+    .assorty .assorty-category a:hover {
+      background-color: #333;
+      color: #fff; }
+    .assorty .assorty-category a {
       display: block;
-      margin-top: 35px;
-      width: 170px;
-      padding: 10px 0;
+      float: left;
+      width: 70px;
+      font-family: "helveticaNeueCyrRoman";
+      color: #191919;
+      font-weight: bold;
+      border: 1px solid #626262;
+      padding: 15px;
       text-align: center;
-      font-family: "proximaNovaSemibold";
       font-size: 15px;
-      color: #383838;
-      border: 1px solid #4d4d4d;
-      font-weight: bold; }
+      letter-spacing: 1px; }
+  .assorty .assorty-row:first-child {
+    margin-top: 30px; }
+  .assorty .assorty-row {
+    margin-top: 50px; }
+    .assorty .assorty-row img:hover {
+      box-shadow: -4px 4px 20px #aaa; }
+    .assorty .assorty-row img {
+      display: block;
+      float: left;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      width: 260px;
+      height: 350px;
+      border: 1px solid #b9b9b9;
+      transition: 0.3s; }
+    .assorty .assorty-row-description {
+      display: block;
+      float: right;
+      width: 730px;
+      min-height: 270px;
+      padding: 40px;
+      border: 1px solid #b9b9b9; }
+      .assorty .assorty-row-description-title {
+        display: block;
+        float: left;
+        width: 235px;
+        margin: 0;
+        font-family: "sportsWorldRegular";
+        font-size: 18px;
+        color: #383838; }
+      .assorty .assorty-row-description-price {
+        display: block;
+        float: left;
+        margin-left: 35px;
+        margin-top: -10px;
+        width: 60px;
+        color: #7d7d7d;
+        font-size: 29px;
+        font-family: "helveticaNeueCyrRoman";
+        text-transform: uppercase;
+        transition: 0.3s; }
+        .assorty .assorty-row-description-price-link:hover .assorty-row-description-price {
+          color: #eb4441;
+          font-weight: bold; }
+        .assorty .assorty-row-description-price-link:hover .assorty-row-description-rub {
+          background-image: url(../img/assorty-rub-active.png);
+          transition: 0.3s; }
+      .assorty .assorty-row-description-rub {
+        display: block;
+        float: left;
+        margin-left: -8px;
+        width: 16px;
+        height: 21px;
+        margin-top: -5px;
+        background-image: url("../img/assorty-rub.png");
+        background-repeat: no-repeat;
+        background-size: cover; }
+      .assorty .assorty-row-description-text {
+        display: block;
+        margin-top: 25px;
+        font-family: "proximaNovaLight";
+        font-size: 15px;
+        color: #656565;
+        line-height: 25px; }
+      .assorty .assorty-row-description-btn:hover {
+        color: #fff;
+        background-color: #191919; }
+      .assorty .assorty-row-description-btn {
+        display: block;
+        margin-top: 35px;
+        width: 170px;
+        padding: 10px 0;
+        text-align: center;
+        font-family: "proximaNovaSemibold";
+        font-size: 15px;
+        color: #383838;
+        border: 1px solid #4d4d4d;
+        font-weight: bold; }
 
 .contacts h1 {
   text-align: center;
@@ -827,5 +859,275 @@ footer {
       outline: none;
       cursor: pointer;
       transition: 0.3s; }
+
+.about {
+  margin-bottom: 100px; }
+  .about h1 {
+    margin-top: 75px;
+    background-image: url("../img/about-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-top: 70px; }
+  .about h2 {
+    margin-top: -80px;
+    margin-bottom: 80px; }
+  .about .info {
+    margin-top: 40px;
+    line-height: 1.5em; }
+    .about .info-left {
+      display: block;
+      float: left;
+      width: 540px; }
+      .about .info-left strong {
+        font-family: "proximaNovaBold";
+        font-size: 18px;
+        color: #4f4f4f; }
+      .about .info-left span {
+        display: block;
+        margin-top: 65px;
+        font-family: "proximaNovaLight";
+        font-size: 16px;
+        color: #404040;
+        line-height: 1.8em; }
+      .about .info-left .whiteBtn {
+        width: 225px;
+        text-transform: uppercase;
+        letter-spacing: 3px; }
+    .about .info-right {
+      display: block;
+      float: right;
+      width: 540px; }
+  .about .tshirt {
+    display: block;
+    margin: 100px 0;
+    height: 120px;
+    background-image: url("../img/line5-tshirt.png");
+    background-repeat: no-repeat;
+    background-position: center center; }
+  .about .slider-pics-left {
+    display: block;
+    float: left;
+    width: 750px; }
+    .about .slider-pics-left-bot {
+      margin-top: 25px; }
+  .about .slider-pics-right {
+    display: block;
+    float: right;
+    width: 350px; }
+  .about .slider-pics-pic1 {
+    display: block;
+    width: 750px;
+    height: 225px; }
+  .about .slider-pics-pic2, .about .slider-pics-pic3 {
+    display: block;
+    float: left;
+    width: 360px;
+    height: 260px; }
+  .about .slider-pics-pic3 {
+    margin-left: 30px; }
+  .about .slider-pics-pic4 {
+    width: 360px;
+    height: 510px; }
+  .about .slider-dots {
+    display: block;
+    margin: 0 auto;
+    margin-top: 45px;
+    width: 110px; }
+    .about .slider-dots-dot {
+      cursor: pointer; }
+
+.services h1 {
+  text-align: center;
+  margin: 0;
+  margin-top: 100px;
+  padding-top: 10px;
+  padding-bottom: 65px;
+  background-image: url("../img/services-title-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
+.services .underline {
+  margin-top: -40px; }
+.services .elements-item:nth-child(4n+1) {
+  margin-left: 12px; }
+.services .elements-item {
+  display: block;
+  float: left;
+  margin-top: 100px;
+  margin-left: 20px;
+  width: 266px; }
+  .services .elements-item img:hover {
+    box-shadow: -4px 4px 20px #aaa; }
+  .services .elements-item img {
+    width: 100%; }
+  .services .elements-item-title:hover {
+    color: #515151; }
+  .services .elements-item-title {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-family: "sportsWorldRegular";
+    font-size: 18px;
+    color: #383838;
+    text-transform: uppercase; }
+  .services .elements-item-text:hover {
+    color: #8d8d8d; }
+  .services .elements-item-text {
+    display: block;
+    margin-top: 0px;
+    text-align: center;
+    font-family: "proximaNovaSemibold";
+    font-size: 19px;
+    color: #686868; }
+  .services .elements-item .whiteBtn {
+    margin: 0 auto;
+    margin-top: 25px; }
+.services .bigBtn {
+  display: block;
+  margin: 100px auto;
+  padding: 20px 0;
+  width: 560px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: bold; }
+  .services .bigBtn strong {
+    color: #4e4e4e;
+    margin-left: 30px; }
+
+.dostavka {
+  margin-top: 100px;
+  margin-bottom: 100px; }
+  .dostavka h1 {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background-image: url("../img/dostavka-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center; }
+  .dostavka .moneybag {
+    display: block;
+    margin-top: 80px; }
+  .dostavka .schedule {
+    margin-top: 20px; }
+    .dostavka .schedule-title {
+      font-family: "sportsWorldRegular";
+      font-size: 25px;
+      color: #4b4b4b; }
+    .dostavka .schedule-num {
+      margin-left: 20px;
+      font-family: "helveticaNeueCyrRoman";
+      font-size: 36px;
+      color: #606060;
+      font-weight: bold; }
+    .dostavka .schedule-info {
+      display: block;
+      margin-top: 30px;
+      margin-bottom: 50px;
+      font-family: "proximaNovaBold";
+      font-size: 20px;
+      color: #4f4f4f;
+      font-weight: bold; }
+
+.franchise {
+  margin-top: 100px; }
+  .franchise .title-line-bg {
+    height: 120px;
+    background-image: url("../img/franchise-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; }
+  .franchise .title-line {
+    width: 950px;
+    margin: 0 auto;
+    margin-top: -80px;
+    margin-bottom: 80px; }
+    .franchise .title-line-left {
+      display: block;
+      float: left;
+      width: 450px;
+      text-align: right; }
+      .franchise .title-line-left h1 {
+        margin-top: -10px; }
+    .franchise .title-line-right {
+      display: block;
+      float: left;
+      margin-left: 30px;
+      width: 350px; }
+      .franchise .title-line-right h3 {
+        margin: 0;
+        margin-top: 20px;
+        font-family: "proximaNovaBold";
+        font-size: 18px;
+        color: #3d3d3d;
+        font-weight: bolder; }
+      .franchise .title-line-right-item:first-child {
+        margin-top: 20px; }
+      .franchise .title-line-right-item {
+        margin-top: 7px; }
+        .franchise .title-line-right-item span {
+          margin-left: 10px;
+          font-family: "proximaNovaBold";
+          font-size: 18px;
+          color: #4f4f4f; }
+  .franchise .banner {
+    display: block;
+    width: 100%;
+    margin-top: 20px; }
+  .franchise .pluses {
+    margin-top: 70px; }
+    .franchise .pluses-plus:first-child {
+      margin-left: 30px; }
+    .franchise .pluses-plus {
+      display: block;
+      float: left;
+      width: 550px;
+      margin-left: 0px; }
+      .franchise .pluses-plus-title-line img {
+        display: block;
+        float: left; }
+      .franchise .pluses-plus-title-line h3 {
+        display: block;
+        float: left;
+        margin: 0;
+        margin-top: -5px;
+        margin-left: 30px;
+        font-size: 17px;
+        color: #383838;
+        line-height: 1.3em; }
+      .franchise .pluses-plus-info ul {
+        margin: 0;
+        margin-top: 30px;
+        margin-left: 40px;
+        list-style-type: none; }
+        .franchise .pluses-plus-info ul li {
+          margin-top: 10px;
+          background-image: url("../img/franchise-dot.png");
+          background-repeat: no-repeat;
+          background-position: left center;
+          padding-left: 25px;
+          font-family: "proximaNovaLight";
+          font-size: 16px;
+          color: #414141; }
+  .franchise .line2 {
+    margin-top: 120px;
+    background-color: #f4f4f4;
+    padding: 110px 0; }
+    .franchise .line2 .request h2 {
+      padding: 35px 0;
+      background-image: url("../img/franchise-request-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      text-align: center; }
+    .franchise .line2 .request .underline {
+      margin-top: -10px; }
+    .franchise .line2 .request h3 {
+      margin: 0;
+      margin-top: 35px;
+      font-family: "proximaNovaBold";
+      font-size: 17px;
+      font-weight: bold;
+      text-align: center;
+      color: #5a5a5a; }
 
 /*# sourceMappingURL=styles.css.map */
