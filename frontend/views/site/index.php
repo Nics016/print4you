@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Print for you! Закажи свой оригинальный принт';
 ?>
@@ -8,67 +10,30 @@ $this->title = 'Print for you! Закажи свой оригинальный п
         <!-- LINE1 -->
         <div class="line1">
             <div class="container clearfix">
-                <h2>Трафаретная печать</h2>
-                <div class="line1-left clearfix">
-                    <div class="line1-left-description">
-                        <h1>Шелкография</h1>
-                        <p>
-                            Шелкография для печати на футболках – доступный <br>
-и качественный способ выделиться на любом мероприятии. 
-Отличный подарок для друзей, коллег по работе, <br>
-партнеров по бизнесу.
-                        </p>
-                        <p>
-                            Преимущества печати на футболках и текстиле <br> 
-методом шелкографии:
-                        </p>
-                    </div>
-
-                    <div class="line1-left-elements">
-                        <div class="line1-left-elements-top clearfix">
-                            <div class="line1-left-elements-top-el1">
-                                <img src="img/line1-pic1.png" alt="">
-                                <h3>Печать на <br>
-любых тканях</h3>
-                                <p>Футболка может быть 
-выполнена из 100% хлопка, 
-льна, нейлона – материал 
-не будет проблемой для 
-выполнения печати на самом 
-высоком уровне.</p>
-                            </div>
-                            <div class="line1-left-elements-top-el2">
-                                <img src="img/line1-pic2.png" alt="">
-                                <h3>Яркие и 
-насыщенные 
-изображения</h3>
-                                <p>Вас приятно удивит качество 
-цветопередачи – краски яркие, 
-насыщенные и вместе с этим 
-абсолютно реалистичные.</p>
-                            </div>
+                <div class="left">
+                    <h1>Печать</h1>
+                    <h2>На футболках</h2>
+                    <h3>Срочная печать фото на футболках и другой одежде <br> за 15 минут оптом и в розницу в <strong>Print<b>4</b>you</strong></h3>
+                    <a href="#" class="whiteBtn">Заказать</a>
+                    <div class="left-elements">
+                        <div class="left-elements-item clearfix">
+                            <img src="/img/main-line1-item1.png" alt="">
+                            <span>Быстро - Печать на футболках <br>
+                            занимает всего 15 минут</span>
                         </div>
-                        <div class="line1-left-elements-bottom">
-                            <div class="line1-left-elements-bottom-el3">
-                                <img src="img/line1-pic3.png" alt="">
-                                <h3>Долговечность <br>
-и стойкость печати</h3>
-                                <p>Долговечность печати не уступает самой футболке. Многие сотни стирок 
-будут выдержаны совершенно без проблем – при офсетной печати слой 
-краски не превышает 2 микрон. При шелкографии этот показатель 
-во многие разы выше!</p>
-                            </div>
+                        <div class="left-elements-item clearfix">
+                            <img src="/img/main-line1-item2.png" alt="">
+                            <span>Качественно - Футболки на заказ <br>
+                            выдержат более 60 стирок</span>
+                        </div>
+                        <div class="left-elements-item clearfix">
+                            <img src="/img/main-line1-item3.png" alt="">
+                            <span>Доступно - Самая лучшая цена <br> 
+                            в Санкт-Петербурге</span>
                         </div>
                     </div>
                 </div>
-                <div class="line1-right">
-                    <img src="img/line1-foto.png" alt="">
-                    <span>
-                        Метод шелкографии был придуман в Китае, в Японии его стали активно использовать для печати на текстиле. Лучшие мировые технологии 
-в исполнении наших специалистов доступны и Вам. Выполним печать на футболках методом шелкографии по действительно доступной цене – даже к небольшим тиражам отнесемся индивидуально, превосходно сделаем нанесение в студии. У нас качественные материалы, футболки под нанесение 
-– такие едва ли найдете в магазинах. Обращайтесь!
-                    </span>
-                </div>
+                <img src="/img/main-line1-david.png" alt="" class="right">
             </div>
         </div>
         <!-- END OF LINE1 -->
@@ -76,9 +41,12 @@ $this->title = 'Print for you! Закажи свой оригинальный п
         <!-- LINE2 -->
         <div class="line2">
             <div class="container">
-                <div class="line2-video" onclick="playVideo1()" id="video-1">
-                    
-                </div>
+                <div class="info-box clearfix">
+                    <div class="info-box-btns">
+                        <img src="/img/main-line2-right.png" alt="" class="info-box-btns-right">
+                        <img src="/img/main-line2-left.png" alt="" class="info-box-btns-left">
+                    </div>
+                </div>              
             </div>
         </div>
         <!-- END OF LINE2 -->
@@ -86,111 +54,60 @@ $this->title = 'Print for you! Закажи свой оригинальный п
         <!-- LINE3 -->
         <div class="line3">
             <div class="container">
-                <div class="line3-title">
-                    <h3>
-                        Что говорят о нас
-                    </h3>
-                    <div class="line3-title-reviews">
-                        <h2>
-                            Наши клиенты
-                        </h2>
-                        <div class="line3-title-reviews-underline"></div>
+                <h2 class="subtitle">Почему именно</h2>
+                <h1 class="title withbg">Print4you?</h1>
+                <div class="underline"></div>
+                <div class="elements clearfix">
+                    <div class="elements-item clearfix">
+                        <img src="/img/main-line3-item1.png" alt="">
+                        <div class="elements-item-info">
+                            <h2>Быстро</h2>
+                            <span>
+                                Печать фото, надписей, <br>
+                                логотипов, рисунков, номера <br>
+                                и любых изображений <br>
+                                на футболках за 15 минут
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="line3-carousel">
-                    <div class="line3-carousel-portraits clearfix">
-                        <img src="img/line3-face1.png" alt="">
-                        <img src="img/line3-face2.png" alt="" class="active">
-                        <img src="img/line3-face3.png" alt="">
-                        <img src="img/line3-face2.png" alt="" class="hidden">
-                        <img src="img/line3-face2.png" alt="" class="hidden">
+                    <div class="elements-item clearfix">
+                        <img src="/img/main-line3-item2.png" alt="">
+                        <div class="elements-item-info">
+                            <h2>Качественно</h2>
+                            <span>
+                                Футболка с нанесением <br>
+                                выдержит более 60-ти стирок. <br>
+                                Собственный пошив футболок <br>
+                                под печать. Используем только <br>
+                                качественные методы печати: <br>
+                                Прямая печать на футболках. 
+                                Печать футболок методом 
+                                шелкография
+                            </span>
+                        </div>
                     </div>
-                    <div class="line3-carousel-info">
-                        <section>
-                            <h4>
-                                Александр Иванов
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reiciendis repellat, consequuntur tenetur sit quos laudantium, libero veritatis fuga ea cum natus iste minima id eum error dicta non quisquam quia! Laborum cupiditate itaque laboriosam unde perferendis, cum ex incidunt numquam dolorum ad minima quo ea amet est rerum tempora!
-                            </p>
-                        </section>
-                        <section class="active">
-                            <h4>
-                                Иван Петров
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae eos odit magnam unde fugiat eligendi quas est excepturi velit in repellat eveniet molestias blanditiis, sit dolor corporis dolorum repellendus ad vitae enim eaque mollitia sint nostrum illo. Praesentium eveniet quod soluta, voluptatem odio! Tenetur omnis dicta quidem qui impedit soluta consequuntur numquam quis facere error!
-                            </p>
-                        </section>
-                        <section>
-                            <h4>
-                                Елизавета
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat repellendus nobis commodi ex, et odio quibusdam, repudiandae totam. Deleniti nam eum, dolorum quasi vel fuga suscipit in praesentium maiores enim.
-                            </p>
-                        </section>
-                        <section>
-                            <h4>
-                                Мария
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam odit consectetur explicabo excepturi non magnam. Quis facere quam corporis, consequatur esse, hic veritatis quo cupiditate perferendis non molestiae odio soluta tempora et. Odit, ullam, dicta, rem quam deleniti explicabo placeat distinctio impedit iusto error magnam! Fugit earum, animi voluptatem asperiores aut, eveniet perspiciatis, placeat ea dolorem, praesentium quia libero velit.
-                            </p>
-                        </section>
-                        <section>
-                            <h4>
-                                Виталий
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo animi dolorum deserunt, quaerat, autem aut ratione quidem tempora earum voluptate maxime magni aliquid odit natus tempore quibusdam repellendus dignissimos, nulla sequi inventore. Optio sit, eum repellat tenetur, expedita ipsam harum commodi consectetur, suscipit culpa vero sequi nihil. Excepturi nesciunt, dolore autem, laudantium perferendis similique, necessitatibus velit quia deleniti eum harum, rem corporis? Natus a incidunt earum, vitae fuga consectetur saepe?
-                            </p>
-                        </section>
-                    </div>
-                    <div class="line3-carousel-circles">
+                    <div class="elements-item clearfix">
+                        <img src="/img/main-line3-item3.png" alt="">
+                        <div class="elements-item-info">
+                            <h2>Доступно</h2>
+                            <span>
+                                Самая низкая цена печати на <br> 
+                                футболках в СПб. Печать 
+                                на футболках недорого оптом 
+                                и в розницу
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                <a href="#" class="line3-leaveReview">Оставить отзыв</a>
             </div>
         </div>
         <!-- END OF LINE3 -->
 
         <!-- LINE4 -->
         <div class="line4">
-            <div class="container clearfix">
-                <div class="line4-left">
-                    <img src="img/line4-postman.png" alt="">
-                </div>
-                <div class="line4-right">
-                    <h3>
-                        Мы работаем
-                    </h3>
-                    <h2>
-                        По всей России!
-                    </h2>
-                    <span class="line4-right-text1">
-                        Ваш заказ доставят прямо к двери в течении <br>
-2 часов с момента оформления заказа!
-                    </span>
-                    <div class="line4-right-text2">
-                        <p>
-                            Стоимость доставки по Санкт-Петербургу в пределах КАД - <br><strong>350 рублей!</strong>
-                        </p>
-                        <p>
-                            За пределами СПб рассчитывается индивидуально. Вы можете <br>
-забрать Ваш заказ с нашей студии:
-                            <a href="#">Контакты</a>
-                        </p>
-                        <p>
-                            Так же мы отправляем ваши заказы по всему миру! <br>
-Стоимость доставки по России - <strong>350 рублей</strong> <br>
-Остальные страны и города - <strong>450 рублей</strong><br>
-Чтобы заказать доставку - Пишите нам или звоните: 
-                        </p>
-                        <a href="tel:88129819484" class="line4-right-text2-number">981 94 84</a>
-                    </div>
-                    <a href="#" class="line4-right-makeOrder">Заказать</a>
+            <div class="container">
+                <div class="line4-video" onclick="playVideo2()" id="video-2">                   
                 </div>
             </div>
         </div>
@@ -199,32 +116,206 @@ $this->title = 'Print for you! Закажи свой оригинальный п
         <!-- LINE5 -->
         <div class="line5">
             <div class="container">
-                <img src="img/line5-tshirt.png" alt="" class="line5-tshirt">
-                <h2>Примеры работ</h2>
-                <div class="line5-underline"></div>
-                <ul class="line5-slider">
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo2.jpg" alt=""></li>
-                    <li><img src="img/line5-photo3.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo2.jpg" alt=""></li>
-                    <li><img src="img/line5-photo3.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="img/line5-photo2.jpg" alt=""></li>
-                </ul>
+                <h1 class="title">Наши услуги</h1>
+                <div class="underline"></div>
+                <div class="elements clearfix">
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic1.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Цифровая печать</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Прямая печать)</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic2.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Печать плёнкой</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Термоперенос)</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/shelkography']) ?>"><img src="/img/services-pic3.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/shelkography']) ?>" class="elements-item-title">Трафаретная печать</a>
+                        <a href="<?= Url::to(['uslugi/shelkography']) ?>" class="elements-item-text">(Шелкография)</a>
+                        <a href="<?= Url::to(['uslugi/shelkography']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic4.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">печать на синтетике</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Сублимация)</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic5.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки мужские</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic6.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки женские</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic7.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки мужские</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                    <div class="elements-item">
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic8.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки женские</a>
+                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+                <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn bigBtn">
+                    Смотреть весь ассортимент <strong> > </strong>
+                </a>
             </div>
         </div>
         <!-- END OF LINE5 -->
+
+        <!-- LINE6 -->
+        <div class="line6">
+            <div class="container">
+                <img src="/img/line5-tshirt.png" alt="" class="tshirt">
+                <div class="title-block clearfix">
+                    <div class="title-block-left">
+                        <h2 class="subtitle">
+                            Печать на футболках в СПБ
+                        </h2>
+                        <h1 class="title">
+                            Наша специализация
+                        </h1>
+                    </div>
+                    <span class="title-block-right">
+                        Принципы успешной деятельности - удачное соотношение <br>
+                        цены и качества производимого продукта. Мы преуспели <br>
+                        в обоих критериях, выпуская футболки на заказ 
+                    </span>
+                </div>
+                <span class="subtitle-block">
+                    Наша студия осуществляет печать на футболках методом прямого переноса (цифровая) и термопереноса. <br> 
+                    Любая сложность работ, самые сжатые сроки. Индивидуально и с высоким качеством на любых объемах печати. <br>
+                    Нас выгодно отличают:
+                </span>
+                <!-- ELEMENTS -->
+                <div class="elements clearfix">
+                    <div class="elements-item">
+                        <span class="elements-item-num">01</span>
+                        <div class="elements-item-info">
+                            <h3>Качественный <br>сервис</h3>
+                            <span>
+                                Индивидуально подойдем <br>
+                                к каждому клиенту. Не работаем <br>
+                                на поток. Нужно напечатать <br>
+                                1 футболку? или 1000? <br>
+                                В любом случае предложим <br>
+                                индивидуальный подход <br>
+                                и полностью удовлетворим <br>
+                                все пожелания
+                            </span>
+                        </div>
+                    </div>
+                    <div class="elements-item">
+                        <span class="elements-item-num">02</span>
+                        <div class="elements-item-info">
+                            <h3>Профессиональное <br>оборудование</h3>
+                            <span>
+                                Мы не печатаем кустарным <br>
+                                способом на самодельных <br>
+                                аппаратах. Качество печати <br>
+                                такое же, как и в ведущих <br>
+                                студиях Европы при совершенно <br>
+                                смешных ценах.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="elements-item">
+                        <span class="elements-item-num">03</span>
+                        <div class="elements-item-info">
+                            <h3>Качественный текстиль <br>и расходные материалы.</h3>
+                            <span>
+                                Мы не экономим на футболках. <br>
+                                Наши футболки приятны к телу, <br>
+                                их не стыдно одеть на любое <br>
+                                мероприятие! Выдерживают <br>
+                                огромное количество стирок.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="elements-item">
+                        <span class="elements-item-num">04</span>
+                        <div class="elements-item-info">
+                            <h3>Можно выбрать <br>готовые принты</h3>
+                            <span>
+                                Огромный ассортимент футболок <br>
+                                с надписями, готовыми принтами. <br>
+                                Детские, стильные мужские, <br>
+                                элегантные женские футболки <br>
+                                в СПб с печатью высочайшего <br>
+                                уровня.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="elements-item">
+                        <span class="elements-item-num">05</span>
+                        <div class="elements-item-info">
+                            <h3>Помощь <br>в индивидуальном <br>дизайне</h3>
+                            <span>
+                                Совершенно бесплатно
+                            </span>
+                        </div>
+                    </div>
+                    <div class="elements-item">
+                        <span class="elements-item-num">06</span>
+                        <div class="elements-item-info">
+                            <h3>Мы любим Вас <br>И свою работу</h3>
+                            <span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF ELEMENTS -->
+                <div class="cities clearfix">
+                    <img src="/img/main-line6-photo.png" alt="" class="cities-left">
+                    <div class="cities-right">
+                        <h2 class="title">
+                            Футболки Санкт-Петербурга <br>
+                            с принтом – <strong>дело наших рук!</strong>
+                        </h2>
+                        <p>PRINT4YOU выполняет яркую печать на футболках в городах:</p>
+                        <div class="cities-right-list">
+                            <div class="cities-right-list-item">
+                                <img src="/img/main-line6-circle-red.png" alt="">
+                                <span><strong>Санкт-Петербург</strong></span>
+                            </div>
+                            <div class="cities-right-list-item">
+                                <img src="/img/main-line6-circle-red.png" alt="">
+                                <span><strong>Великий Новгород</strong></span>
+                            </div>
+                            <div class="cities-right-list-item">
+                                <img src="/img/main-line6-circle-gray.png" alt="">
+                                <span><strong>Москва</strong> - открытие в 2017 г.</span>
+                            </div>
+                        </div>
+                        <a href="#" class="whiteBtn">Узнать адрес</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END OF LINE6 -->
     </main>

@@ -8,8 +8,8 @@ use yii\helpers\Url;
 $this->title = 'Print4you - Услуги';
 ?>
 
-<main class="services">
-		<div class="line1">
+<main class="main">
+		<div class="line5">
 			<div class="container">
 				<h1 class="title">Наши услуги</h1>
 				<div class="underline"></div>

@@ -1,12 +1,23 @@
+///////////////
+// Variables //
+///////////////
 var iNumElements = 0; // total elements size
 var iCurElement = 1; // currently selected item
 var portraits = [];
 var sections = [];
-var activeImgSrc = "img/line3-circle-active.png";
-var passiveImgSrc = "img/line3-circle.png";
+var activeImgSrc = "/img/line3-circle-active.png";
+var passiveImgSrc = "/img/line3-circle.png";
+var mainSliderMax = -1;
+var mainSliderCur = -1;
+var mainSliderIntervalId = -1;
 
+//////////
+// Init //
+//////////
 $(document).ready(function(){
 	initLine3Slider();
+
+	initMainLine2Slider(2, 4000);
 
 	// activate bxslider
 	$('.line5-slider').bxSlider({
@@ -15,35 +26,90 @@ $(document).ready(function(){
  		slideWidth: 360,
   		slideMargin: 10
 	});
-
-    ///////////////////////////////////////////////////////////
-    // Скрипт подсветки текущей страницы белым цветом в меню //
-    ///////////////////////////////////////////////////////////
-
-    // Убираем все классы "active"
-    $('nav a.active').removeClass("active");
-
-    // Получаем URL текущей открытой страницы без параметров
-    var curHref = window.location.href.toString()
-        .split(window.location.host)[1]
-            .split('&')[0];
-
-    // Проходим по каждой ссылке в меню. Если она = открытой, 
-    // помечаем её классом "active", а все li над ней, которые имеют 
-    // класс has-sub, помечаем классами "active" и "opened"
-    $('nav a').each(function(){
-        var curMenuLinkURL = $(this).attr('href');
-        if (curMenuLinkURL == curHref){
-            $(this).addClass("active");
-            
-            return false;
-        }
-    });
-
 });
 
+////////////////////////////////////////////////////
+// The main's line 2 slider functionality script. //
+////////////////////////////////////////////////////
 /**
- * The line 3 carousel's functionality script.
+ * Инициализация mainLine2Slider
+ */
+function initMainLine2Slider(maxSlides, timeToChangeSlide)
+{
+	mainSliderMax = maxSlides;
+	mainSliderCur = 1;
+	$('.main .line2 .info-box-btns-right')
+	.bind("click", function(){
+		mainSliderClearInterval();
+		mainSliderNext();
+	});
+	$('.main .line2 .info-box-btns-left')
+	.bind("click", function(){
+		mainSliderClearInterval();
+		mainSliderPrev();
+	});
+
+	mainSliderIntervalId = setInterval(function(){
+		mainSliderNext();
+	}, timeToChangeSlide);
+}
+
+/**
+ * Функция при нажатии на стрелочку вправо
+ */
+function mainSliderNext()
+{
+	mainSliderCur++;
+	if (mainSliderCur > mainSliderMax)
+		mainSliderCur = 1;
+	mainSliderUpdate();
+}
+
+/**
+ * Функция при нажатии на стрелочку влево
+ */
+function mainSliderPrev()
+{
+	mainSliderCur--;
+	if (mainSliderCur < 1)
+		mainSliderCur = mainSliderMax;
+	mainSliderUpdate();
+}
+
+/**
+ * Останавливает автослайдинг,
+ * если он есть
+ */
+function mainSliderClearInterval()
+{
+	if (mainSliderIntervalId != -1){
+		clearInterval(mainSliderIntervalId);
+		mainSliderIntervalId = -1;
+	}
+}
+
+/**
+ * Обновление картинок слайдера с анимацией
+ */
+function mainSliderUpdate()
+{
+	var bg = '.main .line2';
+	var slider = '.main .line2 .info-box';
+	$(bg).fadeTo(0, 1).fadeTo(0, 0.7);
+	$(slider).fadeTo(0, 1).fadeTo(0, 0);
+	$(bg).css("background-image",
+		"url(/img/main-line2-bg" + mainSliderCur + ".jpg")
+		.fadeTo(500, 1);
+	$(slider).css("background-image",
+		"url(/img/main-line2-slider" + mainSliderCur + ".png")
+		.fadeTo(1000, 1);
+}
+
+////////////////////////////////////////////////
+// The line 3 carousel's functionality script //
+////////////////////////////////////////////////
+/**
+ * Init
  */
 function initLine3Slider(){
 	// count elements num
@@ -143,6 +209,9 @@ function pickElement(id){
 	$('.line3-carousel-info .active').slideDown(500);
 }
 
+////////////////////
+// Videos scripts //
+////////////////////
 /**
  * Triggers when #video-1 clicked.
  */
@@ -150,3 +219,35 @@ function playVideo1(){
 	document.getElementById('video-1').innerHTML = 
 	'<iframe width="1140" height="590" src="https://www.youtube.com/embed/QIHnSxfZhEM?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
 }
+
+/**
+ * Triggers when #video-2 clicked.
+ */
+function playVideo2(){
+	document.getElementById('video-2').innerHTML = 
+	'<iframe width="1140" height="590" src="https://www.youtube.com/embed/QIHnSxfZhEM?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
+}
+
+//////////////////////////////////////////////////////////////
+// Скрипт подсветки текущей страницы красным цветом в меню  //
+//////////////////////////////////////////////////////////////
+$(document).ready(function(){
+	// Убираем все классы "active"
+	$('nav a.active').removeClass("active");
+
+	// Получаем URL текущей открытой страницы без параметров
+	var curHref = window.location.href.toString()
+	    .split(window.location.host)[1]
+	        .split('&')[0];
+
+	// Проходим по каждой ссылке в меню. Если она = открытой, 
+	// помечаем её классом "active"
+	$('nav a').each(function(){
+	    var curMenuLinkURL = $(this).attr('href');
+	    if (curMenuLinkURL == curHref){
+	        $(this).addClass("active");
+	        
+	        return false;
+	    }
+	});
+});
