@@ -43,7 +43,23 @@ class ConstructorController extends Controller {
 									'color_value' => '#fffff',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_1/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_1/back.png',
-									'sizes' => ['M', 'S', 'XXl'],
+									'sizes' => [
+										[
+											'id' => 1,
+											'size' => 'X'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 4,
+											'size' => 'S'
+										],
+
+									],
 								],
 
 								[
@@ -52,7 +68,22 @@ class ConstructorController extends Controller {
 									'color_value' => '#000000',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_2/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_2/back.png',
-									'sizes' => ['XS', 'M', 'S', 'Xl'],
+									'sizes' => [
+										[
+											'id' => 4,
+											'size' => 'XL'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 5,
+											'size' => 'XXl'
+										],
+									],
 								],
 							],
 						],
@@ -65,20 +96,50 @@ class ConstructorController extends Controller {
 							'colors' => [
 								[
 									'name' => 'Белый',
-									'id' => 1,
+									'id' => 3,
 									'color_value' => '#fffff',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_4/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_4/back.png',
-									'sizes' => ['M', 'S', 'XXl'],
+									'sizes' => [
+										[
+											'id' => 4,
+											'size' => 'XL'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 5,
+											'size' => 'XXl'
+										],
+									],
 								],
 
 								[
 									'name' => 'Серый',
-									'id' => 2,
+									'id' => 4,
 									'color_value' => '#cccccc',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_3/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_3/back.png',
-									'sizes' => ['XS', 'M', 'S', 'Xl'],
+									'sizes' => [
+										[
+											'id' => 1,
+											'size' => 'X'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 3,
+											'size' => 'S'
+										],
+									],
 								],
 							],
 						],
@@ -98,20 +159,50 @@ class ConstructorController extends Controller {
 							'colors' => [
 								[
 									'name' => 'Белый',
-									'id' => 1,
+									'id' => 5,
 									'color_value' => '#fffff',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_1/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_1/back.png',
-									'sizes' => ['M', 'S', 'XXl'],
+									'sizes' => [
+										[
+											'id' => 1,
+											'size' => 'X'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 3,
+											'size' => 'S'
+										],
+									],
 								],
 
 								[
 									'name' => 'Черный',
-									'id' => 2,
+									'id' => 6,
 									'color_value' => '#000000',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_2/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_1/color_2/back.png',
-									'sizes' => ['XS', 'M', 'S', 'Xl'],
+									'sizes' => [
+										[
+											'id' => 4,
+											'size' => 'XL'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 5,
+											'size' => 'XXl'
+										],
+									],
 								],
 							],
 						],
@@ -124,20 +215,50 @@ class ConstructorController extends Controller {
 							'colors' => [
 								[
 									'name' => 'Белый',
-									'id' => 1,
+									'id' => 7,
 									'color_value' => '#fffff',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_4/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_4/back.png',
-									'sizes' => ['M', 'S', 'XXl'],
+									'sizes' => [
+										[
+											'id' => 4,
+											'size' => 'XL'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 5,
+											'size' => 'XXl'
+										],
+									],
 								],
 
 								[
 									'name' => 'Серый',
-									'id' => 2,
+									'id' => 8,
 									'color_value' => '#cccccc',
 									'front_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_3/front.png',
 									'back_image' => 'http://print4you.tk/upload/constructor/products/product_2/color_3/back.png',
-									'sizes' => ['XS', 'M', 'S', 'Xl'],
+									'sizes' => [
+										[
+											'id' => 4,
+											'size' => 'XL'
+										],
+
+										[
+											'id' => 2,
+											'size' => 'M'
+										],
+
+										[
+											'id' => 5,
+											'size' => 'XXl'
+										],
+									],
 								],
 							],
 						],

@@ -8,12 +8,22 @@
         var currentProduct = false, 
             currentProductColorId = false, 
             currentProductSize = false, 
-            currentProductPrice = false;
+            currentProductPrice = false,
+            currentProductSide = false;
 
 
+        // элементы конструктора
         var constructorTextArea = document.getElementById('constructor-text');
         var constructorTextColor = document.getElementById('text-color');
         var constructorTextFontFamily = document.getElementById('constructor-text-font-family');
+
+        var constructorFrontSideBtn = document.getElementById('front-side');
+        var constructorBackSideBtn = document.getElementById('back-side');
+
+        var constructorProductColorValueElem = document.querySelector('.constructor-product-color-value');
+        var productFontSideImageElem = document.querySelector('#front-side .product-side-image');
+        var productBackSideImageElem = document.querySelector('#back-side .product-side-image');
+        var colorSizesContainer = document.querySelector('.constructor-product-sizes');
 
         var constructorObjects = {
             front: false,
@@ -67,10 +77,10 @@
         document.getElementById('add-cart').onclick = addToCart;
         
         // клик на фронт
-        document.getElementById('front-side').onclick = showFrontSide;
+        constructorFrontSideBtn.onclick = showFrontSide;
 
         // клик на бэк
-        document.getElementById('back-side').onclick = showBackSide;
+        constructorBackSideBtn.onclick = showBackSide;
 
 
         constructorInit();
@@ -109,46 +119,61 @@
         // показ передней стороны
         function showFrontSide() {
 
-            // найдем текущий цвет
-            var colors = currentProduct['colors'];
+            if (currentProductSide == 'back' || currentProductSide === false) {
 
-            for (var i = 0; i < colors.length; i++) {
-                if (colors[i]['id'] == currentProductColorId) {
-                    
-                    document.getElementById('canvas-bg-image').src = colors[i]['front_image'];
-                    console.log(colors[i]['front_image']);
+                // найдем текущий цвет
+                var colors = currentProduct['colors'];
+
+                for (var i = 0; i < colors.length; i++) {
+                    if (colors[i]['id'] == currentProductColorId) {
+                        document.getElementById('canvas-bg-image').src = colors[i]['front_image'];
+                        currentProductSide = 'front';
+                        break;
+                    }
                 }
-            }
 
-            var json = canvas.toJSON();
-            constructorObjects.back = json;
-            canvas.clear();
-            if (constructorObjects.front !== false) 
-                canvas.loadFromJSON(constructorObjects.front, canvas.renderAll.bind(canvas));
+                var json = canvas.toJSON();
+                constructorObjects.back = json;
+                canvas.clear();
+                if (constructorObjects.front !== false) 
+                    canvas.loadFromJSON(constructorObjects.front, canvas.renderAll.bind(canvas));
+                
+                this.className += ' current';
+                removeClass(constructorBackSideBtn, 'current');
+
+                disableText();
+            }
             
-            disableText();
         }
 
 
         // показ задней стороны
         function showBackSide() {
 
-            // найдем текущий цвет
-            var colors = currentProduct['colors'];
+            if (currentProductSide == 'front' || currentProductSide === false) {
+                // найдем текущий цвет
+                var colors = currentProduct['colors'];
 
-            for (var i = 0; i < colors.length; i++) {
-                if (colors[i]['id'] == currentProductColorId)
-                    document.getElementById('canvas-bg-image').src = colors[i]['back_image'];
-            }
+                for (var i = 0; i < colors.length; i++) {
+                    if (colors[i]['id'] == currentProductColorId) {
+                        document.getElementById('canvas-bg-image').src = colors[i]['back_image'];
+                        currentProductSide = 'back';
+                        break;
+                    }
+                }
 
+                var json = canvas.toJSON();
+                constructorObjects.front = json;
+                canvas.clear();
 
-            var json = canvas.toJSON();
-            constructorObjects.front = json;
-            canvas.clear();
-            if (constructorObjects.back !== false)
-                canvas.loadFromJSON(constructorObjects.back, canvas.renderAll.bind(canvas));
+                if (constructorObjects.back !== false)
+                    canvas.loadFromJSON(constructorObjects.back, canvas.renderAll.bind(canvas));
 
-            disableText();            
+                this.className += ' current';
+                removeClass(constructorFrontSideBtn, 'current');
+
+                disableText();    
+            }        
         }
 
         // ошибки констурктор
@@ -496,6 +521,9 @@
             currentPrice = currentProduct['price'];
             changeProductPrice();
 
+            // установим изначальное положение стороны
+            currentProductSide = false;
+
             // удалим и добавим обработчик событий на клик по цвету
             var colorsList = document.querySelectorAll('.constructor-product-color');
             for (var i = 0; i < colorsList.length; i++) {
@@ -526,18 +554,93 @@
             var colors = currentProduct['colors'];
             for (var i = 0; i < colors.length; i++) {
                 if (colors[i]['id'] == id) {
-                    document.querySelector('.constructor-product-color-value').textContent = colors[i]['name'];
-                    document.getElementById('canvas-bg-image').src = colors[i]['front_image'];
-                    document.querySelector('#front-side .product-side-image').src = colors[i]['front_image'];
-                    document.querySelector('#back-side .product-side-image').src = colors[i]['back_image'];
+
+                    var color = colors[i];
+
+                    
+                    constructorProductColorValueElem.textContent = color['name'];
+                    productFontSideImageElem.src = color['front_image'];
+                    productBackSideImageElem.src = color['back_image'];
+
                     var current = document.querySelector('.constructor-product-color.current-color');
                     removeClass(current, 'current-color');
+
+                    currentProductColorId = id;
+
+                    // очистим все размеры
+                    while (colorSizesContainer.firstChild) {
+                        colorSizesContainer.removeChild(colorSizesContainer.firstChild);
+                    }
+
+                    // добавим все размеры
+                    for (var i = 0; i < color['sizes'].length; i++) {
+                        var span = document.createElement('span');
+                        span.className = 'constructor-product-size';
+                        span.textContent = color['sizes'][i]['size'];
+                        span.dataset.id = color['sizes'][i]['id'];
+                        colorSizesContainer.appendChild(span);
+                    }
+
+                    // удалим и добавим обработчик событий на клик по размеру
+                    var sizesList = document.querySelectorAll('.constructor-product-size');
+                    for (var i = 0; i < sizesList.length; i++) {
+                        sizesList[i].removeEventListener('click', sizeClickHandler);
+                        sizesList[i].addEventListener('click', sizeClickHandler);
+                    }
+                    
+                    sizesList[0].dispatchEvent(new Event('click'));
+
+                    if (currentProductSide === false)
+                        constructorFrontSideBtn.dispatchEvent(new Event('click'));
+                    if (currentProductSide == 'front') 
+                        document.getElementById('canvas-bg-image').src = color['front_image'];
+                    if (currentProductSide == 'back')
+                        document.getElementById('canvas-bg-image').src = color['back_image'];
+
 
                     return true;
                 }
             }
 
             return false;
+        }
+
+        // обработчки событый на клик по размеру
+        function sizeClickHandler() {
+            var id = this.dataset.id;
+
+            if (typeof id !== 'undefined' && !isNaN(parseInt(id)) && currentProductSize !== +id) {
+                var colors = currentProduct['colors'];
+
+
+
+                // пройдемся по массиву цветов и найдем текущий цвет
+                for (var i = 0; i < colors.length; i++) {
+                    if (currentProductColorId == colors[i]['id']) {
+
+
+
+                        var sizes = colors[i]['sizes'];
+
+                        for (var x = 0; x < sizes.length; x++) {
+                            if (sizes[x]['id'] == id) {
+
+                                // удалим класс текущего размера и присвоем другому элементу
+                                var currentSizeElem = document.querySelector('.constructor-product-size.current-size');
+                                removeClass(currentSizeElem, 'current-size');
+                                this.className += ' current-size';
+
+                                // изменим текущий цвет
+                                currentProductSize = id;
+
+                                return true;
+                            }
+
+                        }
+                        
+                    }
+                }
+            }
         }
 
         // изменение цены продукта

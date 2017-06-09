@@ -120,11 +120,11 @@ $constructor_fonts = [
 				<span class="constructor-product-meta-title">Размер:</span>
 
 				<div class="constructor-product-sizes clearfix">
-					<span class="constructor-product-size current-size">X</span>
+					<!-- <span class="constructor-product-size current-size">X</span>
 					<span class="constructor-product-size">XL</span>
 					<span class="constructor-product-size">XXL</span>
 					<span class="constructor-product-size">XL</span>
-					<span class="constructor-product-size">XL</span>
+					<span class="constructor-product-size">XL</span> -->
 				</div>
 
 			</div>

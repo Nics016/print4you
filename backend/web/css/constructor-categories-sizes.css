@@ -1,0 +1,104 @@
+.btn-span {
+	padding-left: 5px;
+	font-size: 16px;
+}
+
+.icon-container {
+	float: left;
+	width: 30px;
+	font-size: 20px;
+    line-height: 28px !important;
+}
+
+.input-container {
+	float: left;
+	width: 30%;
+}
+
+.category-remove {
+	cursor: pointer;
+}
+
+ul { 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+	margin-bottom: 10px; 
+}
+
+#sortable li {
+	display: block;
+}
+
+.sortable-icon {
+	cursor: move;
+}
+
+#size-sortable > li:first-child {
+	margin-left: 0;
+}
+
+#size-sortable > li {
+	margin-left: 10px;
+}
+
+.size {
+    background-color: #3B3738;
+    border-radius: 10px;
+    width: 85px
+}
+
+.sizes-meta {
+    margin-top: 5px;
+}
+
+
+
+.move-size {
+	background-color: #555;
+    font-size: 18px;
+    color: #fff;
+    padding: 3px;
+    cursor: move;
+    margin-left: 5px;
+}
+
+.remove-size {
+	background-color: #555;
+    font-size: 18px;
+    color: #fff;
+    padding: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.size-input {
+	display: block;
+    width: 60px;
+    margin: 10px auto 5px auto;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #555;
+    outline: none;
+    padding: 5px;
+    background-color: #555;
+    color: #fff;
+}
+
+.size-input.error {
+	border: 1px solid red;
+}
+
+#add-size {
+    border: 1px solid #555;
+    margin-left: 20px;
+    background-color: #05A5D1;
+    color: #fff;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    outline: none;
+    font-size: 40px;
+    cursor: pointer;
+}
+

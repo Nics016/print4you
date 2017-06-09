@@ -373,10 +373,19 @@
 }
 
 .constructor-product-side {
-	float: left;
-	width: 130px;
-	margin-left: 20px;
-	cursor: pointer;
+    float: left;
+    width: 130px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.constructor-product-side.current:hover .product-side-image-container {
+    border: 1px solid #eea236;
+}
+
+.constructor-product-side.current .product-side-image-container {
+    cursor: default;
+    border: 1px solid #eea236;
 }
 
 .product-side-title {
