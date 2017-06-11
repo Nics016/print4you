@@ -27,21 +27,13 @@ foreach ($records as $record){
 
         <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'autocomplete' => 'off'])->label('Email') ?>
 
-        <?= $form->field($model, 'office_id')->dropDownList($offices)->label('Офис') ?>
         <?= $form->field($model, 'status')->dropDownList([
             User::STATUS_ACTIVE => 'Активный',
             User::STATUS_DELETED => 'Удален',
         ])->label('Статус') ?>
 
-        <?= $form->field($model, 'role')->dropDownList([
-            User::ROLE_COURIER => 'Курьер',
-            User::ROLE_EXECUTOR => 'Исполнитель',
-            User::ROLE_MANAGER => 'Менеджер',
-            User::ROLE_ADMIN => 'Администратор',
-        ])->label('Роль') ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать пользователя' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать клиента' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

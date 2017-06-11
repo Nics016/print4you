@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 
 use common\components\AccessRule;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use backend\models\User;
 
 /**
@@ -32,13 +33,39 @@ class OrdersController extends Controller
                     'class' => AccessRule::className(),
                 ],
                 'rules' => [
-                    [
-                        'actions' => ['view', 'new', 'proccessing', 'completed', 'accept', 'complete'],
+                     [
+                        'actions' => ['view', 'new', 'proccessing', 'completed'],
                         'allow' => true,
-                        // Allow manager and admin
+                        // Allow courier, executor, manager and admin
                         'roles' => [
+                            User::ROLE_COURIER,
+                            User::ROLE_EXECUTOR,
                             User::ROLE_MANAGER,
                             User::ROLE_ADMIN
+                        ],
+                    ],
+                    [
+                        'actions' => ['accept-executor', 'complete-executor', 'complete'],
+                        'allow' => true,
+                        // Allow executor
+                        'roles' => [
+                            User::ROLE_EXECUTOR
+                        ],
+                    ],
+                    [
+                        'actions' => ['accept-courier', 'complete'],
+                        'allow' => true,
+                        // Allow courier
+                        'roles' => [
+                            User::ROLE_COURIER
+                        ],
+                    ],
+                    [
+                        'actions' => ['accept', 'pick-courier', 'pick-executor'],
+                        'allow' => true,
+                        // Allow manager
+                        'roles' => [
+                            User::ROLE_MANAGER
                         ],
                     ],
                     [
@@ -82,8 +109,29 @@ class OrdersController extends Controller
      */
     public function actionNew()
     {
-        $records = Orders::find()
-            ->where("order_status='new'");
+        $records = [];
+        // Менеджер и админ
+        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
+            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
+            $records = Orders::find()
+                ->where("order_status='new'");
+        } 
+        // Исполнитель
+        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND executor_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_EXECUTOR_NEW);
+        }
+        // Курьер
+        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND courier_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_COURIER_NEW);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $records,
@@ -100,8 +148,29 @@ class OrdersController extends Controller
      */
     public function actionProccessing()
     {
-        $records = Orders::find()
-            ->where("order_status='proccessing'");
+        $records = [];
+        // Менеджер и админ
+        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
+            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
+            $records = Orders::find()
+                ->where("order_status='proccessing'");
+        } 
+        // Исполнитель
+        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND executor_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_EXECUTOR_ACCEPTED);
+        }
+        // Курьер
+        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND courier_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_COURIER_ACCEPTED);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $records,
@@ -118,8 +187,25 @@ class OrdersController extends Controller
      */
     public function actionCompleted()
     {
-        $records = Orders::find()
-            ->where("order_status='completed'");
+        $records = [];
+        // Менеджер и админ
+        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
+            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
+            $records = Orders::find()
+                ->where("order_status='completed'");
+        } 
+        // Исполнитель
+        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
+            $records = Orders::find()
+                ->where("order_status='completed' AND executor_id="
+                    . Yii::$app->user->identity->id);
+        }
+        // Курьер
+        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            $records = Orders::find()
+                ->where("order_status='completed' AND courier_id="
+                    . Yii::$app->user->identity->id);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $records,
@@ -154,54 +240,133 @@ class OrdersController extends Controller
      * и рендерится страница orders/view
      * @param integer $id
      */
-    public function actionCancel($id)
+    public function actionCancel($id, $comment = '')
     {
         $model = $this->findModel($id);
         $model->order_status = Orders::STATUS_CANCELLED;
+        $model->comment = $comment . ' / ' . $model->comment;
         $model->save();
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect('index');
     }
 
     /**
      * Заказу присваивается статус "В обработке",
      * менеджером присваивается текущий пользователь
      * и рендерится страница orders/view
+     * 
      * @param integer $id
      */
     public function actionAccept($id, $comment='нет')
     {
         $model = $this->findModel($id);
         $model->order_status = Orders::STATUS_PROCCESSING;
+        $model->location = Orders::LOCATION_MANAGER_ACCEPTED;
         $model->comment = $comment;
         $model->manager_id = Yii::$app->user->identity->id;
         $model->save();
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect('proccessing');
+    }
+
+    public function actionAcceptExecutor($id)
+    {
+        $model = $this->findModel($id);
+        $model->location = Orders::LOCATION_EXECUTOR_ACCEPTED;
+        $model->save();
+
+        return $this->redirect('proccessing');
+    }
+
+    public function actionCompleteExecutor($id)
+    {
+        $model = $this->findModel($id);
+        $model->location = Orders::LOCATION_COURIER_NEW;
+        $model->save();
+
+        // Если нет курьера, заказ готов
+        if ($model->courier_id == NULL){
+            $model->order_status = Orders::STATUS_COMPLETED;
+            $model->location = Orders::LOCATION_EXECUTOR_COMPLETED;
+            $model->save();
+        }
+
+        return $this->redirect('proccessing');
+    }
+
+    public function actionAcceptCourier($id)
+    {
+        $model = $this->findModel($id);
+        $model->location = Orders::LOCATION_COURIER_ACCEPTED;
+        $model->save();
+
+        return $this->redirect('proccessing');
     }
 
     /**
      * Заказу присваивается статус "Завершен",
-     * если менеджер - текущий пользователь
-     * @param integer $id
+     * если курьер - текущий пользователь,
+     * либо, если у заказа нет курьера, и 
+     * исполнитель - текущий пользователь
+     * 
+     * @param integer $id - id заказа
      */
     public function actionComplete($id)
+    {
+        $model = $this->findModel($id);
+        if ($model['courier_id'] == Yii::$app->user->identity->id){
+            $model->order_status = Orders::STATUS_COMPLETED;
+            $model->location = Orders::LOCATION_COURIER_COMPLETED;
+            $model->save();
+        } else {
+            return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
+        }
+
+        return $this->redirect('proccessing');
+    }
+
+
+    /**
+     * Назначить курьера для заказа
+     * 
+     * @param  integer $id - id заказа
+     * @param  integer $courier_id - id курьера
+     * @param  string $comment - комментарий для курьера
+     */
+    public function actionPickCourier($id, $courier_id, $comment = '')
     {
         $model = $this->findModel($id);
         if ($model['manager_id'] != Yii::$app->user->identity->id){
             return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
         } else {
-            $model->order_status = Orders::STATUS_COMPLETED;
+            $model->order_status = Orders::STATUS_PROCCESSING;
+            $model->courier_id = $courier_id;
+            $model->comment = $comment;
             $model->save();
         }
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->redirect('proccessing');
+    }
+
+    /**
+     * Назначить исполнителя для заказа
+     * 
+     * @param  integer $id - id заказа
+     * @param  integer $executor_id - id исполнителя
+     */
+    public function actionPickExecutor($id, $executor_id)
+    {
+        $model = $this->findModel($id);
+        if ($model['manager_id'] != Yii::$app->user->identity->id){
+            return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
+        } else {
+            $model->order_status = Orders::STATUS_PROCCESSING;
+            $model->executor_id = $executor_id;
+            $model->location = Orders::LOCATION_EXECUTOR_NEW;
+            $model->save();
+        }
+
+        return $this->redirect('proccessing');
     }
 
     /**
@@ -211,6 +376,23 @@ class OrdersController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $forbidden = false;
+
+        // Исполнитель
+        if (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
+            if ($model->executor_id != Yii::$app->user->identity->id)
+                $forbidden = true;
+        }
+        // Курьер
+        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            if ($model->courier_id != Yii::$app->user->identity->id)
+                $forbidden = true;
+        }
+
+        if ($forbidden)
+            return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

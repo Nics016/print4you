@@ -9,7 +9,7 @@ use common\models\Office;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = 'Пользователь '.$model->username;
+$this->title = 'Клиент '.$model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -53,36 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return "Удален";
                             break;
                     }
-                }
-            ],
-            [
-                'label' => 'Роль',
-                'attribute' => 'role',
-                'value' => function($model){
-                    switch($model['role']){
-                        case $model::ROLE_MANAGER:
-                            return "Менеджер";
-                            break;
-
-                        case $model::ROLE_ADMIN:
-                            return "Администратор";
-                            break;
-                    }
-                }
-            ],
-            [
-                'label' => 'Офис',
-                'attribute' => 'office_id',
-                'value' => function($model){
-                    $records = Office::Find()
-                        ->all();
-
-                    foreach ($records as $record){
-                        if ($record['id'] == $model['office_id'])
-                            return $record['address'];                        
-                    }
-                    
-                    return "Офис не задан";
                 }
             ],
             'created_at:datetime',

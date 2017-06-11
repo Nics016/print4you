@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Зарегистрированные пользователи';
+$this->title = 'Зарегистрированные клиенты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -44,21 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         case $model::STATUS_DELETED:
                             return "Удален";
-                            break;
-                    }
-                }
-            ],
-            [
-                'label' => 'Роль',
-                'attribute' => 'role',
-                'value' => function($model){
-                    switch($model['role']){
-                        case $model::ROLE_MANAGER:
-                            return "Менеджер";
-                            break;
-
-                        case $model::ROLE_ADMIN:
-                            return "Администратор";
                             break;
                     }
                 }

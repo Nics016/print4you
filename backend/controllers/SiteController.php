@@ -37,14 +37,16 @@ class SiteController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'can'],
+                        'actions' => ['login', 'error', 'logout'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'test', 'logout'],
+                        'actions' => ['index'],
                         'allow' => true,
-                        // Allow managers and admin
+                        // Allow executor, courier, manager and admin
                         'roles' => [
+                            User::ROLE_EXECUTOR,
+                            User::ROLE_COURIER,
                             User::ROLE_MANAGER,
                             User::ROLE_ADMIN
                         ],

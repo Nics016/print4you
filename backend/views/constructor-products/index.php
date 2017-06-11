@@ -24,8 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'label' => 'Имя',
+                'format' => 'html',
                 'value' => function ($data) {
-                    return $data->name;
+
+                    $html = '<p>' . $data->name .'</p>';
+                    $html .= Html::a('Цвета продукта', ['constructor-colors/', 'id' => $data->id],  ['class' => 'btn btn-primary']);
+
+                    return $html;
                 }
             ],
             [

@@ -61,8 +61,8 @@
 
                 <!-- logo -->
                 <div class="logo">
-                    <a href="index.html">
-                        <img src="/assets/images/logo@2x.png" width="120" alt="" />
+                    <a href="<?= Url::home() ?>" style="font-size: 20px;">
+                        Print4you admin
                     </a>
                 </div>
 
@@ -109,12 +109,12 @@
                                 <span class="title">В обработке</span>
                             </a>
                         </li>
-                    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
                         <li>
                             <a href="<?= Url::toRoute(['orders/completed']) ?>">
                                 <span class="title">Завершенные</span>
                             </a>
                         </li>     
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
                         <li>
                             <a href="<?= Url::toRoute(['orders/cancelled']) ?>">
                                 <span class="title">Отмененные</span>
@@ -133,7 +133,7 @@
                     <ul>
                         <li class="has-sub">
                             <a href="layout-api.html">
-                                <span class="title">Менеджеры</span>
+                                <span class="title">Пользователи</span>
                             </a>
                             <ul>
                                 <li><a href="<?= Url::toRoute(['user/index']) ?>"><span class="title">Все</span></a></li>
@@ -154,6 +154,17 @@
                                 <span class="title">Статистика</span>
                             </a>
                         </li>             
+                    </ul>
+                    <ul>
+                        <li class="has-sub">
+                            <a href="layout-api.html">
+                                <span class="title">Клиенты</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['common-user/index']) ?>"><span class="title">Все</span></a></li>
+                                <li><a href="<?= Url::toRoute(['common-user/create']) ?>"><span class="title">Создать нового</span></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             <?php endif; ?>

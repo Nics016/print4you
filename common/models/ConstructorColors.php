@@ -30,9 +30,10 @@ class ConstructorColors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'color_value', 'front_image', 'back_image', 'sizes'], 'required'],
+            [['name', 'color_value', 'front_image', 'back_image', 'sizes', 'product_id'], 'required'],
             [['name', 'front_image', 'back_image', 'sizes'], 'string', 'max' => 255],
             [['color_value'], 'string', 'max' => 50],
+            ['product_id', 'integer', 'min' => 1],
         ];
     }
 
