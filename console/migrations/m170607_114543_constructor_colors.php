@@ -13,6 +13,7 @@ class m170607_114543_constructor_colors extends Migration
             'front_image' => $this->string(255)->notNull(),
             'back_image' => $this->string(255)->notNull(),
             'sizes' => $this->string(255)->notNull(),
+            'is_published' => $this->boolean()->notNull()->defaultValue(false),
         ]);
     }
 

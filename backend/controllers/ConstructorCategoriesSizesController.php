@@ -13,7 +13,7 @@ use common\models\ConstructorSizes;
 
 use yii\widgets\ActiveForm;
 
-class CategoriesSizesController extends Controller
+class ConstructorCategoriesSizesController extends Controller
 {  
 
     public $layout = 'adminPanel';

@@ -164,8 +164,11 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="<?= Url::toRoute(['constructor/categories-sizes']) ?>">
+                            <a href="<?= Url::toRoute(['constructor-categories-sizes/']) ?>">
                                 <span class="title">Категории и размеры</span>
+                            </a>
+                            <a href="<?= Url::toRoute(['constructor-products/']) ?>">
+                                <span class="title">Товары и цвета</span>
                             </a>
                         </li>
                     </ul>

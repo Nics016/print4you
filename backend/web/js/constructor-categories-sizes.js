@@ -136,7 +136,7 @@ jQuery(document).ready(function($){
 
     			// посылаем аякс запрос на удаление
     			$.ajax({
-		    		url: '/categories-sizes/remove-size',
+		    		url: '/constructor-categories-sizes/remove-size',
 		    		data: {'_csrf-backend': csrf, id: sizeId},
 		    		type: 'POST',
 		    		success: function (msg) {
@@ -192,7 +192,7 @@ jQuery(document).ready(function($){
     	}
 
     	$.ajax({
-    		url: '/categories-sizes/change-sizes',
+    		url: '/constructor-categories-sizes/change-sizes',
     		data: {'_csrf-backend': csrf, data: sizesValues},
     		type: 'POST',
     		success: function (msg) {
@@ -257,7 +257,7 @@ jQuery(document).ready(function($){
     	}
 
     	$.ajax({
-    		url: '/categories-sizes/change-categories',
+    		url: '/constructor-categories-sizes/change-categories',
     		data: {'_csrf-backend': csrf, data: categoriesValues},
     		type: 'POST',
     		success: function (msg) {
@@ -306,7 +306,7 @@ jQuery(document).ready(function($){
 
     			// посылаем аякс запрос на удаление
     			$.ajax({
-		    		url: '/categories-sizes/remove-category',
+		    		url: '/constructor-categories-sizes/remove-category',
 		    		data: {'_csrf-backend': csrf, id: categoryId},
 		    		type: 'POST',
 		    		success: function (msg) {
