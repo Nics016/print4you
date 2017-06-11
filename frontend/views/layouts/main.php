@@ -55,7 +55,7 @@ AppAsset::register($this);
                     </span>
                 </a>
                 <a href="#" class="topline-elem3">Заказать звонок</a>
-                <a href="#" class="topline-elem4">      
+                <a href="<?= Url::to(['site/cabinet']) ?>" class="topline-elem4">      
                     <img src="/img/topline-lk.png" alt=""><span>Личный кабинет</span>
                 </a>
             </div>

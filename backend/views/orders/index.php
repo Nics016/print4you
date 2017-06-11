@@ -60,6 +60,46 @@ $orders = $dataProvider->getModels();
                 }
             ],
             [
+                'label' => 'Местонахождение заказа',
+                'attribute' => 'order_status',
+                'value' => function($model){
+                    switch($model['location']){
+                        case $model::LOCATION_MANAGER_NEW:
+                            return 'Ожидает принятия менеджером';
+                            break;
+
+                        case $model::LOCATION_MANAGER_ACCEPTED:
+                            return 'Менеджер принял заказ';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_NEW:
+                            return 'Ожидается подтверждение исполнителя';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_ACCEPTED:
+                            return 'Исполнитель выполняет заказ';
+                            break;
+
+                        case $model::LOCATION_COURIER_NEW:
+                            return 'Заказ готов. Ожидает подтверждения курьера';
+                            break;
+
+                        case $model::LOCATION_COURIER_ACCEPTED:
+                            return 'Курьер принял заказ';
+                            break;
+
+                        case $model::LOCATION_COURIER_COMPLETED:
+                            return 'Заказ доставлен клиенту';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_COMPLETED:
+                            return 'Исполнитель завершил выполнение';
+                            break;
+
+                    }
+                }
+            ],
+            [
                 'label' => 'Цена (руб.)',
                 'attribute' => 'price',
             ],
@@ -67,14 +107,31 @@ $orders = $dataProvider->getModels();
                 'label' => 'Менеджер',
                 'attribute' => 'manager_id',
                 'value' => function($model){
-                    $manager = $model->getManager($model['manager_id']);
+                    $manager = $model->getUser($model['manager_id']);
                     return $manager['username'];
                 }
             ],
             [
-                'label' => 'Комментарий',
-                'attribute' => 'comment',
+                'label' => 'Исполнитель',
+                'attribute' => '',
+                'value' => function($model){
+                    $user = $model->getUser($model['executor_id']);
+                    return $user['username'];
+                }
             ],
+            [
+                'label' => 'Курьер',
+                'attribute' => '',
+                'value' => function($model){
+                    $user = $model->getUser($model['courier_id']);
+                    return $user['username'];
+                }
+            ],
+            // [
+            //     'label' => 'Комментарий',
+            //     'attribute' => 'comment',
+            // ],
+            'created_at:datetime',
             [
                 'label' => 'Действие',
                 'format' => 'raw',
@@ -82,31 +139,101 @@ $orders = $dataProvider->getModels();
                     // Если статус заказа "новый", то показываем менеджеру кнопку "Принять",
                     // "в обработке" и заказ текущего менеджера, то показываем "Завершить",
                     // админу показываем кнопку "Отменить"
-                    $acceptBtn = Html::tag('button', 'Принять', ['class' => 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#acceptOrderModal'.$model['id']]);
-                    $cancelBtn = Html::tag('button', 'Отменить', ['class' => 'btn btn-danger', 'data-toggle' => 'modal', 'data-target' => '#cancelOrderModal'.$model['id']]);
-                    $completeBtn = Html::tag('a', 'Завершить', ['class' => 'btn btn-success', 
+                    
+                    // Менеджер
+                    $btnAccept = Html::tag('a', 'Принять', ['class' => 'btn btn-info', 
+                        'href' => Yii::$app->urlManager->createUrl([
+                            'orders/accept', 
+                            'id' => $model['id'], 
+                            // 'comment' => ''
+                        ]),
+                    ]);
+                    $btnPickCourier = Html::tag('button', 'Назначить курьера', ['class' => 'btn btn-primary', 'data-toggle' => 'modal', 'data-target' => '#pickCourierModal'.$model['id']]);
+                    $btnPickExecutor = Html::tag('button', 'Назначить исполнителя', ['class' => 'btn btn-primary', 'data-toggle' => 'modal', 'data-target' => '#pickExecutorModal'.$model['id']]);
+
+                    // Исполнитель
+                    $btnAcceptExecutor = Html::tag('button', 'Принять', ['class' => 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#acceptExecutorModal'.$model['id']]);
+                    $btnCompleteExecutor = Html::tag('a', 'Завершить', ['class' => 'btn btn-success', 
+                        'href' => Yii::$app->urlManager->createUrl([
+                            'orders/complete-executor', 
+                            'id' => $model['id']
+                        ]),
+                    ]);
+
+                    // Курьер
+                    $btnAcceptCourier = Html::tag('a', 'Принять', ['class' => 'btn btn-info', 
+                        'href' => Yii::$app->urlManager->createUrl([
+                            'orders/accept-courier', 
+                            'id' => $model['id']
+                        ]),
+                    ]);
+                    $btnComplete = Html::tag('a', 'Завершить', ['class' => 'btn btn-success', 
                         'href' => Yii::$app->urlManager->createUrl([
                             'orders/complete', 
                             'id' => $model['id']
                         ]),
                     ]);
 
+                    // Админ
+                    $btnCancel = Html::tag('button', 'Отменить', ['class' => 'btn btn-danger', 'data-toggle' => 'modal', 'data-target' => '#cancelOrderModal'.$model['id']]);
+                    
+
+                    $returnBtns = '';
+                    // "Принять" у менеджера
                     if ($model->order_status == Orders::STATUS_NEW 
                             && Yii::$app->user->identity->role == User::ROLE_MANAGER){
-                        return $acceptBtn;
-                    } elseif ($model->order_status != Orders::STATUS_CANCELLED
+                        $returnBtns = $btnAccept;
+                    } 
+                    // "Отменить" у админа
+                    elseif ($model->order_status != Orders::STATUS_CANCELLED
                             && Yii::$app->user->identity->role == User::ROLE_ADMIN) {
-                        return $cancelBtn;
-                    } elseif ($model->order_status == Orders::STATUS_PROCCESSING 
+                        $returnBtns = $btnCancel;
+                    } 
+                    // "Выбрать исполнителя" и "Выбрать курьера" у менеджера
+                    elseif ($model->order_status == Orders::STATUS_PROCCESSING 
                             && Yii::$app->user->identity->role == User::ROLE_MANAGER
                             && $model['manager_id'] == Yii::$app->user->identity->id){
-                        return $completeBtn;
-                    } else {
-                        return '';
+                        if ($model->executor_id == NULL)
+                            $returnBtns = $btnPickExecutor . "<br><br>";
+                        if ($model->courier_id == NULL)
+                            $returnBtns .= $btnPickCourier;
+                    } 
+                    // "Принять" у исполнителя
+                    elseif ($model->order_status == Orders::STATUS_PROCCESSING
+                            && Yii::$app->user->identity->role == User::ROLE_EXECUTOR
+                            && $model['executor_id'] == Yii::$app->user->identity->id
+                            && $model->location == Orders::LOCATION_EXECUTOR_NEW){
+                        $returnBtns = $btnAcceptExecutor;
                     }
+                    // "Завершить" у исполнителя
+                    elseif ($model->order_status == Orders::STATUS_PROCCESSING
+                            && Yii::$app->user->identity->role == User::ROLE_EXECUTOR
+                            && $model['executor_id'] == Yii::$app->user->identity->id
+                            && $model->location == Orders::LOCATION_EXECUTOR_ACCEPTED){
+                        $returnBtns = $btnCompleteExecutor;
+                    }
+                    // "Принять" у курьера
+                    elseif ($model->order_status == Orders::STATUS_PROCCESSING
+                            && Yii::$app->user->identity->role == User::ROLE_COURIER
+                            && $model['courier_id'] == Yii::$app->user->identity->id
+                            && $model->location == Orders::LOCATION_COURIER_NEW){
+                        $returnBtns = $btnAcceptCourier;
+                    }
+                    // "Завершить" у курьера
+                    elseif ($model->order_status == Orders::STATUS_PROCCESSING
+                            && Yii::$app->user->identity->role == User::ROLE_COURIER
+                            && $model['courier_id'] == Yii::$app->user->identity->id
+                            && $model->location == Orders::LOCATION_COURIER_ACCEPTED){
+                        $returnBtns = $btnComplete;
+                    }
+
+                    else {
+                        $returnBtns = '';
+                    }
+
+                    return $returnBtns;
                 }
             ],
-            // 'created_at',
             // 'updated_at',
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -116,23 +243,99 @@ $orders = $dataProvider->getModels();
     ]); ?>
 </div>
 
-<?php // Модалки для кнопки "Принять" ?>
+
+<?php 
+//////////////
+// МОДАЛКИ  //
+//////////////
+?>
+<?php // Модалки для кнопки "Назначить исполнителя" ?>
 <?php foreach($orders as $order): ?>
 <!-- Modal -->
-<div id="acceptOrderModal<?= $order['id'] ?>" class="modal fade" role="dialog">
+<div id="pickExecutorModal<?= $order['id'] ?>" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Укажите в комментарии, к какому дню и времени данный заказ будет готов</h4>
+        <h4 class="modal-title">Назначить исполнителя</h4>
       </div>
       <div class="modal-body">
-        <?php $form = ActiveForm::begin(); ?>
-            <?= Html::textInput('comment-name', '', ['class' => 'form-control', 'id' => 'comment-id'.$order['id']]); ?>
+        <?php $form = ActiveForm::begin(['action' => ['orders/pick-executor'], 'method' => 'GET']); ?>
+            <?= Html::dropDownList('executor_id', '', User::GetActiveUsersByRole(User::ROLE_EXECUTOR), ['class' => 'form-control']); ?>
+            <?= Html::hiddenInput('id', $order['id']); ?>
+            <br>
+            <div class="form-group">
+                <?= Html::submitButton('Назначить', ['class' => 'btn btn-success']) ?>
+            </div>
         <?php ActiveForm::end(); ?>
-        <a href="<?= Yii::$app->urlManager->createUrl(['orders/accept', 'id' => $order['id'], 'comment' => '']) ?>" class="btn btn-info" id="accept-link<?= $order['id'] ?>">Принять заказ</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php endforeach; ?>
+
+<?php // Модалки для кнопки "Назначить курьера" ?>
+<?php foreach($orders as $order): ?>
+<!-- Modal -->
+<div id="pickCourierModal<?= $order['id'] ?>" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Укажите в комментарии, куда курьеру необходимо доставить заказ, контакты клиента и пр.</h4>
+      </div>
+      <div class="modal-body">
+        <?php $form = ActiveForm::begin(['action' => ['orders/pick-courier'], 'method' => 'GET']); ?>
+            <?= Html::textInput('comment', '', ['class' => 'form-control']); ?>
+            <br>
+            <?= Html::dropDownList('courier_id', '', User::GetActiveUsersByRole(User::ROLE_COURIER), ['class' => 'form-control']); ?>
+            <?= Html::hiddenInput('id', $order['id']); ?>
+            <br>
+            <div class="form-group">
+                <?= Html::submitButton('Назначить', ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php ActiveForm::end(); ?>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+<?php endforeach; ?>
+
+<?php // Модалки для кнопки "Принять" у исполнителя ?>
+<?php foreach($orders as $order): ?>
+<!-- Modal -->
+<div id="acceptExecutorModal<?= $order['id'] ?>" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Принять заказ</h4>
+      </div>
+      <div class="modal-body">
+        <?php $form = ActiveForm::begin(['action' => ['orders/accept-executor'], 'method' => 'GET']); ?>
+            <?= "Количество краски: " . Html::textInput('comment_123', '', ['class' => 'form-control']) ?>
+            <?= Html::hiddenInput('id', $order['id']); ?>
+            <br>
+            <div class="form-group">
+                <?= Html::submitButton('Принять', ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php ActiveForm::end(); ?>
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
       </div>
       <div class="modal-footer">
@@ -157,7 +360,14 @@ $orders = $dataProvider->getModels();
         <h4 class="modal-title">Вы уверены, что хотите отменить этот заказ?</h4>
       </div>
       <div class="modal-body">
-        <a href="<?= Yii::$app->urlManager->createUrl(['orders/cancel', 'id' => $order['id']]) ?>" class="btn btn-danger">Да, отменить заказ</a>
+        <?php $form = ActiveForm::begin(['action' => ['orders/cancel'], 'method' => 'GET']); ?>
+            <?= Html::textInput('comment', '', ['class' => 'form-control']); ?>
+            <?= Html::hiddenInput('id', $order['id']); ?>
+            <br>
+            <div class="form-group">
+                <?= Html::submitButton('Да, отменить заказ', ['class' => 'btn btn-warning']) ?>
+            </div>
+        <?php ActiveForm::end(); ?>
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
       </div>
       <div class="modal-footer">
@@ -168,27 +378,3 @@ $orders = $dataProvider->getModels();
   </div>
 </div>
 <?php endforeach; ?>
-
-<script>
-    // Скрипт добавления текста комментария в ссылку (GET-запрос)
-    // при нажатии на кнопку "принять"
-    var ordersIds = [];
-    var allowSubmit = false;
-
-    <?php foreach ($orders as $order): ?>
-        ordersIds.push(<?= $order['id'] ?>)
-    <?php endforeach; ?>
-    $(document).ready(function(){
-        for(var i = 0; i < ordersIds.length; i++){
-            jQuery('#accept-link' + ordersIds[i]).bind('click', function (event) {
-                $("#click-me-id").click();
-                event.preventDefault();
-                var oldHref = $(this).attr('href');
-                var commentText = $(this).parent().children("form").children("input[type=text]").val();
-                var newHref = oldHref + commentText;
-                window.location = newHref;
-            });
-        }
-    });
-    
-</script>

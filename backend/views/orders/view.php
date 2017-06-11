@@ -50,6 +50,46 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Местонахождение заказа',
+                'attribute' => 'order_status',
+                'value' => function($model){
+                    switch($model['location']){
+                        case $model::LOCATION_MANAGER_NEW:
+                            return 'Ожидает принятия менеджером';
+                            break;
+
+                        case $model::LOCATION_MANAGER_ACCEPTED:
+                            return 'Менеджер принял заказ';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_NEW:
+                            return 'Исполнитель назначен. Ожидается подтверждение исполнителя';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_ACCEPTED:
+                            return 'Исполнитель выполняет заказ';
+                            break;
+
+                        case $model::LOCATION_COURIER_NEW:
+                            return 'Заказ готов. Ожидает подтверждения курьера';
+                            break;
+
+                        case $model::LOCATION_COURIER_ACCEPTED:
+                            return 'Курьер принял заказ';
+                            break;
+
+                        case $model::LOCATION_COURIER_COMPLETED:
+                            return 'Заказ доставлен клиенту';
+                            break;
+
+                        case $model::LOCATION_EXECUTOR_COMPLETED:
+                            return 'Исполнитель завершил выполнение';
+                            break;
+
+                    }
+                }
+            ],
+            [
                 'label' => 'Цена (руб.)',
                 'attribute' => 'price',
             ],
@@ -57,7 +97,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Менеджер',
                 'attribute' => 'manager_id',
                 'value' => function($model){
-                    $manager = $model->getManager($model['manager_id']);
+                    $manager = $model->getUser($model['manager_id']);
+                    return $manager['username'];
+                }
+            ],
+            [
+                'label' => 'Исполнитель',
+                'attribute' => 'executor_id',
+                'value' => function($model){
+                    $manager = $model->getUser($model['executor_id']);
+                    return $manager['username'];
+                }
+            ],
+            [
+                'label' => 'Курьер',
+                'attribute' => 'courier_id',
+                'value' => function($model){
+                    $manager = $model->getUser($model['courier_id']);
                     return $manager['username'];
                 }
             ],
@@ -68,10 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Дата создания',
                 'attribute' => 'created_at',
-            ],
-            [
-                'label' => 'Дата изменения',
-                'attribute' => 'updated_at',
+                'format' => 'date',
             ],
         ],
     ]) ?>

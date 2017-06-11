@@ -85,8 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return "Офис не задан";
                 }
             ],
-            // 'created_at',
-            // 'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

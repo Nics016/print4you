@@ -76,6 +76,14 @@ class SiteController extends Controller
     }
 
     /**
+     * Личный кабинет
+     */
+    public function actionCabinet()
+    {
+        return $this->render('cabinet');
+    }
+
+    /**
      * Ассортимент
      */
     public function actionAssorty()

@@ -1,0 +1,1625 @@
+@font-face {
+  src: url("../fonts/akrobatBold.otf");
+  font-family: "akrobatBold"; }
+@font-face {
+  src: url("../fonts/proximaNovaBold.ttf");
+  font-family: "proximaNovaBold"; }
+@font-face {
+  src: url("../fonts/proximaNovaBlack.otf");
+  font-family: "proximaNovaBlack"; }
+@font-face {
+  src: url("../fonts/proximaNovaLight.otf");
+  font-family: "proximaNovaLight"; }
+@font-face {
+  src: url("../fonts/proximaNovaRegular.otf");
+  font-family: "proximaNovaRegular"; }
+@font-face {
+  src: url("../fonts/proximaNovaSemibold.otf");
+  font-family: "proximaNovaSemibold"; }
+@font-face {
+  src: url("../fonts/sportsWorldRegular.otf");
+  font-family: "sportsWorldRegular"; }
+@font-face {
+  src: url("../fonts/helveticaNeueCyrRoman.otf");
+  font-family: "helveticaNeueCyrRoman"; }
+@font-face {
+  src: url("../fonts/myriadPro.ttf");
+  font-family: "myriadPro"; }
+body {
+  margin: 0; }
+
+#main-wrap {
+  font-family: proximaNovaRegular;
+  width: 100%;
+  min-width: 1140px; }
+
+.container {
+  display: block;
+  width: 1140px;
+  margin: 0 auto;
+  overflow: hidden; }
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+a {
+  text-decoration: none;
+  transition: 0.25s; }
+
+.withbg {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
+
+.withbgCover {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; }
+
+.title {
+  margin: 0;
+  font-family: sportsWorldRegular;
+  font-size: 40px;
+  color: #3e3e3e; }
+
+.subtitle {
+  font-size: 23px;
+  font-family: akrobatBold;
+  font-size: 23px;
+  color: #fa413d;
+  text-transform: uppercase;
+  letter-spacing: 5px; }
+
+.underline {
+  display: block;
+  margin: 0px auto;
+  width: 60px;
+  height: 2px;
+  background-color: #787875; }
+
+.whiteBtn:hover {
+  color: #fff;
+  background-color: #191919; }
+
+.whiteBtn {
+  display: block;
+  margin-top: 35px;
+  width: 170px;
+  padding: 10px 0;
+  text-align: center;
+  font-family: "proximaNovaSemibold";
+  font-size: 15px;
+  color: #383838;
+  border: 1px solid #4d4d4d;
+  font-weight: bold; }
+
+.topline {
+  background-color: #181818;
+  color: #999999;
+  font-size: 14px;
+  padding: 10px 0; }
+  .topline a:hover {
+    color: #5c5c5c; }
+    .topline a:hover strong {
+      color: #5c5c5c; }
+  .topline a span {
+    margin-left: 15px; }
+  .topline a {
+    color: #999999; }
+  .topline-elem1 {
+    display: block;
+    float: left; }
+  .topline-elem2 {
+    display: block;
+    float: left;
+    margin-left: 55px; }
+    .topline-elem2 strong {
+      color: #959595;
+      transition: 0.25s; }
+  .topline-elem3 {
+    display: block;
+    float: left;
+    margin-left: 20px; }
+  .topline-elem4 {
+    display: block;
+    float: right; }
+  .topline .container {
+    position: relative;
+    overflow: visible; }
+  .topline-popup {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    box-shadow: -4px 4px 20px #aaa; }
+    .topline-popup a {
+      display: block;
+      width: 140px;
+      padding: 15px 0;
+      background-color: #FFF;
+      font-family: "proximaNovaLight";
+      font-size: 14px;
+      color: #a5a5a5;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: center; }
+
+.topmenu {
+  margin-top: 15px;
+  border-bottom: 2px solid #a7a7a7; }
+  .topmenu-left {
+    display: block;
+    float: left;
+    width: 135px; }
+    .topmenu-left span {
+      display: block;
+      margin-top: 10px;
+      color: #0f0000;
+      font-family: helveticaNeueCyrRoman;
+      text-transform: uppercase;
+      padding-left: 35px;
+      font-size: 10px;
+      text-align: right; }
+  .topmenu-right {
+    display: block;
+    float: left;
+    width: 945px;
+    margin-left: 60px; }
+    .topmenu-right-above {
+      display: block;
+      color: #666666;
+      font-size: 15px;
+      line-height: 20px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #d9d9d9; }
+      .topmenu-right-above a:hover {
+        color: #999999; }
+      .topmenu-right-above a {
+        color: #666666; }
+      .topmenu-right-above-elem1 {
+        display: block;
+        float: left;
+        width: 220px; }
+      .topmenu-right-above-elem2 {
+        display: block;
+        float: left;
+        width: 200px;
+        margin-left: 45px; }
+        .topmenu-right-above-elem2 span {
+          width: 170px; }
+      .topmenu-right-above-elem3 {
+        display: block;
+        float: left;
+        width: 175px;
+        margin-left: 35px; }
+        .topmenu-right-above-elem3 span {
+          width: 140px; }
+      .topmenu-right-above-elem2 img, .topmenu-right-above-elem3 img {
+        display: block;
+        float: left;
+        width: 11px;
+        padding-top: 5px; }
+      .topmenu-right-above-elem2 span, .topmenu-right-above-elem3 span {
+        display: block;
+        float: left;
+        margin-left: 15px; }
+      .topmenu-right-above-elem4:hover .topline-popup {
+        display: block; }
+      .topmenu-right-above-elem4 {
+        display: block;
+        float: right;
+        width: 55px;
+        padding-top: 5px; }
+        .topmenu-right-above-elem4 a:first-child {
+          margin-right: 10px; }
+    .topmenu-right-below {
+      display: block;
+      margin-top: 10px; }
+      .topmenu-right-below nav {
+        display: block;
+        float: left;
+        width: 800px; }
+        .topmenu-right-below nav a:hover {
+          color: white;
+          background-color: #eb4441; }
+        .topmenu-right-below nav a:first-child {
+          margin-left: 0; }
+        .topmenu-right-below nav a {
+          display: inline-block;
+          padding: 15px 8px;
+          margin-left: 10px;
+          font-size: 13px;
+          text-transform: uppercase;
+          color: #333333;
+          font-family: proximaNovaSemibold;
+          font-weight: bold;
+          border-radius: 2px; }
+          .topmenu-right-below nav a.active {
+            border-bottom: 4px solid #eb4441; }
+      .topmenu-right-below-vk {
+        display: block;
+        float: right;
+        width: 30px;
+        margin-top: 15px; }
+      .topmenu-right-below-in {
+        display: block;
+        float: right;
+        width: 30px;
+        margin-top: 15px; }
+
+.shelkography .line1 {
+  margin-top: 75px; }
+  .shelkography .line1 h2 {
+    padding-top: 45px;
+    padding-bottom: 15px;
+    font-size: 23px;
+    background-image: url("../img/line1-shelk-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: akrobatBold;
+    font-size: 23px;
+    color: #fa413d;
+    text-transform: uppercase;
+    letter-spacing: 5px; }
+  .shelkography .line1-left {
+    display: block;
+    float: left;
+    margin-top: -60px;
+    width: 550px; }
+    .shelkography .line1-left-description h1 {
+      font-family: sportsWorldRegular;
+      font-size: 40px;
+      color: #3e3e3e; }
+    .shelkography .line1-left-description p {
+      display: block;
+      margin-top: 25px;
+      font-family: proximaNovaBold;
+      font-size: 18px;
+      color: #4f4f4f; }
+    .shelkography .line1-left-elements img {
+      display: block; }
+    .shelkography .line1-left-elements h3 {
+      display: block;
+      margin-top: 20px;
+      font-family: sportsWorldRegular;
+      font-size: 17px;
+      color: #3e3e3e; }
+    .shelkography .line1-left-elements p {
+      display: block;
+      margin-top: 10px;
+      font-size: 15px;
+      font-family: proximaNovaLight;
+      color: #5c5c5c; }
+    .shelkography .line1-left-elements-top {
+      margin-top: 60px; }
+      .shelkography .line1-left-elements-top-el1 {
+        display: block;
+        float: left;
+        width: 200px; }
+      .shelkography .line1-left-elements-top-el2 {
+        display: block;
+        float: left;
+        width: 200px;
+        margin-left: 90px; }
+    .shelkography .line1-left-elements-bottom-el3 {
+      display: block;
+      margin-top: 40px; }
+  .shelkography .line1-right {
+    display: block;
+    float: right;
+    width: 550px;
+    margin-top: 170px; }
+    .shelkography .line1-right img {
+      margin-left: -15px; }
+    .shelkography .line1-right span {
+      display: block;
+      margin-top: 35px;
+      font-family: proximaNovaLight;
+      font-size: 15px;
+      color: #5c5c5c; }
+.shelkography .line2 {
+  margin-bottom: 100px; }
+  .shelkography .line2-video:hover {
+    background-image: url("../img/line2-video-pic-hover.jpg"); }
+  .shelkography .line2-video {
+    margin-top: 80px;
+    background-image: url("../img/line2-video-pic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1140px;
+    height: 590px;
+    cursor: pointer;
+    transition: 0.3s; }
+.shelkography .line3 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: #f4f4f4; }
+  .shelkography .line3-title h3 {
+    display: block;
+    font-size: 23px;
+    font-family: akrobatBold;
+    color: #fa413d;
+    letter-spacing: 5px;
+    text-align: center;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    text-transform: uppercase; }
+  .shelkography .line3-title-reviews {
+    margin-top: 5px;
+    background-image: url("../img/line3-reviews.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    padding-bottom: 25px; }
+    .shelkography .line3-title-reviews h2 {
+      display: block;
+      font-size: 40px;
+      font-family: sportsWorldRegular;
+      color: #3e3e3e;
+      text-align: center;
+      padding-top: 20px;
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      -webkit-margin-start: 0px;
+      -webkit-margin-end: 0px; }
+    .shelkography .line3-title-reviews-underline {
+      display: block;
+      margin: 25px auto;
+      margin-bottom: 0;
+      width: 60px;
+      height: 2px;
+      background-color: #787875; }
+  .shelkography .line3-carousel-portraits {
+    display: block;
+    width: 279px;
+    margin: 60px auto;
+    margin-bottom: 30px; }
+    .shelkography .line3-carousel-portraits img:first-child {
+      margin-left: 0; }
+    .shelkography .line3-carousel-portraits img {
+      display: block;
+      float: left;
+      border-radius: 50%;
+      margin-left: 45px;
+      height: 57px;
+      width: 57px;
+      padding-top: 9px;
+      -webkit-filter: opacity(0.5);
+      filter: opacity(0.5);
+      cursor: pointer; }
+      .shelkography .line3-carousel-portraits img.active {
+        padding-top: 0;
+        height: 75px;
+        width: 75px;
+        -webkit-filter: opacity(1);
+        filter: opacity(1); }
+      .shelkography .line3-carousel-portraits img.hidden {
+        display: none; }
+  .shelkography .line3-carousel-info section {
+    display: none; }
+    .shelkography .line3-carousel-info section h4 {
+      display: block;
+      text-align: center;
+      color: #383838;
+      font-size: 17px;
+      font-family: proximaNovaBold; }
+    .shelkography .line3-carousel-info section p {
+      display: block;
+      margin: 30px auto;
+      width: 690px;
+      font-family: proximaNovaLight;
+      color: #5c5c5c;
+      text-align: center; }
+    .shelkography .line3-carousel-info section.active {
+      display: block; }
+  .shelkography .line3-carousel-circles {
+    display: block;
+    margin: 30px auto;
+    width: 90px; }
+    .shelkography .line3-carousel-circles img:first-child {
+      margin-left: 0; }
+    .shelkography .line3-carousel-circles img {
+      margin-left: 2px;
+      cursor: pointer; }
+  .shelkography .line3-leaveReview:hover {
+    background-color: #383838; }
+  .shelkography .line3-leaveReview {
+    display: block;
+    margin: 75px auto;
+    margin-bottom: 0;
+    padding: 15px 25px;
+    width: 150px;
+    background-color: #191919;
+    font-family: proximaNovaSemibold;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 3px; }
+.shelkography .line5 {
+  margin-bottom: 60px; }
+  .shelkography .line5-tshirt {
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 111px; }
+  .shelkography .line5 h2 {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    font-family: sportsWorldRegular;
+    color: #3e3e3e;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    margin-top: 70px; }
+  .shelkography .line5-underline {
+    display: block;
+    margin: 25px auto;
+    margin-bottom: 0;
+    width: 60px;
+    height: 2px;
+    background-color: #787875; }
+  .shelkography .line5-slider {
+    margin-top: 60px; }
+.shelkography .bx-wrapper {
+  box-shadow: none !important; }
+.shelkography .bx-pager-link {
+  background: #c1c1c1 !important; }
+.shelkography .bx-pager-link.active {
+  background: #f24841 !important; }
+.shelkography .bx-controls {
+  margin-top: 30px !important; }
+
+.line4 {
+  padding-top: 100px; }
+  .line4-left {
+    display: block;
+    float: left;
+    width: 524px; }
+  .line4-right {
+    display: block;
+    float: right;
+    margin-left: 46px;
+    width: 560px; }
+    .line4-right h3 {
+      display: block;
+      font-size: 23px;
+      font-family: akrobatBold;
+      color: #fa413d;
+      letter-spacing: 5px;
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      -webkit-margin-start: 0px;
+      -webkit-margin-end: 0px;
+      text-transform: uppercase; }
+    .line4-right h2 {
+      display: block;
+      font-size: 40px;
+      font-family: sportsWorldRegular;
+      color: #3e3e3e;
+      padding-top: 10px;
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      -webkit-margin-start: 0px;
+      -webkit-margin-end: 0px; }
+    .line4-right-text1 {
+      display: block;
+      font-size: 18px;
+      font-family: proximaNovaBold;
+      color: #4f4f4f;
+      padding-top: 10px; }
+    .line4-right-text2 {
+      display: block;
+      margin-top: 50px; }
+      .line4-right-text2 p:nth-child(3) {
+        padding-top: 40px; }
+      .line4-right-text2 p {
+        display: block;
+        font-size: 16px;
+        font-family: proximaNovaLight;
+        color: #5c5c5c;
+        padding-top: 10px;
+        letter-spacing: 1px; }
+        .line4-right-text2 p strong {
+          font-size: 17px;
+          font-family: sportsWorldRegular;
+          color: #656565; }
+      .line4-right-text2-number:hover {
+        color: #f69392; }
+      .line4-right-text2-number {
+        display: block;
+        width: 200px;
+        font-size: 35px;
+        font-family: proximaNovaRegular;
+        color: #eb4441;
+        transition: 0.3s; }
+    .line4-right-makeOrder:hover {
+      background-color: #383838; }
+    .line4-right-makeOrder {
+      display: block;
+      margin: 75px 0;
+      margin-bottom: 0;
+      padding: 15px 25px;
+      width: 150px;
+      background-color: #191919;
+      font-family: proximaNovaSemibold;
+      color: white;
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center; }
+
+footer {
+  padding: 50px 0;
+  background-color: #1e1e1e; }
+
+.footer-left {
+  display: block;
+  float: left;
+  width: 250px; }
+  .footer-left-contacts p {
+    font-family: proximaNovaBold;
+    font-size: 16px;
+    color: white;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px; }
+  .footer-left-contacts p.with-margin {
+    margin-top: 20px; }
+  .footer-left-contacts a {
+    display: block;
+    text-decoration: none;
+    font-family: proximaNovaRegular;
+    color: white;
+    font-size: 20px; }
+    .footer-left-contacts a strong:hover {
+      color: #f69392; }
+    .footer-left-contacts a strong {
+      font-family: proximaNovaBold;
+      color: #f24841;
+      transition: 0.3s; }
+  .footer-left-contacts .footer-left-callMe:hover {
+    background-color: #383838; }
+  .footer-left-contacts .footer-left-callMe {
+    display: block;
+    margin: 30px 0;
+    margin-bottom: 0;
+    padding: 15px 25px;
+    width: 160px;
+    background-color: #191919;
+    font-family: proximaNovaSemibold;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 3px;
+    border: 2px solid white;
+    text-align: center; }
+.footer-center {
+  display: block;
+  float: left;
+  margin-left: 250px;
+  width: 143px; }
+  .footer-center span {
+    display: block;
+    margin-top: 10px;
+    color: white;
+    font-family: helveticaNeueCyrRoman;
+    text-transform: uppercase;
+    padding-left: 35px;
+    font-size: 10px;
+    text-align: right; }
+  .footer-center-socials {
+    display: block;
+    margin: 35px auto;
+    width: 50px; }
+    .footer-center-socials a:first-child {
+      margin-left: 0; }
+    .footer-center-socials a {
+      margin-left: 10px; }
+.footer-right {
+  display: block;
+  float: right;
+  width: 270px; }
+  .footer-right span {
+    display: block;
+    text-align: center;
+    font-family: proximaNovaBold;
+    font-size: 16px;
+    color: white; }
+  .footer-right-photos {
+    display: block;
+    margin-top: 20px; }
+    .footer-right-photos a:first-child img {
+      margin-left: 0; }
+    .footer-right-photos a img {
+      margin-left: 20px;
+      border-radius: 50%; }
+
+.assorty {
+  margin-top: 100px; }
+  .assorty .title {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    color: #222222;
+    background-image: url("../img/assorty-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain; }
+  .assorty .underline {
+    margin-top: 0; }
+  .assorty .assorty-category {
+    margin: 0 auto;
+    margin-top: 70px;
+    width: 220px;
+    padding-left: 30px;
+    padding-bottom: 30px; }
+    .assorty .assorty-category a:first-child {
+      border-right: none; }
+    .assorty .assorty-category a.active {
+      background-color: #191919;
+      color: #fff;
+      box-shadow: -4px 4px 20px #aaa; }
+    .assorty .assorty-category a:hover {
+      background-color: #333;
+      color: #fff; }
+    .assorty .assorty-category a {
+      display: block;
+      float: left;
+      width: 70px;
+      font-family: "helveticaNeueCyrRoman";
+      color: #191919;
+      font-weight: bold;
+      border: 1px solid #626262;
+      padding: 15px;
+      text-align: center;
+      font-size: 15px;
+      letter-spacing: 1px; }
+  .assorty .assorty-row:first-child {
+    margin-top: 30px; }
+  .assorty .assorty-row {
+    margin-top: 50px; }
+    .assorty .assorty-row img:hover {
+      box-shadow: -4px 4px 20px #aaa; }
+    .assorty .assorty-row img {
+      display: block;
+      float: left;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      width: 260px;
+      height: 350px;
+      border: 1px solid #b9b9b9;
+      transition: 0.3s; }
+    .assorty .assorty-row-description {
+      display: block;
+      float: right;
+      width: 730px;
+      min-height: 270px;
+      padding: 40px;
+      border: 1px solid #b9b9b9; }
+      .assorty .assorty-row-description-title {
+        display: block;
+        float: left;
+        width: 235px;
+        margin: 0;
+        font-family: "sportsWorldRegular";
+        font-size: 18px;
+        color: #383838; }
+      .assorty .assorty-row-description-price {
+        display: block;
+        float: left;
+        margin-left: 35px;
+        margin-top: -10px;
+        width: 60px;
+        color: #7d7d7d;
+        font-size: 29px;
+        font-family: "helveticaNeueCyrRoman";
+        text-transform: uppercase;
+        transition: 0.3s; }
+        .assorty .assorty-row-description-price-link:hover .assorty-row-description-price {
+          color: #eb4441;
+          font-weight: bold; }
+        .assorty .assorty-row-description-price-link:hover .assorty-row-description-rub {
+          background-image: url(../img/assorty-rub-active.png);
+          transition: 0.3s; }
+      .assorty .assorty-row-description-rub {
+        display: block;
+        float: left;
+        margin-left: -8px;
+        width: 16px;
+        height: 21px;
+        margin-top: -5px;
+        background-image: url("../img/assorty-rub.png");
+        background-repeat: no-repeat;
+        background-size: cover; }
+      .assorty .assorty-row-description-text {
+        display: block;
+        margin-top: 25px;
+        font-family: "proximaNovaLight";
+        font-size: 15px;
+        color: #656565;
+        line-height: 25px; }
+      .assorty .assorty-row-description-btn:hover {
+        color: #fff;
+        background-color: #191919; }
+      .assorty .assorty-row-description-btn {
+        display: block;
+        margin-top: 35px;
+        width: 170px;
+        padding: 10px 0;
+        text-align: center;
+        font-family: "proximaNovaSemibold";
+        font-size: 15px;
+        color: #383838;
+        border: 1px solid #4d4d4d;
+        font-weight: bold; }
+
+.contacts h1 {
+  text-align: center;
+  margin-top: 90px;
+  padding-top: 60px;
+  background-image: url("../img/contacts-title-bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center; }
+.contacts-map:first-child {
+  margin-top: 100px; }
+.contacts-map {
+  margin-top: 80px; }
+  .contacts-map-google {
+    display: block;
+    float: left;
+    width: 615px; }
+    .contacts-map-google.graymap {
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%); }
+  .contacts-map-info {
+    display: block;
+    float: right;
+    width: 450px; }
+    .contacts-map-info h2 {
+      margin: 0;
+      padding-top: 40px;
+      font-family: "sportsWorldRegular";
+      font-size: 21px;
+      color: #4f4f4f; }
+    .contacts-map-info span {
+      display: block;
+      margin-top: 35px;
+      font-family: "proximaNovaLight";
+      font-size: 18px;
+      color: #4a4a4a;
+      line-height: 25px; }
+    .contacts-map-info-element {
+      display: block;
+      margin-top: 20px; }
+      .contacts-map-info-element.info-element1 {
+        margin-top: 40px; }
+        .contacts-map-info-element.info-element1 img {
+          width: 18px; }
+      .contacts-map-info-element.info-element2 img {
+        width: 13px;
+        margin-right: 5px; }
+      .contacts-map-info-element img {
+        display: block;
+        float: left; }
+      .contacts-map-info-element span {
+        display: block;
+        float: left;
+        width: 350px;
+        margin-top: -4px;
+        margin-left: 15px; }
+.contacts .line2 {
+  margin-top: 110px;
+  padding: 130px 0;
+  background-color: #f4f4f4; }
+.contacts-questions h2 {
+  padding: 30px 0;
+  font-size: 40px;
+  text-align: center;
+  background-image: url("../img/contacts-request-title-bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center; }
+.contacts-questions h3 {
+  margin: 0;
+  margin-top: 35px;
+  font-family: "proximaNovaBold";
+  font-size: 17px;
+  color: #5a5a5a;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px; }
+.contacts-questions-form {
+  padding: 50px 65px;
+  background-color: #d8d8d8;
+  overflow: hidden;
+  height: 182px; }
+  .contacts-questions-form-wrapper {
+    margin: 0 auto;
+    margin-top: 75px;
+    width: 948px;
+    height: 286px;
+    padding: 12px;
+    background-image: url("../img/contacts-questions-form-wrapper-bg.png"); }
+  .contacts-questions-form-left {
+    display: block;
+    float: left;
+    width: 400px; }
+    .contacts-questions-form-left-line:first-child {
+      margin-top: 0; }
+    .contacts-questions-form-left-line {
+      margin-top: 20px; }
+      .contacts-questions-form-left-line input {
+        width: 350px;
+        font-family: "proximaNovaRegular";
+        font-size: 16px;
+        color: #676767;
+        padding: 10px 20px; }
+      .contacts-questions-form-left-line img {
+        margin-left: -40px; }
+  .contacts-questions-form-right {
+    display: block;
+    float: right;
+    width: 405px;
+    margin-right: -10px; }
+    .contacts-questions-form-right textarea {
+      display: block;
+      float: left;
+      font-family: "proximaNovaRegular";
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #676767;
+      width: 90%;
+      height: 80px;
+      resize: none; }
+    .contacts-questions-form-right img {
+      display: block;
+      float: left;
+      margin-left: -30px;
+      margin-top: 10px; }
+    .contacts-questions-form-right input[type="submit"]:hover {
+      background-color: #555555; }
+    .contacts-questions-form-right input[type="submit"] {
+      display: block;
+      margin-top: 20px;
+      width: 100%;
+      padding: 11px 0;
+      text-align: center;
+      background-color: #353535;
+      font-family: "proximaNovaRegular";
+      font-size: 16px;
+      text-transform: uppercase;
+      color: white;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s; }
+
+.about {
+  margin-bottom: 100px; }
+  .about h1 {
+    margin-top: 75px;
+    background-image: url("../img/about-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-top: 70px; }
+  .about h2 {
+    margin-top: -80px;
+    margin-bottom: 80px; }
+  .about .info {
+    margin-top: 40px;
+    line-height: 1.5em; }
+    .about .info-left {
+      display: block;
+      float: left;
+      width: 540px; }
+      .about .info-left strong {
+        font-family: "proximaNovaBold";
+        font-size: 18px;
+        color: #4f4f4f; }
+      .about .info-left span {
+        display: block;
+        margin-top: 65px;
+        font-family: "proximaNovaLight";
+        font-size: 16px;
+        color: #404040;
+        line-height: 1.8em; }
+      .about .info-left .whiteBtn {
+        width: 225px;
+        text-transform: uppercase;
+        letter-spacing: 3px; }
+    .about .info-right {
+      display: block;
+      float: right;
+      width: 540px; }
+  .about .tshirt {
+    display: block;
+    margin: 100px 0;
+    height: 120px;
+    background-image: url("../img/line5-tshirt.png");
+    background-repeat: no-repeat;
+    background-position: center center; }
+  .about .slider-pics-left {
+    display: block;
+    float: left;
+    width: 750px; }
+    .about .slider-pics-left-bot {
+      margin-top: 25px; }
+  .about .slider-pics-right {
+    display: block;
+    float: right;
+    width: 350px; }
+  .about .slider-pics-pic1 {
+    display: block;
+    width: 750px;
+    height: 225px; }
+  .about .slider-pics-pic2, .about .slider-pics-pic3 {
+    display: block;
+    float: left;
+    width: 360px;
+    height: 260px; }
+  .about .slider-pics-pic3 {
+    margin-left: 30px; }
+  .about .slider-pics-pic4 {
+    width: 360px;
+    height: 510px; }
+  .about .slider-dots {
+    display: block;
+    margin: 0 auto;
+    margin-top: 45px;
+    width: 110px; }
+    .about .slider-dots-dot {
+      cursor: pointer; }
+
+.main .line5 h1 {
+  text-align: center;
+  margin: 0;
+  margin-top: 100px;
+  padding-top: 10px;
+  padding-bottom: 65px;
+  background-image: url("../img/services-title-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
+.main .line5 .underline {
+  margin-top: -40px; }
+.main .line5 .elements-item:nth-child(4n+1) {
+  margin-left: 12px; }
+.main .line5 .elements-item {
+  display: block;
+  float: left;
+  margin-top: 100px;
+  margin-left: 20px;
+  width: 266px; }
+  .main .line5 .elements-item img:hover {
+    box-shadow: -4px 4px 20px #aaa; }
+  .main .line5 .elements-item img {
+    width: 100%; }
+  .main .line5 .elements-item-title:hover {
+    color: #515151; }
+  .main .line5 .elements-item-title {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-family: "sportsWorldRegular";
+    font-size: 18px;
+    color: #383838;
+    text-transform: uppercase; }
+  .main .line5 .elements-item-text:hover {
+    color: #8d8d8d; }
+  .main .line5 .elements-item-text {
+    display: block;
+    margin-top: 0px;
+    text-align: center;
+    font-family: "proximaNovaSemibold";
+    font-size: 19px;
+    color: #686868; }
+  .main .line5 .elements-item .whiteBtn {
+    margin: 0 auto;
+    margin-top: 25px; }
+.main .line5 .bigBtn {
+  display: block;
+  margin: 100px auto;
+  padding: 20px 0;
+  width: 560px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: bold; }
+  .main .line5 .bigBtn strong {
+    color: #4e4e4e;
+    margin-left: 30px; }
+
+.dostavka {
+  margin-top: 100px;
+  margin-bottom: 100px; }
+  .dostavka h1 {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background-image: url("../img/dostavka-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center; }
+  .dostavka .moneybag {
+    display: block;
+    margin-top: 80px; }
+  .dostavka .schedule {
+    margin-top: 20px; }
+    .dostavka .schedule-title {
+      font-family: "sportsWorldRegular";
+      font-size: 25px;
+      color: #4b4b4b; }
+    .dostavka .schedule-num {
+      margin-left: 20px;
+      font-family: "helveticaNeueCyrRoman";
+      font-size: 36px;
+      color: #606060;
+      font-weight: bold; }
+    .dostavka .schedule-info {
+      display: block;
+      margin-top: 30px;
+      margin-bottom: 50px;
+      font-family: "proximaNovaBold";
+      font-size: 20px;
+      color: #4f4f4f;
+      font-weight: bold; }
+
+.franchise {
+  margin-top: 100px; }
+  .franchise .title-line-bg {
+    height: 120px;
+    background-image: url("../img/franchise-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; }
+  .franchise .title-line {
+    width: 950px;
+    margin: 0 auto;
+    margin-top: -80px;
+    margin-bottom: 80px; }
+    .franchise .title-line-left {
+      display: block;
+      float: left;
+      width: 450px;
+      text-align: right; }
+      .franchise .title-line-left h1 {
+        margin-top: -10px; }
+    .franchise .title-line-right {
+      display: block;
+      float: left;
+      margin-left: 30px;
+      width: 350px; }
+      .franchise .title-line-right h3 {
+        margin: 0;
+        margin-top: 20px;
+        font-family: "proximaNovaBold";
+        font-size: 18px;
+        color: #3d3d3d;
+        font-weight: bolder; }
+      .franchise .title-line-right-item:first-child {
+        margin-top: 20px; }
+      .franchise .title-line-right-item {
+        margin-top: 7px; }
+        .franchise .title-line-right-item span {
+          margin-left: 10px;
+          font-family: "proximaNovaBold";
+          font-size: 18px;
+          color: #4f4f4f; }
+  .franchise .banner {
+    display: block;
+    width: 100%;
+    margin-top: 20px; }
+  .franchise .pluses {
+    margin-top: 70px; }
+    .franchise .pluses-plus:first-child {
+      margin-left: 30px; }
+    .franchise .pluses-plus {
+      display: block;
+      float: left;
+      width: 550px;
+      margin-left: 0px; }
+      .franchise .pluses-plus-title-line img {
+        display: block;
+        float: left; }
+      .franchise .pluses-plus-title-line h3 {
+        display: block;
+        float: left;
+        margin: 0;
+        margin-top: -5px;
+        margin-left: 30px;
+        font-size: 17px;
+        color: #383838;
+        line-height: 1.3em; }
+      .franchise .pluses-plus-info ul {
+        margin: 0;
+        margin-top: 30px;
+        margin-left: 40px;
+        list-style-type: none; }
+        .franchise .pluses-plus-info ul li {
+          margin-top: 10px;
+          background-image: url("../img/franchise-dot.png");
+          background-repeat: no-repeat;
+          background-position: left center;
+          padding-left: 25px;
+          font-family: "proximaNovaLight";
+          font-size: 16px;
+          color: #414141; }
+  .franchise .line2 {
+    margin-top: 120px;
+    background-color: #f4f4f4;
+    padding: 110px 0; }
+    .franchise .line2 .request h2 {
+      padding: 35px 0;
+      background-image: url("../img/franchise-request-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      text-align: center; }
+    .franchise .line2 .request .underline {
+      margin-top: -10px; }
+    .franchise .line2 .request h3 {
+      margin: 0;
+      margin-top: 35px;
+      font-family: "proximaNovaBold";
+      font-size: 17px;
+      font-weight: bold;
+      text-align: center;
+      color: #5a5a5a; }
+
+.main h1, .main h2, .main h3 {
+  margin: 0; }
+.main .line1 {
+  background-image: url("../img/main-line1-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; }
+  .main .line1 .left {
+    display: block;
+    float: left;
+    width: 560px;
+    padding-top: 30px; }
+    .main .line1 .left h1 {
+      font-family: "sportsWorldRegular";
+      font-size: 122px;
+      color: #d24b48; }
+    .main .line1 .left h2 {
+      font-family: "sportsWorldRegular";
+      font-size: 62px;
+      color: #2e2e2e; }
+    .main .line1 .left h3 {
+      margin-top: 15px;
+      font-family: "proximaNovaRegular";
+      font-size: 21px;
+      color: #4c4c4c; }
+      .main .line1 .left h3 strong {
+        font-family: "myriadPro";
+        color: #2e2e2e;
+        font-weight: bold; }
+        .main .line1 .left h3 strong b {
+          color: #e94945; }
+    .main .line1 .left a.whiteBtn:hover {
+      background-color: #565656; }
+    .main .line1 .left a.whiteBtn {
+      display: block;
+      background-color: #191919;
+      color: #fff; }
+    .main .line1 .left-elements {
+      display: block;
+      margin-top: 45px;
+      width: 400px;
+      margin-left: 20px; }
+      .main .line1 .left-elements-item {
+        display: block;
+        margin-top: 20px; }
+        .main .line1 .left-elements-item img {
+          display: block;
+          float: left; }
+        .main .line1 .left-elements-item span {
+          display: block;
+          float: left;
+          padding-top: 5px;
+          margin-left: 20px;
+          font-family: "proximaNovaRegular";
+          font-size: 18px;
+          color: #676767; }
+  .main .line1 .right {
+    display: block;
+    float: left;
+    width: 580px; }
+.main .line2 {
+  background-image: url("../img/main-line2-bg1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 10px 0; }
+  .main .line2 .info-box {
+    width: 773px;
+    height: 207px;
+    background-image: url("../img/main-line2-slider1.png");
+    background-size: contain;
+    background-repeat: no-repeat; }
+    .main .line2 .info-box-btns {
+      display: block;
+      float: right;
+      margin-top: 75px; }
+      .main .line2 .info-box-btns img {
+        display: block;
+        margin-top: 5px;
+        cursor: pointer; }
+.main .line3 {
+  padding-top: 100px; }
+  .main .line3 h2 {
+    text-align: center; }
+  .main .line3 h1 {
+    text-align: center;
+    padding-bottom: 55px;
+    background-image: url("../img/main-line3-title-bg.png"); }
+  .main .line3 .underline {
+    margin-top: -40px;
+    margin-bottom: 40px; }
+  .main .line3 .elements {
+    margin-top: 70px; }
+    .main .line3 .elements-item:first-child {
+      margin-left: 10px; }
+    .main .line3 .elements-item {
+      display: block;
+      float: left;
+      width: 340px;
+      margin-left: 50px; }
+      .main .line3 .elements-item img {
+        display: block;
+        float: left;
+        width: 64px; }
+      .main .line3 .elements-item-info {
+        display: block;
+        float: left;
+        width: 240px;
+        margin-left: 30px; }
+        .main .line3 .elements-item-info h2 {
+          text-align: left;
+          font-family: "sportsWorldRegular";
+          font-size: 23px;
+          color: #373737;
+          text-transform: uppercase; }
+        .main .line3 .elements-item-info span {
+          display: block;
+          margin-top: 15px;
+          font-family: "proximaNovaLight";
+          font-size: 16px;
+          color: #404040;
+          line-height: 1.5em; }
+.main .line4 {
+  margin-bottom: 100px; }
+  .main .line4-video:hover {
+    background-image: url("../img/line2-video-pic-hover.jpg"); }
+  .main .line4-video {
+    margin-top: 80px;
+    background-image: url("../img/line2-video-pic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1140px;
+    height: 590px;
+    cursor: pointer;
+    transition: 0.3s; }
+.main .line6 .tshirt {
+  display: block;
+  margin: 70px auto; }
+.main .line6 .title-block {
+  margin-top: 90px; }
+  .main .line6 .title-block-left {
+    display: block;
+    float: left;
+    width: 575px; }
+    .main .line6 .title-block-left h1, .main .line6 .title-block-left h2 {
+      text-align: right; }
+    .main .line6 .title-block-left h1 {
+      color: #191919; }
+  .main .line6 .title-block-right {
+    display: block;
+    float: left;
+    width: 530px;
+    margin-left: 30px;
+    font-family: "proximaNovaBold";
+    font-size: 18px;
+    color: #4f4f4f; }
+.main .line6 .subtitle-block {
+  display: block;
+  margin-top: 40px;
+  font-family: "proximaNovaRegular";
+  font-size: 15px;
+  color: #757575;
+  text-align: center;
+  line-height: 1.6em;
+  letter-spacing: 1px; }
+.main .line6 .elements-item {
+  display: block;
+  float: left;
+  width: 380px;
+  height: 250px;
+  margin-top: 65px; }
+  .main .line6 .elements-item-num {
+    display: block;
+    float: left;
+    width: 55px;
+    font-family: "proximaNovaBlack";
+    font-size: 45px;
+    color: #eb4441; }
+  .main .line6 .elements-item-info {
+    display: block;
+    float: left;
+    width: 295px;
+    margin-left: 30px; }
+    .main .line6 .elements-item-info h3 {
+      font-family: "sportsWorldRegular";
+      font-size: 17px;
+      color: #383838;
+      text-transform: uppercase;
+      line-height: 1.6em; }
+    .main .line6 .elements-item-info span {
+      display: block;
+      margin-top: 15px;
+      font-family: "proximaNovaLight";
+      font-size: 16px;
+      color: #414141;
+      line-height: 1.6em;
+      letter-spacing: 1px; }
+.main .line6 .cities {
+  margin-top: 80px;
+  margin-bottom: 120px; }
+  .main .line6 .cities-left {
+    display: block;
+    float: left;
+    width: 520px; }
+  .main .line6 .cities-right {
+    display: block;
+    float: left;
+    width: 570px;
+    margin-left: 50px;
+    padding-top: 90px; }
+    .main .line6 .cities-right h2 {
+      font-size: 30px;
+      color: #404040; }
+      .main .line6 .cities-right h2 strong {
+        color: #fe4747; }
+    .main .line6 .cities-right p {
+      margin-top: 15px;
+      font-family: "proximaNovaBold";
+      font-size: 18px;
+      color: #4f4f4f; }
+    .main .line6 .cities-right-list {
+      margin-top: 35px; }
+      .main .line6 .cities-right-list-item {
+        margin-top: 15px; }
+        .main .line6 .cities-right-list-item span {
+          margin-left: 20px;
+          font-size: 21px;
+          font-family: "proximaNovaRegular";
+          color: #4f4f4f; }
+          .main .line6 .cities-right-list-item span strong {
+            font-family: "proximaNovaBold"; }
+    .main .line6 .cities-right .whiteBtn:hover {
+      color: #fff; }
+    .main .line6 .cities-right .whiteBtn {
+      margin-top: 65px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      width: 228px;
+      color: #404040; }
+
+.cartfail, .cart, .cartsuccess {
+  margin-top: 90px;
+  margin-bottom: 100px; }
+  .cartfail h1, .cart h1, .cartsuccess h1 {
+    padding-top: 60px;
+    background-image: url("../img/cartfail-title-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    text-align: center; }
+  .cartfail .content, .cart .content, .cartsuccess .content {
+    margin-top: 90px; }
+    .cartfail .content-left, .cart .content-left, .cartsuccess .content-left {
+      display: block;
+      float: left;
+      width: 450px; }
+      .cartfail .content-left-titlebox img, .cart .content-left-titlebox img, .cartsuccess .content-left-titlebox img {
+        display: block;
+        float: left;
+        width: 57px;
+        padding-top: 10px; }
+      .cartfail .content-left-titlebox h2, .cart .content-left-titlebox h2, .cartsuccess .content-left-titlebox h2 {
+        display: block;
+        float: left;
+        width: 235px;
+        margin-left: 45px;
+        font-size: 29px;
+        color: #454545; }
+        .cartfail .content-left-titlebox h2 strong, .cart .content-left-titlebox h2 strong, .cartsuccess .content-left-titlebox h2 strong {
+          font-size: 42px; }
+      .cartfail .content-left-subtitle, .cart .content-left-subtitle, .cartsuccess .content-left-subtitle {
+        display: block;
+        margin-top: 35px;
+        font-family: "proximaNovaSemibold";
+        font-size: 16px;
+        color: #585858; }
+      .cartfail .content-left-payment, .cart .content-left-payment, .cartsuccess .content-left-payment {
+        margin-top: 35px;
+        padding-bottom: 20px;
+        border-bottom: 2px dashed #e9e9e9;
+        width: 320px; }
+        .cartfail .content-left-payment-line, .cart .content-left-payment-line, .cartsuccess .content-left-payment-line {
+          margin-top: 20px;
+          font-family: "proximaNovaRegular";
+          font-size: 16px;
+          color: #565656; }
+          .cartfail .content-left-payment-line span, .cart .content-left-payment-line span, .cartsuccess .content-left-payment-line span {
+            display: block;
+            float: left;
+            width: 220px; }
+          .cartfail .content-left-payment-line strong, .cart .content-left-payment-line strong, .cartsuccess .content-left-payment-line strong {
+            display: block;
+            float: left;
+            width: 100px;
+            font-family: "proximaNovaSemibold";
+            color: #545454; }
+      .cartfail .content-left-status, .cart .content-left-status, .cartsuccess .content-left-status {
+        margin-top: 40px;
+        font-family: "proximaNovaSemibold";
+        font-size: 16px;
+        color: #eb4441; }
+        .cartfail .content-left-status.status-success, .cart .content-left-status.status-success, .cartsuccess .content-left-status.status-success {
+          color: #545454; }
+    .cartfail .content-right, .cart .content-right, .cartsuccess .content-right {
+      display: block;
+      float: left;
+      width: 537px;
+      margin-left: 100px; }
+
+.cart .content-left {
+  width: 465px; }
+  .cart .content-left h2 {
+    font-family: "proximaNovaBold";
+    font-size: 20px;
+    color: #454545;
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 10px; }
+.cart .content-subtitle {
+  font-family: "proximaNovaRegular";
+  font-size: 14px;
+  color: #737373; }
+  .cart .content-subtitle-left {
+    display: block;
+    float: left;
+    width: 230px; }
+  .cart .content-subtitle-right {
+    display: block;
+    float: right;
+    width: 145px;
+    margin-top: -4px; }
+    .cart .content-subtitle-right strong {
+      font-family: "proximaNovaBold";
+      font-size: 18px;
+      color: #eb4441; }
+.cart .content-form {
+  margin-top: 40px;
+  padding: 40px;
+  background-color: #e5e5e5; }
+  .cart .content-form-line:first-child {
+    margin-top: 0; }
+  .cart .content-form-line {
+    margin-top: 15px; }
+    .cart .content-form-line label {
+      font-family: "proximaNovaRegular";
+      font-size: 16px;
+      color: #737373;
+      letter-spacing: 1px; }
+      .cart .content-form-line label input[type="text"] {
+        display: block;
+        margin-top: 5px;
+        width: 360px;
+        background-color: #FFF;
+        border: none;
+        padding: 10px;
+        color: #474747; }
+    .cart .content-form-line .bot-line-element:first-child {
+      margin-left: 0; }
+      .cart .content-form-line .bot-line-element:first-child input[type="text"] {
+        width: 40px; }
+    .cart .content-form-line .bot-line-element:nth-child(3) {
+      float: right; }
+      .cart .content-form-line .bot-line-element:nth-child(3) input[type="text"] {
+        width: 60px; }
+    .cart .content-form-line .bot-line-element:nth-child(2) input[type="text"] {
+      width: 50px; }
+    .cart .content-form-line .bot-line-element {
+      display: block;
+      float: left;
+      width: 80px;
+      margin-left: 10px;
+      overflow: hidden;
+      font-size: 17px; }
+      .cart .content-form-line .bot-line-element input[type="text"] {
+        text-align: center; }
+  .cart .content-form input[type="submit"]:hover {
+    background-color: #494949; }
+  .cart .content-form input[type="submit"] {
+    padding: 15px 0;
+    width: 170px;
+    border: none;
+    outline: none;
+    background-color: #191919;
+    color: #fff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    font-family: "proximaNovaSemibold";
+    font-size: 16px;
+    cursor: pointer; }
+
+.lk h1 {
+  margin-top: 75px;
+  text-align: center;
+  background-image: url("../img/lk-title-bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  padding-top: 50px; }
+.lk .content {
+  margin-top: 50px; }
+  .lk .content-titlebox img {
+    display: block;
+    float: left;
+    width: 57px;
+    padding-top: 15px; }
+  .lk .content-titlebox h2 {
+    display: block;
+    float: left;
+    width: 350px;
+    margin-left: 30px;
+    font-family: "proximaNovaBold";
+    font-size: 29px;
+    color: #3e3e3e; }
+  .lk .content-orders {
+    margin-top: 40px;
+    margin-bottom: 100px; }
+    .lk .content-orders-left {
+      display: block;
+      float: left;
+      width: 650px; }
+      .lk .content-orders-left h2 {
+        font-family: "proximaNovaBold";
+        font-size: 19px;
+        color: #454545; }
+      .lk .content-orders-left table {
+        margin-top: 25px;
+        border-collapse: collapse; }
+        .lk .content-orders-left table td, .lk .content-orders-left table th {
+          padding: 15px 15px;
+          border: none;
+          letter-spacing: 1px; }
+        .lk .content-orders-left table th:nth-child(4) {
+          width: 220px; }
+        .lk .content-orders-left table th {
+          background-color: #272727;
+          font-family: "proximaNovaBold";
+          font-size: 15px;
+          color: #e9e9e9;
+          width: 110px; }
+        .lk .content-orders-left table td:nth-child(4) strong {
+          color: #fff;
+          background-color: #959595;
+          border-radius: 15px;
+          padding: 7px 20px;
+          font-weight: normal;
+          font-size: 15px; }
+        .lk .content-orders-left table td {
+          text-align: center;
+          font-family: "proximaNovaRegular";
+          font-size: 15px;
+          color: #727272; }
+    .lk .content-orders-right {
+      display: block;
+      float: right;
+      width: 458px;
+      padding-top: 80px; }
+
+/*# sourceMappingURL=styles.css.map */

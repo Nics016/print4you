@@ -34,6 +34,8 @@ foreach ($records as $record){
         ])->label('Статус') ?>
 
         <?= $form->field($model, 'role')->dropDownList([
+            User::ROLE_COURIER => 'Курьер',
+            User::ROLE_EXECUTOR => 'Исполнитель',
             User::ROLE_MANAGER => 'Менеджер',
             User::ROLE_ADMIN => 'Администратор',
         ])->label('Роль') ?>

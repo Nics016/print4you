@@ -20,7 +20,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
- * @property $office_id integer
+ * @property $role integer
+ * @property $office_id smallInteger
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -28,9 +29,43 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const ROLE_MANAGER = 20;
     const ROLE_ADMIN = 30;
+    const ROLE_COURIER = 40;
+    const ROLE_EXECUTOR = 50;
     const CREATE_SCENARIO = 'create';
 
     public $password;
+
+    /**
+     * Функция для проверки, видно ли пользователю 
+     * какой-либо пункт меню в админке
+     * 
+     * @param var $user - пользователь
+     * @param string $menuItem - название пункта меню
+     */
+    public static function VisibleInMenu($user, $menuItem)
+    {
+        return true;
+    }
+
+    /**
+     * Находит и возвращает активных пользователей с ролью $role
+     *
+     * @param  $role integer - константа роли (см. вверху)
+     */
+    public static function GetActiveUsersByRole($role)
+    {
+        $users = User::find()
+            ->where("role=" . $role 
+                . " AND status=" . self::STATUS_ACTIVE)
+            ->all();
+        // generate $id => $name array for use in DDL
+        $adaptedUsers = [];
+        foreach ($users as $u){
+            $adaptedUsers[$u['id']] = $u['username'];
+        }
+        return $adaptedUsers;
+    }
+
     /**
      * @inheritdoc
      */
