@@ -122,7 +122,7 @@
             if (currentProductSide == 'back' || currentProductSide === false) {
 
                 // найдем текущий цвет
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
@@ -152,7 +152,7 @@
 
             if (currentProductSide == 'front' || currentProductSide === false) {
                 // найдем текущий цвет
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
@@ -357,7 +357,7 @@
             xhr.send(csrfParam + '='+ csrfToken);
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    products = JSON.parse(xhr.responseText)[0];
+                    products = JSON.parse(xhr.responseText);
                     renderProducts();
                 }
             }
@@ -507,7 +507,7 @@
                 colorsContainer.removeChild(colorsContainer.firstChild);
             }
 
-            var colors = currentProduct['colors'];
+            var colors = currentProduct['constructorColors'];
 
             for (var i = 0; i < colors.length; i++) {
                 var div = document.createElement('div');
@@ -551,7 +551,7 @@
 
         // непосредственно меняем цвет продукта
         function changeProductColor(id) {
-            var colors = currentProduct['colors'];
+            var colors = currentProduct['constructorColors'];
             for (var i = 0; i < colors.length; i++) {
                 if (colors[i]['id'] == id) {
 
@@ -573,11 +573,11 @@
                     }
 
                     // добавим все размеры
-                    for (var i = 0; i < color['sizes'].length; i++) {
+                    for (var i = 0; i < color['constructorSizes'].length; i++) {
                         var span = document.createElement('span');
                         span.className = 'constructor-product-size';
-                        span.textContent = color['sizes'][i]['size'];
-                        span.dataset.id = color['sizes'][i]['id'];
+                        span.textContent = color['constructorSizes'][i]['size'];
+                        span.dataset.id = color['constructorSizes'][i]['id'];
                         colorSizesContainer.appendChild(span);
                     }
 
@@ -610,7 +610,7 @@
             var id = this.dataset.id;
 
             if (typeof id !== 'undefined' && !isNaN(parseInt(id)) && currentProductSize !== +id) {
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
 
 
@@ -620,7 +620,7 @@
 
 
 
-                        var sizes = colors[i]['sizes'];
+                        var sizes = colors[i]['constructorSizes'];
 
                         for (var x = 0; x < sizes.length; x++) {
                             if (sizes[x]['id'] == id) {

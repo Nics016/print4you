@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ConstructorColors */
 
-$this->title = 'Create Constructor Colors';
-$this->params['breadcrumbs'][] = ['label' => 'Constructor Colors', 'url' => ['index']];
+$this->title = 'Создать цвет товара: "' . $product->name . '"';
+$this->params['breadcrumbs'][] = ['label' => 'Цвета товара', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="constructor-colors-create">
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'product' => $product,
+        'sizes' => $sizes,
     ]) ?>
 
 </div>

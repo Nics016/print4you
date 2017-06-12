@@ -4,26 +4,14 @@ namespace common\models;
 
 use Yii;
 
-/**
- * This is the model class for table "constructor_categories".
- *
- * @property integer $id
- * @property string $name
- * @property integer $sequence
- */
 class ConstructorCategories extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+   
     public static function tableName()
     {
         return 'constructor_categories';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -32,9 +20,7 @@ class ConstructorCategories extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+ 
     public function attributeLabels()
     {
         return [
@@ -43,4 +29,35 @@ class ConstructorCategories extends \yii\db\ActiveRecord
             'sequence' => 'Sequence',
         ];
     }
+
+    // перед удалением категории - удалим товар
+    public function beforeDelete() {
+        parent::beforeDelete();
+
+        set_time_limit(0);
+        $products = ConstructorProducts::find()->where(['category_id' => $this->id])->all();
+
+        for ($i = 0; $i < count($products); $i++) 
+            $products[$i]->delete();
+
+        return true;
+    }
+
+    public static function getConstructorArray() 
+    {
+        $array = self::find()->with('products')->asArray()->orderBy('sequence')->all();
+
+        return $array;
+    }
+
+    public function getProducts() 
+    {   
+        $link = ConstructorProducts::getSmallImagesLink();
+
+        return $this->hasMany(ConstructorProducts::className(), ['category_id' => 'id'])
+                    ->select("id, name, description, price, category_id, ('$link' || '/' || small_image) as image")
+                    ->where(['is_published' => true])->with('constructorColors');
+    }
+
+    
 }

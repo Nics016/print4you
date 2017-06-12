@@ -12,18 +12,26 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->label('Имя цвета')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
-    <?= $form->field($model, 'color_value')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'color_value')->label('Значение цвета')->textInput(['type' => 'color']) ?>
 
-    <?= $form->field($model, 'front_image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'frontImage')->label('Лицевая сторона')->fileInput() ?>
 
-    <?= $form->field($model, 'back_image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'backImage')->label('Задняя сторона')->fileInput() ?>
+    
+    <?php 
+    $checkboxes = [];
 
-    <?= $form->field($model, 'sizes')->textInput(['maxlength' => true]) ?>
+    for ($i = 0; $i < count($sizes); $i++) {
+        $checkboxes["" . $sizes[$i]['id'] .""] = $sizes[$i]['size'];
+    }
+    echo $form->field($model, 'colorSizes')->checkboxList($checkboxes);
+    ?>
+
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

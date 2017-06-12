@@ -15,25 +15,77 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Удалить цвет?',
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Вернуться', ['index', 'id' => $product->id], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'name',
-            'color_value',
-            'front_image',
-            'back_image',
-            'sizes',
+            [
+                'attribute' => 'name',
+                'label' => 'Имя цвета',
+            ],
+            [
+                'attribute' => 'color_value',
+                'label' => 'Значение цвета',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return 
+                        '<div style="border: 1px solid black; width: 50px; height: 20px; 
+                            background: ' . $data->color_value .';">
+                        </div>';
+                }
+            ],
+            [
+                'label' => 'Имя товара',
+                'value' => function ($data) {
+                    return $data->product->name;
+                }
+            ],
+            [
+                'label' => 'Размеры',
+                'value' => function ($data) {
+                    $sizes = '';
+
+                    for ($i = 0; $i < count($data->sizes); $i++) {
+                        if ($i + 1 == count($data->sizes))
+                            $sizes .= $data->sizes[$i]->size;
+                        else
+                            $sizes .= $data->sizes[$i]->size . ', ';
+                    }
+
+                    return $sizes;
+                }
+            ],
+
+            [
+                'label' => 'Лицевая сторона',
+                'format' => 'html',
+                'value' => function ($data) {
+                    $image = $data::getSmallFrontImageLink() . '/' . $data->small_front_image;
+
+                    return "<img src='$image' width='320'/>";
+                }
+            ],
+
+            [
+                'label' => 'Обратная сторона',
+                'format' => 'html',
+                'value' => function ($data) {
+                    $image = $data::getSmallBackImageLink() . '/' . $data->small_back_image;
+
+                    return "<img src='$image' width='320'/>";
+                }
+            ],
+            
         ],
     ]) ?>
 

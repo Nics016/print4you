@@ -30,6 +30,19 @@ class Orders extends \yii\db\ActiveRecord
     const STATUS_CANCELLED = 'cancelled';
 
     /**
+     * Константы местонахождения заказа. 
+     * Используются в backend\controllers\OrdersController.php
+     */
+    const LOCATION_MANAGER_NEW = 10;
+    const LOCATION_MANAGER_ACCEPTED = 20;
+    const LOCATION_EXECUTOR_NEW = 30;
+    const LOCATION_EXECUTOR_ACCEPTED = 40;
+    const LOCATION_COURIER_NEW = 50;
+    const LOCATION_COURIER_ACCEPTED = 60;
+    const LOCATION_COURIER_COMPLETED = 70;
+    const LOCATION_EXECUTOR_COMPLETED = 80; // Исполнитель сделал заказ, курьер не был назначен
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -78,10 +91,43 @@ class Orders extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getManager($id)
-    { 
-        $manager = User::findIdentity($id);
+    public static function getNewOrdersCount($user)
+    {
+        $answ = "";
+        // Менеджер 
+        if (Yii::$app->user->identity->role == User::ROLE_MANAGER){
+            $records = self::find()
+                ->where("order_status='new'")->all();
+            $answ .= count($records) > 0 ? count($records) : "";
+        } 
+       // Исполнитель
+        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND executor_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_EXECUTOR_NEW)
+                ->all();
+            $answ .= count($records) > 0 ? count($records) : "";
+        }
+        // Курьер
+        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            $records = Orders::find()
+                ->where("order_status='proccessing' AND courier_id="
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_COURIER_NEW)
+                ->all();
+            $answ .= count($records) > 0 ? count($records) : "";
+        }
 
-        return $manager;
+        return $answ;
+    }
+
+    public function getUser($id)
+    { 
+        $user = User::findIdentity($id);
+
+        return $user;
     }
 }

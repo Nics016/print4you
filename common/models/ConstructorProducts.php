@@ -10,8 +10,8 @@ use yii\web\UploadedFile;
 class ConstructorProducts extends \yii\db\ActiveRecord
 {
 
-    const STORAGE_FULL_SIZE_DIR_TEMPLATE = '/constructor/full-size';
-    const STORAGE_SMALL_SIZE_DIR_TEMPLATE = '/constructor/small-size';
+    const STORAGE_FULL_SIZE_DIR_TEMPLATE = '/constructor/products/full-size';
+    const STORAGE_SMALL_SIZE_DIR_TEMPLATE = '/constructor/products/small-size';
     
     public $imageFile;
 
@@ -136,11 +136,31 @@ class ConstructorProducts extends \yii\db\ActiveRecord
         }
     }
 
-    // перед удалением записи - удалим картинки
+    // перед удалением записи - удалим картинки и цвета
     public function beforeDelete() {
         parent::beforeDelete();
+
+        set_time_limit(0);
+
         $this->removeImages();
+        $colors = ConstructorColors::find()->where(['product_id' => $this->id])->all();
+
+        for ($i = 0; $i < count($colors); $i++) 
+            $colors[$i]->delete();
 
         return true;
+    }
+
+    // свзязь для вывода во фронтенд конструктора
+    public function getConstructorColors()
+    {   
+        $front_link = ConstructorColors::getSmallFrontImageLink();
+        $back_link = ConstructorColors::getSmallBackImageLink();
+
+        return $this->hasMany(ConstructorColors::className(), ['product_id' => 'id'])
+                ->select("id, name, color_value, product_id, 
+                    ('$front_link' || '/' || small_front_image) as front_image, 
+                    ('$back_link' || '/' || small_back_image) as back_image"
+                )->with('constructorSizes');
     }
 }
