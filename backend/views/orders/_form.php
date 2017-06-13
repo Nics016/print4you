@@ -25,6 +25,7 @@ use common\models\Orders;
     <?= $form->field($model, 'price')->textInput()->label('Цена') ?>
 
     <?= $form->field($model, 'manager_id')->textInput()->label('ID менеджера') ?>
+    <?= $form->field($model, 'client_id')->textInput()->label('ID клиента') ?>
 
     <?= $form->field($model, 'comment')->textInput(['maxlength' => true])->label('Комментарий') ?>
 

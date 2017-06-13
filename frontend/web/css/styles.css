@@ -204,8 +204,6 @@ a {
         display: block;
         float: left;
         margin-left: 15px; }
-      .topmenu-right-above-elem4:hover .topline-popup {
-        display: block; }
       .topmenu-right-above-elem4 {
         display: block;
         float: right;
@@ -1621,5 +1619,13 @@ footer {
       float: right;
       width: 458px;
       padding-top: 80px; }
+
+.register h1 {
+  font-family: sportsWorldRegular;
+  text-align: center; }
+.register h2 {
+  margin-top: 50px;
+  margin-bottom: 200px;
+  text-align: center; }
 
 /*# sourceMappingURL=styles.css.map */

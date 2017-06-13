@@ -10,9 +10,11 @@ class m170607_114543_constructor_colors extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->notNull(),
             'color_value' => $this->string(50)->notNull(),
-            'front_image' => $this->string(255)->notNull(),
-            'back_image' => $this->string(255)->notNull(),
-            'sizes' => $this->string(255)->notNull(),
+            'full_front_image' => $this->string(255),
+            'full_back_image' => $this->string(255),
+            'small_front_image' => $this->string(255),
+            'small_back_image' => $this->string(255),
+            'product_id' => $this->integer()->notNull(),
             'is_published' => $this->boolean()->notNull()->defaultValue(false),
         ]);
     }

@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $model common\models\CommonUser */
+/* @var $orders array of common\models\Orders */
 
 use yii\helpers\Html;
 
@@ -14,7 +16,7 @@ $this->title = 'Print4you - Личный кабинет';
 				<div class="content">
 					<div class="content-titlebox clearfix">
 						<img src="/img/lk-circle.png" alt="">
-						<h2>Александр Иванов</h2>
+						<h2><?= $model['firstname'] ?> <?= $model['secondname'] ?></h2>
 					</div>
 					<div class="content-orders clearfix">
 						<div class="content-orders-left">
@@ -26,30 +28,37 @@ $this->title = 'Print4you - Личный кабинет';
 									<th>Цена</th>
 									<th>Статус</th>
 								</tr>
-								<tr>
-									<td>15/02/2017</td>
-									<td>№341</td>
-									<td>2 000 руб.</td>
-									<td><strong>В очереди</strong></td>
-								</tr>
-								<tr>
-									<td>25/01/2017</td>
-									<td>№329</td>
-									<td>1 750 руб.</td>
-									<td><strong>Отправлен</strong></td>
-								</tr>
-								<tr>
-									<td>08/01/2017</td>
-									<td>№314</td>
-									<td>900 руб.</td>
-									<td><strong>Отправлен</strong></td>
-								</tr>
-								<tr>
-									<td>28/12/2016</td>
-									<td>№297</td>
-									<td>1 500 руб.</td>
-									<td><strong>Отправлен</strong></td>
-								</tr>
+								<?php if ($orders): ?>
+									<?php foreach($orders as $order): ?>
+										<?php $formatter = Yii::$app->formatter ?>
+										<?php 
+											$status = '';
+											switch($order['order_status']){
+						                        case $order::STATUS_NEW:
+						                            $status = 'В очереди';
+						                            break;
+
+						                        case $order::STATUS_PROCCESSING:
+						                            $status = 'В обработке';
+						                            break;
+
+						                        case $order::STATUS_COMPLETED:
+						                            $status = 'Завершен';
+						                            break;
+
+						                        case $order::STATUS_CANCELLED:
+						                            $status = 'Отменен';
+						                            break;
+						                    }
+										 ?>
+										<tr>
+											<td><?= $formatter->format($order['created_at'], 'date') ?></td>
+											<td>№<?= $order['id'] ?></td>
+											<td><?= $formatter->format($order['price'], 'integer') ?> руб.</td>
+											<td><strong><?= $status ?></strong></td>
+										</tr>
+									<?php endforeach; // orders ?>
+								<?php endif; // orders ?>
 							</table>
 						</div>
 						<img src="/img/lk-discount.png" alt="" class="content-orders-right">

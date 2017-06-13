@@ -149,6 +149,25 @@ a
 	&-elem4
 		display: block
 		float: right
+	.container
+		position: relative
+		overflow: visible
+	&-popup
+		display: none
+		position: absolute
+		top: 20px
+		right: 0px
+		box-shadow: -4px 4px 20px #aaa
+		a
+			display: block
+			width: 140px
+			padding: 15px 0
+			background-color: #FFF
+			font-family: "proximaNovaLight"
+			font-size: 14px
+			color: #a5a5a5
+			border-bottom: 1px solid #f0f0f0
+			text-align: center
 
 .topmenu
 	margin-top: 15px
@@ -231,7 +250,7 @@ a
 					margin-left: 0
 				a
 					display: inline-block
-					padding: 15px 10px
+					padding: 15px 8px
 					margin-left: 10px
 					font-size: 13px
 					text-transform: uppercase
@@ -1272,7 +1291,7 @@ footer
 		background-size: cover
 		background-repeat: no-repeat
 		padding: 10px 0
-		.ads-box
+		.info-box
 			width: 773px
 			height: 207px
 			background-image: url("../img/main-line2-slider1.png")
@@ -1449,12 +1468,250 @@ footer
 					color: #404040
 // END OF MAIN
 
+// CARTFAIL, CART, CARTSUCCESS
+.cartfail, .cart, .cartsuccess
+	margin-top: 90px
+	margin-bottom: 100px
+	h1
+		padding-top: 60px
+		background-image: url("../img/cartfail-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		background-position: center
+		text-align: center
+	.content
+		margin-top: 90px
+		&-left
+			display: block
+			float: left
+			width: 450px
+			&-titlebox
+				img
+					display: block
+					float: left
+					width: 57px
+					padding-top: 10px
+				h2
+					display: block
+					float: left
+					width: 235px
+					margin-left: 45px
+					font-size: 29px
+					color: #454545
+					strong
+						font-size: 42px
+			&-subtitle
+				display: block
+				margin-top: 35px
+				font-family: "proximaNovaSemibold"
+				font-size: 16px
+				color: #585858
+			&-payment
+				margin-top: 35px
+				padding-bottom: 20px
+				border-bottom: 2px dashed #e9e9e9
+				width: 320px
+				&-line
+					margin-top: 20px
+					font-family: "proximaNovaRegular"
+					font-size: 16px
+					color: #565656
+					span
+						display: block
+						float: left
+						width: 220px
+					strong
+						display: block
+						float: left
+						width: 100px
+						font-family: "proximaNovaSemibold"
+						color: #545454
+			&-status
+				margin-top: 40px 
+				font-family: "proximaNovaSemibold"
+				font-size: 16px
+				color: #eb4441
+				&.status-success
+					color: #545454
+		&-right
+			display: block
+			float: left
+			width: 537px
+			margin-left: 100px
+// END OF CARTFAIL, CART, CARTSUCCESS
+
+// CART
+.cart
+	.content
+		&-left
+			width: 465px
+			h2
+				font-family: "proximaNovaBold"
+				font-size: 20px
+				color: #454545
+				border-bottom: 1px solid #d1d1d1
+				padding-bottom: 10px
+		&-subtitle
+			font-family: "proximaNovaRegular"
+			font-size: 14px
+			color: #737373
+			&-left
+				display: block
+				float: left
+				width: 230px
+			&-right
+				display: block
+				float: right
+				width: 145px
+				margin-top: -4px
+				strong
+					font-family: "proximaNovaBold"
+					font-size: 18px
+					color: #eb4441
+		&-form
+			margin-top: 40px
+			padding: 40px
+			background-color: #e5e5e5
+			&-line:first-child
+				margin-top: 0
+			&-line
+				margin-top: 15px
+				label
+					font-family: "proximaNovaRegular"
+					font-size: 16px
+					color: #737373
+					letter-spacing: 1px
+					input[type="text"]
+						display: block
+						margin-top: 5px
+						width: 360px
+						background-color: #FFF
+						border: none
+						padding: 10px
+						color: #474747
+				.bot-line
+					&-element:first-child
+						margin-left: 0
+						input[type="text"]
+							width: 40px
+					&-element:nth-child(3)
+						float: right
+						input[type="text"]
+							width: 60px
+					&-element:nth-child(2)
+						input[type="text"]
+							width: 50px
+					&-element
+						display: block
+						float: left
+						width: 80px
+						margin-left: 10px
+						overflow: hidden
+						font-size: 17px
+						input[type="text"]
+							text-align: center
+			input[type="submit"]:hover
+				background-color: #494949
+			input[type="submit"]
+				padding: 15px 0
+				width: 170px
+				border: none
+				outline: none
+				background-color: #191919
+				color: #fff
+				letter-spacing: 2px
+				text-transform: uppercase
+				transition: .3s
+				font-family: "proximaNovaSemibold"
+				font-size: 16px
+				cursor: pointer
+// END OF CART
+
+// LK
+.lk
+	h1
+		margin-top: 75px
+		text-align: center
+		background-image: url("../img/lk-title-bg.png")
+		background-repeat: no-repeat
+		background-size: contain
+		background-position: center
+		padding-top: 50px
+	.content
+		margin-top: 50px
+		&-titlebox
+			img
+				display: block
+				float: left
+				width: 57px
+				padding-top: 15px
+			h2
+				display: block
+				float: left
+				width: 350px
+				margin-left: 30px
+				font-family: "proximaNovaBold"
+				font-size: 29px
+				color: #3e3e3e
+		&-orders
+			margin-top: 40px
+			margin-bottom: 100px
+			&-left
+				display: block
+				float: left
+				width: 650px
+				h2
+					font-family: "proximaNovaBold"
+					font-size: 19px
+					color: #454545
+				table
+					margin-top: 25px
+					border-collapse: collapse
+					td, th
+						padding: 15px 15px
+						border: none
+						letter-spacing: 1px
+					th:nth-child(4)
+						width: 220px
+					th
+						background-color: #272727
+						font-family: "proximaNovaBold"
+						font-size: 15px
+						color: #e9e9e9
+						width: 110px
+					td:nth-child(4)
+						strong
+							color: #fff
+							background-color: #959595
+							border-radius: 15px
+							padding: 7px 20px
+							font-weight: normal
+							font-size: 15px
+					td
+						text-align: center
+						font-family: "proximaNovaRegular"
+						font-size: 15px
+						color: #727272
+			&-right
+				display: block
+				float: right
+				width: 458px
+				padding-top: 80px
+// END OF LK
+
+// REGISTER
+.register
+	h1
+		font-family: sportsWorldRegular
+		text-align: center
+	h2
+		margin-top: 50px
+		margin-bottom: 200px
+		text-align: center
+// END OF REGISTER
+
 // 
 
-// END OF
-
-// 
-
-// END OF
+// END OF 
 
 

@@ -56,7 +56,7 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'manager_id', 'created_at', 'updated_at'], 'integer'],
+            [['price', 'manager_id', 'created_at', 'updated_at', 'client_id'], 'integer'],
             [['order_status'], 'string', 'max' => 32],
             [['comment'], 'string', 'max' => 1000],
         ];

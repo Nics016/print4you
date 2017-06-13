@@ -2,6 +2,8 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+/* @var $loginError string */
+/* @var $registerSuccess string */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,6 +12,22 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+
+use yii\widgets\ActiveForm;
+use frontend\models\LoginForm;
+
+$model = new LoginForm();
+$lkLabel = Yii::$app->user->isGuest ? "Личный кабинет" 
+    : Yii::$app->user->identity->username;
+$lkLogoutLink = Html::tag('a', 'выйти', ['style' => 'margin-left: 5px', 
+        'href' => Yii::$app->urlManager->createUrl([
+            'site/logout'
+        ]),
+    ]);
+$lkLink = Yii::$app->user->isGuest ? "#" 
+    : Url::to(['site/cabinet']);
+$lkDataTarget = Yii::$app->user->isGuest ? "#loginRegisterModal"
+    : "";
 
 AppAsset::register($this);
 ?>
@@ -26,12 +44,14 @@ AppAsset::register($this);
     <!-- END OF BXSLIDER -->
     <!-- STYLES -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
     <!-- END OF STYLES -->
 </head>
 <body id=#main-wrap>
 <?php $this->beginBody() ?>
     <!-- SCRIPTS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!-- BXSLIDER -->
     <script src="/js/jquery.bxslider.min.js"></script>
     <!-- END OF BXSLIDER -->
@@ -41,7 +61,7 @@ AppAsset::register($this);
     <header>
         <!-- TOPLINE -->
         <div class="topline">
-            <div class="container clearfix">        
+            <div class="container clearfix"> 
                 <a href="#" class="topline-elem1">
                     <img src="/img/topline-mail.png" alt="">
                     <span>
@@ -55,9 +75,14 @@ AppAsset::register($this);
                     </span>
                 </a>
                 <a href="#" class="topline-elem3">Заказать звонок</a>
-                <a href="<?= Url::to(['site/cabinet']) ?>" class="topline-elem4">      
-                    <img src="/img/topline-lk.png" alt=""><span>Личный кабинет</span>
-                </a>
+                <div class="topline-elem4" >   
+                    <a href="<?= $lkLink ?>" data-toggle="modal" data-target= "<?= $lkDataTarget ?>">
+                        <img src="/img/topline-lk.png" alt=""><span><?= $lkLabel ?></span>
+                    </a>
+                    <?php if (!Yii::$app->user->isGuest): ?>
+                        (<?= $lkLogoutLink ?> )
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <!-- END OF TOPLINE -->
@@ -65,7 +90,7 @@ AppAsset::register($this);
         <!-- TOPMENU -->
         <div class="topmenu">
             <div class="container clearfix">
-                <a href="#" class="topmenu-left">
+                <a href="<?= Url::home() ?>" class="topmenu-left">
                     <img src="/img/header-logo.png">
                     <span>Печатаем и шьем <br> для вас</span>
                 </a>
@@ -156,6 +181,40 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
+
+<div id="loginRegisterModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Войдите или зарегистрируйтесь</h4>
+      </div>
+      <div class="modal-body">
+        <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'POST', 'id' => 'login-form']); ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <br>
+            <div class="form-group" style="margin: 0 auto">
+                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'style' => 'margin-left: 20px',]) ?>
+
+                <?= Html::tag('a', 'Регистрация', ['class' => 'btn btn-success', 'style' => 'margin-left: 5px', 
+                        'href' => Yii::$app->urlManager->createUrl([
+                            'site/register'
+                        ]),
+                    ]); ?>
+            </div>
+        <?php ActiveForm::end(); ?>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+
+  </div>
+</div>
     </footer>
 <?php $this->endBody() ?>
 </body>

@@ -166,7 +166,7 @@
                     </ul>
                     <ul>
                         <li class="has-sub">
-                            <a href="layout-api.html">
+                            <a href="<?= Url::toRoute(['common-user/index']) ?>">
                                 <span class="title">Клиенты</span>
                             </a>
                             <ul>

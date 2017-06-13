@@ -13,6 +13,12 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
+use yii\helpers\Html;
+use common\models\CommonUser;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+use common\models\Orders;
+
 /**
  * Site controller
  */
@@ -43,7 +49,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
@@ -80,7 +86,17 @@ class SiteController extends Controller
      */
     public function actionCabinet()
     {
-        return $this->render('cabinet');
+        if (Yii::$app->user->isGuest)
+            return $this->renderContent(Html::tag('h1','Войдите или зарегистрируйтесь, чтобы просматривать эту страницу'));
+
+        $orders = Orders::find()
+            ->where("client_id=" . Yii::$app->user->identity->id)
+            ->all();
+
+        return $this->render('cabinet',[
+            'model' => Yii::$app->user->identity,
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -138,7 +154,40 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('login', [
+            return $this->render('index', [
+                'loginError' => 'Неверный логин или пароль',
+            ]);
+        }
+    }
+
+    /**
+     * Register action.
+     *
+     * @return string
+     */
+    public function actionRegister()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new CommonUser();
+        $model->scenario = CommonUser::CREATE_SCENARIO;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->generatePasswordHash($model['password']);
+            $model->generateAuthKey();
+            if ($model->save())
+                return $this->redirect('site/register-success');
+            else 
+                print_r($model->getErrors());
+        } else {
+            return $this->render('register', [
                 'model' => $model,
             ]);
         }
@@ -177,6 +226,11 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionRegisterSuccess()
+    {
+        return $this->render('register-success');
     }
 
     /**

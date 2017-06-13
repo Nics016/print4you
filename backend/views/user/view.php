@@ -67,6 +67,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         case $model::ROLE_ADMIN:
                             return "Администратор";
                             break;
+
+                        case $model::ROLE_COURIER:
+                            return "Курьер";
+                            break;
+
+                        case $model::ROLE_EXECUTOR:
+                            return "Исполнитель";
+                            break;
                     }
                 }
             ],

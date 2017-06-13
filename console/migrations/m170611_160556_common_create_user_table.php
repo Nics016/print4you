@@ -15,6 +15,15 @@ class m170611_160556_common_create_user_table extends Migration
         $this->createTable('common_user', [
             'id' => $this->primaryKey(),
             'username' => $this->string()->notNull()->unique(),
+
+            'firstname' => $this->string()->notNull(),
+            'secondname' => $this->string(),
+            'address' => $this->string(),
+            'phone' => $this->string(),
+            'profile_pic' => $this->text(),
+            'sum_purchased_retail' => $this->integer()->defaultValue(0),
+            'sum_purchased_gross' => $this->integer()->defaultValue(0),
+
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),

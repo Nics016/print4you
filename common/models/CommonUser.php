@@ -12,6 +12,15 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
+ * 
+ * @property string $firstname
+ * @property string $secondname
+ * @property string $address
+ * @property string $phone
+ * @property text $profile_pic
+ * @property integer $sum_purchased_retail
+ * @property integer $sum_purchased_gross
+ * 
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
@@ -52,14 +61,32 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'auth_key', 'password_hash', 'email', 'firstname', 'phone'], 'required'],
+            [['status', 'created_at', 'updated_at', 'sum_purchased_retail', 'sum_purchased_gross'], 'integer'],
+            [['username', 'firstname', 'secondname', 'address', 'phone', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
             [['username'], 'unique'],
             [['password'], 'required', 'on' => self::CREATE_SCENARIO],
+        ];
+    }
+
+    /**
+     * Labels
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя',
+            'password' => 'Пароль',
+            'firstname' => 'Имя',
+            'secondname' => 'Фамилия',
+            'email' => 'Email',
+            'phone' => 'Номер телефона',
+            'address' => 'Адрес (город, улица, дом)',
+            'sum_purchased_retail' => 'Сумма покупок в розницу',
+            'sum_purchased_gross' => 'Сумма покупок оптом',
         ];
     }
 

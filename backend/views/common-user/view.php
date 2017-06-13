@@ -40,6 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'password_hash',
             // 'password_reset_token',
             'email:email',
+            'firstname',
+            'secondname',
+            'phone',
+            'address',
+            'sum_purchased_retail',
+            'sum_purchased_gross',
             [
                 'label' => 'Статус',
                 'attribute' => 'status',
