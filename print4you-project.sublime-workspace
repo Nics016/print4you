@@ -1,0 +1,707 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"JS",
+				"JSONitems"
+			],
+			[
+				"cur",
+				"curWidth"
+			],
+			[
+				"new",
+				"newWidth"
+			],
+			[
+				"mapi",
+				"mapIconSize"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"curite",
+				"curItemTotal"
+			],
+			[
+				"refre",
+				"refreshCartCount"
+			],
+			[
+				"items",
+				"itemsCount"
+			],
+			[
+				"dis",
+				"disabled"
+			],
+			[
+				"rebind",
+				"rebindRemoveCartClick"
+			],
+			[
+				"parse",
+				"parseInt"
+			],
+			[
+				"table",
+				"table-header"
+			],
+			[
+				"tabl",
+				"tableEl"
+			],
+			[
+				"det",
+				"detLink"
+			],
+			[
+				"car",
+				"cartItem"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"attr",
+				"attrHref"
+			],
+			[
+				"item",
+				"itemAddress"
+			],
+			[
+				"itema",
+				"itemArticle"
+			],
+			[
+				"get",
+				"getCartItems"
+			],
+			[
+				"sub",
+				"substr"
+			],
+			[
+				"exda",
+				"exdays"
+			],
+			[
+				"bac",
+				"background-size"
+			],
+			[
+				"pb",
+				"padding-bottom"
+			],
+			[
+				"url",
+				"urlArticle"
+			],
+			[
+				"fram",
+				"frameNo"
+			],
+			[
+				"seac",
+				"searchText"
+			],
+			[
+				"searc",
+				"searchText"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"textal",
+				"text-align"
+			],
+			[
+				"return",
+				"returnData"
+			],
+			[
+				"code",
+				"codeParameter"
+			],
+			[
+				"att",
+				"attrAttitude"
+			],
+			[
+				"enter",
+				"enterbg.jpg\tw:1920 h:1080"
+			],
+			[
+				"cur_",
+				"cur_subcat"
+			],
+			[
+				"curc",
+				"cur_cat"
+			],
+			[
+				"curCat",
+				"curCatId"
+			],
+			[
+				"overf",
+				"overflow-y"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"paddi",
+				"padding-top"
+			],
+			[
+				"ovr",
+				"overflow-x"
+			],
+			[
+				"curca",
+				"curCatId"
+			],
+			[
+				"pus",
+				"push_count"
+			],
+			[
+				"dishe",
+				"dishes_count"
+			],
+			[
+				"subca",
+				"subcats_count"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"cat",
+				"categories"
+			],
+			[
+				"name",
+				"nameadd"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 92.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 521.0
+	},
+	"console":
+	{
+		"height": 85.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/garraty/Documents/Code/html/print4you",
+		"/home/garraty/Documents/Code/html/print4you/common",
+		"/home/garraty/Documents/Code/html/print4you/common/config",
+		"/home/garraty/Documents/Code/html/print4you/common/models",
+		"/home/garraty/Documents/Code/html/print4you/console",
+		"/home/garraty/Documents/Code/html/print4you/console/migrations",
+		"/home/garraty/Documents/Code/html/print4you/frontend",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web"
+	],
+	"file_history":
+	[
+		"/home/garraty/Documents/Code/html/print4you/common/models/CommonUser.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/cart/tmpl/show.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/testing.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/modules/mod_menu/mod_menu.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/html/mod_menu/default.php",
+		"/home/garraty/Documents/Code/html/auto-z/tasks.txt",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Order.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z/js/mapControler.js",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/css/style.css",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/newCartOrder.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/js/cart.js",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/layout/index.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/newCartOrderFail.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Offer.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/user/MailerHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/DeprecatedAutoEmail.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/user/RegistrationMailerHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/order/tmpl/order1.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/order/tmpl/order1.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Cart.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/modules/mod_menu/helper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/modules/mod_menu/tmpl/default.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/html/mod_menu/product-catalogue.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/html/mod_menu/default-20170315-074912.php",
+		"/home/garraty/Documents/Code/html/auto-z/contacts-backup.html",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/js/mapControler.js",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_jce/editor/libraries/css/colorpicker.css",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/contact/tmpl/view.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/validators/RequiredValidator.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/validators/PasswordValidator.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/language/ru-RU/ru-RU.com_auto.ini",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/language/ru-RU/ru-RU.com_auto_shop_generator.ini",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/language/ru-RU/ru-RU.com_auto.ini",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/modules/mod_menu/tmpl/default_url.php",
+		"/home/garraty/Documents/Code/html/auto-z/questions.txt",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/plugins/system/autocookiechecker/autocookiechecker.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/CookieHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/tests/unit/administrator/components/com_auto/helpers/CookieHelperTest.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Cookie.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/entities/ECartItem.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/entities/ECart.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/models/MCartItem.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/cart/tmpl/show_new.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/cart/tmpl/show_new.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/cart/tmpl/base/show_new.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/cart/tmpl/base/fields.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/cart/tmpl/show.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/order/tmpl/list.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/CartHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Delivery.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/WholesaleCart.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/vinRequest/tmpl/list.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto_mart/router.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/models/MOrderItem.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/AutoMartRoutingHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/operation/tmpl/list.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/garage/tmpl/garage.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/office/tmpl/settings.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/js/app.js",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/helpers/AutoModuleHelper.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto_mart/controllers/product.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_guayaquil/views/garage/tmpl/default.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_guayaquil/guayaquillib/render/catalog/vinsearchform.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/components/com_auto/views/user/tmpl/login.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/cart/tmpl/base/table.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/garage/tmpl/garage.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/office/tmpl/settings.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Office.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z/components/com_auto/views/office/tmpl/settings.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/automix/components/com_auto/views/office/tmpl/settings.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto/views/office/tmpl/settings.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto/controllers/Order.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto/controllers/Cart.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_guayaquil/guayaquillib/render/catalog/framesearchform.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/sftp-config.json",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/sftp-config.json",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/language/ru-RU/ru-RU.ini",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_guayaquil/views/details/view.html.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z/components/com_auto/views/garage/tmpl/edit.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/plugins/system/stats/stats.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/not_found.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/cache/twig/7f/68/6817c78e55de450c688afa75f7af5f86fe86018498de751846be87629b27.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/offers.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/css/order.css",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/views/offer/tmpl/testing.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/cache/twig/78/4b/cca2a04547298af22d4af0c71c2328fd191d0fcd79717d6b8868e1c0ba9d.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/config/config.json",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/component/xml_sync/handlers/ProductHandler.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/auto.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/kladr/Api.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/automix/layout/index.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z/layout/index.twig",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/index.htmlx",
+		"/home/garraty/Documents/Code/html/auto-z/ftp-old/index.php",
+		"/home/garraty/Documents/Code/html/auto-z/ftp/ftpsync.settings",
+		"/opt/lampp/htdocs/uzbek/slide-test.html",
+		"/opt/lampp/htdocs/uzbek/ftp/engine/layout/main.php",
+		"/opt/lampp/htdocs/uzbek/ftp/engine/layout/menu.php",
+		"/opt/lampp/htdocs/uzbek/ftp/css/style.css",
+		"/opt/lampp/htdocs/uzbek/ftp/robots.txt",
+		"/opt/lampp/htdocs/uzbek/ftp/css/media.css",
+		"/opt/lampp/htdocs/uzbek/ftp/css/bootstrap.css",
+		"/opt/lampp/htdocs/uzbek/ftp/js/linksFix.js",
+		"/opt/lampp/htdocs/uzbek/ftp/index.phtml",
+		"/opt/lampp/htdocs/uzbek/todo.txt",
+		"/home/garraty/Downloads/bootstrap-3.3.7-dist/css/bootstrap-3.3.7/less/variables.less",
+		"/home/garraty/Downloads/bootstrap-3.3.7-dist/css/bootstrap-3.3.7/less/bootstrap.less",
+		"/home/garraty/Downloads/bootstrap-3.3.7-dist/css/bootstrap-3.3.7/less/media.less",
+		"/opt/lampp/htdocs/uzbek/css/bootstrap.min.css",
+		"/home/garraty/Downloads/bootstrap-3.3.7-dist/css/bootstrap-3.3.7/dist/css/bootstrap.css",
+		"/opt/lampp/htdocs/uzbek/ftp/engine/layout/footer.php",
+		"/opt/lampp/htdocs/uzbek/ftp/engine/layout/header.php",
+		"/opt/lampp/htdocs/uzbek/img/fortheir.jpg",
+		"/opt/lampp/htdocs/uzbek/index.phtml",
+		"/opt/lampp/htdocs/uzbek/slider-test2.html",
+		"/opt/lampp/htdocs/uzbek/js/swipe.js",
+		"/opt/lampp/htdocs/uzbek/js/scroll.js",
+		"/opt/lampp/htdocs/uzbek/engine/layout/menu.php",
+		"/opt/lampp/htdocs/uzbek/img/logo1.svg",
+		"/opt/lampp/htdocs/uzbek/css/media.css",
+		"/opt/lampp/htdocs/uzbek/css/style.css",
+		"/opt/lampp/htdocs/uzbek/ftp/engine/layout/logo.php",
+		"/opt/lampp/htdocs/uzbek/engine/globalfunc/func.php",
+		"/opt/lampp/htdocs/uzbek/ftp/ftpsync.settings",
+		"/opt/lampp/htdocs/uzbek/engine/layout/main.php",
+		"/opt/lampp/htdocs/uzbek/engine/layout/header.php",
+		"/opt/lampp/htdocs/uzbek/engine/layout/logo.php",
+		"/opt/lampp/htdocs/uzbek/engine/layout/footer.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/templates/autoz/css",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/administrator",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components",
+			"/home/garraty/Documents/Code/html/auto-z/ftp_stencil/components/com_auto/helpers",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/templates/auto-z/js",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/cache",
+			"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/home/garraty/Documents/Code/html/auto-z/ftp-old",
+			"/home/garraty/Documents/Code/html/auto-z/ftp",
+			"/opt/lampp/htdocs/uzbek/engine",
+			"/opt/lampp/htdocs/uzbek",
+			"/opt/lampp/htdocs/uzbek/engine",
+			"/opt/lampp/htdocs/uzbek"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"replyto",
+			"COM_AUTO_USERS_EMAIL_ACCOUNT_DETAILS",
+			"Параметры учётной записи",
+			"cart-order-wrapper",
+			"params['",
+			"ModMenuHelper",
+			"mod_menu/helper",
+			"validator",
+			"required",
+			"list",
+			"$list",
+			"$class = 'item-' . $item->id",
+			"coord",
+			"mapcontroler.js",
+			"mapcontroller.js",
+			"coord",
+			"custom#default",
+			"marker.png",
+			"/templates/auto-z/graphics/marker.png",
+			"iconImageHref",
+			"addcart",
+			"$",
+			"пароль должен состоять из",
+			"COM_AUTO_VALIDATION_REQUIRED_ERROR",
+			"Обязательно для заполнения",
+			"addcart",
+			"cbox",
+			"header-menu",
+			"Страница в разработке",
+			"optovym-pokupatelyam",
+			"footer__partners-list",
+			"makeorder",
+			"rebind",
+			"addcart",
+			"#makeorder",
+			"р",
+			"prevent",
+			"cookiehelper",
+			"$cookie",
+			"evercookie",
+			"new evercookie()",
+			"cookie",
+			"alert",
+			"table-head",
+			"addcart",
+			")",
+			"tableEl.append(",
+			".data-wrapper",
+			"politics",
+			"show",
+			"->s",
+			"show",
+			"onAddToCart",
+			"add(",
+			"add",
+			"time",
+			"show",
+			"creat",
+			"field_open",
+			"'field_open'",
+			"cartTableInvalidValue",
+			"cart_table_invalid_value_cart",
+			"invalid",
+			"cart-total-sum",
+			"createBaseCartItem",
+			"createCartItem",
+			"setSessionTimestamp",
+			"show",
+			"'fields'",
+			"cartTableInvalidValue",
+			"TPL_TBL_OFFER_EXPIRED",
+			"Предложение истекло",
+			"$data",
+			"amount",
+			"show",
+			"Mcartitem",
+			"show",
+			"getenti",
+			"getentity",
+			"show",
+			"initcart",
+			"getcartitems",
+			"addOrder",
+			"orderCartItems",
+			"addCart",
+			"addCartItem",
+			"order",
+			"addCart",
+			"forord",
+			"getCartItemsForOrder",
+			"fororder",
+			"MCartItem::createCartItem",
+			"add",
+			"ECartItem",
+			"AutoMartRoutingHelper",
+			"product",
+			"cart-inde",
+			".cart-inde",
+			"кабинете",
+			"checkVinValue",
+			"alias",
+			"$",
+			"TPL_AUTOMIX_SETTINGS_PAGE_TITLE",
+			"Ваши личные данные",
+			"render('table'",
+			"populateFromOffer",
+			"pop",
+			"items",
+			"TPL_CART_YOUR_BASKET_EMPTY",
+			"ваша корзина пуста",
+			"TPL_AUTO_CART_YOUR_BASKET_EMPTY",
+			"OM_AUTO_CART_YOUR_BASKET_EMPTY",
+			"ваша корзина пуста",
+			"INSERT INTO #__auto_cart ",
+			"partner_id",
+			"insert",
+			"sql",
+			"$query->",
+			"insert",
+			"carthelper",
+			"input",
+			"cart",
+			"numItems",
+			"Hello",
+			"checkFrameValue",
+			"name=\"findByFrame\"",
+			"name=\"findByVIN\"",
+			"GuayaquilViewDetails"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"jQuery",
+			"",
+			"answ += ",
+			".cart-table-wrapper",
+			"cart",
+			"jQuery",
+			"$this->isAllowedUser()",
+			"= array()",
+			"/img",
+			"=\"/img",
+			"\"/img",
+			"hidden-sm",
+			"hidden-xs",
+			"visible-sm",
+			"hidden-sm",
+			"visible-sm",
+			"<script src=\"js"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 100.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "",
+	"project": "print4you-project.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/Code/html/BizPrice/BizPrice-project.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 473.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

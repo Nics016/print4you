@@ -21,7 +21,7 @@
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Админ-панель Print4you</title>
     <!-- <script src="/assets/js/jquery-1.11.3.min.js"></script> -->
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <?php $this->head() ?>
@@ -158,13 +158,6 @@
                                 <li><a href="<?= Url::toRoute(['office/create']) ?>"><span class="title">Создать новый</span></a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="<?= Url::toRoute(['user/statistics']) ?>">
-                                <span class="title">Статистика</span>
-                            </a>
-                        </li>             
-                    </ul>
-                    <ul>
                         <li class="has-sub">
                             <a href="<?= Url::toRoute(['common-user/index']) ?>">
                                 <span class="title">Клиенты</span>
@@ -174,6 +167,16 @@
                                 <li><a href="<?= Url::toRoute(['common-user/create']) ?>"><span class="title">Создать нового</span></a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="<?= Url::toRoute(['user/statistics']) ?>">
+                                <span class="title">Статистика</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?= Url::toRoute(['user-settings/update', 'id' => 1]) ?>">
+                                <span class="title">Настройки email и ссылок</span>
+                            </a>
+                        </li>               
                     </ul>
                 </li>
                 <li class="has-sub">

@@ -15,8 +15,11 @@ use common\widgets\Alert;
 
 use yii\widgets\ActiveForm;
 use frontend\models\LoginForm;
+use common\models\UserSettings;
 
 $model = new LoginForm();
+
+// LK label and link
 $lkLabel = Yii::$app->user->isGuest ? "Личный кабинет" 
     : Yii::$app->user->identity->username;
 $lkLogoutLink = Html::tag('a', 'выйти', ['style' => 'margin-left: 5px', 
@@ -28,6 +31,12 @@ $lkLink = Yii::$app->user->isGuest ? "#"
     : Url::to(['site/cabinet']);
 $lkDataTarget = Yii::$app->user->isGuest ? "#loginRegisterModal"
     : "";
+
+// Email, vk, insta from UserSettings
+$settingsData = UserSettings::getCurrentSettings();
+$topEmail = $settingsData['email_index'];
+$vkLink = $settingsData['vk_link'];
+$instaLink = $settingsData['insta_link'];
 
 AppAsset::register($this);
 ?>
@@ -62,19 +71,19 @@ AppAsset::register($this);
         <!-- TOPLINE -->
         <div class="topline">
             <div class="container clearfix"> 
-                <a href="#" class="topline-elem1">
+                <a href="mailto:<?= $topEmail ?>" class="topline-elem1">
                     <img src="/img/topline-mail.png" alt="">
                     <span>
-                        info@print4you.su
+                        <?= $topEmail ?>
                     </span>
                 </a>
-                <a href="#" class="topline-elem2">
+                <a href="tel:89633325632" class="topline-elem2">
                     <img src="/img/topline-phone.png" alt="">
                     <span>
                         +7 (963) <strong>332 56 32</strong>
                     </span>
                 </a>
-                <a href="#" class="topline-elem3">Заказать звонок</a>
+                <a href="#" class="topline-elem3" data-toggle="modal" data-target="#makeCallModal">Заказать звонок</a>
                 <div class="topline-elem4" >   
                     <a href="<?= $lkLink ?>" data-toggle="modal" data-target= "<?= $lkDataTarget ?>">
                         <img src="/img/topline-lk.png" alt=""><span><?= $lkLabel ?></span>
@@ -100,14 +109,14 @@ AppAsset::register($this);
                         <span class="topmenu-right-above-elem1">
                             Футболки Cанкт-Петербурга с принтом – дело наших рук!
                         </span>
-                        <a href="#" class="topmenu-right-above-elem2 clearfix">
+                        <a href="https://www.google.com/maps?ll=59.934104,30.344623&z=16&t=m&hl=ru-RU&gl=RU&mapclient=embed&q=naberezhnaya+reki+Fontanki,+38+Sankt-Peterburg+191025" class="topmenu-right-above-elem2 clearfix" target="_blank">
                             <img src="/img/header-pin.png" alt="">
                             <span>
                                 Наб. реки Фонтанки, 38 
 Гостиный двор (в арке)
                             </span>
                         </a>
-                        <a href="#" class="topmenu-right-above-elem3 clearfix">
+                        <a href="https://www.google.com/maps/place/Goncharnaya+ul.,+2,+Sankt-Peterburg,+Russia,+191036/@59.930385,30.363689,16z/data=!4m5!3m4!1s0x469631bb14d4731d:0x545b6687b2935d3d!8m2!3d59.9303848!4d30.3636887?hl=ru-RU" class="topmenu-right-above-elem3 clearfix" target="_blank">
                             <img src="/img/header-pin.png" alt="">
                             <span>
                                 Площадь Восстания 
@@ -115,12 +124,12 @@ AppAsset::register($this);
                             </span>
                         </a>
                         <div class="topmenu-right-above-elem4">
-                            <a href="#">
+                            <!-- <a href="#">
                                 <img src="/img/header-search.png" alt="">
                             </a>
                             <a href="#">
                                 <img src="/img/header-menu.png" alt="">
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <!-- END OF TOP-RIGHT-ABOVE -->
@@ -135,10 +144,10 @@ AppAsset::register($this);
                             <a href="<?= Url::to(['site/franchise']) ?>">Франшиза</a>
                             <a href="<?= Url::to(['site/contacts']) ?>">Контакты</a>
                         </nav>        
-                        <a href="#" class="topmenu-right-below-in">
+                        <a href="<?= $instaLink ?>" class="topmenu-right-below-in" target="_blank">
                             <img src="/img/header-in.png" alt="">
                         </a>
-                        <a href="#" class="topmenu-right-below-vk">
+                        <a href="<?= $vkLink ?>" class="topmenu-right-below-vk" target="_blank">
                             <img src="/img/header-vk.png" alt="">
                         </a>
                     </div>
@@ -159,7 +168,7 @@ AppAsset::register($this);
                     <a href="tel:89633325632">+7 (963) <strong>332 56 32</strong></a>
                     <p class="with-margin">Студия на Фонтанке</p>
                     <a href="tel:89633092848"><strong>309 28 48</strong></a>
-                    <a href="#" class="footer-left-callMe">Заказать звонок</a>
+                    <a href="#" class="footer-left-callMe" data-toggle="modal" data-target="#makeCallModal">Заказать звонок</a>
                 </div>
             </div>
             <div class="footer-center">
@@ -168,8 +177,8 @@ AppAsset::register($this);
                 </a>
                 <span>Печатаем и шьем <br> для вас</span>
                 <div class="footer-center-socials">
-                    <a href="#"><img src="/img/footer-vk.png" alt=""></a>
-                    <a href="#"><img src="/img/footer-in.png" alt=""></a>
+                    <a href="<?= $vkLink ?>" target="_blank"><img src="/img/footer-vk.png" alt=""></a>
+                    <a href="<?= $instaLink ?>" target="_blank"><img src="/img/footer-in.png" alt=""></a>
                 </div>
             </div>
             <div class="footer-right">
@@ -182,6 +191,7 @@ AppAsset::register($this);
             </div>
         </div>
 
+<!-- MODALS -->
 <div id="loginRegisterModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -215,6 +225,42 @@ AppAsset::register($this);
 
   </div>
 </div>
+
+
+<div id="makeCallModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Заказать звонок</h4>
+      </div>
+      <div class="modal-body">
+            <form action="">
+                <div class="contacts-questions-form-left-line">
+                    <input type="text" name="client_name" placeholder="Ваше имя">
+                </div>
+                <div class="contacts-questions-form-left-line">
+                    <input type="text" name="client_phone" placeholder="Ваш телефон">
+                </div>
+                <div class="contacts-questions-form-right">
+                    <div class="clearfix">
+                        <textarea name="client_msg" placeholder="Примечание"></textarea>
+                        <img src="/img/contacts-questions-form-msg.png" alt="">
+                    </div>
+                    <input type="submit" value="Отправить">
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END OF MODALS -->
     </footer>
 <?php $this->endBody() ?>
 </body>

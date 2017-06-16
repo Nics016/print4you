@@ -14,6 +14,10 @@ class m170607_114449_constructor_products extends Migration
             'small_image' => $this->string(255)->notNull(),
             'price' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
+            'print_offset_x' => $this->integer()->notNull(),
+            'print_offset_y' => $this->integer()->notNull(),
+            'print_width' => $this->integer()->notNull(),
+            'print_height' => $this->integer()->notNull(),
             'is_published' => $this->boolean()->notNull()->defaultValue(false),
         ]);
     }

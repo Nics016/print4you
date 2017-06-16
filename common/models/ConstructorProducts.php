@@ -10,8 +10,8 @@ use yii\web\UploadedFile;
 class ConstructorProducts extends \yii\db\ActiveRecord
 {
 
-    const STORAGE_FULL_SIZE_DIR_TEMPLATE = '/constructor/full-size';
-    const STORAGE_SMALL_SIZE_DIR_TEMPLATE = '/constructor/small-size';
+    const STORAGE_FULL_SIZE_DIR_TEMPLATE = '/constructor/products/full-size';
+    const STORAGE_SMALL_SIZE_DIR_TEMPLATE = '/constructor/products/small-size';
     
     public $imageFile;
 
@@ -23,13 +23,18 @@ class ConstructorProducts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'category_id', 'is_published'], 'required'],
+            [['name', 'price', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height'], 'required'],
             [['description'], 'string'],
             [['price', 'category_id'], 'integer'],
             [['name', 'full_image', 'small_image'], 'string', 'max' => 255],
             ['is_published', 'boolean'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
+
+            [['print_width', 'print_height'], 'integer', 'min' => 1, 'max' => 100],
+            [['print_offset_x', 'print_offset_y'], 'integer', 'min' => 0, 'max' => 100],
+
+            [['print_width', 'print_height'], 'sumValidation'],
         ];
     }
 
@@ -44,7 +49,22 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             'price' => 'Цена',
             'category_id' => 'Категория',
             'is_published' => 'Опубликовать?',
+            'print_offset_x' => 'Отсутп принта слева',
+            'print_offset_y' => 'Отсутп принта сверху',
+            'print_width' => 'Ширина принта',
+            'print_height' => 'Высота принта',
         ];
+    }
+
+    public function sumValidation()
+    {
+        if (($this->print_width + $this->print_offset_x) > 100) {
+            $this->addError('print_width', 'Сумма отсутпа слева и ширины принта не может быть больше 100');
+        } 
+
+        if (($this->print_height + $this->print_offset_y) > 100) {
+            $this->addError('print_height', 'Сумма отсутпа сверху и высоты принта не может быть больше 100');
+        } 
     }
 
     public function uploadImage() {
@@ -136,11 +156,36 @@ class ConstructorProducts extends \yii\db\ActiveRecord
         }
     }
 
-    // перед удалением записи - удалим картинки
+    // перед удалением записи - удалим картинки и цвета
     public function beforeDelete() {
         parent::beforeDelete();
+
+        set_time_limit(0);
+
         $this->removeImages();
+        $colors = ConstructorColors::find()->where(['product_id' => $this->id])->all();
+
+        for ($i = 0; $i < count($colors); $i++) 
+            $colors[$i]->delete();
 
         return true;
+    }
+
+    // свзязь для вывода во фронтенд конструктора
+    public function getConstructorColors()
+    {   
+        $front_small_link = ConstructorColors::getSmallFrontImageLink();
+        $back_small_link = ConstructorColors::getSmallBackImageLink();
+
+        $front_full_link = ConstructorColors::getFullFrontImageLink();
+        $back_full_link = ConstructorColors::getFullBackImageLink();
+
+        return $this->hasMany(ConstructorColors::className(), ['product_id' => 'id'])
+                ->select("id, name, color_value, product_id, 
+                    ('$front_small_link' || '/' || small_front_image) as small_front_image, 
+                    ('$back_small_link' || '/' || small_back_image) as small_back_image, 
+                    ('$front_full_link' || '/' || full_front_image) as full_front_image, 
+                    ('$back_full_link' || '/' || full_back_image) as full_back_image"
+                )->with('constructorSizes');
     }
 }

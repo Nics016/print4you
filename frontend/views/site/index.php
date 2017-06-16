@@ -14,7 +14,7 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                     <h1>Печать</h1>
                     <h2>На футболках</h2>
                     <h3>Срочная печать фото на футболках и другой одежде <br> за 15 минут оптом и в розницу в <strong>Print<b>4</b>you</strong></h3>
-                    <a href="#" class="whiteBtn">Заказать</a>
+                    <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">Заказать</a>
                     <div class="left-elements">
                         <div class="left-elements-item clearfix">
                             <img src="/img/main-line1-item1.png" alt="">
@@ -312,7 +312,7 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                                 <span><strong>Москва</strong> - открытие в 2017 г.</span>
                             </div>
                         </div>
-                        <a href="#" class="whiteBtn">Узнать адрес</a>
+                        <a href="<?= Url::to(['site/contacts']) ?>" class="whiteBtn">Узнать адрес</a>
                     </div>
                 </div>
             </div>
