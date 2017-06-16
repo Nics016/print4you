@@ -131,7 +131,7 @@ AppAsset::register($this);
                             <a href="<?= Url::to(['site/about']) ?>">О нас</a>
                             <a href="<?= Url::to(['uslugi/']) ?>">Услуги</a>
                             <a href="<?= Url::to(['site/dostavka']) ?>">Оплата и доставка</a>
-                            <a href="<?= Url::to(['site/calculator']) ?>">Конструктор</a>
+                            <a href="<?= Url::to(['/constructor']) ?>">Конструктор</a>
                             <a href="<?= Url::to(['site/franchise']) ?>">Франшиза</a>
                             <a href="<?= Url::to(['site/contacts']) ?>">Контакты</a>
                         </nav>        
