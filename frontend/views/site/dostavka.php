@@ -3,8 +3,12 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+
+// use common\models\CommonUser;
 
 $this->title = 'Print4you - Оплата и доставка';
+// var_dump(CommonUser::getDiscount());
 ?>
 
 <main class="dostavka">
@@ -58,7 +62,7 @@ $this->title = 'Print4you - Оплата и доставка';
 						</p>
 						<a href="tel:88129819484" class="line4-right-text2-number">981 94 84</a>
 					</div>
-					<a href="#" class="line4-right-makeOrder">Заказать</a>
+					<a href="<?= Url::to(['uslugi/assorty']) ?>" class="line4-right-makeOrder">Заказать</a>
 				</div>
 			</div>
 		</div>

@@ -13,6 +13,16 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
+use common\models\CommonUser;
+use common\models\Orders;
+use common\models\Requests;
+use common\models\Office;
+use frontend\models\RequestCallForm;
+use frontend\components\Basket;
+
 /**
  * Site controller
  */
@@ -43,7 +53,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
@@ -65,6 +75,37 @@ class SiteController extends Controller
         ];
     }
 
+    
+
+    /**
+     * Отправка формы "заказать звонок" происходит сюда
+     */
+    public function actionRequestCallSent()
+    {
+        $model = new RequestCallForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $modelRequest = new Requests();
+            $modelRequest->name = $model->name;
+            $modelRequest->phone = $model->phone;
+            $modelRequest->email = $model->email;
+            $modelRequest->comment = $model->comment;
+            $modelRequest->request_type = $model->form_type;
+            $modelRequest->created_at = Yii::$app->formatter->asTimestamp(new \DateTime());
+            if ($modelRequest->save()){
+
+            } else 
+                return $this->renderContent(var_dump($modelRequest->getErrors()));
+            $msg = '<h2>Имя - ' . $model->name . '</h2>';
+            $msg .= '<h2>Телефон - ' . $model->phone . '</h2>';
+            $msg .= '<h2>Комментарий - ' . $model->comment . '</h2>';
+            return $this->render('successful-request',[
+                'name' => $model->name,
+            ]);
+        } else {
+            return $this->render(['site/index']);
+        }
+    }
+
     /**
      * Displays homepage.
      *
@@ -76,19 +117,26 @@ class SiteController extends Controller
     }
 
     /**
-     * Ассортимент
+     * Личный кабинет
      */
-    public function actionAssorty()
+    public function actionCabinet()
     {
-        return $this->render('assorty');
-    }
+        if (Yii::$app->user->isGuest)
+            return $this->renderContent(Html::tag('h1','Войдите или зарегистрируйтесь, чтобы просматривать эту страницу'));
 
-    /**
-     * Услуги
-     */
-    public function actionServices()
-    {
-        return $this->render('services');
+        $orders = Orders::find()
+            ->where("client_id=" . Yii::$app->user->identity->id)
+            ->all();
+
+        $discountVal = CommonUser::getDiscount();
+        $discountGrossVal = CommonUser::getDiscount(20);
+
+        return $this->render('cabinet',[
+            'model' => Yii::$app->user->identity,
+            'orders' => $orders,
+            'discountVal' => $discountVal,
+            'discountGrossVal' => $discountGrossVal,
+        ]);
     }
 
     /**
@@ -127,10 +175,50 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Basket::saveToDb(Yii::$app->user->identity->id);
             return $this->goBack();
         } else {
-            return $this->render('login', [
+            return $this->render('index', [
+                'loginError' => 'Неверный логин или пароль',
+            ]);
+        }
+    }
+
+    /**
+     * Register action.
+     *
+     * @return string
+     */
+    public function actionRegister()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new CommonUser();
+        $model->scenario = CommonUser::CREATE_SCENARIO;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->generatePasswordHash($model['password']);
+            $model->generateAuthKey();
+            if ($model->save())
+                return $this->redirect(['site/register-success']);
+            else 
+                print_r($model->getErrors());
+        } else {
+            return $this->render('register', [
                 'model' => $model,
             ]);
         }
@@ -143,7 +231,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $user_id = Yii::$app->user->identity->id;
         Yii::$app->user->logout();
+        Basket::saveToSession($user_id);
 
         return $this->goHome();
     }
@@ -169,6 +259,11 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionRegisterSuccess()
+    {
+        return $this->render('register-success');
     }
 
     /**
@@ -232,7 +327,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword($id)
     {
         try {
             $model = new ResetPasswordForm($token);

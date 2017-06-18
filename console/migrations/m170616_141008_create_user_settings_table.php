@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `office`.
+ * Handles the creation of table `user_settings`.
  */
-class m170417_144331_create_office_table extends Migration
+class m170616_141008_create_user_settings_table extends Migration
 {
     /**
      * @inheritdoc
@@ -18,9 +18,12 @@ class m170417_144331_create_office_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('office', [
+        $this->createTable('user_settings', [
             'id' => $this->primaryKey(),
-            'address' => $this->string(255)->notNull(),
+            'email' => $this->string()->notNull(),
+            'email_index' => $this->string(),
+            'vk_link' => $this->string(),
+            'insta_link' => $this->string(),
         ], $tableOptions);
     }
 
@@ -29,6 +32,6 @@ class m170417_144331_create_office_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('office');
+        $this->dropTable('user_settings');
     }
 }

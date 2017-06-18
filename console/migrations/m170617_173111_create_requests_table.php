@@ -2,10 +2,12 @@
 
 use yii\db\Migration;
 
+use frontend\models\RequestCallForm;
+
 /**
- * Handles the creation of table `office`.
+ * Handles the creation of table `requests`.
  */
-class m170417_144331_create_office_table extends Migration
+class m170617_173111_create_requests_table extends Migration
 {
     /**
      * @inheritdoc
@@ -18,9 +20,14 @@ class m170417_144331_create_office_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('office', [
+        $this->createTable('requests', [
             'id' => $this->primaryKey(),
-            'address' => $this->string(255)->notNull(),
+            'request_type' => $this->integer()->defaultValue(RequestCallForm::FORM_TYPE_CALL),
+            'name' => $this->string()->notNull(),
+            'phone' => $this->string(),
+            'email' => $this->string(),
+            'comment' => $this->string(),
+            'created_at' => $this->integer()->notNull(),
         ], $tableOptions);
     }
 
@@ -29,6 +36,6 @@ class m170417_144331_create_office_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('office');
+        $this->dropTable('requests');
     }
 }

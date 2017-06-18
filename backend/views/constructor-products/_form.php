@@ -29,6 +29,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->label('Цена')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
+    <?= $form->field($model, 'print_offset_x')->label('Отступ принта слева')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
+    <?= $form->field($model, 'print_offset_y')->label('Отступ принта сверху')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
+    <?= $form->field($model, 'print_width')->label('Ширина принта')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
+    <?= $form->field($model, 'print_height')->label('Высота принта')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
     <?= $form->field($model, 'is_published')->label('Опубликовать?')->checkbox() ?>
     
     <?php 

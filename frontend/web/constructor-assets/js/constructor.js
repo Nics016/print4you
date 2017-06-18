@@ -25,6 +25,9 @@
         var productBackSideImageElem = document.querySelector('#back-side .product-side-image');
         var colorSizesContainer = document.querySelector('.constructor-product-sizes');
 
+
+        var canvasBgImage = document.getElementById('canvas-bg-image'); 
+
         var constructorObjects = {
             front: false,
             back: false,
@@ -33,6 +36,16 @@
         var canvas = new fabric.Canvas('constructor-canvas', {
             containerClass: 'canvas-container',
         });
+
+        var canvasContainer = document.querySelector('.canvas-container');
+
+        // для добавления в корзину
+        var cloneCanvas = document.createElement('canvas');
+        cloneCanvas = new fabric.Canvas(cloneCanvas, {
+            width: canvas.getWidth(), 
+            height:canvas.getHeight()
+        });
+
 
         var tabsBtns = document.getElementsByClassName('constructor-leftbar-toogle');
 
@@ -82,6 +95,12 @@
         // клик на бэк
         constructorBackSideBtn.onclick = showBackSide;
 
+        // закрыть модалку успешного заказа
+        var closeSuccessModalBtns = document.querySelectorAll('[data-action="close-success-modal"]');
+
+        for (var i = 0; i < closeSuccessModalBtns.length; i++) 
+            closeSuccessModalBtns[i].onclick = hideSuccessModal;
+
 
         constructorInit();
 
@@ -118,7 +137,6 @@
 
         // показ передней стороны
         function showFrontSide() {
-
             if (currentProductSide == 'back' || currentProductSide === false) {
 
                 // найдем текущий цвет
@@ -126,7 +144,7 @@
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
-                        document.getElementById('canvas-bg-image').src = colors[i]['front_image'];
+                        canvasBgImage.src = colors[i]['full_front_image'];
                         currentProductSide = 'front';
                         break;
                     }
@@ -156,7 +174,7 @@
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
-                        document.getElementById('canvas-bg-image').src = colors[i]['back_image'];
+                        canvasBgImage.src = colors[i]['full_back_image'];
                         currentProductSide = 'back';
                         break;
                     }
@@ -225,8 +243,6 @@
                     });
 
                     canvas.add(image);
-            
-                    canvas.setActiveObject(image);
 
                     // центрирование
                     image.center();
@@ -239,7 +255,8 @@
             }
 
             reader.readAsDataURL(file);
-            
+
+            this.value = '';
         }
 
         // открытие input file
@@ -351,6 +368,7 @@
 
         // инициализация констурктора
         function constructorInit () {
+            showLoader('Загружаем товары...');
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/constructor/get-products/', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -365,6 +383,7 @@
 
         // рендер продуктов, пришедштх с сервера
         function renderProducts() {
+
             //изменим селект
             var select = document.getElementById('constructor-leftbar-select');
             for (var i = 0; i < products.length; i++) {
@@ -384,7 +403,7 @@
             var product = document.querySelector('.leftarea-product-image-container');
             if (product) product.dispatchEvent(new Event('click'));
 
-            document.getElementById('constructor-loader').style.display = 'none';
+            setTimeout(hideLoader, 500)
         }
 
         // рендер продуктов категории
@@ -482,6 +501,8 @@
 
                             // отобразим все данные
                             renderProductMeta();
+                            // изменим размер канваса
+                            changeCanvasSize();
 
                             // удалим класс текущего элемента с другого продукта
                             var current = document.querySelector('.leftarea-product-image-container.current');
@@ -521,9 +542,6 @@
             currentPrice = currentProduct['price'];
             changeProductPrice();
 
-            // установим изначальное положение стороны
-            currentProductSide = false;
-
             // удалим и добавим обработчик событий на клик по цвету
             var colorsList = document.querySelectorAll('.constructor-product-color');
             for (var i = 0; i < colorsList.length; i++) {
@@ -559,8 +577,8 @@
 
                     
                     constructorProductColorValueElem.textContent = color['name'];
-                    productFontSideImageElem.src = color['front_image'];
-                    productBackSideImageElem.src = color['back_image'];
+                    productFontSideImageElem.src = color['small_front_image'];
+                    productBackSideImageElem.src = color['small_back_image'];
 
                     var current = document.querySelector('.constructor-product-color.current-color');
                     removeClass(current, 'current-color');
@@ -588,21 +606,44 @@
                         sizesList[i].addEventListener('click', sizeClickHandler);
                     }
                     
+
                     sizesList[0].dispatchEvent(new Event('click'));
 
-                    if (currentProductSide === false)
+                    if (currentProductSide === false) {
                         constructorFrontSideBtn.dispatchEvent(new Event('click'));
+                        currentProductSide = 'front';
+                    }
                     if (currentProductSide == 'front') 
-                        document.getElementById('canvas-bg-image').src = color['front_image'];
+                        canvasBgImage.src = color['full_front_image'];
                     if (currentProductSide == 'back')
-                        document.getElementById('canvas-bg-image').src = color['back_image'];
-
+                        canvasBgImage.src = color['full_back_image'];
 
                     return true;
                 }
             }
 
             return false;
+        }
+
+        // изменяет размер канваса
+        function changeCanvasSize()
+        {
+            canvasBgImage.onload = function () {
+                var imgWidth = this.width;
+                var imgHeight = this.height;
+
+                var canvasOffsetY = imgHeight / 100 * currentProduct['print_offset_y'];
+                var canvasHeight = imgHeight / 100 * currentProduct['print_height'];
+                var canvasOffsetX = imgWidth / 100 * currentProduct['print_offset_x'];  
+                var canvasWidth = imgWidth / 100 * currentProduct['print_width'];
+
+                // изменим отступы у канваса
+                canvasContainer.style.top = canvasOffsetY + 'px';
+                canvasContainer.style.left = canvasOffsetX + 'px';
+
+                canvas.setHeight(canvasHeight);
+                canvas.setWidth(canvasWidth);
+            }
         }
 
         // обработчки событый на клик по размеру
@@ -617,8 +658,6 @@
                 // пройдемся по массиву цветов и найдем текущий цвет
                 for (var i = 0; i < colors.length; i++) {
                     if (currentProductColorId == colors[i]['id']) {
-
-
 
                         var sizes = colors[i]['constructorSizes'];
 
@@ -667,7 +706,158 @@
 
         // добавление в корзину
         function addToCart() {
-            window.open(canvas.toDataURL("image/png"));
+            showLoader('Формируем заказ');
+            // перезапишем текущий момент, потому что другая сторона уже записана
+            var json = canvas.toJSON();
+
+            if (currentProductSide == 'front' || currentProductSide === false)
+                constructorObjects.front = json;
+            else
+                constructorObjects.back = json;
+
+            // возьмем ссылки на картинки цветов
+            var colors = currentProduct['constructorColors'];
+            var frontColorImage, backColorImage;
+            for (var i = 0; i < colors.length; i++) {
+                if (currentProductColorId == colors[i]['id']) {
+                    frontColorImage = colors[i]['full_front_image'];
+                    backColorImage = colors[i]['full_back_image'];
+                }
+            }
+            var frontImage, backImage;
+
+            // загрузим перднее изображение
+            getOrderImage(constructorObjects.front, frontColorImage, function(image) {
+                frontImage = image;
+
+                // загрузим заднее изображение
+                getOrderImage(constructorObjects.back, backColorImage, function(image) {
+                    backImage = image;
+                    // формируем данные
+
+                    var data = csrfParam + '=' + csrfToken + '&front_base64=' + encodeURIComponent(frontImage)
+                                + '&back_base64=' + encodeURIComponent(backImage) 
+                                + '&product_id=' + currentProduct['id']
+                                + '&color_id=' + currentProductColorId + '&size_id=' + currentProductSize;
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/constructor/add-to-cart/', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
+
+                    xhr.onload = function () {
+                        console.log(xhr.responseText);
+                        hideLoader();
+                        if (xhr.status == 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response['status']) 
+                                showSuccessModal();
+                            else 
+                                addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                        } else {
+                            addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                        }
+                    }
+
+                    xhr.onerror = function() {
+                        console.log(xhr.responseText);
+                        hideLoader();
+                        addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                    }
+                });
+            });
+
+        }
+
+        // формирует картинку заказа
+        function getOrderImage(objects, canvasBgImage, callback) {
+
+            // изанчально все приведем к  дефолтному занчению
+            cloneCanvas.clear();
+            cloneCanvas.setWidth(canvas.getWidth());
+            cloneCanvas.setHeight(canvas.getHeight());
+
+            var bgImage = new Image();
+
+            bgImage.onload = function() {
+
+                // загрузили картинку товара
+                var bgImageHeight = this.height;
+                var bgImageWidth = this.width;
+
+                // загрузим все объекты принта
+                cloneCanvas.loadFromJSON(objects, function(){
+
+                    // увеличим сам принт
+                    zoomCanvasObjects(bgImageWidth, bgImageHeight);
+
+                    // получаем сам принт, установим его как картинк
+                    var contentImage = new Image();
+                    contentImage.src = cloneCanvas.toDataURL('image/png', 1.0);
+                    cloneCanvas.clear();
+               
+                    contentImage.onload = function () {
+
+                        // ставим картинку контента и картинку товара
+                        cloneCanvas.setWidth(bgImageWidth);
+                        cloneCanvas.setHeight(bgImageHeight);
+                        cloneCanvas.setBackgroundImage(new fabric.Image(bgImage), function() {
+                            var contentObj = new fabric.Image(contentImage);
+
+                            contentObj.set({
+                                top: bgImageHeight / 100 * currentProduct['print_offset_y'],
+                                left: bgImageWidth / 100 * currentProduct['print_offset_x'],
+                                height: bgImageHeight / 100 * currentProduct['print_height'],
+                                width: bgImageWidth / 100 * currentProduct['print_width'],
+                            });
+
+                            cloneCanvas.add(contentObj);
+                            contentObj.setCoords();
+                            cloneCanvas.renderAll();
+                            callback(cloneCanvas.toDataURL('image/png', 1.0));
+                        });
+                        
+                    } 
+                       
+                });
+            }
+
+            bgImage.crossOrigin = "Anonymous";
+            bgImage.src = canvasBgImage;
+        }
+
+        // увеличивает все объекты и оступы принта
+        function zoomCanvasObjects(newCanvasWidth, newCanvasHeight) {
+            var objects = cloneCanvas.getObjects();
+
+            // рабочая область, которая редактируется в админке
+            var canvasWorkWidth = newCanvasWidth / 100 * currentProduct['print_width'];
+            var canvasWorkHeight = newCanvasHeight / 100 * currentProduct['print_height'];
+
+            cloneCanvas.setWidth(canvasWorkWidth);
+            cloneCanvas.setHeight(canvasWorkHeight);
+
+            var xFactor = canvasWorkWidth / canvas.getWidth();
+            var yFactor = canvasWorkHeight/ canvas.getHeight();
+
+            for (var i in objects) {
+
+                var scaleX = objects[i].scaleX;
+                var scaleY = objects[i].scaleY;
+
+                var left = objects[i].left;
+                var top = objects[i].top;
+
+                objects[i].scaleX = scaleX * xFactor;
+                objects[i].scaleY = scaleY * yFactor;
+                objects[i].left = left * xFactor;
+                objects[i].top = top * yFactor;
+
+
+                objects[i].setCoords();
+            }
+
+            cloneCanvas.renderAll();
         }
 
         // сменить таб 
@@ -694,6 +884,34 @@
 
             }
 
+        }
+
+
+        // показать лоадер
+        function showLoader(text) {
+            document.getElementById('loader-text').textContent = text;
+            document.getElementById('constructor-loader').style.display = 'block';
+        }
+
+
+        // скрыть лоадер
+        function hideLoader() {
+            document.getElementById('constructor-loader').style.display = 'none';
+        }
+
+        // скрыть модалку успешного заказа
+        function hideSuccessModal(event) {
+            event.preventDefault();
+            document.getElementById('success-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // показать модалку умпешного заказа
+        function showSuccessModal() {
+            var modal = document.getElementById('success-modal');
+            modal.style.top = window.pageYOffset + 'px';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
     }
 

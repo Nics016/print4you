@@ -9,6 +9,15 @@ use yii\helpers\Html;
 
 $this->title = $name;
 ?>
+
+<?php if ($exception->statusCode == 404): ?>
+    <main>
+        <div class="container">
+            <h1 style="font-family: sportsWorldRegular; text-align: center;">Страницы не существует</h1>
+            <img style="display: block; margin: 10px auto" src="/img/404-pic.png" alt="">
+        </div>
+    </main>
+<?php else: ?>
 <div class="site-error">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -25,3 +34,4 @@ $this->title = $name;
     </p>
 
 </div>
+<?php endif; ?>

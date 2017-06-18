@@ -55,7 +55,8 @@ class ConstructorCategories extends \yii\db\ActiveRecord
         $link = ConstructorProducts::getSmallImagesLink();
 
         return $this->hasMany(ConstructorProducts::className(), ['category_id' => 'id'])
-                    ->select("id, name, description, price, category_id, ('$link' || '/' || small_image) as image")
+                    ->select("id, name, description, print_offset_x, print_offset_y, print_width, print_height,
+                            price, category_id, ('$link' || '/' || small_image) as image")
                     ->where(['is_published' => true])->with('constructorColors');
     }
 

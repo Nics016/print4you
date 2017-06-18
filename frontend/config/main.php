@@ -5,7 +5,6 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -16,7 +15,7 @@ return [
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\CommonUser',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
@@ -42,6 +41,16 @@ return [
             'showScriptName' => false,
             'suffix' => '/',
             'rules' => [
+                'cabinet' => 'site/cabinet',
+                'checkout' => 'cart/checkout',
+                'order-created' => 'cart/order-created',
+                'request-call-sent' => 'site/request-call-sent',
+                'dostavka' => 'site/dostavka',
+                'franchise' => 'site/franchise',
+                'register' => 'site/register',
+                'contacts' => 'site/contacts',
+                'register-success' => 'site/register-success',
+                'about' => 'site/about',
             ],
         ],
         

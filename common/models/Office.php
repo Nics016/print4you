@@ -27,7 +27,7 @@ class Office extends \yii\db\ActiveRecord
     {
         return [
             [['address'], 'required'],
-            [['address'], 'string', 'max' => 32],
+            [['address'], 'string', 'max' => 255],
         ];
     }
 

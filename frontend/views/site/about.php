@@ -28,7 +28,7 @@ $this->title = 'Print4you - О нас';
 							опыт, узкая специализация позволили нам полностью завладеть 
 							направлением.
 						</span>
-						<a href="#" class="whiteBtn">Узнать больше</a>
+						<a href="#" class="whiteBtn" data-toggle="modal" data-target="#makeCallModal">Узнать больше</a>
 					</div>
 					<img src="/img/about-man.png" alt="" class="info-right">
 				</div>
