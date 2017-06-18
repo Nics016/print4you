@@ -14,10 +14,12 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
 use yii\helpers\Html;
-use common\models\CommonUser;
-use yii\web\Response;
 use yii\widgets\ActiveForm;
+use yii\web\Response;
+use common\models\CommonUser;
 use common\models\Orders;
+use common\models\Requests;
+use frontend\models\RequestCallForm;
 
 /**
  * Site controller
@@ -69,6 +71,35 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    /**
+     * Отправка формы "заказать звонок" происходит сюда
+     */
+    public function actionRequestCallSent()
+    {
+        $model = new RequestCallForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $modelRequest = new Requests();
+            $modelRequest->name = $model->name;
+            $modelRequest->phone = $model->phone;
+            $modelRequest->email = $model->email;
+            $modelRequest->comment = $model->comment;
+            $modelRequest->request_type = $model->form_type;
+            $modelRequest->created_at = Yii::$app->formatter->asTimestamp(new \DateTime());
+            if ($modelRequest->save()){
+
+            } else 
+                return $this->renderContent(var_dump($modelRequest->getErrors()));
+            $msg = '<h2>Имя - ' . $model->name . '</h2>';
+            $msg .= '<h2>Телефон - ' . $model->phone . '</h2>';
+            $msg .= '<h2>Комментарий - ' . $model->comment . '</h2>';
+            return $this->render('successful-request',[
+                'name' => $model->name,
+            ]);
+        } else {
+            return $this->render('index');
+        }
     }
 
     /**

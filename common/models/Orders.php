@@ -91,6 +91,33 @@ class Orders extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Возвращает количество завершенных заказов клиента
+     * 
+     * @param  common\models\CommonUser $user - модель клиента
+     * @return integer $numOrders
+     */
+    public static function getClientCompletedOrdersCount($user)
+    {
+        $numOrders = 0;
+
+        $records = self::find()
+            ->where("order_status='completed'"
+                . " AND client_id=" . $user->identity->id)
+            ->all();
+        if ($records){
+            $numOrders = count($records);
+        }
+
+        return $numOrders;
+    }
+
+    /**
+     * Возвращает количество новых заказов для юзера/
+     * Используется в бэкэнде (!)
+     * 
+     * @param  backend\models\User $user - модель бэкэндного юзера
+     */
     public static function getNewOrdersCount($user)
     {
         $answ = "";

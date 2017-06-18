@@ -3,6 +3,10 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use frontend\models\RequestCallForm;
+
+$model = new RequestCallForm();
 
 $this->title = 'Print4you - Франшиза';
 ?>
@@ -97,29 +101,30 @@ $this->title = 'Print4you - Франшиза';
 					<h3>В поле "примечание" укажите ваш город</h3>
 
 					<div class="contacts-questions-form-wrapper">
-						<form method="POST" class="contacts-questions-form clearfix">
+						<?php $form = ActiveForm::begin(['action' => ['site/request-call-sent'], 'method' => 'POST', 'options' => ['class' => 'clearfix contacts-questions-form']]); ?>
 							<div class="contacts-questions-form-left">
 								<div class="contacts-questions-form-left-line">
-									<input type="text" name="client_name" placeholder="Ваше имя">
+									<?= $form->field($model, 'name')->textInput(['placeholder' => 'Ваше имя', 'class' => '', 'style' => ''])->label(false) ?>		
 									<img src="/img/topline-lk.png" alt="">
 								</div>
 								<div class="contacts-questions-form-left-line">
-									<input type="text" name="client_phone" placeholder="Ваш телефон">
+									<?= $form->field($model, 'phone')->textInput(['placeholder' => 'Ваш телефон', 'class' => '', 'style' => ''])->label(false) ?>
 									<img src="/img/topline-phone.png" alt="">
 								</div>
 								<div class="contacts-questions-form-left-line">
-									<input type="text" name="client_email" placeholder="Ваш Email">
+									<?= $form->field($model, 'email')->textInput(['placeholder' => 'Ваше Email', 'class' => '', 'style' => ''])->label(false) ?>
 									<img src="/img/topline-mail.png" alt="">
 								</div>
 							</div>
 							<div class="contacts-questions-form-right">
 								<div class="clearfix">
-									<textarea name="client_msg" placeholder="Примечание"></textarea>
+									<?= $form->field($model, 'comment')->textArea(['placeholder' => 'Примечание', 'class' => '', 'style' => ''])->label(false) ?>
 									<img src="/img/contacts-questions-form-msg.png" alt="">
 								</div>
+								<?= $form->field($model, 'form_type')->hiddenInput(['value' => RequestCallForm::FORM_TYPE_FRANCHISE])->label(false) ?>
 								<input type="submit" value="Отправить">
 							</div>
-						</form>
+						<?php ActiveForm::end(); ?>
 					</div>
 				</div>
 			</div>

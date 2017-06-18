@@ -7,6 +7,8 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
+use common\models\Orders;
+
 /**
  * User model
  *
@@ -37,6 +39,103 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     const CREATE_SCENARIO = 'create';
 
     public $password;
+
+    /**
+     * Возвращает текущую скидку клиента в %.
+     *
+     * Высчитывается на основе количества завершенных заказов 
+     * и суммы стоимости заказов.
+     *
+     * Для гостя ($user->identity->isGuest) может быть только скидка 
+     * когда он заказывает 10-19 товаров.
+     *
+     * @var integer $numItems - количество покупаемых товаров
+     * @return integer $discountVal - итоговая скидка
+     */
+    public static function getDiscount($numItems = 0, $user = null)
+    {
+        $discountVal = 0;
+
+        if (!$user){
+            $user = Yii::$app->user;
+        }
+
+        // guest
+        if ($user->isGuest){
+            if ($numItems >= 10 && $numItems <= 19){
+                $discountVal = 20;
+            }
+        }
+        // registered user
+        else{
+            // retail
+            if ($numItems < 20){
+                // 10-19 items => 20%
+                if ($numItems >= 10 && $numItems <= 19){
+                    $discountVal = 20;
+                } else { // 1-9 items
+                    $numOrders = Orders::getClientCompletedOrdersCount($user);
+                    if ($numOrders >= 1){
+                        $discountVal = 5;
+                    }
+                    if ($numOrders >= 2){
+                        $discountVal = 10;
+                    }
+                    if ($user->identity->getRetailPurchasedSum() >= 50000){
+                        $discountVal = 15;
+                    }
+                    if ($user->identity->getRetailPurchasedSum() >= 150000){
+                        $discountVal = 20;
+                    }
+                }
+                
+            } 
+            // gross
+            else {
+                if ($user->identity->getTotalPurchasedSum() >= 50000){
+                    $discountVal = 3;
+                }
+                if ($user->identity->getTotalPurchasedSum() >= 150000){
+                    $discountVal = 5;
+                }
+            }
+        }
+
+        return $discountVal;
+    }
+
+    /**
+     * Возвращает сумму розничных покупок клиента
+     * 
+     * @return integer $sumRetail
+     */
+    public function getRetailPurchasedSum()
+    {
+        return $this->sum_purchased_retail;
+    }
+
+    /**
+     * Возвращает сумму оптовых покупок клиента
+     * 
+     * @return integer $sumGross
+     */
+    public function getGrossPurchasedSum()
+    {
+        return $this->sum_purchased_gross;
+    }
+
+    /**
+     * Возвращает сумму заказов - оптом + розница
+     *
+     * Используется в методе getCurrentDiscount
+     * @return integer $totalPurchasedSum
+     */
+    public function getTotalPurchasedSum()
+    {
+        return ($this->getRetailPurchasedSum() 
+            + $this->getGrossPurchasedSum());
+    }
+
     /**
      * @inheritdoc
      */

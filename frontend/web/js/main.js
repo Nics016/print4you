@@ -18,6 +18,11 @@ $(document).ready(function(){
 	initLine3Slider();
 
 	initMainLine2Slider(2, 4000);
+	
+	activateAssortyTabs();
+
+	// lightgallery
+	$(".footer-right-photos").lightGallery();
 
 	// activate bxslider
 	$('.line5-slider').bxSlider({
@@ -26,7 +31,33 @@ $(document).ready(function(){
  		slideWidth: 360,
   		slideMargin: 10
 	});
+
 });
+
+/**
+ * Табы Розница / Оптом на странице uslugi/assorty
+ */
+function activateAssortyTabs()
+{
+	$(".assorty-category a").each(function(index){
+		$(this).bind("click", function(e){
+			e.preventDefault();
+			clickAssortyTab(index);
+		});
+	});
+
+	clickAssortyTab(0);
+}
+
+function clickAssortyTab(i)
+{
+	// change .active class
+	$(".assorty-category a").removeClass("active");
+	$(".assorty-category a").eq(i).addClass("active");
+
+	// show tab
+	$(".line2-tabs-tab").fadeOut().eq(i).fadeIn();
+}
 
 ////////////////////////////////////////////////////
 // The main's line 2 slider functionality script. //

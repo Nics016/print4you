@@ -15,9 +15,11 @@ use common\widgets\Alert;
 
 use yii\widgets\ActiveForm;
 use frontend\models\LoginForm;
+use frontend\models\RequestCallForm;
 use common\models\UserSettings;
 
 $model = new LoginForm();
+$modelRequestCall = new RequestCallForm();
 
 // LK label and link
 $lkLabel = Yii::$app->user->isGuest ? "Личный кабинет" 
@@ -37,36 +39,19 @@ $settingsData = UserSettings::getCurrentSettings();
 $topEmail = $settingsData['email_index'];
 $vkLink = $settingsData['vk_link'];
 $instaLink = $settingsData['insta_link'];
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <?php $this->head() ?>
     <meta charset="<?= Yii::$app->charset ?>">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-    <!-- BXSLIDER -->
-    <link rel="stylesheet" href="/css/jquery.bxslider.css">
-    <!-- END OF BXSLIDER -->
-    <!-- STYLES -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <!-- END OF STYLES -->
 </head>
 <body id=#main-wrap>
 <?php $this->beginBody() ?>
-    <!-- SCRIPTS -->
-    <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- BXSLIDER -->
-    <script src="/js/jquery.bxslider.min.js"></script>
-    <!-- END OF BXSLIDER -->
-    <script src="/js/main.js"></script>  
-    <!-- END OF SCRIPTS -->
-
     <header>
         <!-- TOPLINE -->
         <div class="topline">
@@ -184,9 +169,9 @@ AppAsset::register($this);
             <div class="footer-right">
                 <span>Последние фотографии</span>
                 <div class="footer-right-photos">
-                    <a href="#"><img src="/img/footer-photo1.png" alt=""></a>
-                    <a href="#"><img src="/img/footer-photo2.png" alt=""></a>
-                    <a href="#"><img src="/img/footer-photo3.png" alt=""></a>
+                    <a href="/img/footer-photo1.png"><img src="/img/footer-photo1.png" alt=""></a>
+                    <a href="/img/footer-photo2.png"><img src="/img/footer-photo2.png" alt=""></a>
+                    <a href="/img/footer-photo3.png"><img src="/img/footer-photo3.png" alt=""></a>
                 </div>
             </div>
         </div>
@@ -237,21 +222,22 @@ AppAsset::register($this);
         <h4 class="modal-title">Заказать звонок</h4>
       </div>
       <div class="modal-body">
-            <form action="">
-                <div class="contacts-questions-form-left-line">
-                    <input type="text" name="client_name" placeholder="Ваше имя">
+        <?php $form = ActiveForm::begin(['action' => ['site/request-call-sent'], 'method' => 'POST']); ?>
+            <div class="contacts-questions-form-left-line">
+                <?= $form->field($modelRequestCall, 'name')->textInput(['autofocus' => true, 'placeholder' => 'Ваше имя'])->label(false) ?>
+            </div>
+            <div class="contacts-questions-form-left-line">
+                <?= $form->field($modelRequestCall, 'phone')->textInput(['placeholder' => 'Ваш телефон'])->label(false) ?>
+            </div>
+            <div class="contacts-questions-form-right">
+                <?= $form->field($modelRequestCall, 'comment')->textArea(['placeholder' => 'Примечание'])->label(false) ?>
+                <br>
+                <div class="clearfix">
+                    <?= $form->field($modelRequestCall, 'form_type')->hiddenInput(['value' => RequestCallForm::FORM_TYPE_CALL])->label(false) ?>
+                    <?= Html::submitInput('Отправить', ['style' => 'margin-top: 20px']) ?>
                 </div>
-                <div class="contacts-questions-form-left-line">
-                    <input type="text" name="client_phone" placeholder="Ваш телефон">
-                </div>
-                <div class="contacts-questions-form-right">
-                    <div class="clearfix">
-                        <textarea name="client_msg" placeholder="Примечание"></textarea>
-                        <img src="/img/contacts-questions-form-msg.png" alt="">
-                    </div>
-                    <input type="submit" value="Отправить">
-                </div>
-            </form>
+            </div>
+        <?php ActiveForm::end(); ?>
       </div>
       <div class="modal-footer">
         

@@ -93,8 +93,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     return "Офис не задан";
                 }
             ],
-            'created_at:datetime',
-            'updated_at:datetime',
+            [
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
+            ],
+            [
+                'label' => 'Дата обновления',
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->updated_at);
+                }
+            ],
         ],
     ]) ?>
 

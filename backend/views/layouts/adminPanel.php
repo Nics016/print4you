@@ -176,7 +176,7 @@
                             <a href="<?= Url::toRoute(['user-settings/update', 'id' => 1]) ?>">
                                 <span class="title">Настройки email и ссылок</span>
                             </a>
-                        </li>               
+                        </li>   
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -196,6 +196,11 @@
                     </ul>
                 </li>
             <?php endif ?>
+                <li>
+                    <a href="<?= Url::toRoute(['requests/index']) ?>">
+                        <span class="title">Заявки на звонок</span>
+                    </a>
+                </li> 
             </ul>
         </div>
     </div>

@@ -344,7 +344,7 @@ class OrdersController extends Controller
      * если курьер - текущий пользователь,
      * либо, если у заказа нет курьера, и 
      * исполнитель - текущий пользователь
-     * 
+     *
      * @param integer $id - id заказа
      */
     public function actionComplete($id)

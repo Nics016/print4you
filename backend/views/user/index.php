@@ -71,7 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
-            'created_at:datetime',
+            [
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
+            ],
             // 'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

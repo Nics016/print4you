@@ -1,6 +1,6 @@
 <?php
 return [
-    'language' => 'ru',
+    'language' => 'ru-RU',
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -22,6 +22,17 @@ return [
             'decimalSeparator' => '.',
             'thousandSeparator' => ' ',
             'currencyCode' => 'EUR',
+            'locale' => 'ru',
        ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,   // do not publish the bundle
+                    'js' => [
+                        '/js/jQuery-3.0.0.min.js',
+                    ]
+                ],
+            ],
+        ],
     ],
 ];

@@ -5,7 +5,10 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+// use common\models\CommonUser;
+
 $this->title = 'Print4you - Оплата и доставка';
+// var_dump(CommonUser::getDiscount());
 ?>
 
 <main class="dostavka">

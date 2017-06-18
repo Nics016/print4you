@@ -674,6 +674,10 @@ footer
 .assorty
 	margin-top: 100px
 	margin-bottom: 100px
+	.line2
+		&-tabs
+			&-tab
+				display: none
 	.title
 		text-align: center
 		margin-top: 20px
@@ -892,6 +896,8 @@ footer
 				&-line:first-child
 					margin-top: 0
 				&-line
+					position: relative
+					margin-top: 20px
 					input
 						width: 350px
 						font-family: "proximaNovaRegular"
@@ -899,11 +905,13 @@ footer
 						color: #676767
 						padding: 10px 20px
 					img
-						margin-left: -40px
-					margin-top: 20px
+						position: absolute
+						top: 15px
+						right: 70px
 			&-right
 				display: block
 				float: right
+				position: relative
 				width: 405px
 				margin-right: -10px
 				textarea
@@ -919,8 +927,9 @@ footer
 				img
 					display: block
 					float: left
-					margin-left: -30px
-					margin-top: 10px
+					position: absolute
+					top: 25px
+					right: 20px
 				input[type="submit"]:hover
 					background-color: #555555
 				input[type="submit"]
@@ -949,6 +958,8 @@ footer
 		display: block
 		margin: 20px auto
 		float: none
+		textarea
+			float: none
 
 // END OF CONTACTS
 
