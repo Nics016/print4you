@@ -22,6 +22,9 @@ use common\models\Orders;
             Orders::STATUS_CANCELLED => 'Отменен',
         ])->label('Статус') ?>
 
+    <?= $form->field($model, 'client_name')->textInput()->label('Имя клиента') ?>
+    <?= $form->field($model, 'phone')->textInput()->label('Номер телефона клиента') ?>
+    <?= $form->field($model, 'address')->textInput()->label('Адрес доставки') ?>
     <?= $form->field($model, 'price')->textInput()->label('Цена') ?>
 
     <?= $form->field($model, 'manager_id')->textInput()->label('ID менеджера') ?>

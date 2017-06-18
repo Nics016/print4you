@@ -223,7 +223,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 
@@ -241,7 +241,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 
@@ -259,7 +259,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 
@@ -277,7 +277,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 
@@ -295,7 +295,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 						<div class="assorty-row clearfix">
@@ -312,7 +312,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 						<div class="assorty-row clearfix">
@@ -329,7 +329,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 						<div class="assorty-row clearfix">
@@ -346,7 +346,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 						<div class="assorty-row clearfix">
@@ -363,7 +363,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 						<div class="assorty-row clearfix">
@@ -380,7 +380,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 								<span class="assorty-row-description-text">
 									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam minima consequatur vitae, libero quis doloribus veritatis culpa non porro aperiam ipsa repudiandae molestias illum exercitationem eius, harum ut itaque, cumque et, dolorum autem mollitia vel officiis! Repellendus illum laboriosam nobis architecto, ipsa nisi sequi, ipsam debitis totam iusto placeat adipisci harum laudantium, obcaecati, voluptatum delectus? Repellendus aliquid quis iste, repellat vitae reprehenderit ut, totam veniam doloremque illum, illo harum labore.
 								</span>
-								<a href="#" class="assorty-row-description-btn">Печать от 10 шт.</a>
+								<a href="#" class="assorty-row-description-btn">Печать от 20 шт.</a>
 							</div>
 						</div>
 					</div> 

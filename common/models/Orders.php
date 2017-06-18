@@ -56,9 +56,12 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'manager_id', 'created_at', 'updated_at', 'client_id'], 'integer'],
-            [['order_status'], 'string', 'max' => 32],
+            [['client_name', 'phone'], 'required'],
+            [['price', 'manager_id', 'created_at', 'updated_at', 'client_id', 'delivery_office_id'], 'integer'],
+            ['delivery_required', 'boolean'],
+            [['order_status', 'client_name', 'address'], 'string', 'max' => 32],
             [['comment'], 'string', 'max' => 1000],
+            ['phone', 'match', 'pattern' => '/9\d{9}/']
         ];
     }
 
@@ -69,12 +72,16 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'order_status' => 'Order Status',
-            'price' => 'Price',
-            'manager_id' => 'Manager ID',
-            'comment' => 'Comment',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'order_status' => 'Статус',
+            'price' => 'Стоимость',
+            'manager_id' => 'ID менеджера',
+            'comment' => 'Комментарий',
+            'client_name' => 'Имя',
+            'address' => 'Адрес доставки',
+            'phone' => 'Номер телефона',
+            'created_at' => 'Дата',
+            'updated_at' => 'Дата изменения',
+            'delivery_required' => 'Доставка',
         ];
     }
 

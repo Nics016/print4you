@@ -19,7 +19,9 @@ use yii\web\Response;
 use common\models\CommonUser;
 use common\models\Orders;
 use common\models\Requests;
+use common\models\Office;
 use frontend\models\RequestCallForm;
+use frontend\components\Basket;
 
 /**
  * Site controller
@@ -74,6 +76,41 @@ class SiteController extends Controller
     }
 
     /**
+     * Рендерится при нажатии "Оформить" в корзине
+     */
+    public function actionNewOrder()
+    {
+        $model = new Orders();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save())
+                return $this->redirect(['site/order-created']);
+            else 
+                print_r($model->getErrors());
+        } else {
+            $model->delivery_required = true;
+            $records = Office::Find()->all();
+            $offices = [];
+            foreach ($records as $record){
+                $offices[(int)$record['id']] = $record['address'];
+            }
+            return $this->render('new-order', [
+                'model' => $model,
+                'offices' => $offices,
+            ]);
+        }
+    }
+
+    /**
+     * Открывается после успешного создания заказа,
+     * т.е. перенаправляется сюда из new-order
+     */
+    public function actionOrderCreated()
+    {
+        return $this->render('order-created');
+    }
+
+    /**
      * Отправка формы "заказать звонок" происходит сюда
      */
     public function actionRequestCallSent()
@@ -98,7 +135,7 @@ class SiteController extends Controller
                 'name' => $model->name,
             ]);
         } else {
-            return $this->render('index');
+            return $this->render(['site/index']);
         }
     }
 
@@ -124,26 +161,13 @@ class SiteController extends Controller
             ->where("client_id=" . Yii::$app->user->identity->id)
             ->all();
 
+        $discountVal = CommonUser::getDiscount();
+
         return $this->render('cabinet',[
             'model' => Yii::$app->user->identity,
             'orders' => $orders,
+            'discountVal' => $discountVal,
         ]);
-    }
-
-    /**
-     * Ассортимент
-     */
-    public function actionAssorty()
-    {
-        return $this->render('assorty');
-    }
-
-    /**
-     * Услуги
-     */
-    public function actionServices()
-    {
-        return $this->render('services');
     }
 
     /**
@@ -182,7 +206,14 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Basket::saveToDb(Yii::$app->user->identity->id);
             return $this->goBack();
         } else {
             return $this->render('index', [
@@ -214,7 +245,7 @@ class SiteController extends Controller
             $model->generatePasswordHash($model['password']);
             $model->generateAuthKey();
             if ($model->save())
-                return $this->redirect('site/register-success');
+                return $this->redirect(['site/register-success']);
             else 
                 print_r($model->getErrors());
         } else {
@@ -231,7 +262,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $user_id = Yii::$app->user->identity->id;
         Yii::$app->user->logout();
+        Basket::saveToSession($user_id);
 
         return $this->goHome();
     }
@@ -325,7 +358,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword($id)
     {
         try {
             $model = new ResetPasswordForm($token);

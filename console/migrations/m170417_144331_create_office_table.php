@@ -20,7 +20,7 @@ class m170417_144331_create_office_table extends Migration
 
         $this->createTable('office', [
             'id' => $this->primaryKey(),
-            'address' => $this->string(32)->notNull(),
+            'address' => $this->string(255)->notNull(),
         ], $tableOptions);
     }
 

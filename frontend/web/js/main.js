@@ -32,7 +32,28 @@ $(document).ready(function(){
   		slideMargin: 10
 	});
 
+	initNewOrderCheckbox();
+
 });
+
+/**
+ * Бинд функции при нажатии на чекбокс "Доставка"
+ * на странице new-order
+ */
+function initNewOrderCheckbox()
+{
+	// hide delivery_office_id initially
+	$(".field-orders-delivery_office_id").hide();
+	$("#orders-delivery_required").bind("click", function(){
+		if (document.getElementById("orders-delivery_required").checked){
+			$(".field-orders-delivery_office_id").slideUp();
+			$(".field-orders-address").slideDown();
+		} else {
+			$(".field-orders-address").slideUp();
+			$(".field-orders-delivery_office_id").slideDown();
+		}
+	});
+}
 
 /**
  * Табы Розница / Оптом на странице uslugi/assorty

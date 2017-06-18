@@ -157,7 +157,7 @@ AppAsset::register($this);
                 </div>
             </div>
             <div class="footer-center">
-                <a href="#">
+                <a href="<?= Url::home() ?>">
                     <img src="/img/footer-logo.png" alt="" class="footer-center-print">
                 </a>
                 <span>Печатаем и шьем <br> для вас</span>
@@ -187,7 +187,7 @@ AppAsset::register($this);
         <h4 class="modal-title">Войдите или зарегистрируйтесь</h4>
       </div>
       <div class="modal-body">
-        <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'POST', 'id' => 'login-form']); ?>
+        <?php $form = ActiveForm::begin(['action' => ['site/login'], 'method' => 'POST', 'id' => 'login-form', 'enableAjaxValidation'=> true, 'validateOnBlur' => false, 'validateOnChange' => false]); ?>
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'rememberMe')->checkbox() ?>

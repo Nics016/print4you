@@ -42,6 +42,14 @@ return [
             'showScriptName' => false,
             'suffix' => '/',
             'rules' => [
+                'cabinet' => 'site/cabinet',
+                'request-call-sent' => 'site/request-call-sent',
+                'dostavka' => 'site/dostavka',
+                'franchise' => 'site/franchise',
+                'register' => 'site/register',
+                'contacts' => 'site/contacts',
+                'register-success' => 'site/register-success',
+                'about' => 'site/about',
             ],
         ],
         
