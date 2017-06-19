@@ -162,12 +162,13 @@ class CommonUser extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'firstname', 'phone'], 'required'],
             [['status', 'created_at', 'updated_at', 'sum_purchased_retail', 'sum_purchased_gross'], 'integer'],
-            [['username', 'firstname', 'secondname', 'address', 'phone', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'firstname', 'secondname', 'address', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
             [['username'], 'unique'],
             [['password'], 'required', 'on' => self::CREATE_SCENARIO],
+            ['phone', 'match', 'pattern' => '/9\d{9}/'],
         ];
     }
 

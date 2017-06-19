@@ -78,7 +78,7 @@ class SiteController extends Controller
     /**
      * Рендерится при нажатии "Оформить" в корзине
      */
-    public function actionNewOrder()
+    public function actionCheckout()
     {
         $model = new Orders();
 
@@ -94,7 +94,7 @@ class SiteController extends Controller
             foreach ($records as $record){
                 $offices[(int)$record['id']] = $record['address'];
             }
-            return $this->render('new-order', [
+            return $this->render('checkout', [
                 'model' => $model,
                 'offices' => $offices,
             ]);
@@ -162,11 +162,13 @@ class SiteController extends Controller
             ->all();
 
         $discountVal = CommonUser::getDiscount();
+        $discountGrossVal = CommonUser::getDiscount(20);
 
         return $this->render('cabinet',[
             'model' => Yii::$app->user->identity,
             'orders' => $orders,
             'discountVal' => $discountVal,
+            'discountGrossVal' => $discountGrossVal,
         ]);
     }
 

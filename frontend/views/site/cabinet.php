@@ -3,6 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\CommonUser */
 /* @var $orders array of common\models\Orders */
+/* @var $discountVal integer */
+/* @var $discountGrossVal integer */
 
 use yii\helpers\Html;
 
@@ -61,7 +63,11 @@ $this->title = 'Print4you - Личный кабинет';
 								<?php endif; // orders ?>
 							</table>
 						</div>
-						<img src="/img/lk-discount.png" alt="" class="content-orders-right">
+						<div class="content-orders-right">
+							<h2>Ваша скидка</h2>
+							<h3 style="margin-top: 40px">Розничная - <strong><?= $discountVal ?>%</strong></h3>
+							<h3>Оптовая - <strong><?= $discountGrossVal ?>%</strong></h3>
+						</div>
 					</div>
 				</div>
 			</div>

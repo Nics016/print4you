@@ -19,14 +19,12 @@ class AppAsset extends AssetBundle
         '/css/bootstrap.css',
     ];
     public $js = [
-        '/js/jQuery-3.0.0.min.js',
         '/js/bootstrap.min.js',
         '/js/lightgallery.js',
         '/js/jquery.bxslider.min.js',
-        '/js/main.js?v=2',
+        '/js/main.js?v=3',
     ];
     public $depends = [
-        // 'yii\web\YiiAsset',
-        // 'yii\bootstrap\BootstrapAsset',
+        'frontend\assets\jQueryAsset'
     ];
 }
