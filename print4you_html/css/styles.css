@@ -204,8 +204,6 @@ a {
         display: block;
         float: left;
         margin-left: 15px; }
-      .topmenu-right-above-elem4:hover .topline-popup {
-        display: block; }
       .topmenu-right-above-elem4 {
         display: block;
         float: right;
@@ -638,7 +636,10 @@ footer {
       border-radius: 50%; }
 
 .assorty {
-  margin-top: 100px; }
+  margin-top: 100px;
+  margin-bottom: 100px; }
+  .assorty .line2-tabs-tab {
+    display: none; }
   .assorty .title {
     text-align: center;
     margin-top: 20px;
@@ -652,7 +653,7 @@ footer {
   .assorty .assorty-category {
     margin: 0 auto;
     margin-top: 70px;
-    width: 220px;
+    width: 280px;
     padding-left: 30px;
     padding-bottom: 30px; }
     .assorty .assorty-category a:first-child {
@@ -667,7 +668,7 @@ footer {
     .assorty .assorty-category a {
       display: block;
       float: left;
-      width: 70px;
+      width: 100px;
       font-family: "helveticaNeueCyrRoman";
       color: #191919;
       font-weight: bold;
@@ -835,12 +836,12 @@ footer {
   padding: 50px 65px;
   background-color: #d8d8d8;
   overflow: hidden;
-  height: 182px; }
+  height: 280px; }
   .contacts-questions-form-wrapper {
     margin: 0 auto;
     margin-top: 75px;
-    width: 948px;
-    height: 286px;
+    width: 970px;
+    height: 305px;
     padding: 12px;
     background-image: url("../img/contacts-questions-form-wrapper-bg.png"); }
   .contacts-questions-form-left {
@@ -850,6 +851,7 @@ footer {
     .contacts-questions-form-left-line:first-child {
       margin-top: 0; }
     .contacts-questions-form-left-line {
+      position: relative;
       margin-top: 20px; }
       .contacts-questions-form-left-line input {
         width: 350px;
@@ -858,10 +860,13 @@ footer {
         color: #676767;
         padding: 10px 20px; }
       .contacts-questions-form-left-line img {
-        margin-left: -40px; }
+        position: absolute;
+        top: 15px;
+        right: 70px; }
   .contacts-questions-form-right {
     display: block;
     float: right;
+    position: relative;
     width: 405px;
     margin-right: -10px; }
     .contacts-questions-form-right textarea {
@@ -871,14 +876,15 @@ footer {
       padding: 10px 20px;
       font-size: 16px;
       color: #676767;
-      width: 90%;
-      height: 80px;
+      width: 100%;
+      height: 115px;
       resize: none; }
     .contacts-questions-form-right img {
       display: block;
       float: left;
-      margin-left: -30px;
-      margin-top: 10px; }
+      position: absolute;
+      top: 25px;
+      right: 20px; }
     .contacts-questions-form-right input[type="submit"]:hover {
       background-color: #555555; }
     .contacts-questions-form-right input[type="submit"] {
@@ -896,6 +902,18 @@ footer {
       outline: none;
       cursor: pointer;
       transition: 0.3s; }
+
+#makeCallModal .contacts-questions-form-left-line input {
+  display: block;
+  position: relative;
+  margin: 10px auto 0;
+  width: 405px; }
+#makeCallModal .contacts-questions-form-right {
+  display: block;
+  margin: 20px auto;
+  float: none; }
+  #makeCallModal .contacts-questions-form-right textarea {
+    float: none; }
 
 .about {
   margin-bottom: 100px; }
@@ -1620,6 +1638,108 @@ footer {
       display: block;
       float: right;
       width: 458px;
-      padding-top: 80px; }
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-radius: 20px;
+      background-color: #efefef;
+      text-align: center; }
+      .lk .content-orders-right h3 strong {
+        color: red; }
+
+.register h1 {
+  font-family: sportsWorldRegular;
+  text-align: center; }
+.register h2 {
+  margin-top: 50px;
+  margin-bottom: 200px;
+  text-align: center; }
+
+.sublimation .line1 h2 {
+  background-image: url("../img/sublimation-title-bg.png"); }
+.sublimation .line1-right {
+  width: 455px;
+  height: 322px;
+  background-image: url("../img/sublimation-line1-photo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 50px;
+  padding: 50px; }
+  .sublimation .line1-right h3 {
+    font-family: "sportsWorldRegular";
+    font-size: 26px;
+    color: #fff;
+    letter-spacing: 2px;
+    font-weight: normal; }
+  .sublimation .line1-right p {
+    margin-top: 30px;
+    font-family: "proximaNovaRegular";
+    font-size: 16px;
+    color: #fff;
+    line-height: 26px; }
+
+.termoperenos .line1 h2 {
+  background-image: url("../img/termoperenos-title-bg.png");
+  text-align: center; }
+.termoperenos .line1 h1 {
+  margin-top: 50px;
+  text-align: center; }
+.termoperenos .line1-left {
+  float: none;
+  width: 100%; }
+  .termoperenos .line1-left-description p {
+    text-align: center;
+    padding: 0 100px; }
+.termoperenos .pluses {
+  margin-top: 80px; }
+  .termoperenos .pluses h3 {
+    font-family: "sportsWorldRegular";
+    font-size: 21px;
+    color: #3b3b3b;
+    text-align: center; }
+  .termoperenos .pluses-elements {
+    margin-top: 60px;
+    padding-left: 100px;
+    padding-right: 30px; }
+    .termoperenos .pluses-elements-item {
+      display: block;
+      float: left;
+      width: 250px;
+      margin-left: 100px;
+      height: 370px; }
+      .termoperenos .pluses-elements-item h4 {
+        margin-top: 20px;
+        font-size: 19px; }
+      .termoperenos .pluses-elements-item p {
+        margin-top: 15px;
+        font-family: "proximaNovaLight";
+        font-size: 16px;
+        color: #404040; }
+
+.cifrovaya .line1 h2 {
+  background-image: url("../img/cifrovaya-title-bg.png"); }
+.cifrovaya .line1-left-elements-top-el:nth-child(2n) {
+  margin-left: 100px; }
+.cifrovaya .line1-left-elements-top-el {
+  display: block;
+  float: left;
+  width: 195px;
+  height: 250px; }
+.cifrovaya .line2 .subvideo {
+  margin-top: 70px; }
+  .cifrovaya .line2 .subvideo-left, .cifrovaya .line2 .subvideo-right {
+    font-family: "proximaNovaLight";
+    font-size: 14px;
+    color: #5c5c5c;
+    line-height: 25px;
+    letter-spacing: 1px;
+    text-align: justify; }
+  .cifrovaya .line2 .subvideo-left {
+    display: block;
+    float: left;
+    width: 555px; }
+  .cifrovaya .line2 .subvideo-right {
+    display: block;
+    float: right;
+    width: 555px; }
 
 /*# sourceMappingURL=styles.css.map */

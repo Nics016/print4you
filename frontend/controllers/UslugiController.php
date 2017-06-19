@@ -27,6 +27,31 @@ class UslugiController extends Controller
         return $this->render("assorty");
     }
 
+
+    /**
+     * Термоперенос
+     */
+    public function actionTermoperenos()
+    {
+        return $this->render("termoperenos");
+    }
+
+    /**
+     * Сублимация
+     */
+    public function actionSublimation()
+    {
+        return $this->render("sublimation");
+    }
+
+    /**
+     * Цифровая печать
+     */
+    public function actionCifrovaya()
+    {
+        return $this->render("cifrovaya");
+    }
+
 	/**
 	 * Шелкография
 	 */

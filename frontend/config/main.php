@@ -5,7 +5,6 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -23,6 +22,20 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js'=>[],
+                ],
+                'yii\validators\ValidationAsset' => [
+                    'depends' => [
+                        'frontend\assets\jQueryAsset',
+                        'frontend\assets\AppAsset',
+                        'yii\web\YiiAsset',
+                    ],
+                ],
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -43,6 +56,8 @@ return [
             'suffix' => '/',
             'rules' => [
                 'cabinet' => 'site/cabinet',
+                'checkout' => 'cart/checkout',
+                'order-created' => 'cart/order-created',
                 'request-call-sent' => 'site/request-call-sent',
                 'dostavka' => 'site/dostavka',
                 'franchise' => 'site/franchise',

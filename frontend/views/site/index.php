@@ -120,18 +120,18 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                 <div class="underline"></div>
                 <div class="elements clearfix">
                     <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic1.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Цифровая печать</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Прямая печать)</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                        <a href="<?= Url::to(['uslugi/cifrovaya']) ?>"><img src="/img/services-pic1.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/cifrovaya']) ?>" class="elements-item-title">Цифровая печать</a>
+                        <a href="<?= Url::to(['uslugi/cifrovaya']) ?>" class="elements-item-text">(Прямая печать)</a>
+                        <a href="<?= Url::to(['uslugi/cifrovaya']) ?>" class="whiteBtn">
                             Подробнее
                         </a>
                     </div>
                     <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic2.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Печать плёнкой</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Термоперенос)</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                        <a href="<?= Url::to(['uslugi/termoperenos']) ?>"><img src="/img/services-pic2.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/termoperenos']) ?>" class="elements-item-title">Печать плёнкой</a>
+                        <a href="<?= Url::to(['uslugi/termoperenos']) ?>" class="elements-item-text">(Термоперенос)</a>
+                        <a href="<?= Url::to(['uslugi/termoperenos']) ?>" class="whiteBtn">
                             Подробнее
                         </a>
                     </div>
@@ -144,10 +144,10 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                         </a>
                     </div>
                     <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic4.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">печать на синтетике</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-text">(Сублимация)</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
+                        <a href="<?= Url::to(['uslugi/sublimation']) ?>"><img src="/img/services-pic4.jpg" alt=""></a>
+                        <a href="<?= Url::to(['uslugi/sublimation']) ?>" class="elements-item-title">печать на синтетике</a>
+                        <a href="<?= Url::to(['uslugi/sublimation']) ?>" class="elements-item-text">(Сублимация)</a>
+                        <a href="<?= Url::to(['uslugi/sublimation']) ?>" class="whiteBtn">
                             Подробнее
                         </a>
                     </div>

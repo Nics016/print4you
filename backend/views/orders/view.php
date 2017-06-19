@@ -4,6 +4,8 @@ use Yii;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\models\User;
+use common\models\CommonUser;
+use common\models\Orders;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
@@ -94,6 +96,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'price',
             ],
             [
+                'label' => 'Цена со скидкой (руб.)',
+                'value' => function($model){
+                    $answ = floor(Orders::calculateDiscountPrice($model['price'], $model['discount_percent']));
+                    return $answ;
+                }
+            ],
+            [
                 'label' => 'Менеджер',
                 'attribute' => 'manager_id',
                 'value' => function($model){
@@ -126,13 +135,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Нужна доставка по адресу клиента',
+                'attribute' => 'delivery_required',
+                'value' => function($model){
+                    $answ = $model['delivery_required'] ? "Да" : "Нет";
+                    return $answ;
+                }
+            ],
+            [
+                'label' => 'Оптовый заказ',
+                'attribute' => 'is_gross',
+                'value' => function($model){
+                    $answ = $model['is_gross'] ? "Да" : "Нет";
+                    return $answ;
+                }
+            ],
+            'address',
+            [
                 'label' => 'Комментарий',
                 'attribute' => 'comment',
             ],
             [
                 'label' => 'Дата создания',
                 'attribute' => 'created_at',
-                'format' => 'date',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
             ],
         ],
     ]) ?>

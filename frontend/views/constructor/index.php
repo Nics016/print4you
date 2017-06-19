@@ -1,17 +1,26 @@
 <?php 
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 $this->title = 'Конструктор';
 
-$this->registerCssFile('/constructor-assets/css/constructor.css');
+// common style.css
+$css_file_name = Yii::getAlias('@frontend') . '/web/constructor-assets/css/constructor.css';
+$this->registerCssFile('/constructor-assets/css/constructor.css?v='. filemtime($css_file_name));
 
+// fabric.js
 $this->registerJsFile('/constructor-assets/js/fabric.min.js', [
 	'position' => \yii\web\View::POS_END,
 ]);
 
-
-$this->registerJsFile('/constructor-assets/js/constructor.js?v=' . time(), [
+// common constructor.js
+$js_file_name = Yii::getAlias('@frontend') . '/web/constructor-assets/js/constructor.js';
+$this->registerJsFile('/constructor-assets/js/constructor.js?v=' . filemtime($js_file_name), [
 	'position' => \yii\web\View::POS_END,
 ]);
 
+// avaliable constructor fonts
 $constructor_fonts = [
 	'Acrobat Bold' => 'akrobatBold',
 	'Sports World Regular' => 'sportsWorldRegular',
@@ -91,7 +100,7 @@ $constructor_fonts = [
 			<div id="image-tab" class="constructor-tab" style="display: none;">
 				<span class="add-image-title">
 					Здесь вы можете <button href="#" id="add-image">добавить изображение</button> с компьютера 
-					<input type="file" id="fileupload" style="position:absolute; top:-100px;">
+					<input type="file" id="fileupload" style="position:absolute; top:-9999999px;">
 				</span>
 
 				<ul class="image-rules-list">
@@ -120,11 +129,6 @@ $constructor_fonts = [
 				<span class="constructor-product-meta-title">Размер:</span>
 
 				<div class="constructor-product-sizes clearfix">
-					<!-- <span class="constructor-product-size current-size">X</span>
-					<span class="constructor-product-size">XL</span>
-					<span class="constructor-product-size">XXL</span>
-					<span class="constructor-product-size">XL</span>
-					<span class="constructor-product-size">XL</span> -->
 				</div>
 
 			</div>
@@ -137,21 +141,22 @@ $constructor_fonts = [
 		<div class="constructor-center-area" id="canvas-wrap">
 			
 			<span id="constructor-error">/</span>
-
-			<div class="canvas-bg-container">
-				<img src="" alt="" id="canvas-bg-image">
-			</div>
-				
-			<div class="canvas-main-container">
-				<canvas id="constructor-canvas" width="190" height="330"></canvas>
-			</div>
-
-			<div class="canvas-controls-contaner">
-				<button class="canvas-control" id="delete-layer" disabled>Удалить</button>
-				<button class="canvas-control" id="x-align-layer" disabled>Гор. выравнивание</button>
-				<button class="canvas-control" id="y-align-layer" disabled>Верт. выравнивание</button>
-			</div>
 			
+			<div class="constructor-canvas-area">
+				<div class="canvas-bg-container">
+					<img src="" alt="" id="canvas-bg-image">
+				</div>
+					
+				<div class="canvas-main-container">
+					<canvas id="constructor-canvas" width="190" height="330"></canvas>
+				</div>
+
+				<div class="canvas-controls-contaner">
+					<button class="canvas-control" id="delete-layer" disabled>Удалить</button>
+					<button class="canvas-control" id="x-align-layer" disabled>Гор. выравнивание</button>
+					<button class="canvas-control" id="y-align-layer" disabled>Верт. выравнивание</button>
+				</div>
+			</div>
 		</div>
 
 
@@ -197,10 +202,30 @@ $constructor_fonts = [
 		
 		<div id="constructor-loader">
 			<div class='uil-ripple-css' style='transform:scale(0.99);'><div></div><div></div></div>
+			<span id="loader-text"></span>
 		</div>
 		
 	</div>
 	
 	<!-- END CONSTRUCTOR  -->
-
+	<!-- SUCCESS MODAL -->
+	<div id="success-modal">
+		<div class="success-modal-container">
+			<div class="success-modal-title clearfix">
+				<span class="success-modal-title-text">Ваш заказ успешно добавлен в корзину!</span>
+				<div class="success-modal-title-icon-container" data-action="close-success-modal">
+					<?= Html::img('@web/constructor-assets/img/close-icon.png', [
+						'alt' => 'close icon',
+						'class' => 'success-modal-title-icon',
+					]) ?>
+				</div>
+			</div>
+			<div class="success-modal-body">
+				<div class="success-modal-content clearfix">
+					<a href="#" data-action="close-success-modal" class="success-modal-link success-modal-left">Продолжить</a>
+					<a href="<?= Url::to(['cart/']) ?>" class="success-modal-link success-modal-right">В корзину</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -75,40 +75,7 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Рендерится при нажатии "Оформить" в корзине
-     */
-    public function actionCheckout()
-    {
-        $model = new Orders();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save())
-                return $this->redirect(['site/order-created']);
-            else 
-                print_r($model->getErrors());
-        } else {
-            $model->delivery_required = true;
-            $records = Office::Find()->all();
-            $offices = [];
-            foreach ($records as $record){
-                $offices[(int)$record['id']] = $record['address'];
-            }
-            return $this->render('checkout', [
-                'model' => $model,
-                'offices' => $offices,
-            ]);
-        }
-    }
-
-    /**
-     * Открывается после успешного создания заказа,
-     * т.е. перенаправляется сюда из new-order
-     */
-    public function actionOrderCreated()
-    {
-        return $this->render('order-created');
-    }
+    
 
     /**
      * Отправка формы "заказать звонок" происходит сюда

@@ -1654,4 +1654,92 @@ footer {
   margin-bottom: 200px;
   text-align: center; }
 
+.sublimation .line1 h2 {
+  background-image: url("../img/sublimation-title-bg.png"); }
+.sublimation .line1-right {
+  width: 455px;
+  height: 322px;
+  background-image: url("../img/sublimation-line1-photo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 50px;
+  padding: 20px 50px; }
+  .sublimation .line1-right h3 {
+    font-family: "sportsWorldRegular";
+    font-size: 26px;
+    color: #fff;
+    letter-spacing: 2px;
+    font-weight: normal; }
+  .sublimation .line1-right p {
+    margin-top: 15px;
+    font-family: "proximaNovaRegular";
+    font-size: 16px;
+    color: #fff;
+    line-height: 20px; }
+
+.termoperenos .line1 h2 {
+  background-image: url("../img/termoperenos-title-bg.png");
+  text-align: center; }
+.termoperenos .line1 h1 {
+  margin-top: 50px;
+  text-align: center; }
+.termoperenos .line1-left {
+  float: none;
+  width: 100%; }
+  .termoperenos .line1-left-description p {
+    text-align: center;
+    padding: 0 100px; }
+.termoperenos .pluses {
+  margin-top: 80px; }
+  .termoperenos .pluses h3 {
+    font-family: "sportsWorldRegular";
+    font-size: 21px;
+    color: #3b3b3b;
+    text-align: center; }
+  .termoperenos .pluses-elements {
+    margin-top: 60px;
+    padding-left: 100px;
+    padding-right: 30px; }
+    .termoperenos .pluses-elements-item {
+      display: block;
+      float: left;
+      width: 250px;
+      margin-left: 100px;
+      height: 370px; }
+      .termoperenos .pluses-elements-item h4 {
+        margin-top: 20px;
+        font-size: 19px; }
+      .termoperenos .pluses-elements-item p {
+        margin-top: 15px;
+        font-family: "proximaNovaLight";
+        font-size: 16px;
+        color: #404040; }
+
+.cifrovaya .line1 h2 {
+  background-image: url("../img/cifrovaya-title-bg.png"); }
+.cifrovaya .line1-left-elements-top-el:nth-child(2n) {
+  margin-left: 100px; }
+.cifrovaya .line1-left-elements-top-el {
+  display: block;
+  float: left;
+  width: 195px;
+  height: 250px; }
+.cifrovaya .line2 .subvideo {
+  margin-top: 70px; }
+  .cifrovaya .line2 .subvideo-left, .cifrovaya .line2 .subvideo-right {
+    font-family: "proximaNovaLight";
+    font-size: 14px;
+    color: #5c5c5c;
+    line-height: 25px;
+    letter-spacing: 1px;
+    text-align: justify; }
+  .cifrovaya .line2 .subvideo-left {
+    display: block;
+    float: left;
+    width: 555px; }
+  .cifrovaya .line2 .subvideo-right {
+    display: block;
+    float: right;
+    width: 555px; }
+
 /*# sourceMappingURL=styles.css.map */

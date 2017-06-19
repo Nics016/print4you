@@ -1,12 +1,8 @@
 <?php
-
 namespace common\models;
-
 use Yii;
-
 use yii\db\ActiveRecord;
 use backend\models\User;
-
 /**
  * This is the model class for table "orders".
  *
@@ -43,6 +39,13 @@ class Orders extends \yii\db\ActiveRecord
     const LOCATION_EXECUTOR_COMPLETED = 80; // Исполнитель сделал заказ, курьер не был назначен
 
     /**
+     * Константы стоимости доставки товара
+     */
+    const DELIVERY_REQUIRED_PRICE = 300;
+    const DELIVERY_NOT_REQUIRED_PRICE = 0;
+    const GROSS_PRICE_PRODUCT_COUNT = 20;
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -50,6 +53,21 @@ class Orders extends \yii\db\ActiveRecord
         return 'orders';
     }
 
+    /**
+     * Считает цену со скидкой
+     * 
+     * @param  integer $price - начальная цена
+     * @param  integer $discount - скидка в %
+     * @return integer $discountedPrice - цена со скидкой
+     */
+    public static function calculateDiscountPrice($price, $discount = null)
+    {
+        if (!$discount)
+            return $price;
+        $answ = $price * (100 - $discount) / 100;
+
+        return $answ;
+    }
     /**
      * @inheritdoc
      */
@@ -59,12 +77,11 @@ class Orders extends \yii\db\ActiveRecord
             [['client_name', 'phone'], 'required'],
             [['price', 'manager_id', 'created_at', 'updated_at', 'client_id', 'delivery_office_id'], 'integer'],
             ['delivery_required', 'boolean'],
-            [['order_status', 'client_name', 'address'], 'string', 'max' => 32],
+            [['order_status', 'client_name', 'address'], 'string', 'max' => 255],
             [['comment'], 'string', 'max' => 1000],
             ['phone', 'match', 'pattern' => '/9\d{9}/']
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -82,9 +99,9 @@ class Orders extends \yii\db\ActiveRecord
             'created_at' => 'Дата',
             'updated_at' => 'Дата изменения',
             'delivery_required' => 'Доставка',
+            'delivery_price' => 'Стоимость доставки',
         ];
     }
-
     public function behaviors()
     {
         return [
@@ -109,14 +126,29 @@ class Orders extends \yii\db\ActiveRecord
         $numOrders = 0;
 
         $records = self::find()
-            ->where("order_status='completed'"
-                . " AND client_id=" . $user->identity->id)
-            ->all();
+            ->where('order_status=:status AND client_id=:client_id', [
+                    ':status' => self::STATUS_COMPLETED,
+                    ':client_id' => $user->identity->id,
+                ])->all();
+            
         if ($records){
             $numOrders = count($records);
         }
 
         return $numOrders;
+    }
+
+    public static function getClientCompletedOrdersCountNew($user)
+    {
+
+        $records = self::find()->select('id')
+            ->where([
+                    'order_status' => self::STATUS_COMPLETED,
+                    'client_id' => $user->identity->id,
+                ])->asArray()->all();
+            
+
+        return count($records);
     }
 
     /**
@@ -156,6 +188,40 @@ class Orders extends \yii\db\ActiveRecord
         }
 
         return $answ;
+    }
+
+    public function getNewOrdersCountNew()
+    {
+        switch (Yii::$app->user->identity->role) {
+            // Менеджер 
+            case User::ROLE_MANAGER:
+
+                // безопасный запрос
+                $records = self::find()->where(['order_status' => self::STATUS_NEW])->all();
+                break;
+            // Исполнитель
+            case User::ROLE_EXECUTOR:
+                $records = Orders::find()
+                            ->where([
+                                'order_status' => self::STATUS_PROCCESSING,
+                                'executor_id' => Yii::$app->user->identity->id,
+                                'location' => self::LOCATION_EXECUTOR_NEW,
+                            ])->all();
+                break;
+            // Курьер
+            case User::ROLE_COURIER:
+                $records = self::find()
+                            ->where([
+                                'order_status' => self::STATUS_PROCCESSING,
+                                'courier_id'=> Yii::$app->user->identity->id,
+                                'location' => self::LOCATION_COURIER_NEW,
+                            ])->all();
+                break;
+        }
+
+        // php считает только 1 раз
+        $count = count($records);
+        return  $count > 0 ? (string)$count : "";
     }
 
     public function getUser($id)
