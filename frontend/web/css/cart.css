@@ -56,6 +56,15 @@
     margin-bottom: 0px;
 }
 
+.about-big-order {
+    text-align: center;
+    display: block;
+    color: #363636;
+    font-size: 18px;
+    font-family: 'helveticaNeueCyrRoman';
+    margin-top: 10px;
+}
+
 .constructor-product-row:last-child {
 	margin-bottom: 20px;
 }
@@ -153,11 +162,26 @@
     margin-right: 10px;
     color: #555;
     font-family: 'proximaNovaSemibold';
+    border: 1px solid #555;
+    max-width: 50px;
+    text-align: center;
+}
+
+.product-count {
+    -moz-appearance: textfield;
+}
+
+.product-count::-webkit-outer-spin-button,
+.product-count::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .push-product:hover, .pop-product:hover {
     background-color: #5BC0DE;
 }
+
+
 
 .push-product, .pop-product {
 	color: #fff;
@@ -199,6 +223,17 @@
     font-family: 'helveticaNeueCyrRoman';
     text-transform: uppercase;
     border-bottom: 1px solid black;
+}
+
+.product-price-sum:last-child {
+    margin-top: 5px;
+}
+
+.product-price-sum.text-through-line {
+    font-size: 18px;
+    font-family: 'proximaNovaBold';
+    text-decoration: line-through;
+    color: #a5a4a4;
 }
 
 .product-price-sum {

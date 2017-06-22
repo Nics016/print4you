@@ -538,9 +538,6 @@
                 colorsContainer.appendChild(div);
             }
 
-            // установим цену
-            currentPrice = currentProduct['price'];
-            changeProductPrice();
 
             // удалим и добавим обработчик событий на клик по цвету
             var colorsList = document.querySelectorAll('.constructor-product-color');
@@ -575,7 +572,10 @@
 
                     var color = colors[i];
 
-                    
+                    // установим цену
+                    currentPrice = color['price'];
+                    changeProductPrice();
+
                     constructorProductColorValueElem.textContent = color['name'];
                     productFontSideImageElem.src = color['small_front_image'];
                     productBackSideImageElem.src = color['small_back_image'];

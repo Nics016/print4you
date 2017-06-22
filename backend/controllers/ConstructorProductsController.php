@@ -33,7 +33,7 @@ class ConstructorProductsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ConstructorProducts::find()->with('category'),
+            'query' => ConstructorProducts::find()->with('category')->orderBy('category_id'),
         ]);
 
         return $this->render('index', [

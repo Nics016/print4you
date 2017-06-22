@@ -10,6 +10,18 @@ jQuery(document).ready(function($){
 		changeProductCount(this, 'pop')
 	});
 
+	$('.product-count').bind('change', function() {
+		var val = parseInt($(this).val());
+		if (isNaN(val) || val <= 0) {
+			$(this).css({'border': '1px solid red'});
+		} else {
+			$(this).css({'border': '1px solid #555'});
+			changeProductCount(this, 'count', val);
+		}
+		
+	});
+
+	// изменение размера продукта
 	$('.constructor-product-sizes').bind('change', function() {
 		var parent = $(this).closest('.constructor-product-row');
 		var id = parseInt($(parent).find('.product-id').val());
@@ -95,7 +107,7 @@ jQuery(document).ready(function($){
 										$(elem).val(val - 1);
 								})
 
-								changeCheckoutHtml(msg['checkout_html']);
+								changeFullPrice(msg['basket_price']);
 
 								$(parent).remove();
 
@@ -117,11 +129,10 @@ jQuery(document).ready(function($){
 	});
 
 	// изенение количества продукции
-	function changeProductCount(elem, action) {
+	function changeProductCount(elem, action, count = false) {
 
 		var parent = $(elem).closest('.constructor-product-row');
 		var id = parseInt($(parent).find('.product-id').val());
-		var price = parseInt($(parent).find('.product-price').val());
 		var loadingOverlay = $(parent).find('.loading-product-container');
 		var loadingText = $(loadingOverlay).find('.loading-text');
 
@@ -133,15 +144,20 @@ jQuery(document).ready(function($){
 
 			$.ajax({
 				url: '/cart/change-product-count/',
-				data: {'_csrf-frontend': _csrf, id: id, action: action},
+				data: {'_csrf-frontend': _csrf, id: id, action: action, count: count},
 				type: 'POST',
 				success: function (response) {
 
 					if (response['status'] == 'ok') {
-						changeCheckoutHtml(response['checkout_html']);
-						$(parent).find('.product-count').text(response['count']);
-						$(parent).find('.product-price-count').text(response['count']);
-						$(parent).find('.product-price-sum-value').text(response['count'] * price);
+
+						// изменяем цену коризны
+						changeFullPrice(response['basket_price']);
+
+						// изменим значение инпута
+						$(parent).find('.product-count').val(response['count']);
+						
+						// изменим html продукта
+						$(parent).find('.product-price-container').html(response['product_price_html']);
 					}
 
 					setTimeout(function (){
@@ -160,8 +176,8 @@ jQuery(document).ready(function($){
 
 
 	// изменить цену внизу
-	function changeCheckoutHtml(html) {
-		$('#checkout-container').html(html);
+	function changeFullPrice(val) {
+		$('#full-price').text(val);
 	}
 
 });

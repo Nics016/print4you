@@ -23,6 +23,20 @@ return [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js'=>[],
+                ],
+                'yii\validators\ValidationAsset' => [
+                    'depends' => [
+                        'frontend\assets\jQueryAsset',
+                        'frontend\assets\AppAsset',
+                        'yii\web\YiiAsset',
+                    ],
+                ],
+            ],
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

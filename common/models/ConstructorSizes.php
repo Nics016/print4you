@@ -44,4 +44,13 @@ class ConstructorSizes extends \yii\db\ActiveRecord
             'sequence' => 'Sequence',
         ];
     }
+
+    // удлим данные со склада и из таблицы ConstructorColorSizes
+    public function beforeDelete() {
+        ConstructorStorage::deleteAll(['color_id' => $this->id]);
+        ConstructorColorSizes::deleteAll(['color_id' => $this->id]);
+
+        return true;
+    }
+
 }

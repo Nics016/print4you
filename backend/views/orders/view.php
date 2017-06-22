@@ -102,6 +102,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Клиент',
+                'attribute' => '',
+                'value' => function($model){
+                    $user = CommonUser::findIdentity($model['client_id']);
+                    return $user['username'];
+                }
+            ],
+            [
                 'label' => 'Исполнитель',
                 'attribute' => 'executor_id',
                 'value' => function($model){

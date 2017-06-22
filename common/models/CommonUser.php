@@ -111,7 +111,12 @@ class CommonUser extends ActiveRecord implements IdentityInterface
      */
     public function getRetailPurchasedSum()
     {
-        return $this->sum_purchased_retail;
+        $orders = Orders::find()->where(['is_gross' => false, 'order_status' => Orders::STATUS_COMPLETED])->all();
+        $sum = 0;
+        foreach($orders as $order){
+            $sum += Orders::calculateDiscountPrice($order['price'], $order['discount_percent']);
+        }
+        return $sum;
     }
 
     /**
@@ -121,7 +126,12 @@ class CommonUser extends ActiveRecord implements IdentityInterface
      */
     public function getGrossPurchasedSum()
     {
-        return $this->sum_purchased_gross;
+        $orders = Orders::find()->where(['is_gross' => true, 'order_status' => Orders::STATUS_COMPLETED])->all();
+        $sum = 0;
+        foreach($orders as $order){
+            $sum += Orders::calculateDiscountPrice($order['price'], $order['discount_percent']);
+        }
+        return $sum;
     }
 
     /**

@@ -60,10 +60,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         case $model::ROLE_ADMIN:
                             return "Администратор";
                             break;
+
+                        case $model::ROLE_COURIER:
+                            return "Курьер";
+                            break;
+
+                        case $model::ROLE_EXECUTOR:
+                            return "Исполнитель";
+                            break;
                     }
                 }
             ],
-            'created_at:datetime',
+            [
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
+            ],
             // 'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

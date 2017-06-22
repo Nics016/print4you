@@ -22,9 +22,9 @@ class AppAsset extends AssetBundle
         '/js/bootstrap.min.js',
         '/js/lightgallery.js',
         '/js/jquery.bxslider.min.js',
-        '/js/main.js?v=2',
+        '/js/main.js?v=3',
     ];
     public $depends = [
-        'frontend\assets\jQueryAsset'
+        'frontend\assets\jQueryAsset',
     ];
 }

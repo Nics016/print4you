@@ -6,6 +6,7 @@ use Yii;
 use common\models\ConstructorColors;
 use common\models\ConstructorProducts;
 use common\models\ConstructorSizes;
+use common\models\ConstructorStorage;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -104,10 +105,13 @@ class ConstructorColorsController extends Controller
         } 
 
         $model->checkSizes();
+        $color_storage = ConstructorStorage::find()->where(['color_id' => $model->id])->orderBy('office_id')
+                                            ->with('office')->with('size')->asArray()->all();
 
         return $this->render('update', [
             'model' => $model,
             'sizes' => $sizes,
+            'color_storage' => $color_storage,
         ]);
         
 

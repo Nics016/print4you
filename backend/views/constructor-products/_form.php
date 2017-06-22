@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imageFile')->label('Картинка')->fileInput() ?>
 
-    <?= $form->field($model, 'price')->label('Цена')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
-
     <?= $form->field($model, 'print_offset_x')->label('Отступ принта слева')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'print_offset_y')->label('Отступ принта сверху')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>

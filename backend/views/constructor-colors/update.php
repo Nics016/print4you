@@ -29,5 +29,50 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
         'sizes' => $sizes,
     ]) ?>
+	
+	<br>
+	
+	<?php if (count($color_storage) > 0): ?>
+		<h3>Склад:</h3>
+
+		<br>
+
+		<table class="table table-striped table-bordered" style="max-width: 700px;">
+			<thead>
+				<tr>
+					<th>Наименование размера</th>
+					<th>Адрес склада</th>
+					<th>Количество</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<?php 
+				for ($i = 0; $i < count($color_storage); $i++): 
+					$size = $color_storage[$i]['size']['size'];
+					$adress = $color_storage[$i]['office']['address'];
+					$count = $color_storage[$i]['count'];
+				?>
+					<tr>
+						<td class="text-center" style="vertical-align: center;"><?= $size ?></td>
+						<td class="text-center" style="vertical-align: center;"><?= $adress ?></td>
+						<td class="text-center" style="vertical-align: center;"><?= $count ?></td>
+					</tr>
+				<?php endfor; ?>
+			</tbody>
+		</table>
+		
+		<br>
+		<br>
+
+	<?php else: ?>
+
+		<h3>Склад еще не заполняли!</h3>
+
+	<?php endif; ?>
+
+	
+	
 
 </div>

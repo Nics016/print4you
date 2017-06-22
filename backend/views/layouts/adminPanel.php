@@ -8,6 +8,7 @@
 
     use yii\helpers\Url;
     use backend\models\User;
+    use common\models\Orders;
 
     AppAsset::register($this);
  ?>
@@ -20,7 +21,7 @@
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Админ-панель Print4you</title>
     <!-- <script src="/assets/js/jquery-1.11.3.min.js"></script> -->
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <?php $this->head() ?>
@@ -33,6 +34,7 @@
     <link rel="stylesheet" href="/assets/css/neon-theme.css">
     <link rel="stylesheet" href="/assets/css/neon-forms.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/print4you-adminpanel.css">
 
     <!-- MORRIS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
@@ -101,7 +103,14 @@
                     <?php endif; ?>
                         <li>
                             <a href="<?= Url::toRoute(['orders/new']) ?>">
-                                <span class="title">Новые</span>
+                                <span class="title">Новые 
+                                    <?php $newOrders = Orders::getNewOrdersCount(Yii::$app->user) ?>
+                                    <?php if ($newOrders != ""): ?>
+                                        <em class="neworders-count">
+                                            <?= $newOrders ?>
+                                        </em>
+                                    <?php endif; ?>
+                                </span>
                             </a>
                         </li>
                         <li>
@@ -149,15 +158,8 @@
                                 <li><a href="<?= Url::toRoute(['office/create']) ?>"><span class="title">Создать новый</span></a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="<?= Url::toRoute(['user/statistics']) ?>">
-                                <span class="title">Статистика</span>
-                            </a>
-                        </li>             
-                    </ul>
-                    <ul>
                         <li class="has-sub">
-                            <a href="layout-api.html">
+                            <a href="<?= Url::toRoute(['common-user/index']) ?>">
                                 <span class="title">Клиенты</span>
                             </a>
                             <ul>
@@ -165,12 +167,21 @@
                                 <li><a href="<?= Url::toRoute(['common-user/create']) ?>"><span class="title">Создать нового</span></a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="<?= Url::toRoute(['user/statistics']) ?>">
+                                <span class="title">Статистика</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?= Url::toRoute(['user-settings/update', 'id' => 1]) ?>">
+                                <span class="title">Настройки email и ссылок</span>
+                            </a>
+                        </li>   
                     </ul>
                 </li>
-            <?php endif; ?>
                 <li class="has-sub">
                     <a href="layout-api.html">
-                        <i class="entypo-monitor"></i>
+                        <i class="entypo-cog"></i>
                         <span class="title">Конструктор</span>
                     </a>
                     <ul>
@@ -184,6 +195,28 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="<?= Url::toRoute(['requests/index']) ?>">
+                        <span class="title">Заявки на звонок</span>
+                    </a>
+                </li> 
+            <?php endif ?>
+            <?php if (Yii::$app->user->identity->role == User::ROLE_EXECUTOR): ?>
+                <li class="has-sub">
+                    <a href="layout-api.html">
+                        <i class="entypo-cog"></i>
+                        <span class="title">Склад</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="<?= Url::toRoute(['constructor-sklad/']) ?>">
+                                <span class="title">Склад конструктора</span>
+                            </a>
+                          
+                        </li>
+                    </ul>
+                </li>
+            <?php endif; ?>
             </ul>
         </div>
     </div>

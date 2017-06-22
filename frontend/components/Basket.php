@@ -9,6 +9,7 @@ use common\models\ConstructorColorSizes;
 use common\models\UserCart;
 use common\models\CommonUser;
 use common\models\OrdersProduct;
+use common\models\Orders;
 
 
 class Basket {
@@ -18,6 +19,9 @@ class Basket {
 
 	const STORAGE_CONSTRUCTOR_TEMP_ORDER_DIR = '/constructor/orders/temp';
 	const PRODUCT_CONSTRUCTOR_TYPE = 'constructor';
+
+	const PRODUCT_MIN_COUNT = 1;
+	const PRODUCT_MAX_COUNT = 2999;
 
 	public function __construct()
 	{	
@@ -70,8 +74,9 @@ class Basket {
 				'product_type' => self::PRODUCT_CONSTRUCTOR_TYPE,
 				'color_id' => $color_id,
 				'name' => $product->name,
+				'price' => $color->price,
+				'gross_price' => json_decode($color->gross_price, true),
 				'size_id' => $size_id,
-				'price' => $product->price,
 				'front_image' => $front_filename,
 				'back_image' => $back_filename,
 				'count' => 1,
@@ -128,14 +133,49 @@ class Basket {
 		return $this->basket;
 	}
 
+	// проверяет, продукт ли констурктора или нет
+	public function isConstructorProduct($id) 
+	{
+		if (isset($this->basket[$id])) {
+			return $this->basket[$id]['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE;
+		}
+
+		return null;
+	}
+
+	public function changeCount($id, $count) {
+
+		if (isset($this->basket[$id]) && $count <= self::PRODUCT_MAX_COUNT && $count >= self::PRODUCT_MIN_COUNT) {
+			$item = &$this->basket[$id];
+			$item['count'] = $count;
+			$price = $this->getItemPrice($item);
+			$dicount_price = $price * $this->getDiscountFactor($item);
+			if ($this->save()) return [
+				'count' => $item['count'], 
+				'price' => $price,
+				'discount_price' => $dicount_price,
+			];
+			
+			return false;
+
+		} 
+			
+		return false;
+	}
 
 	// добавление продукта
 	public function push($id)
 	{
-		if (isset($this->basket[$id]) && $this->basket[$id]['count'] < 99) {
-			$this->basket[$id]['count']++;
-
-			if ($this->save()) return $this->basket[$id]['count'];
+		if (isset($this->basket[$id]) && $this->basket[$id]['count'] < self::PRODUCT_MAX_COUNT) {
+			$item = &$this->basket[$id];
+			$item['count']++;
+			$price = $this->getItemPrice($item);
+			$dicount_price = $price * $this->getDiscountFactor($item);
+			if ($this->save()) return [
+				'count' => $item['count'], 
+				'price' => $price,
+				'discount_price' => $dicount_price,
+			];
 			
 			return false;
 
@@ -148,10 +188,16 @@ class Basket {
 	// уменьшение продукта
 	public function pop($id)
 	{
-		if (isset($this->basket[$id]) && $this->basket[$id]['count'] > 1) {
-			$this->basket[$id]['count']--;
-
-			if ($this->save()) return $this->basket[$id]['count'];
+		if (isset($this->basket[$id]) && $this->basket[$id]['count'] > self::PRODUCT_MIN_COUNT) {
+			$item = &$this->basket[$id];
+			$item['count']--;
+			$price = $this->getItemPrice($item);
+			$dicount_price = $price * $this->getDiscountFactor($item);
+			if ($this->save()) return [
+				'count' => $item['count'], 
+				'price' => $price,
+				'discount_price' => $dicount_price,
+			];
 			
 			return false;
 
@@ -209,8 +255,11 @@ class Basket {
 		$basket_price = 0;
 		$basket_count = 0;
 		for ($i = 0; $i < count($this->basket); $i++) {
-			$basket_price += $this->basket[$i]['price'] * $this->basket[$i]['count'];
-			$basket_count += $this->basket[$i]['count'];
+			$item = $this->basket[$i];
+			$price = $this->getItemPrice($item);
+			$discount_price = $price * $this->getDiscountFactor($item);
+			$basket_price += $discount_price * $item['count'];
+			$basket_count += $item['count'];
 		}
 
 		return [
@@ -225,17 +274,6 @@ class Basket {
 		return count($this->basket);
 	}
 
-	// возвращает полную стоимость коризны со скидкой и количесвтом товаров
-	public function getBasketFullPrice()
-	{
-		$discount = 0;
-		$data = $this->basketCountPrice();
-
-		return [
-			'basket_price' =>  $data['price'],
-			'discount' => CommonUser::getDiscount($data['count']),
-		];
-	}
 
 	// вывод корзины во фронтенд
 	public function getFrontendCart()
@@ -250,33 +288,42 @@ class Basket {
 
 			if ($basket[$i]['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
 
+				$item = $basket[$i];
+
 				$color = ConstructorColors::find()->select('name')
 							->where(['id' => $basket[$i]['color_id']])->one();
+
 				$avaliable_sizes = ConstructorColorSizes::find()->asArray()
 							->where(['color_id' => $basket[$i]['color_id']])
 							->all();
 
+				// оптовая цена или нет
+				$price = $this->getItemPrice($item); 
+
+				// цена со скидкой
+				$discount_price = $price * $this->getDiscountFactor($item);
+
 				$result_basket[] = [
 					'id' => $i,
-					'product_type' => $basket[$i]['product_type'],
-					'name' => $basket[$i]['name'],  
+					'product_type' => $item['product_type'],
+					'name' => $item['name'],  
 					'color' => $color->name, 
-					'price' => $basket[$i]['price'], 
-					'front_image' => $print_temp_adress . '/' . $basket[$i]['front_image'], 
-					'back_image' => $print_temp_adress . '/' . $basket[$i]['back_image'], 
+					'price' => $price,
+					'discount_price' => $discount_price,
+					'front_image' => $print_temp_adress . '/' . $item['front_image'], 
+					'back_image' => $print_temp_adress . '/' . $item['back_image'], 
 					'avaliable_sizes' => $avaliable_sizes,
-					'current_size' => $basket[$i]['size_id'],
-					'count' => $basket[$i]['count'],
+					'current_size' => $item['size_id'],
+					'count' => $item['count'],
 				];
-				$products_count += $basket[$i]['count'];
-				$basket_price += $basket[$i]['price'] * $basket[$i]['count'];
+
+				$basket_price += $discount_price * $basket[$i]['count'];
 			}
 		}
 
 		return [
 			'basket' =>  $result_basket,
 			'basket_price' =>  $basket_price,
-			'discount' => CommonUser::getDiscount($products_count),
 		];
 	}
 
@@ -288,7 +335,7 @@ class Basket {
 			$model = new OrdersProduct();
 			$model->order_id = $order_id;
 			$model->product_id = $item['product_id'];
-			$model->price = $item['price'];
+			$model->price = $this->getItemPrice($item);
 			$model->count = $item['count'];
 			$model->name = $item['name'];
 			if ($item['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
@@ -308,6 +355,48 @@ class Basket {
 		return $this->save();
 	}
 
+	// возврашает цену товара взависиммости от опта или нет
+	private function getItemPrice($item) 
+	{	
+
+		if ($item['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
+			$count = $item['count'];
+			$gross_price = $item['gross_price'];
+
+			// запишем максимальное число количества товара оптовой цены и его значение
+			$max_value = 0;
+			$max_gross_price = 0;
+
+			for ($i = 0; $i < count($gross_price); $i++) {
+				// если нашли подходящую оптовую цену
+				if ($count >= $gross_price[$i]['from'] && $count <= $gross_price[$i]['to'])
+					return $gross_price[$i]['price'];
+
+				// иначе запишем максимальные данные
+				if ($gross_price[$i]['to'] > $max_value) {
+					$max_value = $gross_price[$i]['to'];
+					$max_gross_price = $gross_price[$i]['price'];
+				}
+			}
+
+			/* 
+				если не нашли подходящую оптову цену, проверим,
+				может быть количество вышло за рамки максимального оптового число
+				если нет, то это розничная цена 
+			*/
+		
+			return $count > $max_value ? $max_gross_price : $item['price'];
+		}
+	}
+
+	// получение скидочного множителя товара
+	private function getDiscountFactor($item)
+	{
+		if ($item['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
+			$discount = CommonUser::getDiscount($item['count']);
+			return ((100 - $discount) / 100);
+		}
+	}
 
 	// сохранение корзины
 	private function save() 

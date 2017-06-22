@@ -30,6 +30,10 @@ $this->registerJsFile('/js/cart.js?v=' . filemtime($js_file_name), [
 	<?php else: ?>
 	
 	<h3 class="your-order">Ваш заказ: </h3>
+	
+	<span class="about-big-order">
+		(Заказ более <?= Basket::PRODUCT_MAX_COUNT  ?>шт. за товар обговаривается индивидуально)
+	</span>
 
 	<?php
 	// для удобства переформируем массива размеров (такой вид используется при рендере продукта товара их конструктора)
@@ -46,10 +50,17 @@ $this->registerJsFile('/js/cart.js?v=' . filemtime($js_file_name), [
 	}
 	?>
 	<div id="checkout-container" class="clearfix">
-		<?= $this->render('checkout_price', [
-			'basket_price' => $basket_price,
-			'discount' => $discount,
-		]) ?>
+
+		<div class="full-price-container">
+			<span class="checkout-label">Итог:</span>
+
+			<span class="full-price">
+				<span id="full-price"><?= $basket_price ?></span> руб
+			</span>
+
+		</div>
+		<a href="<?= Url::to(['checkout']) ?>" class="checkout-link">Оформить</a>
+
 	</div>	
 	<?php endif; ?>
 </div>

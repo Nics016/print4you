@@ -1,12 +1,12 @@
 <?php
 use yii\helpers\Html;
+use frontend\components\Basket;
 ?>
 
 
 <div class="constructor-product-row clearfix">
 	
 	<input type="hidden" class="product-id" value="<?= $product['id'] ?>">
-	<input type="hidden" class="product-price" value="<?= $product['price'] ?>">
 
 	<div class="remove-icon-container">
 		<?= Html::img('@web/img/remove-cart-item.png', [
@@ -42,9 +42,13 @@ use yii\helpers\Html;
 			<span class="constructor-product-meta-label">Количество: </span>
 			<div class="constructor-product-meta-content">
 				<div class="product-count-container">
-					<button class="push-product">+</button>
-					<span class="product-count"><?= $product['count'] ?></span>
 					<button class="pop-product">-</button>
+					<input class="product-count" type="number" 
+							min="<?= Basket::PRODUCT_MIN_COUNT ?>" 
+							max="<?= Basket::PRODUCT_MAX_COUNT ?>" 
+							value="<?= $product['count'] ?>"
+					/>
+					<button class="push-product">+</button>
 				</div>		
 			</div>
 		</div>
@@ -68,18 +72,13 @@ use yii\helpers\Html;
 	</div>
 
 	<div class="product-price-container">
-		<div class="product-price">
-			<div class="product-price-count-container">
-				<span class="product-price-count"><?= $product['count'] ?></span>
-				<span class="product-price-value">шт. × <?=$product['price']?> руб.</span>
-			</div>
-			<span class="product-price-sum">
-				<span class="product-price-sum-value"><?= $product['count'] * $product['price'] ?></span>
-				<span> руб.</span>
-			</span>
-		</div>
+		<?= $this->render('constructor_product_price', [
+			'price' => $product['price'],
+			'discount_price' => $product['discount_price'],
+			'count' => $product['count'],
+		]) ?>
 	</div>
-	
+
 	<div class="product-row-overlay-container remove-product-container">
 		<div class="product-overlay-remove-container">
 			<span class="product-remove-title">Точно удалить товар?</span>

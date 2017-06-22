@@ -30,11 +30,12 @@ class ConstructorColors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'color_value', 'colorSizes', 'product_id'], 'required'],
+            [['name', 'color_value', 'colorSizes', 'product_id', 'price', 'gross_price'], 'required'],
             [['name'], 'string', 'max' => 255],
             [['color_value'], 'string', 'max' => 50],
             [['full_front_image', 'full_back_image', 'small_front_image', 'small_back_image'], 'string', 'max' => 255],
-            ['product_id', 'integer', 'min' => 1],
+            ['gross_price', 'string', 'min' => 1],
+            [['product_id', 'price'], 'integer', 'min' => 1],
             ['backImage', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
             ['frontImage', 'file', 'extensions' => 'png, jpg', 
@@ -51,6 +52,8 @@ class ConstructorColors extends \yii\db\ActiveRecord
             'frontImage' => 'Лицевая сторона',
             'backImage' => 'Задняя сторона',
             'colorSizes' => 'Размеры',
+            'price' => 'Цена',
+            'gross_price' => 'Оптовая цена',
         ];
     }
 
@@ -58,6 +61,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
     {   
         if ($this->isNewRecord) {
             $this->uploadImages();
+            $this->uploadGrossFromJson();
             if ($this->save()) {
                 $this->changeSizes();
                 return true;
@@ -65,6 +69,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
             return false;
         } else {
             $this->uploadImages();
+            $this->uploadGrossFromJson();
             $this->changeSizes();
             return $this->save();
         }
@@ -72,12 +77,37 @@ class ConstructorColors extends \yii\db\ActiveRecord
     }
 
 
+    // сохрание оптовой цени из json (приходит из админки)
+    public function uploadGrossFromJson()
+    {
+        $array = json_decode($this->gross_price, true);
+        $count = count($array);
+        if ($count > 0) {
+
+            for ($i = 0; $i < $count; $i++ ) {
+                $item = $array[$i];
+                $from = (int)$item['from'];
+                $to = (int)$item['to'];
+                $price = (int)$item['price'];
+
+                if ($from < 1 || $to < 1 || $price < 1) {
+                    $this->addError('gross_price', 'Одно из полей заполнено не верно');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        $this->addError('gross_price', 'Нет ни 1 цены');
+        return false;
+    }
+
     public function uploadImages() {
         if ($this->checkDirs()) {
 
             $this->frontImage = UploadedFile::getInstance($this, 'frontImage');
             $this->backImage = UploadedFile::getInstance($this, 'backImage');
-            dd(ActiveForm::validate($this));
             if ($this->validate()) {  
 
                 // берем пути папок, куда будем загружать
@@ -115,17 +145,30 @@ class ConstructorColors extends \yii\db\ActiveRecord
     }
 
     public function changeSizes() 
-    {
+    {   
+        $size_ids = [];
         $constructor_sizes = ConstructorSizes::find()->where(['id' => $this->colorSizes])->asArray()->all();
 
         ConstructorColorSizes::deleteAll(['color_id' => $this->id]);
 
         for ($i = 0; $i < count($constructor_sizes); $i++) {
+            $size_ids[] = $constructor_sizes[$i]['id'];
             $model = new ConstructorColorSizes();
             $model->color_id = $this->id;
             $model->size_id = $constructor_sizes[$i]['id'];
             $model->save();
         }
+
+
+        ConstructorStorage::deleteAll(
+            [
+                'AND', 
+                'color_id = :color_id', 
+                ['NOT IN', 'size_id', $size_ids],
+            ], 
+            [':color_id' => $this->id]
+        );
+
     }
 
     // загружает полную картинку
@@ -269,6 +312,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
             $this->colorSizes[] =  $sizes[$i]->id;
     }
 
+
     public function getProduct() 
     {
         return $this->hasOne(ConstructorProducts::className(), ['id' => 'product_id']);
@@ -281,10 +325,13 @@ class ConstructorColors extends \yii\db\ActiveRecord
     }
 
     // перед удалением записи - удалим картинки
+    // а так же данные со склада и из таблицы ConstructorColorSizes
     public function beforeDelete() {
         parent::beforeDelete();
         $this->removeFrontImages();
         $this->removeBackImages();
+        ConstructorStorage::deleteAll(['color_id' => $this->id]);
+        ConstructorColorSizes::deleteAll(['color_id' => $this->id]);
 
         return true;
     }

@@ -5,6 +5,7 @@ use yii\grid\GridView;
 
 use common\models\Orders;
 use backend\models\User;
+use common\models\CommonUser;
 use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -112,6 +113,14 @@ $orders = $dataProvider->getModels();
                 }
             ],
             [
+                'label' => 'Клиент',
+                'attribute' => '',
+                'value' => function($model){
+                    $user = CommonUser::findIdentity($model['client_id']);
+                    return $user['username'];
+                }
+            ],
+            [
                 'label' => 'Курьер',
                 'attribute' => '',
                 'value' => function($model){
@@ -119,19 +128,17 @@ $orders = $dataProvider->getModels();
                     return $user['username'];
                 }
             ],
-            [
-                'label' => 'Исполнитель',
-                'attribute' => '',
-                'value' => function($model){
-                    $user = $model->getUser($model['executor_id']);
-                    return $user['username'];
-                }
-            ],
             // [
             //     'label' => 'Комментарий',
             //     'attribute' => 'comment',
             // ],
-            'created_at:datetime',
+            [
+                'label' => 'Дата',
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
+            ],
             [
                 'label' => 'Действие',
                 'format' => 'raw',

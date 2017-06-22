@@ -24,6 +24,7 @@ class Orders extends \yii\db\ActiveRecord
     const STATUS_PROCCESSING = 'proccessing';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELLED = 'cancelled';
+
     /**
      * Константы местонахождения заказа. 
      * Используются в backend\controllers\OrdersController.php
@@ -36,12 +37,36 @@ class Orders extends \yii\db\ActiveRecord
     const LOCATION_COURIER_ACCEPTED = 60;
     const LOCATION_COURIER_COMPLETED = 70;
     const LOCATION_EXECUTOR_COMPLETED = 80; // Исполнитель сделал заказ, курьер не был назначен
+
+    /**
+     * Константы стоимости доставки товара
+     */
+    const DELIVERY_REQUIRED_PRICE = 300;
+    const DELIVERY_NOT_REQUIRED_PRICE = 0;
+    const GROSS_PRICE_PRODUCT_COUNT = 20;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'orders';
+    }
+
+    /**
+     * Считает цену со скидкой
+     * 
+     * @param  integer $price - начальная цена
+     * @param  integer $discount - скидка в %
+     * @return integer $discountedPrice - цена со скидкой
+     */
+    public static function calculateDiscountPrice($price, $discount = null)
+    {
+        if (!$discount)
+            return $price;
+        $answ = $price * (100 - $discount) / 100;
+
+        return $answ;
     }
     /**
      * @inheritdoc
@@ -52,7 +77,7 @@ class Orders extends \yii\db\ActiveRecord
             [['client_name', 'phone'], 'required'],
             [['price', 'manager_id', 'created_at', 'updated_at', 'client_id', 'delivery_office_id'], 'integer'],
             ['delivery_required', 'boolean'],
-            [['order_status', 'client_name', 'address'], 'string', 'max' => 32],
+            [['order_status', 'client_name', 'address'], 'string', 'max' => 255],
             [['comment'], 'string', 'max' => 1000],
             ['phone', 'match', 'pattern' => '/9\d{9}/']
         ];
@@ -74,6 +99,7 @@ class Orders extends \yii\db\ActiveRecord
             'created_at' => 'Дата',
             'updated_at' => 'Дата изменения',
             'delivery_required' => 'Доставка',
+            'delivery_price' => 'Стоимость доставки',
         ];
     }
     public function behaviors()
