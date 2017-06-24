@@ -17,6 +17,9 @@ use common\models\Office;
  */
 class StockColors extends \yii\db\ActiveRecord
 {
+    public $color_id;
+    // public $office_id;
+
     /**
      * @inheritdoc
      */
@@ -31,9 +34,9 @@ class StockColors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'office_id'], 'required'],
+            [['name', 'office_id', 'liters'], 'required'],
             [['liters'], 'number'],
-            [['office_id'], 'integer'],
+            [['office_id', 'color_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['office_id'], 'exist', 'skipOnError' => true, 'targetClass' => Office::className(), 'targetAttribute' => ['office_id' => 'id']],
         ];

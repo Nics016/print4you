@@ -15,6 +15,7 @@ class m170623_215552_stock_requests extends Migration
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'office_id' => $this->integer()->notNull(),
+            'applied' => $this->boolean()->notNull()->defaultValue(false),
         ], $tableOptions);
 
         $this->addForeignKey('fk_stock_requests_user', 

@@ -44,7 +44,7 @@ class StockController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST', 'GET'],
                 ],
             ],
         ];
@@ -57,15 +57,38 @@ class StockController extends Controller
     public function actionIndex()
     {
         $dataProviderColors = new ActiveDataProvider([
-            'query' => StockColors::find(),
+            'query' => StockColors::find()->orderBy('office_id'),
         ]);
         $dataProviderItems = new ActiveDataProvider([
-            'query' => ConstructorStorage::find(),
+            'query' => ConstructorStorage::find()->orderBy('office_id'),
         ]);
 
         return $this->render('index', [
             'dataProviderColors' => $dataProviderColors,
             'dataProviderItems' => $dataProviderItems,
         ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['stock/index']);
+    }
+
+    /**
+     * Finds the StockRequests model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return StockRequests the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = ConstructorStorage::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

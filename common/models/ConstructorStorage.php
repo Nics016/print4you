@@ -6,6 +6,7 @@ use Yii;
 
 class ConstructorStorage extends \yii\db\ActiveRecord
 {
+    public $constructor_storage_id;
    
     public static function tableName()
     {
@@ -18,6 +19,7 @@ class ConstructorStorage extends \yii\db\ActiveRecord
         return [
             [['color_id', 'size_id', 'office_id'], 'required'],
             [['color_id', 'size_id', 'office_id', 'count'], 'integer'],
+            ['constructor_storage_id', 'integer'],
         ];
     }
 

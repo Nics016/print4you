@@ -129,7 +129,21 @@
                                 <span class="title">Отмененные</span>
                             </a>
                         </li>  
-                    <?php endif; ?>                     
+                    <?php endif; ?> 
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_MANAGER): ?>
+                        <li class="has-sub">
+                            <a href="<?= Url::toRoute(['stock/index']) ?>">
+                                <span class="title">Склад</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/index']) ?>"><span class="title">Заявки</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/create']) ?>"><span class="title">Новая заявка</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/index']) ?>"><span class="title">Цвета краски</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/create']) ?>"><span class="title">Новый цвет краски</span></a></li>
+                            </ul>
+                        </li>   
+                    <?php endif; ?>                 
                     </ul>
                 </li>
                 

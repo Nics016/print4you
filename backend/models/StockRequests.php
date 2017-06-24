@@ -47,7 +47,7 @@ class StockRequests extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'Имя пользователя',
-            'office_id' => 'ID Офиса',
+            'office_id' => 'Офис',
         ];
     }
 
