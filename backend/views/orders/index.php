@@ -101,8 +101,11 @@ $orders = $dataProvider->getModels();
                 }
             ],
             [
-                'label' => 'Цена (руб.)',
-                'attribute' => 'price',
+                'label' => 'Цена со скидкой (руб.)',
+                'value' => function($model){
+                    $answ = floor(Orders::calculateDiscountPrice($model['price'], $model['discount_percent']));
+                    return $answ;
+                }
             ],
             [
                 'label' => 'Менеджер',

@@ -129,7 +129,21 @@
                                 <span class="title">Отмененные</span>
                             </a>
                         </li>  
-                    <?php endif; ?>                     
+                    <?php endif; ?> 
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_MANAGER): ?>
+                        <li class="has-sub">
+                            <a href="<?= Url::toRoute(['stock/index']) ?>">
+                                <span class="title">Склад</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/index']) ?>"><span class="title">Заявки</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/create']) ?>"><span class="title">Новая заявка</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/index']) ?>"><span class="title">Цвета краски</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/create']) ?>"><span class="title">Новый цвет краски</span></a></li>
+                            </ul>
+                        </li>   
+                    <?php endif; ?>                 
                     </ul>
                 </li>
                 
@@ -167,6 +181,18 @@
                                 <li><a href="<?= Url::toRoute(['common-user/create']) ?>"><span class="title">Создать нового</span></a></li>
                             </ul>
                         </li>
+                        <li class="has-sub">
+                            <a href="<?= Url::toRoute(['stock/index']) ?>">
+                                <span class="title">Склад</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/index']) ?>"><span class="title">Заявки</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-requests/create']) ?>"><span class="title">Новая заявка</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/index']) ?>"><span class="title">Цвета краски</span></a></li>
+                                <li><a href="<?= Url::toRoute(['stock-colors/create']) ?>"><span class="title">Новый цвет краски</span></a></li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="<?= Url::toRoute(['user/statistics']) ?>">
                                 <span class="title">Статистика</span>
@@ -187,10 +213,16 @@
                     <ul>
                         <li>
                             <a href="<?= Url::toRoute(['constructor-categories-sizes/']) ?>">
-                                <span class="title">Категории и размеры</span>
+                                <span class="title">Категории, размеры и материалы</span>
                             </a>
                             <a href="<?= Url::toRoute(['constructor-products/']) ?>">
                                 <span class="title">Товары и цвета</span>
+                            </a>
+                            <a href="<?= Url::toRoute(['constructor-print/']) ?>">
+                                <span class="title">Управление печатью</span>
+                            </a>
+                            <a href="<?= Url::toRoute(['constructor-print-prices/']) ?>">
+                                <span class="title">Цены на печать</span>
                             </a>
                         </li>
                     </ul>

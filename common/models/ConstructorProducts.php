@@ -23,9 +23,9 @@ class ConstructorProducts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height'], 'required'],
+            [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height', 'material_id'], 'required'],
             [['description'], 'string'],
-            ['category_id', 'integer'],
+            [['category_id', 'material_id'], 'integer'],
             [['name', 'full_image', 'small_image'], 'string', 'max' => 255],
             ['is_published', 'boolean'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
@@ -47,6 +47,7 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             'description' => 'Описание',
             'imageFile' => 'Картинка',
             'category_id' => 'Категория',
+            'material_id' => 'Материал',
             'is_published' => 'Опубликовать?',
             'print_offset_x' => 'Отсутп принта слева',
             'print_offset_y' => 'Отсутп принта сверху',

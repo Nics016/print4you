@@ -1,9 +1,11 @@
 <?php 
 $this->title = 'Редактор категорий и размеров';
 
-$this->registerCssFile('/css/constructor-categories-sizes.css');
+$css_file_name = Yii::getAlias('@backend') . '/web/css/constructor-categories-sizes.css';
+$this->registerCssFile('/css/constructor-categories-sizes.css?v='. @filemtime($css_file_name));
 
-$this->registerJsFile('/js/constructor-categories-sizes.js?v=' . time(), [
+$js_file_name = Yii::getAlias('@backend') . '/web/js/constructor-categories-sizes.js';
+$this->registerJsFile('/js/constructor-categories-sizes.js?v=' . @filemtime($js_file_name), [
 	'position' => \yii\web\View::POS_END,
 ]);
 
@@ -80,5 +82,25 @@ $this->registerJsFile('/js/constructor-categories-sizes.js?v=' . time(), [
 	<button class="btn btn-success glyphicon glyphicon-ok" id="sizes-save" style="margin-top: 10px;">
 		<span class="btn-span">Сохранить</span>
 	</button>
+	
+
+	<br>
+	<br>
+	<h3>Материалы:</h3>
+	<div class="product-materials">
+		<?php 
+		for ($i = 0; $i < count($materials); $i++): 
+			$id = $materials[$i]['id'];
+			$name = $materials[$i]['name'];
+		?>
+		<div class="product-material" data-id="<?= $id ?>">
+			<input type="text" class="material-input form-control" value="<?= $name ?>" placeholder="Название материала">
+			<button class="save-material btn btn-success">Сохранить</button>
+			<button class="remove-material btn btn-danger">Удалить</button>
+		</div>
+		<?php endfor; ?>
+		<button id="add-material" class="btn btn-primary" style="margin-top: 10px;">Добавить материал</button>
+
+	</div>
 
 </div>

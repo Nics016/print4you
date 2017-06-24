@@ -2,6 +2,11 @@
 
 	window.onload = function() {
 
+        var printSizes = JSON.parse(document.getElementById('print-sizes').value);
+        var currentPrintSize = false; // сюда будем записывать размер принта стороны
+
+        console.log(printSizes);
+
         var csrfParam = document.querySelector('meta[name="csrf-param"]').getAttribute('content');
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var products = false;
@@ -729,13 +734,14 @@
             // загрузим перднее изображение
             getOrderImage(constructorObjects.front, frontColorImage, function(image) {
                 frontImage = image;
-
+                console.log(currentPrintSize);
                 // загрузим заднее изображение
                 getOrderImage(constructorObjects.back, backColorImage, function(image) {
                     backImage = image;
                     // формируем данные
-
-                    var data = csrfParam + '=' + csrfToken + '&front_base64=' + encodeURIComponent(frontImage)
+                    console.log(currentPrintSize);
+                    hideLoader();
+                    /*var data = csrfParam + '=' + csrfToken + '&front_base64=' + encodeURIComponent(frontImage)
                                 + '&back_base64=' + encodeURIComponent(backImage) 
                                 + '&product_id=' + currentProduct['id']
                                 + '&color_id=' + currentProductColorId + '&size_id=' + currentProductSize;
@@ -763,7 +769,7 @@
                         console.log(xhr.responseText);
                         hideLoader();
                         addConstructorError('Извините, произошла ошибка, попробуйте позже!');
-                    }
+                    }*/
                 });
             });
 
@@ -830,6 +836,8 @@
         function zoomCanvasObjects(newCanvasWidth, newCanvasHeight) {
             var objects = cloneCanvas.getObjects();
 
+            var offsets = {left: false, top: false, right: false, bottom: false};
+
             // рабочая область, которая редактируется в админке
             var canvasWorkWidth = newCanvasWidth / 100 * currentProduct['print_width'];
             var canvasWorkHeight = newCanvasHeight / 100 * currentProduct['print_height'];
@@ -838,7 +846,7 @@
             cloneCanvas.setHeight(canvasWorkHeight);
 
             var xFactor = canvasWorkWidth / canvas.getWidth();
-            var yFactor = canvasWorkHeight/ canvas.getHeight();
+            var yFactor = canvasWorkHeight / canvas.getHeight();
 
             for (var i in objects) {
 
@@ -847,7 +855,10 @@
 
                 var left = objects[i].left;
                 var top = objects[i].top;
+                
+                getObjectOffsets(objects[i], offsets);
 
+            
                 objects[i].scaleX = scaleX * xFactor;
                 objects[i].scaleY = scaleY * yFactor;
                 objects[i].left = left * xFactor;
@@ -857,7 +868,106 @@
                 objects[i].setCoords();
             }
 
+            // рассчитаем размер принта
+            calcPrintSize(offsets);
+
             cloneCanvas.renderAll();
+        }
+
+        // высчитывает координаты, нужные для расчета размера принта
+        function getObjectOffsets(object, values) {
+
+            var height = canvas.getHeight();
+            var width = canvas.getWidth();
+            var coords = object.oCoords;
+
+            // запишем координаты углов
+            var yCoords = [coords.tl.y, coords.tr.y, coords.bl.y, coords.br.y];
+            var xCoords = [coords.tl.x, coords.tr.x, coords.bl.x, coords.br.x];
+
+            // найдем минимальные и максимальные отсутпы углов данного объект
+            var minYOffset = coords.tl.y;
+            var maxYOffset = coords.tr.y;
+            var minXOffset = coords.tl.x;
+            var maxXOffset = coords.tr.x;
+            
+            // минимальный отступ - верх, максимальный - низ для Y
+            // минимальный отступ - левый, максимальный - правый для X
+            for (i = 0; i < yCoords.length; i++) {
+                minYOffset = yCoords[i] < minYOffset ? yCoords[i] : minYOffset;
+                maxYOffset = yCoords[i] > maxYOffset ? yCoords[i] : maxYOffset;
+
+                minXOffset = xCoords[i] < minXOffset ? xCoords[i] : minXOffset;
+                maxXOffset = xCoords[i] > maxXOffset ? xCoords[i] : maxXOffset;
+            }
+
+            // проверим координаты, может они зашли за область канваса
+            minYOffset = minYOffset < 0 ? 0 : minYOffset;
+            maxYOffset = maxYOffset > height ? 0 : height - maxYOffset;
+
+            minXOffset = minXOffset < 0 ? 0 : minXOffset;
+            maxXOffset = maxXOffset > width ? 0 : width - maxXOffset;
+
+            // теперь проверим, записывали ли мы ранее координаты
+            if (values.top === false) {
+                // если нет, то запишем эти
+                values.top = minYOffset;
+                values.bottom = maxYOffset;
+                values.left = minXOffset;
+                values.right = maxXOffset;
+            } else {
+                // иначе сравним с минимальными значениями отступов
+                values.top = values.top < minYOffset ? values.top : minYOffset;
+                values.bottom = values.bottom < maxYOffset ? values.bottom : maxYOffset;
+                values.left = values.left < minXOffset ? values.left : minXOffset;
+                values.right = values.right < maxXOffset ? values.right : maxXOffset;
+            }
+        }
+
+        // рассчитать размер принта
+        function calcPrintSize(values) {
+
+            if (values.left === false) {
+                currentPrintSize = false;
+                return;
+            }
+
+            var parentWidth = canvas.getWidth();
+            var parentHeight = canvas.getHeight();
+            var printWidth = parentWidth - values.left - values.right;
+            var printHeight = parentHeight - values.top - values.bottom;
+
+            var parentSquare = parentHeight * parentWidth;
+            var printSquare = printWidth * printHeight;
+
+            
+            var printPercent = Math.ceil(printSquare / parentSquare * 100);
+            var possibleSizes = []; // сюда будем записывать возиожные размеры принта
+
+            // переберм все размеры
+            for (var i = 0; i < printSizes.length; i++) {
+                var current = printSizes[i];
+
+                // если нашли прям ровный процент, о значит это
+                if (current['percent'] == printPercent) {
+                    currentPrintSize = current['id'];
+                    return;
+                }
+
+                // это возиожные размеры принта
+                if (current['percent'] > printPercent) {
+                    possibleSizes.push(current);
+                }
+            }
+
+            var minSize = possibleSizes[0];
+
+            // найдем самый подзодящий размер
+            for (i = 0; i < possibleSizes.length; i++) {
+                minSize = possibleSizes[i]['percent'] < minSize['percent'] ? possibleSizes[i] : minSize;
+            }
+
+            currentPrintSize = minSize['id'];
         }
 
         // сменить таб 

@@ -40,6 +40,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
                     'skipOnEmpty' => true],
             ['frontImage', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
+            ['is_white', 'boolean'],
         ];
     }
 
@@ -54,6 +55,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
             'colorSizes' => 'Размеры',
             'price' => 'Цена',
             'gross_price' => 'Оптовая цена',
+            'is_white' => 'Белый?',
         ];
     }
 

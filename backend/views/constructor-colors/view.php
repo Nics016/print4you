@@ -65,7 +65,44 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $sizes;
                 }
             ],
-
+            [
+                'attribute' => 'price',
+                'label' => 'Розничная цена',
+                'value' => function ($data) {
+                    return $data->price . ' руб.';
+                }
+            ],
+            [
+                'attribute' => 'gross_price',
+                'label' => 'Оптовые цены',
+                'format' => 'html',
+                'value' => function ($data) {
+                    $html = '
+                        <table class="table table-hover table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>От</th>
+                                    <th>До</th>
+                                    <th>Цена</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    ';
+                    $prices = json_decode($data->gross_price, true);
+                    for ($i = 0; $i < count($prices); $i++) {
+                        $html .= '<tr>';
+                        $html.= '<td>' . $prices[$i]['from'] .' шт.</td>';
+                        $html.= '<td>' . $prices[$i]['to'] .' шт.</td>';
+                        $html.= '<td>' . $prices[$i]['price'] .' руб.</td>';
+                        $html .= '</tr>';
+                    }
+                    $html .= '
+                            </tbody>
+                        </table>
+                    ';
+                    return $html;
+                }
+            ],
             [
                 'label' => 'Лицевая сторона',
                 'format' => 'html',

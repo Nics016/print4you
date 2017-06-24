@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 
 use common\models\ConstructorCategories;
+use common\models\ConstructorPrintSizes;
 
 use frontend\components\Basket;
 
@@ -48,7 +49,10 @@ class ConstructorController extends Controller {
 	}
 
 	public function actionIndex() {
-		return $this->render('index');
+		$print_sizes = json_encode(ConstructorPrintSizes::find()->asArray()->all());
+		return $this->render('index', [
+			'print_sizes' => $print_sizes,
+		]);
 	}
 
 }

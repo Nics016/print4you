@@ -102,3 +102,22 @@ ul {
     cursor: pointer;
 }
 
+.product-material {
+    width: 500px;
+    margin-top: 10px;
+}
+
+.material-input {
+    width: 200px !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin-right: 10px;
+}
+
+.remove-material {
+    margin-left: 10px;
+}
+
+.error-material {
+    border: 1px solid red !important;
+}

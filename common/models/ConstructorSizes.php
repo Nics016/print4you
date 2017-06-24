@@ -47,6 +47,7 @@ class ConstructorSizes extends \yii\db\ActiveRecord
 
     // удлим данные со склада и из таблицы ConstructorColorSizes
     public function beforeDelete() {
+        parent::beforeDelete();
         ConstructorStorage::deleteAll(['color_id' => $this->id]);
         ConstructorColorSizes::deleteAll(['color_id' => $this->id]);
 

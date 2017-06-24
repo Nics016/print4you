@@ -82,13 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Офис',
                 'attribute' => 'office_id',
                 'value' => function($model){
-                    $records = Office::Find()
-                        ->all();
+                    $record = Office::FindOne(['id' => $model['office_id']]);
 
-                    foreach ($records as $record){
-                        if ($record['id'] == $model['office_id'])
-                            return $record['address'];                        
-                    }
+                    if ($record)
+                        return $record['address'];                        
                     
                     return "Офис не задан";
                 }

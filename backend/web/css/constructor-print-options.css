@@ -1,0 +1,173 @@
+
+.constructor-print-sizes {
+	width: 820px;
+}
+
+.constructor-print-sizes > div:first-of-type, .constructor-print-size:nth-child(7n + 1) {
+	margin-left: 0px;
+}
+
+.constructor-print-size {
+	width: 100px;
+    padding: 5px;
+    border: 1px solid #363636;
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.print-size-name:focus, .print-size-percent:focus {
+	border: 1px solid #7293B6;
+}
+
+.print-size-name, .print-size-percent {
+	width: 80px;
+    display: block;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    margin: 0 auto;
+}
+
+.print-size-percent {
+	margin-top: 10px;
+}
+
+
+.print-size-buttons {
+	width: 70px;
+    margin: 10px auto 0 auto;
+}
+
+.save-print-size {
+	float: left;
+}
+
+.remove-print-size {
+	float: right;
+}
+
+.save-print-size, .remove-print-size {
+	display: inline-block;
+	padding: 5px 7px !important;
+}
+
+.spin-animation {
+	animation: spin 2000ms infinite linear;
+}
+
+
+.print-size-modal {
+	position: absolute;
+	display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.print-size-modal-loader {
+    color: #fff;
+    font-size: 45px;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.add-size-btn-container {
+    float: left;
+    width: 100px;
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 120px;
+}
+
+#add-print-size:hover {
+	color: #5779A1;
+}
+
+#add-print-size {
+    text-align: center;
+    color: #7293B6;
+    font-size: 40px;
+    display: block;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.size-input-err {
+	border: 1px solid red;
+}
+
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+
+.print-type {
+    width: 500px;
+    margin-top: 10px;
+}
+
+.type-input {
+    width: 200px !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin-right: 10px;
+}
+
+.remove-type {
+    margin-left: 10px !important;
+}
+
+.error-type {
+    border: 1px solid red !important;
+}
+
+.print-attendance {
+    width: 600px;
+    margin-top: 15px;
+}
+
+.attendance-name {
+    display: inline-block !important;
+    width: 150px !important;
+    font-size: 16px !important;
+}
+
+.attendance-percent {
+    display: inline-block !important;
+    width: 75px !important;
+    font-size: 16px !important;
+    margin-left: 10px !important;
+}
+
+.save-attendance, .remove-attendance {
+    margin-left: 10px !important;
+}
+
+#add-attendance {
+    margin-top: 15px;
+}

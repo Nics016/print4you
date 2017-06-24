@@ -85,6 +85,8 @@ $this->registerJsFile('/js/constructor-colors.js?v=' . @filemtime($js_file_name)
 
 
     <?= $form->field($model, 'backImage')->label('Задняя сторона')->fileInput() ?>
+
+    <?= $form->field($model, 'is_white')->label('Белый цвет?')->checkbox() ?>
     
     <?php 
     $checkboxes = [];
