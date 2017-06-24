@@ -90,8 +90,7 @@ class OrdersController extends Controller
 
     /**
      * Lists all Orders models.
-     *
-     * Доступно только админам
+     * @return mixed
      */
     public function actionIndex()
     {
@@ -129,7 +128,9 @@ class OrdersController extends Controller
         elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
             $records = Orders::find()
                 ->where("order_status='proccessing' AND courier_id="
-                    . Yii::$app->user->identity->id);
+                    . Yii::$app->user->identity->id
+                    . " AND location="
+                    . Orders::LOCATION_COURIER_NEW);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -218,8 +219,6 @@ class OrdersController extends Controller
 
     /**
      * Lists only Orders with status "new"
-     *
-     * Действие доступно только админам
      */
     public function actionCancelled()
     {
@@ -239,9 +238,6 @@ class OrdersController extends Controller
     /**
      * Заказу присваивается статус "Отменен"
      * и рендерится страница orders/view
-     *
-     * Действие доступно только админам
-     * 
      * @param integer $id
      */
     public function actionCancel($id, $comment = '')
@@ -258,8 +254,6 @@ class OrdersController extends Controller
      * Заказу присваивается статус "В обработке",
      * менеджером присваивается текущий пользователь
      * и рендерится страница orders/view
-     *
-     * Действие доступно только менеджерам
      * 
      * @param integer $id
      */
@@ -275,38 +269,18 @@ class OrdersController extends Controller
         return $this->redirect('proccessing');
     }
 
-    /**
-     * Действие при нажатии "Принять" исполнителем
-     *    
-     * @param  integer $id - id заказа
-     */
     public function actionAcceptExecutor($id)
     {
         $model = $this->findModel($id);
-        if (!(Yii::$app->user->identity->role == User::ROLE_EXECUTOR
-                && (Yii::$app->user->identity->id == $model->executor_id) )){
-            return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
-        }
-
         $model->location = Orders::LOCATION_EXECUTOR_ACCEPTED;
         $model->save();
 
         return $this->redirect('proccessing');
     }
 
-    /**
-     * Действие при нажатии "Завершить" исполнителем
-     *    
-     * @param  integer $id - id заказа
-     */
     public function actionCompleteExecutor($id)
     {
         $model = $this->findModel($id);
-        if (!(Yii::$app->user->identity->role == User::ROLE_EXECUTOR
-                && (Yii::$app->user->identity->id == $model->executor_id) )){
-            return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
-        }
-
         $model->location = Orders::LOCATION_COURIER_NEW;
         $model->save();
 
@@ -320,19 +294,9 @@ class OrdersController extends Controller
         return $this->redirect('proccessing');
     }
 
-    /**
-     * Действие при нажатии "Принять" курьером
-     *    
-     * @param  integer $id - id заказа
-     */
     public function actionAcceptCourier($id)
     {
         $model = $this->findModel($id);
-        if (!(Yii::$app->user->identity->role == User::ROLE_COURIER
-                && (Yii::$app->user->identity->id == $model->courier_id) )){
-            return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
-        }
-
         $model->location = Orders::LOCATION_COURIER_ACCEPTED;
         $model->save();
 
@@ -344,13 +308,12 @@ class OrdersController extends Controller
      * если курьер - текущий пользователь,
      * либо, если у заказа нет курьера, и 
      * исполнитель - текущий пользователь
-     *
+     * 
      * @param integer $id - id заказа
      */
     public function actionComplete($id)
     {
         $model = $this->findModel($id);
-
         if ($model['courier_id'] == Yii::$app->user->identity->id){
             $model->order_status = Orders::STATUS_COMPLETED;
             $model->location = Orders::LOCATION_COURIER_COMPLETED;
@@ -374,7 +337,7 @@ class OrdersController extends Controller
     {
         $model = $this->findModel($id);
         if ($model['manager_id'] != Yii::$app->user->identity->id){
-            return $this->renderContent(Html::tag('h1','Ошибка - это действие вам не доступно'));
+            return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
         } else {
             $model->order_status = Orders::STATUS_PROCCESSING;
             $model->courier_id = $courier_id;
@@ -395,7 +358,7 @@ class OrdersController extends Controller
     {
         $model = $this->findModel($id);
         if ($model['manager_id'] != Yii::$app->user->identity->id){
-            return $this->renderContent(Html::tag('h1','Ошибка - это действие вам не доступно'));
+            return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
         } else {
             $model->order_status = Orders::STATUS_PROCCESSING;
             $model->executor_id = $executor_id;
@@ -408,7 +371,6 @@ class OrdersController extends Controller
 
     /**
      * Displays a single Orders model.
-     * 
      * @param integer $id
      * @return mixed
      */
@@ -439,9 +401,6 @@ class OrdersController extends Controller
     /**
      * Creates a new Orders model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * Доступно только админу
-     * 
      * @return mixed
      */
     public function actionCreate()
@@ -449,7 +408,7 @@ class OrdersController extends Controller
         $model = new Orders();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['new']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -460,8 +419,6 @@ class OrdersController extends Controller
     /**
      * Updates an existing Orders model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
-     * Доступно только админу
      * @param integer $id
      * @return mixed
      */
@@ -470,7 +427,7 @@ class OrdersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -481,9 +438,6 @@ class OrdersController extends Controller
     /**
      * Deletes an existing Orders model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
-     * Доступно только админу
-     * 
      * @param integer $id
      * @return mixed
      */
@@ -497,7 +451,6 @@ class OrdersController extends Controller
     /**
      * Finds the Orders model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * 
      * @param integer $id
      * @return Orders the loaded model
      * @throws NotFoundHttpException if the model cannot be found

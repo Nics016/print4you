@@ -10,23 +10,50 @@ use yii\web\Response;
 
 use common\models\ConstructorCategories;
 use common\models\ConstructorSizes;
+use common\models\ConstructorProductMaterials;
 
 use yii\widgets\ActiveForm;
+
+use backend\models\User;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
 
 class ConstructorCategoriesSizesController extends Controller
 {  
 
-    public $layout = 'adminPanel';
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex() {
 
         // возьмем все категории и размеры
         $categories = ConstructorCategories::find()->asArray()->orderBy('sequence')->all();
         $sizes = ConstructorSizes::find()->asArray()->orderBy('sequence')->all();
+        $materials = ConstructorProductMaterials::find()->asArray()->all();
 
         return $this->render('index', [
             'categories' => $categories,
             'sizes' => $sizes,
+            'materials' => $materials,
         ]);
     }
 
@@ -72,9 +99,9 @@ class ConstructorCategoriesSizesController extends Controller
 
             return ['response' => true, 'new' => $new_ids];
 
-        } else {
-            throw new NotFoundHttpException();
-        }
+        } 
+        
+        throw new NotFoundHttpException();
     }
 
     // удаление категорий
@@ -91,9 +118,9 @@ class ConstructorCategoriesSizesController extends Controller
             return ['response' => $model->delete()];
 
 
-        } else {
-            throw new NotFoundHttpException();
-        }
+        } 
+        
+        throw new NotFoundHttpException();
     }
 
     // измененеие размеров
@@ -135,9 +162,9 @@ class ConstructorCategoriesSizesController extends Controller
 
             return ['response' => true, 'new' => $new_ids];
 
-        } else {
-            throw new NotFoundHttpException();
-        }
+        } 
+
+        throw new NotFoundHttpException();
     }
 
     // удаление размеров
@@ -154,9 +181,52 @@ class ConstructorCategoriesSizesController extends Controller
             return ['response' => $model->delete()];
 
 
-        } else {
-            throw new NotFoundHttpException();
+        } 
+            
+        throw new NotFoundHttpException();
+    }
+
+
+    // сохранение материала
+    public function actionSaveMaterial()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $id = Yii::$app->request->post('id');
+            $name = Yii::$app->request->post('name');
+
+            if ($id == 'new') {
+                $model = new ConstructorProductMaterials();
+            } else {
+                $model = ConstructorProductMaterials::findOne(['id' => (int)$id]);
+                if ($model == null) return ['status' => 'fail'];
+            }
+
+            $model->name = $name;
+            return $model->save() ? ['status' => 'ok', 'id' => $model->getPrimaryKey()] : ['status' => 'fail'];
         }
+
+        throw new NotFoundHttpException();
+    }
+
+
+
+    // удаление материала
+    public function actionRemoveMaterial()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $id = (int)Yii::$app->request->post('id');
+
+            $model = ConstructorProductMaterials::findOne(['id' => $id]);
+            if ($model == null) return ['status' => 'fail'];
+            
+            return $model->delete() ? ['status' => 'ok'] : ['status' => 'fail'];
+        }
+
+        throw new NotFoundHttpException();
     }
 
 }

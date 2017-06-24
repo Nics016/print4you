@@ -6,11 +6,15 @@ use Yii;
 use common\models\ConstructorColors;
 use common\models\ConstructorProducts;
 use common\models\ConstructorSizes;
+use common\models\ConstructorStorage;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use backend\models\User;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
 
 class ConstructorColorsController extends Controller
 {
@@ -19,6 +23,21 @@ class ConstructorColorsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -104,10 +123,13 @@ class ConstructorColorsController extends Controller
         } 
 
         $model->checkSizes();
+        $color_storage = ConstructorStorage::find()->where(['color_id' => $model->id])->orderBy('office_id')
+                                            ->with('office')->with('size')->asArray()->all();
 
         return $this->render('update', [
             'model' => $model,
             'sizes' => $sizes,
+            'color_storage' => $color_storage,
         ]);
         
 

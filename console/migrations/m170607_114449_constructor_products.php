@@ -12,7 +12,7 @@ class m170607_114449_constructor_products extends Migration
             'description' => $this->text(),
             'full_image' => $this->string(255)->notNull(),
             'small_image' => $this->string(255)->notNull(),
-            'price' => $this->integer()->notNull(),
+            'material_id' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
             'print_offset_x' => $this->integer()->notNull(),
             'print_offset_y' => $this->integer()->notNull(),

@@ -23,9 +23,9 @@ class ConstructorProducts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height'], 'required'],
+            [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height', 'material_id'], 'required'],
             [['description'], 'string'],
-            [['price', 'category_id'], 'integer'],
+            [['category_id', 'material_id'], 'integer'],
             [['name', 'full_image', 'small_image'], 'string', 'max' => 255],
             ['is_published', 'boolean'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
@@ -46,8 +46,8 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             'name' => 'Имя',
             'description' => 'Описание',
             'imageFile' => 'Картинка',
-            'price' => 'Цена',
             'category_id' => 'Категория',
+            'material_id' => 'Материал',
             'is_published' => 'Опубликовать?',
             'print_offset_x' => 'Отсутп принта слева',
             'print_offset_y' => 'Отсутп принта сверху',
@@ -171,6 +171,19 @@ class ConstructorProducts extends \yii\db\ActiveRecord
         return true;
     }
 
+
+    // для ассортимента
+    public function getFirstColor()
+    {   
+         $front_full_link = ConstructorColors::getFullFrontImageLink();
+
+        return $this->hasOne(ConstructorColors::className(), ['product_id' => 'id'])
+                ->select(
+                    "product_id, price, gross_price,
+                    ('$front_full_link' || '/' || full_front_image) as image"
+                )->orderBy('id');
+    }
+
     // свзязь для вывода во фронтенд конструктора
     public function getConstructorColors()
     {   
@@ -181,7 +194,7 @@ class ConstructorProducts extends \yii\db\ActiveRecord
         $back_full_link = ConstructorColors::getFullBackImageLink();
 
         return $this->hasMany(ConstructorColors::className(), ['product_id' => 'id'])
-                ->select("id, name, color_value, product_id, 
+                ->select("id, name, color_value, product_id, price,
                     ('$front_small_link' || '/' || small_front_image) as small_front_image, 
                     ('$back_small_link' || '/' || small_back_image) as small_back_image, 
                     ('$front_full_link' || '/' || full_front_image) as full_front_image, 

@@ -4,12 +4,8 @@ namespace common\models;
 
 use Yii;
 
-/**
- * This is the model class for table "constructor_color_sizes".
- *
- * @property integer $color_id
- * @property integer $size_id
- */
+use yii\helpers\ArrayHelper;
+
 class ConstructorColorSizes extends \yii\db\ActiveRecord
 {
     /**
@@ -31,9 +27,32 @@ class ConstructorColorSizes extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+    // используется в backend для склада
+    public static function getAvaliableSizes($color_id, $as_array = true)
+    {   
+        $avaliable_sizes = self::find()->select('size_id')->where(['color_id' => $color_id])
+                            ->asArray()->all();
+        $count = count($avaliable_sizes);
+        if ($count > 0) {
+
+            $ids = [];
+            $result = false;
+
+            for ($i = 0; $i < $count; $i++) {
+                $ids[] = $avaliable_sizes[$i]['size_id'];
+            }
+
+            if ($as_array) 
+                $result = ConstructorSizes::find()->where(['id' => $ids])->orderBy('sequence')->asArray()->all();
+            else
+                $result = ConstructorSizes::find()->where(['id' => $ids])->orderBy('sequence')->all();
+
+            return $result;
+        }
+
+        return false;
+    }
+
     public function attributeLabels()
     {
         return [

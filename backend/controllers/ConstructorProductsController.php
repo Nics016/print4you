@@ -6,12 +6,17 @@ use Yii;
 
 use common\models\ConstructorProducts;
 use common\models\ConstructorCategories;
+use common\models\ConstructorProductMaterials;
 
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
+
+use backend\models\User;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
 
 class ConstructorProductsController extends Controller
 {
@@ -21,6 +26,21 @@ class ConstructorProductsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,7 +53,7 @@ class ConstructorProductsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ConstructorProducts::find()->with('category'),
+            'query' => ConstructorProducts::find()->with('category')->orderBy('category_id'),
         ]);
 
         return $this->render('index', [
@@ -63,10 +83,11 @@ class ConstructorProductsController extends Controller
 
     
         $categories = ConstructorCategories::find()->asArray()->all();
-
+        $materials = ConstructorProductMaterials::find()->asArray()->all();
         return $this->render('create', [
             'model' => $model,
             'categories' => $categories,
+            'materials' => $materials,
         ]);
         
     }
@@ -82,9 +103,11 @@ class ConstructorProductsController extends Controller
         }
 
         $categories = ConstructorCategories::find()->asArray()->all();
+        $materials = ConstructorProductMaterials::find()->asArray()->all();
         return $this->render('update', [
             'model' => $model,
             'categories' => $categories,
+            'materials' => $materials,
         ]);
     }
 

@@ -48,13 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'ntext',
             ],
             [
-                'attribute' => 'price',
-                'label' => 'Цена товара',
-                'value' => function ($data) {
-                    return $data->price . ' Р';
-                }
-            ],
-            [
                 'label' => 'Категория товара',
                 'value' => function ($data) {
                     return $data->category->name;

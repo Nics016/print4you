@@ -40,15 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
                     return $data->description;
                 } 
-            ],
-            //'image',
-            [
-               'attribute' => 'price',
-                'label' => 'Цена',
-                'value' => function ($data) {
-                    return $data->price . ' Р';
-                } 
-            ],
+            ], 
             [
                 'attribute' => 'is_published',
                 'label' => 'Опубликовано?',

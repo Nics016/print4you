@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imageFile')->label('Картинка')->fileInput() ?>
 
-    <?= $form->field($model, 'price')->label('Цена')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
-
     <?= $form->field($model, 'print_offset_x')->label('Отступ принта слева')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'print_offset_y')->label('Отступ принта сверху')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
@@ -40,13 +38,19 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'is_published')->label('Опубликовать?')->checkbox() ?>
     
     <?php 
-    $dropdown_categories  = [];
+    $dropdown_categories = [];
 
     for ($i = 0; $i < count($categories); $i++)
         $dropdown_categories[$categories[$i]['id']] = $categories[$i]['name'];
 
     echo $form->field($model, 'category_id')->label('Категория')->dropDownList($dropdown_categories);
 
+    $dropdown_materials = [];
+
+    for ($i = 0; $i < count($materials); $i++)
+        $dropdown_materials[$materials[$i]['id']] = $materials[$i]['name'];
+
+    echo $form->field($model, 'material_id')->label('Материал')->dropDownList($dropdown_materials);
     ?>
 
 
