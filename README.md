@@ -1,5 +1,5 @@
 <h1>Print4you</h1>
-<h2>Ссылка на сайт: <a href="www.print4you.tk" target="_blank">www.print4you.tk</a></h2>
+<h2>Ссылка на сайт: <a href="http://www.print4you.tk" target="_blank">www.print4you.tk</a></h2>
 <h2>Админка</h2>
 <ol>
    <li>
