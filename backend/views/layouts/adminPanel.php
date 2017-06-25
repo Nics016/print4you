@@ -258,7 +258,7 @@
         <!-- Footer -->
         <footer class="main">
             
-            &copy; 2017 | Сайт разработали Степан Куштуев и Никита Абрашнев
+            &copy; 2017 | Print4you
         
         </footer>
     </div>
