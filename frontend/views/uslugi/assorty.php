@@ -27,6 +27,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 							for ($i = 0; $i < count($content); $i++) {
 								$item = $content[$i];
 								echo $this->render('assorty_row', [
+									'product_id' => $item['id'],
 									'name' => $item['name'],
 									'image' => $item['firstColor']['image'],
 									'count' => 1,
@@ -50,11 +51,14 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 						<?php 
 							for ($i = 0; $i < count($content); $i++) {
 								$item = $content[$i];
+								$gross_price = json_decode($item['firstColor']['gross_price'], true);
+								$gross_price = $gross_price[0]["price"];
 								echo $this->render('assorty_row', [
+									'product_id' => $item['id'],
 									'name' => $item['name'],
 									'image' => $item['firstColor']['image'],
 									'count' => $groos_count,
-									'price' => $item['firstColor']['gross_price'],
+									'price' => $gross_price,
 									'description' => $item['description'],
 								]);
 							}

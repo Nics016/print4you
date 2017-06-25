@@ -72,6 +72,7 @@ class UslugiController extends Controller
             for ($i = 0; $i < count($content); $i++) {
                 $item = $content[$i];
                 $simple_html .= $this->renderAjax('assorty_row', [
+                    'product_id' => $item['id'],
                     'name' => $item['name'],
                     'image' => $item['firstColor']['image'],
                     'count' => 1,
@@ -79,11 +80,14 @@ class UslugiController extends Controller
                     'description' => $item['description'],
                 ]);
 
+                $gross_price = json_decode($item['firstColor']['gross_price'], true);
+                $gross_price = $gross_price[0]["price"];
                 $gross_html .= $this->renderAjax('assorty_row', [
+                    'product_id' => $item['id'],
                     'name' => $item['name'],
                     'image' => $item['firstColor']['image'],
-                    'count' => 1,
-                    'price' => $item['firstColor']['price'],
+                    'count' => 20,
+                    'price' => $gross_price,
                     'description' => $item['description'],
                 ]);
             } 
