@@ -2,6 +2,9 @@
 
 	window.onload = function() {
 
+        var printSizes = JSON.parse(document.getElementById('print-sizes').value);
+        var currentPrintSize = false; // сюда будем записывать размер принта стороны
+
         var csrfParam = document.querySelector('meta[name="csrf-param"]').getAttribute('content');
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var products = false;
@@ -25,6 +28,9 @@
         var productBackSideImageElem = document.querySelector('#back-side .product-side-image');
         var colorSizesContainer = document.querySelector('.constructor-product-sizes');
 
+
+        var canvasBgImage = document.getElementById('canvas-bg-image'); 
+
         var constructorObjects = {
             front: false,
             back: false,
@@ -33,6 +39,16 @@
         var canvas = new fabric.Canvas('constructor-canvas', {
             containerClass: 'canvas-container',
         });
+
+        var canvasContainer = document.querySelector('.canvas-container');
+
+        // для добавления в корзину
+        var cloneCanvas = document.createElement('canvas');
+        cloneCanvas = new fabric.Canvas(cloneCanvas, {
+            width: canvas.getWidth(), 
+            height:canvas.getHeight()
+        });
+
 
         var tabsBtns = document.getElementsByClassName('constructor-leftbar-toogle');
 
@@ -82,6 +98,12 @@
         // клик на бэк
         constructorBackSideBtn.onclick = showBackSide;
 
+        // закрыть модалку успешного заказа
+        var closeSuccessModalBtns = document.querySelectorAll('[data-action="close-success-modal"]');
+
+        for (var i = 0; i < closeSuccessModalBtns.length; i++) 
+            closeSuccessModalBtns[i].onclick = hideSuccessModal;
+
 
         constructorInit();
 
@@ -118,15 +140,14 @@
 
         // показ передней стороны
         function showFrontSide() {
-
             if (currentProductSide == 'back' || currentProductSide === false) {
 
                 // найдем текущий цвет
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
-                        document.getElementById('canvas-bg-image').src = colors[i]['front_image'];
+                        canvasBgImage.src = colors[i]['full_front_image'];
                         currentProductSide = 'front';
                         break;
                     }
@@ -152,11 +173,11 @@
 
             if (currentProductSide == 'front' || currentProductSide === false) {
                 // найдем текущий цвет
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
                 for (var i = 0; i < colors.length; i++) {
                     if (colors[i]['id'] == currentProductColorId) {
-                        document.getElementById('canvas-bg-image').src = colors[i]['back_image'];
+                        canvasBgImage.src = colors[i]['full_back_image'];
                         currentProductSide = 'back';
                         break;
                     }
@@ -225,8 +246,6 @@
                     });
 
                     canvas.add(image);
-            
-                    canvas.setActiveObject(image);
 
                     // центрирование
                     image.center();
@@ -239,7 +258,8 @@
             }
 
             reader.readAsDataURL(file);
-            
+
+            this.value = '';
         }
 
         // открытие input file
@@ -351,13 +371,14 @@
 
         // инициализация констурктора
         function constructorInit () {
+            showLoader('Загружаем товары...');
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/constructor/get-products/', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send(csrfParam + '='+ csrfToken);
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    products = JSON.parse(xhr.responseText)[0];
+                    products = JSON.parse(xhr.responseText);
                     renderProducts();
                 }
             }
@@ -365,6 +386,7 @@
 
         // рендер продуктов, пришедштх с сервера
         function renderProducts() {
+
             //изменим селект
             var select = document.getElementById('constructor-leftbar-select');
             for (var i = 0; i < products.length; i++) {
@@ -384,7 +406,7 @@
             var product = document.querySelector('.leftarea-product-image-container');
             if (product) product.dispatchEvent(new Event('click'));
 
-            document.getElementById('constructor-loader').style.display = 'none';
+            setTimeout(hideLoader, 500)
         }
 
         // рендер продуктов категории
@@ -482,6 +504,8 @@
 
                             // отобразим все данные
                             renderProductMeta();
+                            // изменим размер канваса
+                            changeCanvasSize();
 
                             // удалим класс текущего элемента с другого продукта
                             var current = document.querySelector('.leftarea-product-image-container.current');
@@ -507,7 +531,7 @@
                 colorsContainer.removeChild(colorsContainer.firstChild);
             }
 
-            var colors = currentProduct['colors'];
+            var colors = currentProduct['constructorColors'];
 
             for (var i = 0; i < colors.length; i++) {
                 var div = document.createElement('div');
@@ -517,12 +541,6 @@
                 colorsContainer.appendChild(div);
             }
 
-            // установим цену
-            currentPrice = currentProduct['price'];
-            changeProductPrice();
-
-            // установим изначальное положение стороны
-            currentProductSide = false;
 
             // удалим и добавим обработчик событий на клик по цвету
             var colorsList = document.querySelectorAll('.constructor-product-color');
@@ -551,16 +569,19 @@
 
         // непосредственно меняем цвет продукта
         function changeProductColor(id) {
-            var colors = currentProduct['colors'];
+            var colors = currentProduct['constructorColors'];
             for (var i = 0; i < colors.length; i++) {
                 if (colors[i]['id'] == id) {
 
                     var color = colors[i];
 
-                    
+                    // установим цену
+                    currentPrice = color['price'];
+                    changeProductPrice();
+
                     constructorProductColorValueElem.textContent = color['name'];
-                    productFontSideImageElem.src = color['front_image'];
-                    productBackSideImageElem.src = color['back_image'];
+                    productFontSideImageElem.src = color['small_front_image'];
+                    productBackSideImageElem.src = color['small_back_image'];
 
                     var current = document.querySelector('.constructor-product-color.current-color');
                     removeClass(current, 'current-color');
@@ -573,11 +594,11 @@
                     }
 
                     // добавим все размеры
-                    for (var i = 0; i < color['sizes'].length; i++) {
+                    for (var i = 0; i < color['constructorSizes'].length; i++) {
                         var span = document.createElement('span');
                         span.className = 'constructor-product-size';
-                        span.textContent = color['sizes'][i]['size'];
-                        span.dataset.id = color['sizes'][i]['id'];
+                        span.textContent = color['constructorSizes'][i]['size'];
+                        span.dataset.id = color['constructorSizes'][i]['id'];
                         colorSizesContainer.appendChild(span);
                     }
 
@@ -588,15 +609,17 @@
                         sizesList[i].addEventListener('click', sizeClickHandler);
                     }
                     
+
                     sizesList[0].dispatchEvent(new Event('click'));
 
-                    if (currentProductSide === false)
+                    if (currentProductSide === false) {
                         constructorFrontSideBtn.dispatchEvent(new Event('click'));
+                        currentProductSide = 'front';
+                    }
                     if (currentProductSide == 'front') 
-                        document.getElementById('canvas-bg-image').src = color['front_image'];
+                        canvasBgImage.src = color['full_front_image'];
                     if (currentProductSide == 'back')
-                        document.getElementById('canvas-bg-image').src = color['back_image'];
-
+                        canvasBgImage.src = color['full_back_image'];
 
                     return true;
                 }
@@ -605,12 +628,33 @@
             return false;
         }
 
+        // изменяет размер канваса
+        function changeCanvasSize()
+        {
+            canvasBgImage.onload = function () {
+                var imgWidth = this.width;
+                var imgHeight = this.height;
+
+                var canvasOffsetY = imgHeight / 100 * currentProduct['print_offset_y'];
+                var canvasHeight = imgHeight / 100 * currentProduct['print_height'];
+                var canvasOffsetX = imgWidth / 100 * currentProduct['print_offset_x'];  
+                var canvasWidth = imgWidth / 100 * currentProduct['print_width'];
+
+                // изменим отступы у канваса
+                canvasContainer.style.top = canvasOffsetY + 'px';
+                canvasContainer.style.left = canvasOffsetX + 'px';
+
+                canvas.setHeight(canvasHeight);
+                canvas.setWidth(canvasWidth);
+            }
+        }
+
         // обработчки событый на клик по размеру
         function sizeClickHandler() {
             var id = this.dataset.id;
 
             if (typeof id !== 'undefined' && !isNaN(parseInt(id)) && currentProductSize !== +id) {
-                var colors = currentProduct['colors'];
+                var colors = currentProduct['constructorColors'];
 
 
 
@@ -618,9 +662,7 @@
                 for (var i = 0; i < colors.length; i++) {
                     if (currentProductColorId == colors[i]['id']) {
 
-
-
-                        var sizes = colors[i]['sizes'];
+                        var sizes = colors[i]['constructorSizes'];
 
                         for (var x = 0; x < sizes.length; x++) {
                             if (sizes[x]['id'] == id) {
@@ -667,7 +709,263 @@
 
         // добавление в корзину
         function addToCart() {
-            window.open(canvas.toDataURL("image/png"));
+            showLoader('Формируем заказ');
+            // перезапишем текущий момент, потому что другая сторона уже записана
+            var json = canvas.toJSON();
+
+            if (currentProductSide == 'front' || currentProductSide === false)
+                constructorObjects.front = json;
+            else
+                constructorObjects.back = json;
+
+            // возьмем ссылки на картинки цветов
+            var colors = currentProduct['constructorColors'];
+            var frontColorImage, backColorImage;
+            for (var i = 0; i < colors.length; i++) {
+                if (currentProductColorId == colors[i]['id']) {
+                    frontColorImage = colors[i]['full_front_image'];
+                    backColorImage = colors[i]['full_back_image'];
+                }
+            }
+            var frontImage, backImage, frontPrintSize, backPrintSize;
+
+            // загрузим перднее изображение и размер принта
+            getOrderImage(constructorObjects.front, frontColorImage, function(image) {
+                frontImage = image;
+                frontPrintSize = currentPrintSize;
+
+                // загрузим заднее изображение и размер принта
+                getOrderImage(constructorObjects.back, backColorImage, function(image) {
+                    backImage = image;
+                    backPrintSize = currentPrintSize;
+                    // формируем данные
+                    var data = csrfParam + '=' + csrfToken + '&front_base64=' + encodeURIComponent(frontImage)
+                                + '&back_base64=' + encodeURIComponent(backImage) 
+                                + '&product_id=' + currentProduct['id']
+                                + '&color_id=' + currentProductColorId + '&size_id=' + currentProductSize
+                                + '&front_print_size=' + frontPrintSize + '&back_print_size=' + backPrintSize;
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/constructor/add-to-cart/', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
+
+                    xhr.onload = function () {
+                        hideLoader();
+                        if (xhr.status == 200) {
+                            hideLoader();
+                            var response = JSON.parse(xhr.responseText);
+                            if (response['status']) 
+                                showSuccessModal();
+                            else 
+                                addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                        } else {
+                            addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                        }
+                    }
+
+                    xhr.onerror = function() {
+                        hideLoader();
+                        addConstructorError('Извините, произошла ошибка, попробуйте позже!');
+                    }
+                });
+            });
+
+        }
+
+        // формирует картинку заказа
+        function getOrderImage(objects, canvasBgImage, callback) {
+
+            // изанчально все приведем к  дефолтному занчению
+            cloneCanvas.clear();
+            cloneCanvas.setWidth(canvas.getWidth());
+            cloneCanvas.setHeight(canvas.getHeight());
+
+            var bgImage = new Image();
+
+            bgImage.onload = function() {
+
+                // загрузили картинку товара
+                var bgImageHeight = this.height;
+                var bgImageWidth = this.width;
+
+                // загрузим все объекты принта
+                cloneCanvas.loadFromJSON(objects, function(){
+
+                    // увеличим сам принт
+                    zoomCanvasObjects(bgImageWidth, bgImageHeight);
+
+                    // получаем сам принт, установим его как картинк
+                    var contentImage = new Image();
+                    contentImage.src = cloneCanvas.toDataURL('image/png', 1.0);
+                    cloneCanvas.clear();
+               
+                    contentImage.onload = function () {
+
+                        // ставим картинку контента и картинку товара
+                        cloneCanvas.setWidth(bgImageWidth);
+                        cloneCanvas.setHeight(bgImageHeight);
+                        cloneCanvas.setBackgroundImage(new fabric.Image(bgImage), function() {
+                            var contentObj = new fabric.Image(contentImage);
+
+                            contentObj.set({
+                                top: bgImageHeight / 100 * currentProduct['print_offset_y'],
+                                left: bgImageWidth / 100 * currentProduct['print_offset_x'],
+                                height: bgImageHeight / 100 * currentProduct['print_height'],
+                                width: bgImageWidth / 100 * currentProduct['print_width'],
+                            });
+
+                            cloneCanvas.add(contentObj);
+                            contentObj.setCoords();
+                            cloneCanvas.renderAll();
+                            callback(cloneCanvas.toDataURL('image/png', 1.0));
+                        });
+                        
+                    } 
+                       
+                });
+            }
+
+            bgImage.crossOrigin = "Anonymous";
+            bgImage.src = canvasBgImage;
+        }
+
+        // увеличивает все объекты и оступы принта
+        function zoomCanvasObjects(newCanvasWidth, newCanvasHeight) {
+            var objects = cloneCanvas.getObjects();
+
+            var offsets = {left: false, top: false, right: false, bottom: false};
+
+            // рабочая область, которая редактируется в админке
+            var canvasWorkWidth = newCanvasWidth / 100 * currentProduct['print_width'];
+            var canvasWorkHeight = newCanvasHeight / 100 * currentProduct['print_height'];
+
+            cloneCanvas.setWidth(canvasWorkWidth);
+            cloneCanvas.setHeight(canvasWorkHeight);
+
+            var xFactor = canvasWorkWidth / canvas.getWidth();
+            var yFactor = canvasWorkHeight / canvas.getHeight();
+
+            for (var i in objects) {
+
+                var scaleX = objects[i].scaleX;
+                var scaleY = objects[i].scaleY;
+
+                var left = objects[i].left;
+                var top = objects[i].top;
+                
+                getObjectOffsets(objects[i], offsets);
+
+            
+                objects[i].scaleX = scaleX * xFactor;
+                objects[i].scaleY = scaleY * yFactor;
+                objects[i].left = left * xFactor;
+                objects[i].top = top * yFactor;
+
+
+                objects[i].setCoords();
+            }
+
+            // рассчитаем размер принта
+            calcPrintSize(offsets);
+
+            cloneCanvas.renderAll();
+        }
+
+        // высчитывает координаты, нужные для расчета размера принта
+        function getObjectOffsets(object, values) {
+
+            var height = canvas.getHeight();
+            var width = canvas.getWidth();
+            var coords = object.oCoords;
+
+            // запишем координаты углов
+            var yCoords = [coords.tl.y, coords.tr.y, coords.bl.y, coords.br.y];
+            var xCoords = [coords.tl.x, coords.tr.x, coords.bl.x, coords.br.x];
+
+            // найдем минимальные и максимальные отсутпы углов данного объект
+            var minYOffset = coords.tl.y;
+            var maxYOffset = coords.tr.y;
+            var minXOffset = coords.tl.x;
+            var maxXOffset = coords.tr.x;
+            
+            // минимальный отступ - верх, максимальный - низ для Y
+            // минимальный отступ - левый, максимальный - правый для X
+            for (i = 0; i < yCoords.length; i++) {
+                minYOffset = yCoords[i] < minYOffset ? yCoords[i] : minYOffset;
+                maxYOffset = yCoords[i] > maxYOffset ? yCoords[i] : maxYOffset;
+
+                minXOffset = xCoords[i] < minXOffset ? xCoords[i] : minXOffset;
+                maxXOffset = xCoords[i] > maxXOffset ? xCoords[i] : maxXOffset;
+            }
+
+            // проверим координаты, может они зашли за область канваса
+            minYOffset = minYOffset < 0 ? 0 : minYOffset;
+            maxYOffset = maxYOffset > height ? 0 : height - maxYOffset;
+
+            minXOffset = minXOffset < 0 ? 0 : minXOffset;
+            maxXOffset = maxXOffset > width ? 0 : width - maxXOffset;
+
+            // теперь проверим, записывали ли мы ранее координаты
+            if (values.top === false) {
+                // если нет, то запишем эти
+                values.top = minYOffset;
+                values.bottom = maxYOffset;
+                values.left = minXOffset;
+                values.right = maxXOffset;
+            } else {
+                // иначе сравним с минимальными значениями отступов
+                values.top = values.top < minYOffset ? values.top : minYOffset;
+                values.bottom = values.bottom < maxYOffset ? values.bottom : maxYOffset;
+                values.left = values.left < minXOffset ? values.left : minXOffset;
+                values.right = values.right < maxXOffset ? values.right : maxXOffset;
+            }
+        }
+
+        // рассчитать размер принта
+        function calcPrintSize(values) {
+
+            if (values.left === false) {
+                currentPrintSize = 0;
+                return;
+            }
+
+            var parentWidth = canvas.getWidth();
+            var parentHeight = canvas.getHeight();
+            var printWidth = parentWidth - values.left - values.right;
+            var printHeight = parentHeight - values.top - values.bottom;
+
+            var parentSquare = parentHeight * parentWidth;
+            var printSquare = printWidth * printHeight;
+
+            
+            var printPercent = Math.ceil(printSquare / parentSquare * 100);
+            var possibleSizes = []; // сюда будем записывать возиожные размеры принта
+
+            // переберм все размеры
+            for (var i = 0; i < printSizes.length; i++) {
+                var current = printSizes[i];
+
+                // если нашли прям ровный процент, о значит это
+                if (current['percent'] == printPercent) {
+                    currentPrintSize = current['id'];
+                    return;
+                }
+
+                // это возиожные размеры принта
+                if (current['percent'] > printPercent) {
+                    possibleSizes.push(current);
+                }
+            }
+
+            var minSize = possibleSizes[0];
+
+            // найдем самый подзодящий размер
+            for (i = 0; i < possibleSizes.length; i++) {
+                minSize = possibleSizes[i]['percent'] < minSize['percent'] ? possibleSizes[i] : minSize;
+            }
+
+            currentPrintSize = minSize['id'];
         }
 
         // сменить таб 
@@ -694,6 +992,34 @@
 
             }
 
+        }
+
+
+        // показать лоадер
+        function showLoader(text) {
+            document.getElementById('loader-text').textContent = text;
+            document.getElementById('constructor-loader').style.display = 'block';
+        }
+
+
+        // скрыть лоадер
+        function hideLoader() {
+            document.getElementById('constructor-loader').style.display = 'none';
+        }
+
+        // скрыть модалку успешного заказа
+        function hideSuccessModal(event) {
+            event.preventDefault();
+            document.getElementById('success-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // показать модалку умпешного заказа
+        function showSuccessModal() {
+            var modal = document.getElementById('success-modal');
+            modal.style.top = window.pageYOffset + 'px';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
     }
 

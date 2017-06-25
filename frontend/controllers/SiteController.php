@@ -224,6 +224,36 @@ class SiteController extends Controller
         }
     }
 
+    public function actionEditProfile($id = -1)
+    {
+        if (Yii::$app->user->isGuest
+                || $id < 0) {
+            return $this->goHome();
+        }
+
+        $model = CommonUser::findOne(['id' => $id]);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model['password'] != ''){
+                $model->generatePasswordHash($model['password']);
+                $model->generateAuthKey();
+            }
+            if ($model->save())
+                return $this->redirect(['site/cabinet']);
+            else 
+                print_r($model->getErrors());
+        } else {
+            return $this->render('edit-profile', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Logs out the current user.
      *

@@ -4,13 +4,19 @@ namespace backend\controllers;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 use common\components\AccessRule;
 use yii\filters\AccessControl;
 use backend\models\User;
+use common\models\CommonUser;
+use common\models\Orders;
+use common\models\Office;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -76,7 +82,75 @@ class UserController extends Controller
      */
     public function actionStatistics()
     {
-        return $this->render('statistics');
+        // clients
+        $clients = CommonUser::find()
+            ->where(['status' => CommonUser::STATUS_ACTIVE])
+            ->all();
+        $clientsByDate = [];
+        foreach($clients as $client) {
+            $clientRegistered = Yii::$app->formatter->asDate($client->created_at);
+            if (!array_key_exists($clientRegistered, $clientsByDate)) {
+                $clientsByDate[$clientRegistered] = 1;
+            } else {
+                $clientsByDate[$clientRegistered]++;
+            }
+        }
+        $queryNoOrders = Yii::$app->db->createCommand("
+            SELECT username, common_user.phone as phone FROM common_user
+            INNER JOIN orders ON common_user.id <> orders.client_id
+        ");
+        $clientsWithoutOrders = $queryNoOrders->queryAll();
+
+        // orders
+        $ordersAll = Orders::find()
+            ->all();
+        $ordersCompleted = Orders::find()
+            ->where(['order_status' => Orders::STATUS_COMPLETED])
+            ->all();
+
+        // orders - data providers
+        $queryManagers = (new Query())
+            ->select([
+                'manager_name' => 'u.username', 
+                'num_orders' => 'COUNT(orders.id)'
+            ])
+            ->from('user u')
+            ->where(['u.role' => User::ROLE_MANAGER])
+            ->join('LEFT JOIN', 'orders', 'orders.manager_id=u.id')
+            ->groupBy('manager_name');
+        $commandManagers = $queryManagers->createCommand();
+        $dataProviderManagers = new SqlDataProvider([
+            'sql' => $commandManagers->sql,
+            'params' => $commandManagers->params,
+            'totalCount' => $queryManagers->count(),
+        ]);
+
+        $modelsOffices = Office::find()->asArray()->all();
+        $arrayOffices = [];
+        foreach ($modelsOffices as $office) {
+            $arrayOffices[$office['id']] = [
+                'office_address' => $office['address'],
+                'num_orders' => 0,
+            ];
+        }
+        foreach ($ordersCompleted as $order) {
+            if ($order->office_id) {
+                $arrayOffices[$order->office_id]['num_orders']++;
+            }
+        }
+        $dataProviderOffices = new ArrayDataProvider([
+            'allModels' => $arrayOffices,
+        ]);
+
+        return $this->render('statistics', [
+            'totalClients' => count($clients),
+            'clientsByDate' => $clientsByDate,
+            'clientsWithoutOrders' => $clientsWithoutOrders,
+            'totalOrdersAll' => count($ordersAll),
+            'totalOrdersCompleted' => count($ordersCompleted),
+            'dataProviderManagers' => $dataProviderManagers,
+            'dataProviderOffices' => $dataProviderOffices,
+        ]);
     }
 
     /**

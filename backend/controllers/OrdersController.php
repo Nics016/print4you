@@ -12,7 +12,11 @@ use yii\filters\VerbFilter;
 use common\components\AccessRule;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use backend\models\StockColors;
 use backend\models\User;
+use common\models\OrdersProduct;
+use common\models\ConstructorStorage;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -110,6 +114,7 @@ class OrdersController extends Controller
     public function actionNew()
     {
         $records = [];
+        $mapColors = [];
         // Менеджер и админ
         if (Yii::$app->user->identity->role == User::ROLE_MANAGER
             || Yii::$app->user->identity->role == User::ROLE_ADMIN){
@@ -123,6 +128,10 @@ class OrdersController extends Controller
                     . Yii::$app->user->identity->id
                     . " AND location="
                     . Orders::LOCATION_EXECUTOR_NEW);
+            $colors = StockColors::find()
+                ->where(['office_id' => Yii::$app->user->identity->office_id])
+                ->asArray()->all();
+            $mapColors = ArrayHelper::map($colors, 'id', 'name');
         }
         // Курьер
         elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
@@ -140,6 +149,7 @@ class OrdersController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ordersTitle' => 'Новые заказы',
+            'mapColors' => $mapColors,
         ]);
     }
 
@@ -269,15 +279,35 @@ class OrdersController extends Controller
         return $this->redirect('proccessing');
     }
 
-    public function actionAcceptExecutor($id)
+    /**
+     * При нажатии на кнопку "принять" исполнителем.
+     * Происходит вычет краски со склада и меняется статус заказа
+     */
+    public function actionAcceptExecutor($id, $stock_color_id, $liters = 0)
     {
+        $fLiters = 0;
+        try {
+            $fLiters = (float)$liters;
+        } catch(Exception $e) {
+            return $this->renderContent(Html::tag('h1', $e->getMessage()));
+        }
+
+        $stockColor = StockColors::findOne(['id' => $stock_color_id]);
+        $stockColor->liters -= $liters;
+        $stockColor->save();
+
         $model = $this->findModel($id);
+        $model->stock_color_id = $stock_color_id;
+        $model->stock_color_liters = $liters;
         $model->location = Orders::LOCATION_EXECUTOR_ACCEPTED;
         $model->save();
 
         return $this->redirect('proccessing');
     }
 
+    /**
+     * При нажатии на кнопку "завершить" исполнителем
+     */
     public function actionCompleteExecutor($id)
     {
         $model = $this->findModel($id);
@@ -294,6 +324,9 @@ class OrdersController extends Controller
         return $this->redirect('proccessing');
     }
 
+    /**
+     * При нажатии на кнопку "принять" курьером
+     */
     public function actionAcceptCourier($id)
     {
         $model = $this->findModel($id);
@@ -360,10 +393,34 @@ class OrdersController extends Controller
         if ($model['manager_id'] != Yii::$app->user->identity->id){
             return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
         } else {
+            $office_id = User::findIdentity($executor_id)->office_id;
+            // Вычитаем товары со склада
+            $products = OrdersProduct::find()
+                ->where(['order_id' => $id])
+                ->all();
+            $transaction = Yii::$app->db->beginTransaction();
+            foreach($products as $product){
+                $storage = ConstructorStorage::findOne([
+                    'color_id' => $product->color_id,
+                    'size_id' => $product->size_id,
+                    'office_id' => $office_id,
+                ]);
+                if ($storage){
+                    if ($storage->count <= 0) {
+                        $transaction->rollBack();
+                        return $this->renderContent(Html::tag('h1', 'На складе недостаточно товаров!'));
+                    }
+                    $storage->count -= $product->count;
+                    $storage->save();
+                }
+            }
+
             $model->order_status = Orders::STATUS_PROCCESSING;
             $model->executor_id = $executor_id;
             $model->location = Orders::LOCATION_EXECUTOR_NEW;
+            $model->office_id = $office_id;
             $model->save();
+            $transaction->commit();
         }
 
         return $this->redirect('proccessing');

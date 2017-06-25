@@ -30,6 +30,9 @@ class m170612_153932_create_orders_product_table extends Migration
             'count' => $this->integer()->defaultValue(1),
             'size_id' => $this->integer(),
             'color_id' => $this->integer(),
+            'back_print_data' => $this->text(),
+            'front_print_data' => $this->text(),
+            'discount_percent' => $this->integer()->notNull()->defaultValue(0),
         ], $tableOptions);
     }
 

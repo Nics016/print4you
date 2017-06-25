@@ -32,6 +32,9 @@ $constructor_fonts = [
 ?>
 
 <div class="container">
+	
+
+	<input type="hidden" id="print-sizes" value='<?= $print_sizes ?>'>
 
 	<!-- TITLE  -->
 

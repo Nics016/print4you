@@ -7,7 +7,6 @@
 /* @var $discountGrossVal integer */
 
 use yii\helpers\Html;
-use common\models\Orders;
 
 $this->title = 'Print4you - Личный кабинет';
 ?>
@@ -19,7 +18,7 @@ $this->title = 'Print4you - Личный кабинет';
 				<div class="content">
 					<div class="content-titlebox clearfix">
 						<img src="/img/lk-circle.png" alt="">
-						<h2><?= $model['firstname'] ?> <?= $model['secondname'] ?></h2>
+						<h2><?= $model['firstname'] ?> <?= $model['secondname'] ?> <?= Html::a('Изменить данные', ['site/edit-profile', 'id' => Yii::$app->user->identity->id], ['class' => 'btn btn-primary', 'style' => 'margin-left: 10px']) ?></h2>
 					</div>
 					<div class="content-orders clearfix">
 						<div class="content-orders-left">
@@ -34,7 +33,6 @@ $this->title = 'Print4you - Личный кабинет';
 								<?php if ($orders): ?>
 									<?php foreach($orders as $order): ?>
 										<?php $formatter = Yii::$app->formatter ?>
-										<?php $discountedPrice = Orders::calculateDiscountPrice($order['price'], $order['discount_percent']); ?>
 										<?php 
 											$status = '';
 											switch($order['order_status']){
@@ -58,7 +56,7 @@ $this->title = 'Print4you - Личный кабинет';
 										<tr>
 											<td><?= $formatter->format($order['created_at'], 'date') ?></td>
 											<td>№<?= $order['id'] ?></td>
-											<td><?= $formatter->format($discountedPrice, 'integer') ?> руб.</td>
+											<td><?= $formatter->format($order['price'], 'integer') ?> руб.</td>
 											<td><strong><?= $status ?></strong></td>
 										</tr>
 									<?php endforeach; // orders ?>

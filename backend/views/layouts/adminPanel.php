@@ -221,6 +221,9 @@
                             <a href="<?= Url::toRoute(['constructor-print/']) ?>">
                                 <span class="title">Управление печатью</span>
                             </a>
+                            <a href="<?= Url::toRoute(['constructor-print-prices/']) ?>">
+                                <span class="title">Цены на печать</span>
+                            </a>
                         </li>
                     </ul>
                 </li>

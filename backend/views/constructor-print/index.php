@@ -19,3 +19,11 @@ $this->registerJsFile('/js/constructor-print-options.js?v=' . @filemtime($js_fil
 <?= $this->render('constructor-print-sizes', [
 	'print_sizes' => $print_sizes
 ]) ?>
+
+<?= $this->render('constructor-print-types', [
+	'print_types' => $print_types
+]) ?>
+
+<?= $this->render('constructor-print-attendances', [
+	'attendances' => $attendances
+]) ?>

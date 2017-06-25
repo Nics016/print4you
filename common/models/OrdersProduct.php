@@ -63,4 +63,10 @@ class OrdersProduct extends \yii\db\ActiveRecord
             'back_image' => 'Back Image',
         ];
     }
+
+    public static function getImagesLink()
+    {
+        $alias = Yii::getAlias('@storage_link');
+        return $alias . '/' . self::STORAGE_CONSTRUCTOR_ORDER_DIR;
+    }
 }

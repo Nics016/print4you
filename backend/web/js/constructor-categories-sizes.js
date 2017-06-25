@@ -119,8 +119,46 @@ jQuery(document).ready(function($){
     });
 
 
+    // доабвление материала
+    $('#add-material').on('click', function(event) {
+        event.preventDefault();
+        var materialContainer = $(document.createElement('div'));
+        materialContainer.addClass('product-material');
+        materialContainer.attr('data-id', 'new');
+
+        var materialInput = $(document.createElement('input'));
+        materialInput.addClass('material-input form-control');
+        materialInput.attr('type', 'text');
+        materialInput.attr('placeholder', 'Название материала');
+
+        var saveBtn = $(document.createElement('button'));
+        saveBtn.addClass('save-material btn btn-success');
+        saveBtn.text('Сохранить');
+
+        var removeBtn = $(document.createElement('button'));
+        removeBtn.addClass('remove-material btn btn-danger');
+        removeBtn.text('Удалить');
+
+        materialContainer.append(materialInput);
+        materialContainer.append(saveBtn);
+        materialContainer.append(removeBtn);
+
+        materialInput.bind('keyup', clearErrorMaterialClass);
+        saveBtn.bind('click', saveMaterial);
+        removeBtn.bind('click', removeMaterial);
+
+        materialContainer.insertBefore(this);
+    });
+
+    // сохранение и удаление материала
+    $('.save-material').bind('click', saveMaterial);
+    $('.remove-material').bind('click', removeMaterial);
+
+    // очистка класса ошибки материала
+    $('.material-input').bind('keyup', clearErrorMaterialClass);
+
     // удаление размера
-   function removeSizeHandle() {
+    function removeSizeHandle() {
     	confirmRemove = confirm('Точно удалить размер?');
  		var elem = $(this);
 
@@ -336,5 +374,94 @@ jQuery(document).ready(function($){
     }
 
 
+    // сохранение материала
+    function saveMaterial() {
+        var parent = $(this).closest('.product-material');
+        var id = $(parent).attr('data-id');
+        var input = $(parent).find('.material-input');
+        var saveBtn = this;
+        var removeBtn = $(parent).find('.remove-material');
+
+
+        if ($(input).val().length == 0) {
+            $(input).addClass('error-material');
+            return false;
+        }
+
+        $(input).prop('disabled', true);
+        $(saveBtn).prop('disabled', true);
+        $(removeBtn).prop('disabled', true);
+
+        $.ajax({
+            url: '/constructor-categories-sizes/save-material',
+            data: {'_csrf-backend': csrf, id: id, name: $(input).val()},
+            type: 'POST',
+            success: function (response) {
+                if (response['status'] == 'ok') {
+                    $(parent).attr('data-id', response['id']);
+                    setTimeout(function(){
+                        $(input).prop('disabled', false);
+                        $(saveBtn).prop('disabled', false);
+                        $(removeBtn).prop('disabled', false);
+                    }, 500);
+                } else {
+                    console.log(err);
+                    alert('Произошла ошибка, обновите страницу');
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                alert('Произошла ошибка, обновите страницу');
+            }
+        });
+
+    }
+
+    // удаление материала
+    function removeMaterial() {
+        var parent = $(this).closest('.product-material');
+        var id = $(parent).attr('data-id');
+        var input = $(parent).find('.material-input');
+        var saveBtn = this;
+        var removeBtn = $(parent).find('.remove-material');
+
+        if (confirm('Точно удалить размер?')) {
+            if (id == 'new') {
+                $(parent).remove();
+                return false;
+            }
+
+            $(input).prop('disabled', true);
+            $(saveBtn).prop('disabled', true);
+            $(removeBtn).prop('disabled', true);
+
+            $.ajax({
+               url: '/constructor-categories-sizes/remove-material',
+                data: {'_csrf-backend': csrf, id: id},
+                type: 'POST',
+                success: function (response) {
+                    if (response['status'] == 'ok') {
+                        setTimeout(function(){
+                            $(parent).remove();
+                        }, 500);
+                    } else {
+                        console.log(err);
+                        alert('Произошла ошибка, обновите страницу');
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                    alert('Произошла ошибка, обновите страницу');
+                } 
+            });
+        }
+
+        
+    }   
+
+    // стирание класса ошибки у материала
+    function clearErrorMaterialClass() {
+        $(this).removeClass('error-material');
+    }
 
 });

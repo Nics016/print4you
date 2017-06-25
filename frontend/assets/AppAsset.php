@@ -25,6 +25,6 @@ class AppAsset extends AssetBundle
         '/js/main.js?v=3',
     ];
     public $depends = [
-        'frontend\assets\jQueryAsset'
+        'frontend\assets\jQueryAsset',
     ];
 }

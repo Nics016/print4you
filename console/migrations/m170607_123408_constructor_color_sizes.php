@@ -15,7 +15,7 @@ class m170607_123408_constructor_color_sizes extends Migration
     }
 
     public function down()
-    {
+    {   $this->dropPrimaryKey('constructor_color_sizes_pkey');
         $this->dropTable('constructor_color_sizes');
     }
 }

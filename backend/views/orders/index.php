@@ -4,9 +4,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use common\models\Orders;
+use common\models\OrdersProduct;
 use backend\models\User;
 use common\models\CommonUser;
 use yii\widgets\ActiveForm;
+use common\models\ConstructorColors;
+use common\models\ConstructorSizes;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $ordersTitle - contains current title (new orders, proccessing orders, etc) */
@@ -102,8 +105,40 @@ $orders = $dataProvider->getModels();
             ],
             [
                 'label' => 'Цена со скидкой (руб.)',
+                'value' => function($model) {
+                    $products = OrdersProduct::find()
+                        ->where(['order_id' => $model->id])
+                        ->all();
+                    $totalPrice = 0;
+                    foreach ($products as $product) {
+                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
+                        $totalPrice += $productDiscountPrice;
+                    }
+                    return $totalPrice;
+                }
+            ],
+            [
+                'label' => 'Товары',
+                'format' => 'html',
                 'value' => function($model){
-                    $answ = floor(Orders::calculateDiscountPrice($model['price'], $model['discount_percent']));
+                    $answ = '';
+                    $products = OrdersProduct::find()
+                        ->where(['order_id' => $model->id])
+                        ->all();
+                    if ($products){
+                        $answ .= '<ol>';
+                        foreach($products as $product) {
+                            $color = ConstructorColors::findOne(['id' => $product->color_id]);
+                            $size = ConstructorSizes::findOne(['id' => $product->size_id]);
+                            $liText = $product->count . ' x ' 
+                                . $product->name
+                                . ' (' . $color->name
+                                . ', ' . $size->size . ')';
+                            $answ .= '<li>' . $liText . '</li>';
+                        } // foreach products
+                        $answ .= '</ol>';
+                    } // if products
+
                     return $answ;
                 }
             ],
@@ -339,8 +374,11 @@ $orders = $dataProvider->getModels();
       </div>
       <div class="modal-body">
         <?php $form = ActiveForm::begin(['action' => ['orders/accept-executor'], 'method' => 'GET']); ?>
-            <?= "Количество краски: " . Html::textInput('comment_123', '', ['class' => 'form-control']) ?>
-            <?= Html::hiddenInput('id', $order['id']); ?>
+            <?php if (Yii::$app->user->identity->role === User::ROLE_EXECUTOR
+                && $order['location'] === Orders::LOCATION_EXECUTOR_NEW): ?>
+                <?= "Количество краски (л): " . "<br>" . Html::dropDownList('stock_color_id', '', $mapColors, ['class' => 'form-control']) . "<br>" . Html::textInput('liters', '', ['class' => 'form-control']) ?>
+                <?= Html::hiddenInput('id', $order['id']); ?>
+            <?php endif; ?>
             <br>
             <div class="form-group">
                 <?= Html::submitButton('Принять', ['class' => 'btn btn-success']) ?>

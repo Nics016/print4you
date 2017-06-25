@@ -6,6 +6,11 @@ use yii\widgets\DetailView;
 use backend\models\User;
 use common\models\CommonUser;
 use common\models\Orders;
+use backend\models\StockColors;
+use common\models\OrdersProduct;
+use common\models\ConstructorColors;
+use common\models\ConstructorSizes;
+use frontend\components\Basket;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
@@ -94,12 +99,29 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Цена (руб.)',
                 'attribute' => 'price',
+                'value' => function($model) {
+                    $products = OrdersProduct::find()
+                        ->where(['order_id' => $model->id])
+                        ->all();
+                    $totalPrice = 0;
+                    foreach ($products as $product) {
+                        $totalPrice += $product->count * $product->price;
+                    }
+                    return $totalPrice;
+                }
             ],
             [
                 'label' => 'Цена со скидкой (руб.)',
-                'value' => function($model){
-                    $answ = floor(Orders::calculateDiscountPrice($model['price'], $model['discount_percent']));
-                    return $answ;
+                'value' => function($model) {
+                    $products = OrdersProduct::find()
+                        ->where(['order_id' => $model->id])
+                        ->all();
+                    $totalPrice = 0;
+                    foreach ($products as $product) {
+                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
+                        $totalPrice += $productDiscountPrice;
+                    }
+                    return $totalPrice;
                 }
             ],
             [
@@ -115,7 +137,69 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => '',
                 'value' => function($model){
                     $user = CommonUser::findIdentity($model['client_id']);
-                    return $user['username'];
+                    return $user->username . ' - ' . $user->firstname 
+                        . ' ' . $user->secondname;
+                }
+            ],
+            [
+                'label' => 'Номер телефона клиента',
+                'attribute' => 'phone',
+            ],
+            [
+                'label' => 'Заказанные товары',
+                'format' => 'raw',
+                'value' => function($model){
+                    $answ = '';
+                    $products = OrdersProduct::find()
+                        ->where(['order_id' => $model->id])
+                        ->all();
+                    if ($products){
+                        $answ .= '<ol>';
+                        foreach($products as $product) {
+                            $urlFrontImg = OrdersProduct::getImagesLink() . '/' . $product->front_image; 
+                            $urlBackImg = OrdersProduct::getImagesLink() . '/' . $product->back_image; 
+                            $discountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
+                            $color = ConstructorColors::findOne(['id' => $product->color_id]);
+                            $size = ConstructorSizes::findOne(['id' => $product->size_id]);
+
+                            $liText = $product->count . ' x ' 
+                                . $product->name
+                                . ' (' . $color->name
+                                . ', ' . $size->size . ')';
+                            $liText .= '<br>Цена: ' . $product->price . ' р';
+                            $liText .= '<br>Количество: ' . $product->count . ' шт';
+                            $liText .= '<br>Сумма: ' . $product->count * $product->price . ' р';
+                            if ($discountPrice !== $product->count * $product->price) {
+                                $liText .= '<br>Скидка: ' . $product->discount_percent . ' %';
+                                $liText .= '<br>Сумма (со скидкой): ' . $discountPrice . ' р';
+                            }
+                            $liText .= '<br><br>Принт спереди - '
+                                . Html::a('Ссылка', $urlFrontImg, [ 'target' => 'blank', 'style' => 'color: purple']);
+                            $liText .= '<br>Принт сзади - '
+                                . Html::a('Ссылка', $urlBackImg, ['style' => 'color: purple', 'target' => '_blank']);
+                            $answ .= '<li><h4>' . $liText . '</h4></li>';
+                        } // foreach products
+                        $answ .= '</ol>';
+                    } // if products
+
+                    return $answ;
+                }
+            ],
+            [
+                'label' => 'Затраченные материалы',
+                'format' => 'html',
+                'value' => function($model){
+                    $answ = '';
+                    if ($model->stock_color_liters > 0){
+                        $answ .= '<h3>Краска<h3>';
+                        $answ .= '<h4>';
+                        $answ .= StockColors::findOne(['id' => $model->stock_color_id])->name . " - " . $model->stock_color_liters . " л";
+                        $answ .= '</h4>';
+                    }
+                    
+                    if ($answ === '')
+                        $answ = 'Нет';
+                    return $answ;
                 }
             ],
             [
@@ -142,14 +226,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $answ;
                 }
             ],
-            [
+            /*[
                 'label' => 'Оптовый заказ',
                 'attribute' => 'is_gross',
                 'value' => function($model){
                     $answ = $model['is_gross'] ? "Да" : "Нет";
                     return $answ;
                 }
-            ],
+            ],*/
             'address',
             [
                 'label' => 'Комментарий',
