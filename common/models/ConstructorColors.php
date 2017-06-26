@@ -148,28 +148,33 @@ class ConstructorColors extends \yii\db\ActiveRecord
 
     public function changeSizes() 
     {   
-        $size_ids = [];
-        $constructor_sizes = ConstructorSizes::find()->where(['id' => $this->colorSizes])->asArray()->all();
 
         ConstructorColorSizes::deleteAll(['color_id' => $this->id]);
 
-        for ($i = 0; $i < count($constructor_sizes); $i++) {
-            $size_ids[] = $constructor_sizes[$i]['id'];
-            $model = new ConstructorColorSizes();
-            $model->color_id = $this->id;
-            $model->size_id = $constructor_sizes[$i]['id'];
-            $model->save();
+        if (!empty($this->colorSizes)) {
+            $size_ids = [];
+            $constructor_sizes = ConstructorSizes::find()->where(['id' => $this->colorSizes])->asArray()->all();
+
+            for ($i = 0; $i < count($constructor_sizes); $i++) {
+                $size_ids[] = $constructor_sizes[$i]['id'];
+                $model = new ConstructorColorSizes();
+                $model->color_id = $this->id;
+                $model->size_id = $constructor_sizes[$i]['id'];
+                $model->save();
+            }
+
+
+            ConstructorStorage::deleteAll(
+                [
+                    'AND', 
+                    'color_id = :color_id', 
+                    ['NOT IN', 'size_id', $size_ids],
+                ], 
+                [':color_id' => $this->id]
+            );
+        } else {
+            ConstructorStorage::deleteAll(['color_id' => $color_id]);
         }
-
-
-        ConstructorStorage::deleteAll(
-            [
-                'AND', 
-                'color_id = :color_id', 
-                ['NOT IN', 'size_id', $size_ids],
-            ], 
-            [':color_id' => $this->id]
-        );
 
     }
 

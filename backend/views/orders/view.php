@@ -10,6 +10,7 @@ use backend\models\StockColors;
 use common\models\OrdersProduct;
 use common\models\ConstructorColors;
 use common\models\ConstructorSizes;
+use common\models\ConstructorPrintTypes;
 use frontend\components\Basket;
 
 /* @var $this yii\web\View */
@@ -105,7 +106,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         ->all();
                     $totalPrice = 0;
                     foreach ($products as $product) {
-                        $totalPrice += $product->count * $product->price;
+                        $frontPrintData = json_decode($product->front_print_data, true);
+                        $productPrice = $product->price;
+                        if ($frontPrintData){
+                            $productPrice += $frontPrintData['price'];
+                        }
+                        $totalPrice += $product->count * $productPrice;
                     }
                     return $totalPrice;
                 }
@@ -118,7 +124,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         ->all();
                     $totalPrice = 0;
                     foreach ($products as $product) {
-                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
+                        $frontPrintData = json_decode($product->front_print_data, true);
+                        $productPrice = $product->price;
+                        if ($frontPrintData){
+                            $productPrice += $frontPrintData['price'];
+                        }
+                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
                         $totalPrice += $productDiscountPrice;
                     }
                     return $totalPrice;
@@ -158,20 +169,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         foreach($products as $product) {
                             $urlFrontImg = OrdersProduct::getImagesLink() . '/' . $product->front_image; 
                             $urlBackImg = OrdersProduct::getImagesLink() . '/' . $product->back_image; 
-                            $discountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
                             $color = ConstructorColors::findOne(['id' => $product->color_id]);
                             $size = ConstructorSizes::findOne(['id' => $product->size_id]);
+                            $frontPrintData = json_decode($product->front_print_data, true);
+                            $productPrice = $product->price;
+                            if ($frontPrintData){
+                                $productPrice += $frontPrintData['price'];
+                            }
+                            $discountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
 
                             $liText = $product->count . ' x ' 
                                 . $product->name
                                 . ' (' . $color->name
                                 . ', ' . $size->size . ')';
-                            $liText .= '<br>Цена: ' . $product->price . ' р';
+                            $liText .= '<br>Цена: ' . $productPrice . ' р';
                             $liText .= '<br>Количество: ' . $product->count . ' шт';
-                            $liText .= '<br>Сумма: ' . $product->count * $product->price . ' р';
-                            if ($discountPrice !== $product->count * $product->price) {
+                            $liText .= '<br>Сумма: ' . $product->count * $productPrice . ' р';
+                            if ($discountPrice !== $product->count * $productPrice) {
                                 $liText .= '<br>Скидка: ' . $product->discount_percent . ' %';
                                 $liText .= '<br>Сумма (со скидкой): ' . $discountPrice . ' р';
+                            }
+                            if ($frontPrintData){
+                                $printType = ConstructorPrintTypes::findOne(['id' => $frontPrintData['type_id']]);
+                                $liText .= '<br>Тип услуги: ' . $printType->name;
                             }
                             $liText .= '<br><br>Принт спереди - '
                                 . Html::a('Ссылка', $urlFrontImg, [ 'target' => 'blank', 'style' => 'color: purple']);

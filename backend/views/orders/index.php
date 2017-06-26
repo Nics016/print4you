@@ -111,7 +111,12 @@ $orders = $dataProvider->getModels();
                         ->all();
                     $totalPrice = 0;
                     foreach ($products as $product) {
-                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $product->price, $product->discount_percent);
+                        $frontPrintData = json_decode($product->front_print_data, true);
+                        $productPrice = $product->price;
+                        if ($frontPrintData){
+                            $productPrice += $frontPrintData['price'];
+                        }
+                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
                         $totalPrice += $productDiscountPrice;
                     }
                     return $totalPrice;

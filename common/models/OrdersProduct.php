@@ -29,7 +29,7 @@ class OrdersProduct extends \yii\db\ActiveRecord
 
         // возьмем имя файла
         $filename = basename($oldfile);
-        if (rename($oldfile, $dir_path . '/' . $filename))
+        if (@rename($oldfile, $dir_path . '/' . $filename))
             return $filename;
         else
             return false;
