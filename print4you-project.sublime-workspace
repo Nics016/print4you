@@ -458,15 +458,30 @@
 	"expanded_folders":
 	[
 		"/home/garraty/Documents/Code/html/print4you",
-		"/home/garraty/Documents/Code/html/print4you/backend",
-		"/home/garraty/Documents/Code/html/print4you/backend/assets",
-		"/home/garraty/Documents/Code/html/print4you/backend/models",
-		"/home/garraty/Documents/Code/html/print4you/backend/views",
-		"/home/garraty/Documents/Code/html/print4you/backend/views/orders",
-		"/home/garraty/Documents/Code/html/print4you/common"
+		"/home/garraty/Documents/Code/html/print4you/frontend",
+		"/home/garraty/Documents/Code/html/print4you/frontend/assets",
+		"/home/garraty/Documents/Code/html/print4you/frontend/components",
+		"/home/garraty/Documents/Code/html/print4you/frontend/controllers",
+		"/home/garraty/Documents/Code/html/print4you/frontend/models",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/site",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web/css",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web/js"
 	],
 	"file_history":
 	[
+		"/home/garraty/Documents/Code/html/print4you/frontend/assets/AppAsset.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/cifrovaya.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/shelkography.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/sublimation.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/termoperenos.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web/js/main.js",
+		"/home/garraty/Documents/Code/html/print4you/frontend/views/site/index.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/web/css/styles.sass",
+		"/home/garraty/Documents/Code/html/print4you/common/models/CommonUser.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/controllers/SiteController.php",
+		"/home/garraty/Documents/Code/html/print4you/frontend/components/Sms.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/views/orders/view.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/views/orders/index.php",
 		"/home/garraty/Documents/Code/html/print4you/README.md",
@@ -479,10 +494,8 @@
 		"/home/garraty/Documents/Code/html/print4you/backend/views/layouts/adminPanel.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/views/site/cabinet.php",
 		"/home/garraty/Documents/Code/html/print4you/common/models/OrdersProduct.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/controllers/SiteController.php",
 		"/home/garraty/Documents/Code/html/print4you/console/migrations/m170612_153932_create_orders_product_table.php",
 		"/home/garraty/Documents/Code/html/print4you/console/migrations/m170415_161527_create_orders_table.php",
-		"/home/garraty/Documents/Code/html/print4you/common/models/CommonUser.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/controllers/UserController.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/views/user/statistics.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/models/User.php",
@@ -512,8 +525,6 @@
 		"/home/garraty/Documents/Code/html/print4you/backend/views/stock-colors/update.php",
 		"/home/garraty/Documents/Code/html/print4you/console/migrations/m170623_211235_stock_colors.php",
 		"/home/garraty/Documents/Code/html/print4you/console/migrations/m170619_111831_constructor_storage.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/web/js/main.js",
-		"/home/garraty/Documents/Code/html/print4you/frontend/web/css/styles.sass",
 		"/home/garraty/Documents/Code/html/print4you/console/migrations/m170612_153854_orders_table_add_9_columns.php",
 		"/home/garraty/Documents/Code/html/print4you/common/config/main-local.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/views/cart/checkout.php",
@@ -521,15 +532,10 @@
 		"/home/garraty/Documents/Code/html/print4you/frontend/controllers/CartController.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/config/main.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/index.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/views/site/index.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/web/css/styles.css",
-		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/termoperenos.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/sublimation.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/views/uslugi/cifrovaya.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/views/layouts/main.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/assets/ConstructorAsset.php",
 		"/home/garraty/Documents/Code/html/print4you/frontend/controllers/ConstructorController.php",
-		"/home/garraty/Documents/Code/html/print4you/frontend/assets/AppAsset.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/views/user/_user.php",
 		"/home/garraty/Documents/Code/html/print4you/backend/views/orders/_form.php",
 		"/home/garraty/Documents/Code/html/print4you/common/models/Office.php",
@@ -592,19 +598,19 @@
 		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/helpers/CookieHelper.php",
 		"/home/garraty/Documents/Code/html/auto-z/ftp/tests/unit/administrator/components/com_auto/helpers/CookieHelperTest.php",
 		"/home/garraty/Documents/Code/html/auto-z/ftp/components/com_auto/controllers/Cookie.php",
-		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/entities/ECartItem.php",
-		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/entities/ECart.php",
-		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/models/MCartItem.php"
+		"/home/garraty/Documents/Code/html/auto-z/ftp/administrator/components/com_auto/entities/ECartItem.php"
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 41.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"/home/garraty/Documents/Code/html/print4you/frontend",
+			"/home/garraty/Documents/Code/html/print4you/frontend/views",
 			"/home/garraty/Documents/Code/html/print4you/backend",
 			"/home/garraty/Documents/Code/html/print4you/frontend",
 			"/home/garraty/Documents/Code/html/print4you/backend",
@@ -655,6 +661,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"playvideo",
+			"linksvi",
+			"playVideo",
 			"transaction",
 			"$pro",
 			"accept",
@@ -779,10 +788,7 @@
 			"Ваши личные данные",
 			"render('table'",
 			"populateFromOffer",
-			"pop",
-			"items",
-			"TPL_CART_YOUR_BASKET_EMPTY",
-			"ваша корзина пуста"
+			"pop"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -826,7 +832,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 33.0
 	},
 	"input":
 	{
@@ -875,7 +881,7 @@
 	"project": "print4you-project.sublime-project",
 	"replace":
 	{
-		"height": 66.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":

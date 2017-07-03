@@ -72,3 +72,441 @@
     outline: none;
     transition: .3s all ease-in;
 }
+
+.topmenu-right-below nav .red-label.active {
+    border-bottom: 4px solid #363636;
+}
+
+.topmenu-right-below .red-label:hover {
+    background-color: #363636;
+}
+
+.topmenu-right-below .red-label {
+    background-color: #eb4441;
+    color: #fff;
+}
+
+.submenu-container:hover {
+    color: white;
+    background-color: #eb4441;
+}
+
+.submenu-container {
+    display: inline-block;
+    padding: 15px 8px;
+    margin-left: 10px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #333333;
+    font-family: proximaNovaSemibold;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: default;
+}
+
+.submenu-container:hover > .submenu {
+    display: block;
+}
+
+.submenu-container .submenu{
+    display: none;
+    position: absolute;
+    padding: 0px;
+    list-style: none;
+    margin-top: 15px;
+    margin-left: -8px;
+    z-index: 100;
+    background-color: #f7f7f7;
+}
+
+.submenu-container .submenu > li:last-child {
+    margin-bottom: 10px;
+}
+
+.submenu-container .submenu > li {
+    display: block;
+    margin-top: 15px;
+    padding: 0px 15px;
+}
+
+.submenu > li > a {
+    display: block;
+    text-align: center;
+}
+
+/* REVIEWS */
+
+
+.left-column {
+    width: 700px;
+    float: left;
+}
+
+.right-column {
+    width: 400px;
+    float: left;
+    margin-left: 40px;
+}
+
+.reviews-container {
+    width: 1170px;
+}
+
+.reviews-main-title {
+    text-align: center;
+    margin-top: 90px;
+    padding-top: 60px;
+    background-image: url("../img/line3-reviews.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+    margin-bottom: 20px;
+}
+
+.not-login-container {
+    width: 400px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+}
+
+.not-login-text a:hover {
+    text-decoration: underline;
+}
+
+.not-login-text a {
+    color: #3974b3;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+}
+
+.not-login-text {
+    color: #000;
+    font-family: proximaNovaSemibold;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.reviews-title {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    font-family: sportsWorldRegular;
+    font-size: 30px;
+    color: #3e3e3e;
+}
+
+.review:last-child {
+    margin: 0px auto 25px auto;
+}
+
+.review {
+    width: 600px;
+    margin: 25px auto 0 auto;
+    padding: 0px 10px 10px 10px;
+    border-bottom: 1px solid #000;
+}
+
+.review-top {
+    padding: 5px 0;
+}
+
+.review-icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.review-icon.like {
+    background-image: url('../img/like.png'); 
+}
+
+.review-icon.dislike {
+    background-image: url('../img/dislike.png'); 
+}
+
+.review-user-name {
+    font-family: proximaNovaBold;
+    font-size: 25px;
+    color: #3E3E3E;
+    padding-left: 10px;
+}
+
+.review-date {
+    font-family: proximaNovaRegular;
+    color: #EB4441;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.review-text {
+    display: block;
+    font-family: "proximaNovaLight";
+    font-size: 20px;
+    color: #404040;
+}
+
+.review-form-container {
+    width: 600px;
+    margin: 30px auto;
+}
+
+.review-form-label {
+    font-family: proximaNovaBold;
+    font-size: 25px;
+    display: block;
+    color: #363636;
+}
+
+#review-textarea:focus {
+    border: 2px solid #000;
+}
+
+#review-textarea {
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid rgb(142, 138, 138);
+    display: block;
+    width: 960px;
+    height: 120px;
+    margin: 10px 0px 15px 0px;
+    padding: 5px 10px;
+    font-family: proximaNovaLight;
+    font-size: 18px;
+    color: #000;
+    resize: vertical;
+}
+
+.review-form-checkboxes  {
+    width: 150px;
+}
+
+.review-checkbox-container:first-child {
+    margin-left: 0px;
+}
+
+.review-checkbox-container {
+    width: 50px;
+    float: left; 
+    margin-left: 25px;
+}
+
+.review-checkbox-container label, .review-checkbox-container input {
+    cursor: pointer;
+}
+
+#add-review:disabled:hover {
+    cursor: default;
+}
+
+#add-review:disabled {
+    opacity: 0.7;
+}
+
+#add-review:hover {
+    background-color: #EB4441;
+    color: #fff;
+}
+
+#add-review {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #333333;
+    font-family: proximaNovaSemibold;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #EB4441;
+    background-color: #fff;
+    margin-top: 10px;
+    cursor: pointer;
+    outline: none;
+    transition: all .2s ease-in;
+    width: 300px;
+}
+
+.review-form-error {
+    display: none;
+    margin-top: 15px;
+    font-family: "proximaNovaLight";
+    font-size: 18px;
+    color: red;
+}
+
+.review-form-success {
+    display: none;
+    margin-top: 15px;
+    font-family: "proximaNovaLight";
+    font-size: 18px;
+    color: green;  
+}
+
+.not-reviews {
+    color: #333333;
+    font-family: proximaNovaSemibold;
+    font-size: 20px;
+    display: block;
+    width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.pagination-container {
+    margin-left: 50px;
+}
+
+
+/* SALE */
+
+#sale {
+    margin-top: 20px;
+}
+
+.sale-main-title {
+    text-align: center;
+    margin-top: 90px;
+    padding-top: 60px;
+    background-image: url(../img/contacts-title-bg.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+    margin-bottom: 20px; 
+}
+
+.sale-slider-container {
+    width: 950px;
+    margin: 20px auto 0 auto;
+}
+
+#sale-slider li img {
+    display: block;
+    margin: 0 auto;
+}
+
+.sales-container {
+    width: 920px;
+    margin: 0 auto;
+    margin-top: 15px;
+    padding-bottom: 60px;
+}
+
+.sale {
+    margin-top: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #000;
+}
+
+.sale-image {
+    width: 450px;
+    float: left;
+}
+
+.sale-image img {
+    display: block;
+    max-height: 230px;
+    width: 450px;
+}
+
+.sale-info {
+    width: 450px;
+    float: right;
+}
+
+.sale-title {
+    display: block;
+    text-align: center;
+    font-family: "sportsWorldRegular";
+    font-size: 23px;
+}
+
+.sale-text {
+    display: block;
+    font-family: "proximaNovaLight";
+    font-size: 16px;
+    color: #404040;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.about-sales {
+    display: block;
+    font-family: "proximaNovaLight";
+    font-size: 18px;
+    color: #404040;
+    text-align: center;
+    padding-bottom: 60px;
+}
+
+/* CALLBACK ANIMATION */
+
+.callback-phone:hover {
+    animation: none;
+}
+
+
+.callback-phone {
+    color: #999;
+    animation: color 2s infinite ease-in;
+}
+
+@keyframes color {
+    0% {color: #999;}
+    50% {color: #EB4441;}
+    100% {color: #999;}
+}
+
+/* GUESTS */
+
+#guests {
+    margin-top: 20px;
+}
+
+.guests-main-title {
+    text-align: center;
+    margin-top: 90px;
+    padding-top: 60px;
+    background-image: url(../img/contacts-title-bg.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+    margin-bottom: 20px; 
+}
+
+.guests-container {
+    width: 1060px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+.guest:first-child, .guest:nth-child(4n + 1) {
+    margin-left: 0px;
+}
+
+.guest {
+    width: 238px;
+    display: block;
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+    height: 180px;
+    overflow: hidden;
+    border: 1px solid #3E3E3E;
+    padding: 5px;
+}
+
+.guest > img {
+    display: block;
+    width: 226px;
+}

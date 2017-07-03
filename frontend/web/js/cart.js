@@ -167,6 +167,59 @@ jQuery(document).ready(function($){
 		}
 	});
 
+	// изменение параметра принта
+	$(document).on('change', '.change-print-form-select', function() {
+		var parent = $(this).closest('.change-print-side');
+		var mainContainer = $(parent).closest('.constructor-product-row');
+		var id = parseInt($(mainContainer).find('.product-id').val());
+
+		if (isNaN(id)) {
+			$(parent).remove();
+			return false;
+		}
+
+		var action = $(this).data('action');
+		var side = $(parent).data('side');
+		var value = $(this).val();
+		var name = $(this).attr('name');
+		var loadingOverlay = $(mainContainer).find('.loading-product-container');
+		var loadingText = $(loadingOverlay).find('.loading-text');
+		$(loadingText).text('Меняем ' +  action +', подождите...');
+		$(loadingOverlay).show();
+		
+
+		$.ajax({
+			url: '/cart/change-print-option/',
+			data: {'_csrf-frontend': _csrf, id: id, side: side, value: value, name: name},
+			type: 'POST',
+			success: function (response) {
+				if (response['status'] == 'ok') {
+
+					// изменяем цену коризны
+					changeFullPrice(response['basket_price']);
+
+					// изменим html продукта
+					$(mainContainer).find('.product-price-container').html(response['product_price_html']);
+
+					// изменим html настроек принта
+					$(parent).html(response['print_html']);
+
+					setTimeout(function(){
+						$(loadingOverlay).hide();
+					}, 500);
+
+				} else {
+					console.log(response);
+					$(loadingText).text('Произошла ошибка, обновите страницу');
+				}
+			},
+			error: function (err) {
+				console.log(err);
+				$(loadingText).text('Произошла ошибка, обновите страницу');
+			}
+		});
+	});
+
 	// изенение количества продукции
 	function changeProductCount(elem, action, count = false) {
 
@@ -186,7 +239,7 @@ jQuery(document).ready(function($){
 				data: {'_csrf-frontend': _csrf, id: id, action: action, count: count},
 				type: 'POST',
 				success: function (response) {
-
+					//console.log(response);
 					if (response['status'] == 'ok') {
 
 						// изменяем цену коризны
@@ -197,16 +250,24 @@ jQuery(document).ready(function($){
 						
 						// изменим html продукта
 						$(parent).find('.product-price-container').html(response['product_price_html']);
+
+						// изменим html сторон
+						$(parent).find('.change-print-side[data-side="front"]').html(response['front_print_html']);
+						$(parent).find('.change-print-side[data-side="back"]').html(response['back_print_html']);
+
+						setTimeout(function (){
+							$(loadingOverlay).hide();
+						}, 500);
+						
+					} else {
+						$(loadingText).text('Произошла ошибка, обновите страницу');
 					}
 
-					setTimeout(function (){
-						$(loadingOverlay).hide();
-					}, 500);
 				},
 				error: function (err) {
 					console.log(err);
 					setTimeout(function (){
-						$(loadingOverlay).hide();
+						$(loadingText).text('Произошла ошибка, обновите страницу');
 					}, 500);
 				}
 			});

@@ -20,15 +20,15 @@ if ($price == $discount_price):
 
 		<div class="about-price-block">
 			<span class="about-price-span-label">Цена за товар</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
+			<span class="about-price-span-value">1шт. × <?= $product_price ?> руб.</span>
 
 			<span class="about-price-span-label">Цена за печать:</span>
-
+	
 			<span class="about-price-span-value">Лицевая сторона:</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
+			<span class="about-price-span-value">1шт. × <?= +$front_print_price ?> руб.</span>
 
 			<span class="about-price-span-value">Обратная сторона:</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
+			<span class="about-price-span-value">1шт. × <?= +$back_print_price ?> руб.</span>
 		</div>
 
 		<span class="about-price" data-action="open">Подробнее о цене</span>
@@ -59,15 +59,15 @@ else:
 
 		<div class="about-price-block">
 			<span class="about-price-span-label">Цена за товар</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
+			<span class="about-price-span-value">1шт. × <?= $product_price ?> руб.</span>
 
 			<span class="about-price-span-label">Цена за печать:</span>
-
+	
 			<span class="about-price-span-value">Лицевая сторона:</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
-			
+			<span class="about-price-span-value">1шт. × <?= +$front_print_price ?> руб.</span>
+
 			<span class="about-price-span-value">Обратная сторона:</span>
-			<span class="about-price-span-value">1шт. × 300 руб.</span>
+			<span class="about-price-span-value">1шт. × <?= +$back_print_price ?> руб.</span>
 		</div>
 
 		<span class="about-price" data-action="open">Подробнее о цене</span>

@@ -63,8 +63,12 @@ return [
                 'franchise' => 'site/franchise',
                 'register' => 'site/register',
                 'contacts' => 'site/contacts',
+                'sale' => 'site/sale',
+                'nashi-gosti' => 'site/nashi-gosti',
                 'register-success' => 'site/register-success',
                 'about' => 'site/about',
+                '/reviews/page/<page:\d+>' => 'reviews/index',
+                '/reviews/' => 'reviews/index',
             ],
         ],
         

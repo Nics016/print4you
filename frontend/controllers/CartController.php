@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 
 use frontend\components\Basket;
+use frontend\components\Sms;
 
 use common\models\ConstructorSizes;
 use common\models\Orders;
@@ -22,6 +23,7 @@ class CartController extends Controller {
 	            'actions' => [
 	                'get-products'  => ['post'],
 	                'add-to-cart'  => ['post'],
+	                'change-print-option'  => ['post'],
 	            ],
 	        ],
 	    ];
@@ -33,6 +35,8 @@ class CartController extends Controller {
 		$basket_obj = Basket::init()->getFrontendCart();
 		$basket = $basket_obj['basket'];
 		$basket_price = $basket_obj['basket_price'];
+		/*$lol = Basket::init()->getBasket();
+		dd($lol[0]);*/
 		return $this->render('index', [
 			'basket' => $basket,
 			'basket_price' => $basket_price,
@@ -71,16 +75,17 @@ class CartController extends Controller {
 		if ($result !== false) {
 
 			if ($basket->isConstructorProduct($id)) {
+				$rebuild = $basket->rebuildOptions($id);
+				if ($rebuild == false) return ['status' => 'fail'];
 				$basket_price = $basket->basketCountPrice();
+				$product_price = $basket->getConstructorProductPrice($id);
 				return [
 					'status' => 'ok',
 					'basket_price' => $basket_price['price'],
-					'count' => $result['count'],
-					'product_price_html' => $this->renderAjax('constructor_product_price', [
-						'count' => $result['count'],
-						'price' => $result['price'],
-						'discount_price' => $result['discount_price'],
-					]),
+					'count' => $result,
+					'product_price_html' => $this->renderAjax('constructor_product_price', $product_price),
+					'front_print_html' => $this->renderAjax('constructor_change_print', $rebuild['front']),
+					'back_print_html' => $this->renderAjax('constructor_change_print', $rebuild['back']),
 				];
 			}
 				
@@ -120,6 +125,33 @@ class CartController extends Controller {
 
 		return ['status' => 'ok', 'html' => $this->renderAjax('empty_cart')];
 
+	}
+
+
+	// настройки принта
+	public function actionChangePrintOption() 
+	{
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		$id = (int)Yii::$app->request->post('id');
+		$side = Yii::$app->request->post('side');
+		$value = Yii::$app->request->post('value');
+		$name = Yii::$app->request->post('name');
+
+		$basket = Basket::init();
+		$result = $basket->changePrintOption($id, $side, $name, $value);
+
+		if ($result !== false) {
+			$basket_price = $basket->basketCountPrice();
+			$product_price = $basket->getConstructorProductPrice($id);
+			return [
+				'status' => 'ok',
+				'basket_price' => $basket_price['price'],
+				'product_price_html' => $this->renderAjax('constructor_product_price', $product_price),
+				'print_html' => $this->renderAjax('constructor_change_print', $result),
+			];
+		} 
+
+		return ['status' => 'fail'];
 	}
 
 	/**
@@ -167,8 +199,10 @@ class CartController extends Controller {
             	$model->address = $office->address;
             }
 
-            if ($model->save() && $basket->makeOrder($model->getPrimaryKey())) 
+            if ($model->save() && $basket->makeOrder($model->getPrimaryKey())) { 
+            	Sms::message($model->phone, 'Спасибо, Ваш заказ #' . $model->id . ' принят в обработку!');
                 return $this->redirect(['order-created']);
+            }
 
         }   
       

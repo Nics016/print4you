@@ -60,7 +60,7 @@ $this->title = 'Print4you - Оплата и доставка';
 Остальные страны и города - <strong>450 рублей</strong><br>
 Чтобы заказать доставку - Пишите нам или звоните: 
 						</p>
-						<a href="tel:88129819484" class="line4-right-text2-number">981 94 84</a>
+						<a href="tel:88129819484" class="line4-right-text2-number">309 28 48</a>
 					</div>
 					<a href="<?= Url::to(['uslugi/assorty']) ?>" class="line4-right-makeOrder">Заказать</a>
 				</div>

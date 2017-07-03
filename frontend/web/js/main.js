@@ -13,6 +13,10 @@ jQuery(document).ready(function($) {
 	var mainSliderCur = -1;
 	var mainSliderIntervalId = -1;
 	var _csrf = $('meta[name="csrf-token"]').attr('content');
+	var linksVideo = [
+        'ld9A6WVatL0',
+        'ld9A6WVatL0'
+    ];
 
 	//////////
 	// Init //
@@ -297,24 +301,18 @@ jQuery(document).ready(function($) {
 		$('.line3-carousel-info .active').slideDown(500);
 	}
 
-	////////////////////
-	// Videos scripts //
-	////////////////////
-	/**
-	 * Triggers when #video-1 clicked.
-	 */
-	function playVideo1(){
-		document.getElementById('video-1').innerHTML = 
-		'<iframe width="1140" height="590" src="https://www.youtube.com/embed/QIHnSxfZhEM?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
-	}
-
-	/**
-	 * Triggers when #video-2 clicked.
-	 */
-	function playVideo2(){
-		document.getElementById('video-2').innerHTML = 
-		'<iframe width="1140" height="590" src="https://www.youtube.com/embed/QIHnSxfZhEM?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
-	}
+    ////////////////////
+    // Videos scripts //
+    ////////////////////
+    /**
+     * Triggers when #video-i clicked.
+     */
+    function playVideo(i)
+    {
+        var link = linksVideo[i];
+        document.getElementById('video-' + i).innerHTML = 
+            '<iframe width="1140" height="590" src="https://www.youtube.com/embed/' + link + '?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
+    }
 
 	//////////////////////////////////////////////////////////////
 	// Скрипт подсветки текущей страницы красным цветом в меню  //
@@ -340,5 +338,100 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-});
+	// Отзывы
+
+	// очистим ошибки
+	$('#review-textarea').on('keyup', function() {
+		$(this).siblings('.review-form-error').hide();
+	});
+
+	// добавление отзыва
+	$('#add-review').on('click', function() {
+		var elem = $(this);
+		var parent = elem.closest('.review-form-container');
+		var val = elem.siblings('#review-textarea').val();
+		var errorElem = elem.siblings('.review-form-error');
+		var successElem = elem.siblings('.review-form-success');
+
+		if (val.replace(/\s/g, '').length == 0) {
+			$(successElem).hide();
+			$(errorElem).text('Пожалуйста, введите отзыв!');
+			$(errorElem).show();
+			return false;
+		} else if(val.replace(/\s/g, '').length < 5) {
+			$(successElem).hide();
+			$(errorElem).text('Отзыв должен быть длинной не менее 5 символов!');
+			$(errorElem).show();
+			return false;
+		}
+
+		var isLike = parseInt($(parent).find('[name="review-type"]:checked').val());
+
+	
+		if (isLike !== 1 && isLike !== 0) {
+			$(errorElem).text('Что то пошло не так, обновите страницу!');
+			$(errorElem).show();
+			return false;
+		}
+
+		elem.prop('disabled', true);
+
+		$.ajax({
+			url: '/reviews/add-review/',
+			type: 'POST',
+			data: {'_csrf-frontend': _csrf, text: val, is_like: isLike},
+			success: function (response) {
+				console.log(response);
+
+				switch (response['status']) {
+					case 'ok':
+						$(errorElem).hide();
+						$(successElem).show();
+						setTimeout(function(){
+							$(successElem).hide();
+						}, 5000);
+						elem.siblings('#review-textarea').val('');
+						break;
+
+					case 'login': 
+						$(errorElem).text('Вы не авторизованы!');
+						$(errorElem).show();
+						break;
+
+					case 'moder':
+						$(errorElem).text('Ваш отзыв проходит модерацию!');
+						$(errorElem).show();
+						break;
+
+					case 'fail':
+						$(errorElem).text('Произошла ошибка, обновите страницу!');
+						$(errorElem).show();
+						break;
+				}
+
+				elem.prop('disabled', false);
+
+			},
+			error: function (err) {
+				console.log(err);
+				elem.prop('disabled', false);
+			}
+
+		})
+	});
+
+	// sales
+
+	// sale silder
+	$('#sale-slider').bxSlider({
+		responsive: false,
+		auto: true,
+	});
+
+	// guset gallery
+	$('.guests-container').lightGallery({
+	    thumbnail:true
+	}); 
+
+});	
 

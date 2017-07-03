@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 use common\models\ConstructorProducts;
+use common\models\ConstructorCategories;
 use common\models\ConstructorColors;
 use common\models\Orders;
 
@@ -33,8 +34,11 @@ class UslugiController extends Controller
      * Услуги
      */
     public function actionIndex()
-    {
-        return $this->render("index");
+    {   
+
+        return $this->render("index", [
+            'categories' => ConstructorCategories::getCats(), 
+        ]);
     }
 
     /**
@@ -43,7 +47,7 @@ class UslugiController extends Controller
     public function actionAssorty()
     {   
         $offset = 0;
-        $limit = 1;
+        $limit = 10;
 
         $content = ConstructorProducts::find()->orderBy('category_id')->limit($limit)
                         ->offset($offset)->asArray()->with('firstColor')->all();

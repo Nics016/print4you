@@ -64,8 +64,9 @@ AppAsset::register($this);
                 </a>
                 <a href="tel:89633325632" class="topline-elem2">
                     <img src="/img/topline-phone.png" alt="">
-                    <span>
-                        +7 (963) <strong>332 56 32</strong>
+                    <span class="callback-phone">
+                        +7 (963) 
+                        <strong>332 56 32</strong>
                     </span>
                 </a>
                 <a href="#" class="topline-elem3" data-toggle="modal" data-target="#makeCallModal">Заказать звонок</a>
@@ -122,12 +123,34 @@ AppAsset::register($this);
                     <div class="topmenu-right-below clearfix">
                         <nav>
                             <a href="<?= Url::home() ?>" class='active'>Главная</a>
-                            <a href="<?= Url::to(['site/about']) ?>">О нас</a>
+                            <span  class="submenu-container">
+                                Инфо
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="<?= Url::to(['site/franchise']) ?>">Франшиза</a>
+                                    </li> 
+                                    <li>
+                                        <a href="<?= Url::to(['site/contacts']) ?>">Контакты</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= Url::to(['site/sale']) ?>">Акции</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= Url::to(['site/nashi-gosti']) ?>">Наши гости</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= Url::to(['site/about']) ?>">О нас</a>
+                                    </li>
+                                </ul>
+                            </span>
                             <a href="<?= Url::to(['uslugi/']) ?>">Услуги</a>
                             <a href="<?= Url::to(['site/dostavka']) ?>">Оплата и доставка</a>
-                            <a href="<?= Url::to(['/constructor']) ?>">Конструктор</a>
-                            <a href="<?= Url::to(['site/franchise']) ?>">Франшиза</a>
-                            <a href="<?= Url::to(['site/contacts']) ?>">Контакты</a>
+                            <a href="<?= Url::to(['/constructor']) ?>" class="red-label">Конструктор</a>
+                            <a href="<?= Url::to(['reviews/']) ?>">Отзывы</a>
+                            <a href="<?= Url::to(['cart/']) ?>">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Корзина
+                            </a>
                         </nav>        
                         <a href="<?= $instaLink ?>" class="topmenu-right-below-in" target="_blank">
                             <img src="/img/header-in.png" alt="">

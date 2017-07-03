@@ -69,32 +69,15 @@ class ConstructorCategoriesSizesController extends Controller
             for ($i = 0; $i < count($data); $i++) {
 
                 $id = $data[$i]['id'];
-                $value = $data[$i]['value'];
+                // если нужно изменить старый
+                $model = ConstructorCategories::find()->where(['id' => +$id])->one();
 
-                // если нужен новый размер
-                if ($id == 'new') {
-                    $model = new ConstructorCategories();
-                    $model->name = $value;
-                    $model->sequence = $i;
+                if ($model == null) return ['response' => false];
+                $model->sequence = $i;
 
-                    if (!$model->save())
-                        return ['response' => false];
-
-                    $new_ids[] = $model->getPrimaryKey();
-
-                } else {
-
-                    // если нужно изменить старый
-                    $model = ConstructorCategories::find()->where(['id' => +$id])->one();
-
-                    if ($model == null) return ['response' => false];
-
-                    $model->name = $value;
-                    $model->sequence = $i;
-
-                    if (!$model->save())
-                        return ['response' => false];
-                }
+                if (!$model->save())
+                    return ['response' => false];
+                
             }
 
             return ['response' => true, 'new' => $new_ids];

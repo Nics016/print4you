@@ -46,34 +46,28 @@ $this->title = 'Print4you - Услуги';
 							Подробнее
 						</a>
 					</div>
-					<div class="elements-item">
-						<a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic5.jpg" alt=""></a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки мужские</a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-							Подробнее
-						</a>
-					</div>
-					<div class="elements-item">
-						<a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic6.jpg" alt=""></a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки женские</a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-							Подробнее
-						</a>
-					</div>
-					<div class="elements-item">
-						<a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic7.jpg" alt=""></a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки мужские</a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-							Подробнее
-						</a>
-					</div>
-					<div class="elements-item">
-						<a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic8.jpg" alt=""></a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки женские</a>
-						<a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-							Подробнее
-						</a>
-					</div>
+
+					<?php 
+					for ($i = 0; $i < count($categories); $i++):
+						$id = $categories[$i]['id'];
+						$name = $categories[$i]['name'];
+						$img = $categories[$i]['img'];
+					?>
+						<div class="elements-item">
+							<a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>">
+								<img src="<?= $img ?>" alt="">
+							</a>
+							<a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>" class="elements-item-title">
+								<?= $name ?>
+							</a>
+							<a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>" class="whiteBtn">
+								Подробнее
+							</a>
+						</div>
+
+					<?php endfor;?>
+					
+					
 				</div>
 				<a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn bigBtn">
 					Смотреть весь ассортимент <strong> > </strong>

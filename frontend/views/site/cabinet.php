@@ -18,7 +18,7 @@ $this->title = 'Print4you - Личный кабинет';
 				<div class="content">
 					<div class="content-titlebox clearfix">
 						<img src="/img/lk-circle.png" alt="">
-						<h2><?= $model['firstname'] ?> <?= $model['secondname'] ?> <?= Html::a('Изменить данные', ['site/edit-profile', 'id' => Yii::$app->user->identity->id], ['class' => 'btn btn-primary', 'style' => 'margin-left: 10px']) ?></h2>
+						<h2><?= $model['firstname'] ?> <?= $model['secondname'] ?></h2>
 					</div>
 					<div class="content-orders clearfix">
 						<div class="content-orders-left">

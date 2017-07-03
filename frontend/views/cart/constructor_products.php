@@ -73,70 +73,31 @@ use frontend\components\Basket;
 		</div>
 	</div>
 
+	
 	<div class="change-print-container clearfix">
 		<div class="change-left-print">
 			<span class="change-print-label">Лицевая сторона</span>
 			
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Метод печати</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">Термоперенос</option>
-					<option value="1">Шелкография</option>
-					<option value="1">Прямая печать</option>
-				</select>
-			</div>
-			
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Цветность</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">1</option>
-					<option value="1">2</option>
-					<option value="1">3</option>
-				</select>
-			</div>
-			
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Доп. услуги</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">Печать золотой пленкой</option>
-					<option value="1">Печать металической пленкой</option>
-					<option value="1">Печать неоновым цветом</option>
-				</select>
+			<div class="change-print-side" data-side="front">
+				<?= $this->render('constructor_change_print', [
+					'print' => $product['front_print'],
+					'print_avaliable_prices' => $product['front_print_avaliable_prices'],
+				]) ?>
 			</div>
 
 		</div>
 		<div class="change-right-print">
 			<span class="change-print-label">Обратная сторона</span>
 
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Метод печати</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">Термоперенос</option>
-					<option value="1">Шелкография</option>
-					<option value="1">Прямая печать</option>
-				</select>
-			</div>
-			
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Цветность</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">1</option>
-					<option value="1">2</option>
-					<option value="1">3</option>
-				</select>
-			</div>
-			
-			<div class="change-print-form-row">
-				<span class="change-print-form-label">Доп. услуги</span>
-				<select name="" class="change-print-form-select">
-					<option value="1">Печать золотой пленкой</option>
-					<option value="1">Печать металической пленкой</option>
-					<option value="1">Печать неоновым цветом</option>
-				</select>
+			<div class="change-print-side" data-side="back">
+				<?= $this->render('constructor_change_print', [
+					'print' => $product['back_print'],
+					'print_avaliable_prices' => $product['back_print_avaliable_prices'],
+				]) ?>
 			</div>
 
 		</div>
-		
+
 		<div class="change-meta-container">
 			<span class="change-meta">Вернуться</span>
 		</div>
@@ -147,6 +108,9 @@ use frontend\components\Basket;
 		<?= $this->render('constructor_product_price', [
 			'price' => $product['price'],
 			'discount_price' => $product['discount_price'],
+			'product_price' => $product['product_price'],
+			'front_print_price' => $product['front_print_price'],
+			'back_print_price' => $product['back_print_price'],
 			'count' => $product['count'],
 		]) ?>
 	</div>

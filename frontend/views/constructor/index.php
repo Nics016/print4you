@@ -33,6 +33,8 @@ $constructor_fonts = [
 
 <div class="container">
 	
+	<input type="hidden" id="set_product" value="<?= $set_product ?>">
+	<input type="hidden" id="set_cat" value="<?= $set_cat ?>">
 
 	<input type="hidden" id="print-sizes" value='<?= $print_sizes ?>'>
 
@@ -209,26 +211,89 @@ $constructor_fonts = [
 		</div>
 		
 	</div>
-	
 	<!-- END CONSTRUCTOR  -->
-	<!-- SUCCESS MODAL -->
-	<div id="success-modal">
-		<div class="success-modal-container">
-			<div class="success-modal-title clearfix">
-				<span class="success-modal-title-text">Ваш заказ успешно добавлен в корзину!</span>
-				<div class="success-modal-title-icon-container" data-action="close-success-modal">
-					<?= Html::img('@web/constructor-assets/img/close-icon.png', [
-						'alt' => 'close icon',
-						'class' => 'success-modal-title-icon',
-					]) ?>
-				</div>
+</div>
+
+<!-- CATEGORY INFO -->
+<div class="current-category">
+	<span id="category-title"></span>
+	<span id="category-info"></span>
+</div>
+<!-- END CATEGORY INFO -->	
+	
+<!-- SITE META -->
+<div class="container">
+	<img src="/img/line5-tshirt.png" alt="" class="tshirt-icon">
+
+	<div class="ad-elements-container clearfix">
+		<div class="ad-element clearfix">
+			<img src="/img/constructor-plus1.png" class="ad-element-icon">
+			<div class="ad-element-info">
+				<h2>Номера, фамилии и другие надписи</h2>
+				<span>
+					Отличное решение для спортсменов. <br>
+					Нанесение будет выглядеть не хуже чем то, что видим по ТВ
+					на майках и футболках профессионалов.
+				</span>
 			</div>
-			<div class="success-modal-body">
-				<div class="success-modal-content clearfix">
-					<a href="#" data-action="close-success-modal" class="success-modal-link success-modal-left">Продолжить</a>
-					<a href="<?= Url::to(['cart/']) ?>" class="success-modal-link success-modal-right">В корзину</a>
-				</div>
+		</div>
+
+		<div class="ad-element clearfix">
+			<img src="/img/constructor-plus2.png" class="ad-element-icon">
+			<div class="ad-element-info">
+				<h2>Логотипы и слоганы</h2>
+				<span>
+					Решение для корпоративов, выставок и других event-мероприятий.
+				</span>
+			</div>
+		</div>
+
+		<div class="ad-element clearfix">
+			<img src="/img/constructor-plus3.png" class="ad-element-icon">
+			<div class="ad-element-info">
+				<h2>Фотографии</h2>
+				<span>
+					Напечатаем фотографию на футболке - будет выглядеть
+					не менее реалистично, чем на компьютере или бумаге из фотостудии.
+				</span>
+			</div>
+		</div>
+
+	</div>
+
+
+</div>
+<!-- END SITE META -->
+
+
+<!-- REVIEWS -->
+<?= \frontend\widgets\ReviewsWidget::widget() ?>
+<!-- END REVIEWS -->
+
+<!-- DELIVERY INFO  -->
+<?= \frontend\widgets\DeliveryInfoWidget::widget() ?>
+<!-- END DELIVERY INFO -->
+
+
+
+<!-- SUCCESS MODAL -->
+<div id="success-modal">
+	<div class="success-modal-container">
+		<div class="success-modal-title clearfix">
+			<span class="success-modal-title-text">Ваш заказ успешно добавлен в корзину!</span>
+			<div class="success-modal-title-icon-container" data-action="close-success-modal">
+				<?= Html::img('@web/constructor-assets/img/close-icon.png', [
+					'alt' => 'close icon',
+					'class' => 'success-modal-title-icon',
+				]) ?>
+			</div>
+		</div>
+		<div class="success-modal-body">
+			<div class="success-modal-content clearfix">
+				<a href="#" data-action="close-success-modal" class="success-modal-link success-modal-left">Продолжить</a>
+				<a href="<?= Url::to(['cart/']) ?>" class="success-modal-link success-modal-right">В корзину</a>
 			</div>
 		</div>
 	</div>
 </div>
+

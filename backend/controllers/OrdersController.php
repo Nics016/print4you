@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use common\components\AccessRule;
+use frontend\components\Sms;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -257,6 +258,8 @@ class OrdersController extends Controller
         $model->comment = $comment . ' / ' . $model->comment;
         $model->save();
 
+        Sms::message($model->phone, 'Здравствуйте, Ваш заказ # ' . $model->id . ' отклонён. Причина: ' . $comment) . '. Подробнее: +7 963 332 56 32';
+
         return $this->redirect('index');
     }
 
@@ -319,6 +322,8 @@ class OrdersController extends Controller
             $model->order_status = Orders::STATUS_COMPLETED;
             $model->location = Orders::LOCATION_EXECUTOR_COMPLETED;
             $model->save();
+
+            Sms::message($model->phone, 'Здравствуйте! Ваш заказ #' . $model->id . ' готов и ожидает Вас в офисе по адресу:' . $model->address);
         }
 
         return $this->redirect('proccessing');
@@ -333,6 +338,8 @@ class OrdersController extends Controller
         $model->location = Orders::LOCATION_COURIER_ACCEPTED;
         $model->save();
 
+        Sms::message($model->phone, 'Здравствуйте! Ваш заказ #' . $model->id . ' готов и готовится к доставке');
+        
         return $this->redirect('proccessing');
     }
 

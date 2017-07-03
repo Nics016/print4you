@@ -79,6 +79,9 @@ a {
   height: 2px;
   background-color: #787875; }
 
+.whiteBtn:visited {
+  color: #530d5a; }
+
 .whiteBtn:hover {
   color: #fff;
   background-color: #191919; }
@@ -115,9 +118,6 @@ a {
     display: block;
     float: left;
     margin-left: 55px; }
-    .topline-elem2 strong {
-      color: #959595;
-      transition: 0.25s; }
   .topline-elem3 {
     display: block;
     float: left;

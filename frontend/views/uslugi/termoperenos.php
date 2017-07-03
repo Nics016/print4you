@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use frontend\components\ReviewsWidget;
+
 $this->title = 'Print4you - Услуги - Термоперенос';
 ?>
 <main class="shelkography termoperenos">
@@ -25,7 +27,7 @@ $this->title = 'Print4you - Услуги - Термоперенос';
 		<!-- LINE2 -->
 		<div class="line2">
 			<div class="container">
-				<div class="line2-video" onclick="playVideo1()" id="video-1">
+				<div class="line2-video" onclick="playVideo(1)" id="video-1">
 					
 				</div>
 			</div>
@@ -92,78 +94,7 @@ $this->title = 'Print4you - Услуги - Термоперенос';
 		</div>
 		<!-- END OF PLUSES -->
 
-		<!-- LINE3 -->
-		<div class="line3">
-			<div class="container">
-				<div class="line3-title">
-					<h3>
-						Что говорят о нас
-					</h3>
-					<div class="line3-title-reviews">
-						<h2>
-							Наши клиенты
-						</h2>
-						<div class="line3-title-reviews-underline"></div>
-					</div>
-				</div>
-				<div class="line3-carousel">
-					<div class="line3-carousel-portraits clearfix">
-						<img src="/img/line3-face1.png" alt="">
-						<img src="/img/line3-face2.png" alt="" class="active">
-						<img src="/img/line3-face3.png" alt="">
-						<img src="/img/line3-face2.png" alt="" class="hidden">
-						<img src="/img/line3-face2.png" alt="" class="hidden">
-					</div>
-					<div class="line3-carousel-info">
-						<section>
-							<h4>
-								Александр Иванов
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reiciendis repellat, consequuntur tenetur sit quos laudantium, libero veritatis fuga ea cum natus iste minima id eum error dicta non quisquam quia! Laborum cupiditate itaque laboriosam unde perferendis, cum ex incidunt numquam dolorum ad minima quo ea amet est rerum tempora!
-							</p>
-						</section>
-						<section class="active">
-							<h4>
-								Иван Петров
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae eos odit magnam unde fugiat eligendi quas est excepturi velit in repellat eveniet molestias blanditiis, sit dolor corporis dolorum repellendus ad vitae enim eaque mollitia sint nostrum illo. Praesentium eveniet quod soluta, voluptatem odio! Tenetur omnis dicta quidem qui impedit soluta consequuntur numquam quis facere error!
-							</p>
-						</section>
-						<section>
-							<h4>
-								Елизавета
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat repellendus nobis commodi ex, et odio quibusdam, repudiandae totam. Deleniti nam eum, dolorum quasi vel fuga suscipit in praesentium maiores enim.
-							</p>
-						</section>
-						<section>
-							<h4>
-								Мария
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam odit consectetur explicabo excepturi non magnam. Quis facere quam corporis, consequatur esse, hic veritatis quo cupiditate perferendis non molestiae odio soluta tempora et. Odit, ullam, dicta, rem quam deleniti explicabo placeat distinctio impedit iusto error magnam! Fugit earum, animi voluptatem asperiores aut, eveniet perspiciatis, placeat ea dolorem, praesentium quia libero velit.
-							</p>
-						</section>
-						<section>
-							<h4>
-								Виталий
-							</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo animi dolorum deserunt, quaerat, autem aut ratione quidem tempora earum voluptate maxime magni aliquid odit natus tempore quibusdam repellendus dignissimos, nulla sequi inventore. Optio sit, eum repellat tenetur, expedita ipsam harum commodi consectetur, suscipit culpa vero sequi nihil. Excepturi nesciunt, dolore autem, laudantium perferendis similique, necessitatibus velit quia deleniti eum harum, rem corporis? Natus a incidunt earum, vitae fuga consectetur saepe?
-							</p>
-						</section>
-					</div>
-					<div class="line3-carousel-circles">
-					</div>
-				</div>
-
-				<a href="#" class="line3-leaveReview">Оставить отзыв</a>
-			</div>
-		</div>
-		<!-- END OF LINE3 -->
+		<?= ReviewsWidget::widget() ?>
 
 		<!-- LINE4 -->
 		<div class="line4">

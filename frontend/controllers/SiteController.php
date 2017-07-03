@@ -22,6 +22,7 @@ use common\models\Requests;
 use common\models\Office;
 use frontend\models\RequestCallForm;
 use frontend\components\Basket;
+use frontend\components\Sms;
 
 /**
  * Site controller
@@ -124,6 +125,8 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest)
             return $this->renderContent(Html::tag('h1','Войдите или зарегистрируйтесь, чтобы просматривать эту страницу'));
 
+        $msg = "Hello, World";
+        // Sms::message(Yii::$app->user->identity->phone, $msg);
         $orders = Orders::find()
             ->where("client_id=" . Yii::$app->user->identity->id)
             ->all();
@@ -374,5 +377,17 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    // страница акций
+    public function actionSale()
+    {
+        return $this->render('sale');
+    }
+
+    // страница наших гостей
+    public function actionNashiGosti()
+    {
+        return $this->render('nashi-gosti');
     }
 }

@@ -178,7 +178,7 @@ class CommonUser extends ActiveRecord implements IdentityInterface
             [['password_reset_token'], 'unique'],
             [['username'], 'unique'],
             [['password'], 'required', 'on' => self::CREATE_SCENARIO],
-            ['phone', 'match', 'pattern' => '/9\d{9}/'],
+            ['phone', 'match', 'pattern' => '/^9[0-9]{9}$/'],
         ];
     }
 
