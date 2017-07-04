@@ -2,6 +2,9 @@
 
 	window.onload = function() {
 
+        var setProduct = document.getElementById('set_product').value;
+        var setCat = document.getElementById('set_cat').value;
+
         var printSizes = JSON.parse(document.getElementById('print-sizes').value);
         var currentPrintSize = false; // сюда будем записывать размер принта стороны
 
@@ -387,10 +390,17 @@
         // рендер продуктов, пришедштх с сервера
         function renderProducts() {
 
+            var hasCat = false;
+
             //изменим селект
             var select = document.getElementById('constructor-leftbar-select');
             for (var i = 0; i < products.length; i++) {
                 var opt = document.createElement('option');
+
+                // если есть категория, которую получили из get парметров
+                if (!hasCat && products[i]['id'] == setCat)
+                    hasCat = true;
+
                 opt.value = products[i]['id'];
                 opt.innerHTML = products[i]['name'];
                 select.appendChild(opt);
@@ -402,9 +412,23 @@
                 renderCurrentCat(this.value);
             });
 
-            // вызовим клик на первого ребенка
-            var product = document.querySelector('.leftarea-product-image-container');
-            if (product) product.dispatchEvent(new Event('click'));
+            if (hasCat) {
+                // если есть категория из гет параметров, то кликнем на нее 
+                select.value = setCat;
+                select.dispatchEvent(new Event('change')); 
+
+            } 
+
+           // вызовим клик на первого ребенка или на которого нам задвали параметром
+            var product = 
+                document.querySelector('.leftarea-product-image-container[data-id="' + setProduct +'"]');
+
+            if (!product)
+                product = document.querySelector('.leftarea-product-image-container');
+
+            if (product) product.dispatchEvent(new Event('click')); 
+           
+            
 
             setTimeout(hideLoader, 500)
         }
@@ -423,12 +447,20 @@
                 // ренедер всех категорий
                 for (var i = 0; i < products.length; i++) 
                     renderCurrentCatHelp(i, productsContainer);
+
+                document.getElementById('category-title').textContent = '';
+                document.getElementById('category-info').textContent = '';
+
             } else {
 
                 // рендер отдельной категории
                 for (var i = 0; i < products.length; i++) {
-                    if (catId == products[i]['id']) 
+                    if (catId == products[i]['id']) {
                         renderCurrentCatHelp(i, productsContainer);
+                        document.getElementById('category-title').textContent = products[i]['name'];
+                        document.getElementById('category-info').textContent = products[i]['description'];
+                        break;
+                    }
                 }
             }
 

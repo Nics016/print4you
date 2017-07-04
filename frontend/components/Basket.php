@@ -76,7 +76,6 @@ class Basket {
 			else
 				$front_print = [
 					'size_id' => $front_size,
-					'color' => null,
 				];
 
 			if ($back_size == false) 
@@ -84,7 +83,6 @@ class Basket {
 			else 
 				$back_print = [
 					'size_id' => $back_size,
-					'color' => null,
 				];
 
 			$item = [
@@ -127,10 +125,17 @@ class Basket {
 			$avaliable_front_prices = [];
 		} else {
 			$front_size = $item['front_print']['size_id'];
-			$front_color = $item['front_print']['color'];
-			$front_print = ConstructorPrintPrices::getPriceData($material_id, $front_size, $count, $front_color);
-			$type_id = $front_print['type_id'];
-			$avaliable_front_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $front_size, $type_id, $count, $front_color);
+			$front_print = ConstructorPrintPrices::getPriceData($material_id, $front_size, $count);
+			if ($front_print == false) {
+				$front_print = [];
+				$avaliable_front_prices = [];
+			} else {
+				$front_print['attendance'] = null; 
+				$type_id = $front_print['type_id'];
+				$front_color = $front_print['color'];
+				$avaliable_front_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $front_size, $count, $type_id, $front_color);
+			}
+		
 		}
 		
 		if (empty($item['back_print'])) {
@@ -138,19 +143,186 @@ class Basket {
 			$avaliable_back_prices = [];
 		} else {
 			$back_size = $item['back_print']['size_id'];
-			$back_color = $item['back_print']['color'];
-			$back_print = ConstructorPrintPrices::getPriceData($material_id, $back_size, $count, $back_color);
-			$type_id = $back_print['type_id'];
-			$avaliable_back_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $back_size, $type_id, $count, $back_color);
+			$back_print = ConstructorPrintPrices::getPriceData($material_id, $back_size, $count);
+			if ($back_print == false) {
+				$back_print = [];
+				$avaliable_back_prices = [];
+			} else {
+				$back_print['attendance'] = null; 
+				$type_id = $back_print['type_id'];
+				$back_color = $back_print['color'];
+				$avaliable_back_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $back_size, $count, $type_id, $back_color);
+			}
+			
 		}
 		
 
 		$item['front_print'] = $front_print;
-		$item['front_print']['avaliable_prices'] = $avaliable_front_prices;
+		$item['front_print_avaliable_prices'] = $avaliable_front_prices;
 
 		$item['back_print'] = $back_print;
-		$item['back_print']['avaliable_prices'] = $avaliable_back_prices;
+		$item['back_print_avaliable_prices'] = $avaliable_back_prices;
+		
 		return $item;
+	}
+
+	public function changePrintOption($id, $side_name, $option_name, $option_value)
+	{
+		if (!isset($this->basket[$id])) return false;
+		$item = &$this->basket[$id];
+		if ($item['product_type'] != self::PRODUCT_CONSTRUCTOR_TYPE) return false;
+		$print = [];
+		switch ($side_name) {
+			case 'front':
+				$print = &$item['front_print'];
+				$print_avaliable_prices = &$item['front_print_avaliable_prices'];
+				break;
+			
+			case 'back':
+				$print = &$item['back_print'];
+				$print_avaliable_prices = &$item['back_print_avaliable_prices'];
+				break;
+		}
+		if (empty($print)) return false;
+
+		$material_id = $item['material_id'];
+		$size_id = $print['size_id'];
+		$count = $item['count'];
+
+		$type_id = $print['type_id'];
+		$color = $print['color'];
+
+		switch ($option_name) {
+			case 'type':
+				$price_data = $this->changePrintType($material_id, $size_id, $count, (int)$option_value);
+				if ($price_data == false) return false;
+				$print = $price_data;
+				break;
+
+			case 'color':
+				$price_data = $this->changePrintColor($material_id, $size_id, $count, $type_id, (int)$option_value);
+				if ($price_data == false) return false;
+				$print = $price_data;
+				break;
+
+			case 'attendance':
+				if ($option_value != false) {
+					$attendance = $this->changePrintAttendance($material_id, $size_id, $count, $type_id, $color, (int)$option_value);
+					if ($attendance == false) return false;
+					$print['attendance'] = $attendance;
+
+				} else {
+					$print['attendance'] = null;
+				}
+				break;
+			default:
+				return false;
+				break;
+		}
+
+		$color = $print['color'];
+		$type_id = $print['type_id'];
+		$print_avaliable_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $size_id, $count, $type_id, $color);
+
+		if (!$this->save()) return false;
+
+
+		return [
+			'print' => $print,
+			'print_avaliable_prices' => $print_avaliable_prices,
+		];
+
+	}
+
+	public function rebuildOptions($id) {
+		if (!isset($this->basket[$id])) return false;
+		$item = &$this->basket[$id];
+		if ($item['product_type'] != self::PRODUCT_CONSTRUCTOR_TYPE) return false;
+
+		$front_data = $this->rebuildType($item, 'front_print');
+		$item['front_print'] = $front_data['print'];
+		$item['front_print_avaliable_prices'] = $front_data['print_avaliable_prices'];
+		
+		$back_data = $this->rebuildType($item, 'back_print');
+		$item['back_print'] = $back_data['print'];
+		$item['back_print_avaliable_prices'] = $back_data['print_avaliable_prices'];
+
+		if (!$this->save()) return false;
+
+		return [
+			'front' => [
+				'print' => $item['front_print'],
+				'print_avaliable_prices' => $item['front_print_avaliable_prices'],
+			],
+			'back' => [
+				'print' => $item['back_print'],
+				'print_avaliable_prices' => $item['back_print_avaliable_prices'],
+			],
+		];
+	}
+
+	private function rebuildType($item, $side_name) {
+		$material_id = $item['material_id'];
+		$count = $item['count'];
+
+		$print = [];
+		$print_avaliable_prices = [];
+
+		if (!empty($item[$side_name])) {
+			$size_id = $item[$side_name]['size_id'];
+			$type_id = $item[$side_name]['type_id'];
+
+			// узнаем доступные методы печати для текущего количества
+			$avaliable_types = ConstructorPrintPrices::getAvaliableTypes($material_id, $size_id, $count);
+
+			$need_change = true;
+			for ($i = 0; $i < count($avaliable_types); $i++) {
+				if ($avaliable_types[$i]['id'] == $type_id) {
+					$need_change = false;
+					break;
+				}
+			}
+
+			// если надо изменить, то именим тип на самый первый в списке
+			if ($need_change)
+				$print = $this->changePrintType($material_id, $size_id, $count, $avaliable_types[0]['id']);
+			else
+				$print = $item[$side_name];
+			
+			$type_id = $print['type_id'];
+			$color = $print['color'];
+			$print_avaliable_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $size_id, $count, $type_id, $color);
+		}
+
+		return [
+			'print' => $print,
+			'print_avaliable_prices' => $print_avaliable_prices,
+		];
+	}
+
+	// возвращают измененные данные цены принта
+	private function changePrintType($material_id, $size_id, $count, $type_id)
+	{
+		$model = ConstructorPrintPrices::getPrintType($material_id, $size_id, $count, $type_id);
+		if ($model != false) 
+			$model['attendance'] = null;
+		
+		return $model;
+	}
+
+	private function changePrintColor($material_id, $size_id, $count, $type_id, $color_id)
+	{
+		$model = ConstructorPrintPrices::getPrintColor($material_id, $size_id, $count, $type_id, $color_id);
+		if ($model != false) 
+			$model['attendance'] = null;
+
+		return $model;
+	}
+
+	private function changePrintAttendance($material_id, $size_id, $count, $type_id, $color, $attendance_id)
+	{
+		return ConstructorPrintPrices::getPrintAttendance($material_id, $size_id, $count, $type_id, $color, $attendance_id);
+		
 	}
 
 	// генерация временного файла принта
@@ -212,16 +384,7 @@ class Basket {
 		if (isset($this->basket[$id]) && $count <= self::PRODUCT_MAX_COUNT && $count >= self::PRODUCT_MIN_COUNT) {
 			$item = &$this->basket[$id];
 			$item['count'] = $count;
-			$price = $this->getItemPrice($item);
-			$dicount_price = $price * $this->getDiscountFactor($item);
-			if ($this->save()) return [
-				'count' => $item['count'], 
-				'price' => $price,
-				'discount_price' => $dicount_price,
-			];
-			
-			return false;
-
+			return $this->save() ? $item['count'] : false;
 		} 
 			
 		return false;
@@ -233,16 +396,7 @@ class Basket {
 		if (isset($this->basket[$id]) && $this->basket[$id]['count'] < self::PRODUCT_MAX_COUNT) {
 			$item = &$this->basket[$id];
 			$item['count']++;
-			$price = $this->getItemPrice($item);
-			$dicount_price = $price * $this->getDiscountFactor($item);
-			if ($this->save()) return [
-				'count' => $item['count'], 
-				'price' => $price,
-				'discount_price' => $dicount_price,
-			];
-			
-			return false;
-
+			return $this->save() ? $item['count'] : false;
 		} 
 			
 		return false;
@@ -255,16 +409,7 @@ class Basket {
 		if (isset($this->basket[$id]) && $this->basket[$id]['count'] > self::PRODUCT_MIN_COUNT) {
 			$item = &$this->basket[$id];
 			$item['count']--;
-			$price = $this->getItemPrice($item);
-			$dicount_price = $price * $this->getDiscountFactor($item);
-			if ($this->save()) return [
-				'count' => $item['count'], 
-				'price' => $price,
-				'discount_price' => $dicount_price,
-			];
-			
-			return false;
-
+			return $this->save() ? $item['count'] : false;
 		} 
 			
 		return false;
@@ -320,7 +465,13 @@ class Basket {
 		$basket_count = 0;
 		for ($i = 0; $i < count($this->basket); $i++) {
 			$item = $this->basket[$i];
-			$price = $this->getItemPrice($item);
+
+			// формирование полной цеын за товар
+			$product_price = $this->getItemPrice($item);
+			$front_print_price = $this->getPrintPrice($item, 'front');
+			$back_print_price = $this->getPrintPrice($item, 'back');
+			$price = $product_price + $front_print_price + $back_print_price; 
+
 			$discount_price = $price * $this->getDiscountFactor($item);
 			$basket_price += $discount_price * $item['count'];
 			$basket_count += $item['count'];
@@ -362,7 +513,11 @@ class Basket {
 							->all();
 
 				// оптовая цена или нет
-				$price = $this->getItemPrice($item); 
+				$front_print_price = $this->getPrintPrice($item, 'front');
+				$back_print_price = $this->getPrintPrice($item, 'back');
+				$product_price = $this->getItemPrice($item);
+
+				$price = $product_price + $front_print_price + $back_print_price; 
 
 				// цена со скидкой
 				$discount_price = $price * $this->getDiscountFactor($item);
@@ -379,6 +534,13 @@ class Basket {
 					'avaliable_sizes' => $avaliable_sizes,
 					'current_size' => $item['size_id'],
 					'count' => $item['count'],
+					'front_print' => $item['front_print'],
+					'front_print_avaliable_prices' => $item['front_print_avaliable_prices'],
+					'back_print' => $item['back_print'],
+					'back_print_avaliable_prices' => $item['back_print_avaliable_prices'],
+					'front_print_price' => $front_print_price,
+					'back_print_price' => $back_print_price,
+					'product_price' => $product_price,
 				];
 
 				$basket_price += $discount_price * $basket[$i]['count'];
@@ -410,6 +572,28 @@ class Basket {
 				$back_image_path = self::getImageDir() . '/' .$item['back_image'];
 				$model->front_image = OrdersProduct::moveFileToProduction($front_image_path);
 				$model->back_image = OrdersProduct::moveFileToProduction($back_image_path);
+				$model->discount_percent = $this->getDiscountFactor($item, true);
+
+				if (!empty($item['front_print'])) {
+					$model->front_print_data = json_encode([
+						'type_id' => $item['front_print']['type_id'],
+						'size_id' => $item['front_print']['size_id'],
+						'color' => $item['front_print']['color'],
+						'attendance' => $item['front_print']['attendance'],
+						'price' => $this->getPrintPrice($item, 'front'),
+					]);
+				}
+
+				if (!empty($item['back_print'])) {
+					$model->back_print_data = json_encode([
+						'type_id' => $item['back_print']['type_id'],
+						'size_id' => $item['back_print']['size_id'],
+						'color' => $item['back_print']['color'],
+						'attendance' => $item['back_print']['attendance'],
+						'price' => $this->getPrintPrice($item, 'back'),
+					]);
+				}
+				
 			}
 
 			if (!$model->save()) return false;
@@ -455,12 +639,90 @@ class Basket {
 		}
 	}
 
+	private function getPrintPrice($item, $side) {
+		$price = 0;
+		$gross_price = [];
+		$count = $item['count'];
+		$attendance = null;
+		$print_price = false;
+
+		if ($side == 'front') {
+
+			if (empty($item['front_print'])) return null;
+			$price = $item['front_print']['price'];
+			$gross_price = json_decode($item['front_print']['gross_price'], true);
+			//$attendance = $item['front_print']['attendance'];
+
+		} elseif ($side == 'back') {
+
+			if (empty($item['back_print'])) return null;
+			$price = $item['back_print']['price'];
+			$gross_price = json_decode($item['back_print']['gross_price'], true);
+			$attendance = $item['back_print']['attendance'];
+
+		} else {
+			return null;
+		}
+
+		$max_value = 0;
+		$max_gross_price = 0;
+
+		for ($i = 0; $i < count($gross_price); $i++) {
+			// если нашли подходящую оптовую цену
+			if ($count >= $gross_price[$i]['from'] && $count <= $gross_price[$i]['to']){
+				$print_price = $gross_price[$i]['price'];
+				break;
+			}
+
+			// иначе запишем максимальные данные
+			if ($gross_price[$i]['to'] > $max_value) {
+				$max_value = $gross_price[$i]['to'];
+				$max_gross_price = $gross_price[$i]['price'];
+			}
+		}
+		
+		// если так и не нашли оптовую цену
+		if ($print_price == false)
+			$print_price = $count > $max_value ? $max_gross_price : $price;
+		// найдем услуги
+		if ($attendance != null) 
+			$print_price += $print_price * $attendance['percent'] / 100;
+		
+		return $print_price;
+	}
+
+	public function getConstructorProductPrice($id)
+	{	
+		if (!isset($this->basket[$id])) return false;
+		$item = $this->basket[$id];
+		if ($item['product_type'] != self::PRODUCT_CONSTRUCTOR_TYPE) return false;
+
+		$front_print_price = $this->getPrintPrice($item, 'front');
+		$back_print_price = $this->getPrintPrice($item, 'back');
+		$product_price = $this->getItemPrice($item);
+		$price = $product_price + $front_print_price + $back_print_price; 
+		$discount_price = $price * $this->getDiscountFactor($item);
+		$count = $item['count'];
+
+		return [
+			'front_print_price' => $front_print_price,
+			'back_print_price' => $back_print_price,
+			'product_price' => $product_price,
+			'price' => $price,
+			'discount_price' => $discount_price,
+			'count' => $count,
+		];
+	}
+
 	// получение скидочного множителя товара
-	private function getDiscountFactor($item)
+	private function getDiscountFactor($item, $return_percent = false)
 	{
 		if ($item['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
 			$discount = CommonUser::getDiscount($item['count']);
-			return ((100 - $discount) / 100);
+			if ($return_percent) 
+				return $discount;
+			else
+				return ((100 - $discount) / 100);
 		}
 	}
 

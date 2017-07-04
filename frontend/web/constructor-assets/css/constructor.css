@@ -62,7 +62,7 @@
 .constrructor-container {
 	position: relative;
 	margin-top: 100px;
-	padding-bottom: 60px
+    border-bottom: 1px solid black;
 }
 
 /* CONSTRUCTOR LEFT */
@@ -785,4 +785,81 @@
 .success-modal-right {
     float: right;
     margin-right: 120px;
+}
+
+.current-category {
+    width: 1000px;
+    margin: 20px auto 0 auto;
+    padding-bottom: 40px;
+}
+
+#category-title {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    color: #3E3E3E;
+    text-transform: uppercase;
+    font-family: 'sportsWorldRegular';
+}
+
+#category-info {
+    text-align: center;
+    font-size: 21px;
+    color: #787878;
+    text-transform: uppercase;
+    font-family: 'akrobatBold';
+    display: block;
+}
+
+.tshirt-icon {
+    width: 110px;
+    display: block;
+    margin: 0 auto;
+}
+
+.ad-item:first-child, .ad-element:nth-child(3n + 1) {
+    margin-left: 10px;
+}
+
+.ad-elements-container {
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 40px;
+}
+
+.ad-element {
+    display: block;
+    float: left;
+    width: 340px;
+    margin-left: 50px;
+}
+
+.ad-element-icon {
+    display: block;
+    float: left;
+    width: 64px;
+}
+
+.ad-element-info {
+    display: block;
+    float: left;
+    width: 240px;
+    margin-left: 30px;
+}
+
+.ad-element-info h2 {
+    text-align: left;
+    font-family: "sportsWorldRegular";
+    font-size: 20px;
+    color: #373737;
+    text-transform: uppercase;
+}
+
+.ad-element-info span {
+    display: block;
+    margin-top: 15px;
+    font-family: "proximaNovaLight";
+    font-size: 15px;
+    color: #404040;
+    line-height: 1.5em;
 }

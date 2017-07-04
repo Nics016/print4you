@@ -3,6 +3,7 @@ namespace frontend\components;
 
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use common\models\Reviews;
 
 class ReviewsWidget extends Widget
@@ -72,7 +73,7 @@ class ReviewsWidget extends Widget
                     </div>
                 </div>
 
-                <a href="#" class="line3-leaveReview">Оставить отзыв</a>
+                <a href="' . Url::to(['reviews/index']) . '" class="line3-leaveReview">Оставить отзыв</a>
             </div>
         </div>
         <!-- END OF LINE3 -->';

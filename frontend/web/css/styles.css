@@ -79,9 +79,6 @@ a {
   height: 2px;
   background-color: #787875; }
 
-.whiteBtn:visited {
-  color: #530d5a; }
-
 .whiteBtn:hover {
   color: #fff;
   background-color: #191919; }
@@ -429,7 +426,7 @@ a {
     margin: 75px auto;
     margin-bottom: 0;
     padding: 15px 25px;
-    width: 150px;
+    width: 200px;
     background-color: #191919;
     font-family: proximaNovaSemibold;
     color: white;
@@ -1219,8 +1216,11 @@ footer {
       background-color: #565656; }
     .main .line1 .left a.whiteBtn {
       display: block;
-      background-color: #191919;
-      color: #fff; }
+      background-color: #EB4441;
+      color: #fff;
+      width: 400px;
+      padding: 15px;
+      font-size: 22px; }
     .main .line1 .left-elements {
       display: block;
       margin-top: 45px;

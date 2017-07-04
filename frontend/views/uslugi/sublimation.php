@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use frontend\components\ReviewsWidget;
+use yii\helpers\Url;
 
 $this->title = 'Print4you - Услуги - Сублимация';
 ?>
@@ -94,7 +95,7 @@ $this->title = 'Print4you - Услуги - Сублимация';
 						</p>
 						<a href="tel:88129819484" class="line4-right-text2-number">981 94 84</a>
 					</div>
-					<a href="#" class="line4-right-makeOrder">Заказать</a>
+					<a href="<?= Url::to(['uslugi/assorty']) ?>" class="line4-right-makeOrder">Заказать</a>
 				</div>
 			</div>
 		</div>
