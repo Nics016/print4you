@@ -1,5 +1,6 @@
 <?php 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Акции';
 
@@ -9,7 +10,7 @@ $this->title = 'Акции';
 
 	<h1 class="sale-main-title">Акции</h1>
 	
-	<div class="sale-slider-container">
+	<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-slider-container">
 		
 		<ul id="sale-slider">
 			<li>
@@ -26,14 +27,14 @@ $this->title = 'Акции';
 			</li>
 		</ul>
 
-	</div>
+	</a>
 
 	<div class="sales-container">
 
 		<div class="sale clearfix">
-			<div class="sale-image">
+			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/first-order.jpg') ?>
-			</div>
+			</a>
 			<div class="sale-info">
 				<span class="sale-title">-30% на первый заказ!</span>
 				<span class="sale-text">
@@ -46,9 +47,9 @@ $this->title = 'Акции';
 		</div>
 
 		<div class="sale clearfix">
-			<div class="sale-image">
+			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/prizes.jpg') ?>
-			</div>
+			</a>
 			<div class="sale-info">
 				<span class="sale-title">Не покупай ВЕЛОСИПЕД мы тебе его ПОДАРИМ</span>
 				<span class="sale-text">
@@ -66,9 +67,9 @@ $this->title = 'Акции';
 		</div>
 
 		<div class="sale clearfix">
-			<div class="sale-image">
+			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/20_sale_2.jpg') ?>
-			</div>
+			</a>
 			<div class="sale-info">
 				<span class="sale-title">-20% в Субботу и Воскресение</span>
 				<span class="sale-text">
@@ -81,9 +82,9 @@ $this->title = 'Акции';
 		</div>
 
 		<div class="sale clearfix">
-			<div class="sale-image">
+			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/sale_design.jpg') ?>
-			</div>
+			</a>
 			<div class="sale-info">
 				<span class="sale-title">Бесплатный дизайн для Вас</span>
 				<span class="sale-text">
@@ -96,9 +97,9 @@ $this->title = 'Акции';
 		</div>
 
 		<div class="sale clearfix">
-			<div class="sale-image">
+			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/delivery.jpg') ?>
-			</div>
+			</a>
 			<div class="sale-info">
 				<span class="sale-title">Бесплатная доставка при заказе от 25.000 тыс. руб.</span>
 				<span class="sale-text">

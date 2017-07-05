@@ -118,7 +118,10 @@ a {
   .topline-elem3 {
     display: block;
     float: left;
-    margin-left: 20px; }
+    margin-left: 20px;
+    background-color: #EB4441;
+    color: #FFF !important;
+    padding: 0px 10px; }
   .topline-elem4 {
     display: block;
     float: right; }
@@ -555,21 +558,32 @@ footer {
   display: block;
   float: left;
   width: 250px; }
+  .footer-left-contacts a.whiteBtn:hover {
+    background-color: #565656; }
+  .footer-left-contacts a.whiteBtn {
+    display: block;
+    background-color: #EB4441;
+    color: #fff;
+    width: 400px;
+    padding: 15px;
+    font-size: 22px; }
   .footer-left-contacts p {
     font-family: proximaNovaBold;
-    font-size: 16px;
+    font-size: 14px;
     color: white;
     margin: 0;
     padding: 0;
     padding-bottom: 5px; }
   .footer-left-contacts p.with-margin {
-    margin-top: 20px; }
+    margin-top: 10px; }
+  .footer-left-contacts p:first-child a {
+    font-size: 20px; }
   .footer-left-contacts a {
     display: block;
     text-decoration: none;
     font-family: proximaNovaRegular;
     color: white;
-    font-size: 20px; }
+    font-size: 14px; }
     .footer-left-contacts a strong:hover {
       color: #f69392; }
     .footer-left-contacts a strong {
@@ -1249,8 +1263,16 @@ footer {
   background-size: cover;
   background-repeat: no-repeat;
   padding: 10px 0; }
+  .main .line2 .container {
+    height: 200px;
+    padding-top: 20px; }
+  .main .line2 .info-box:first-child {
+    margin-left: 0; }
   .main .line2 .info-box {
-    width: 773px;
+    display: block;
+    float: left;
+    width: 49%;
+    margin-left: 2%;
     height: 207px;
     background-image: url("../img/main-line2-slider1.png");
     background-size: contain;

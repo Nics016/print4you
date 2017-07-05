@@ -17,11 +17,11 @@ $this->title = 'Print4you - Регистрация';
 				<?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 		            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 		            <?= $form->field($model, 'password')->passwordInput() ?>
-		            <?= $form->field($model, 'email')->textInput() ?>
-		            <?= $form->field($model, 'firstname')->textInput() ?>
-		            <?= $form->field($model, 'secondname')->textInput() ?>
-		            <?= $form->field($model, 'phone')->textInput() ?>
-		            <?= $form->field($model, 'address')->textInput() ?>
+		            <?= $form->field($model, 'email')->textInput(['placeholder' => 'info@print4you.su']) ?>
+		            <?= $form->field($model, 'firstname')->textInput(['placeholder' => 'Иван']) ?>
+		            <?= $form->field($model, 'secondname')->textInput(['placeholder' => 'Иванов']) ?>
+		            <?= $form->field($model, 'phone')->textInput(['placeholder' => '9127776655']) ?>
+		            <?= $form->field($model, 'address')->textInput(['placeholder' => 'СПб, м. Гостиный двор, Набережная реки Фонтанки, 38']) ?>
 		            <br>
 		            <div class="form-group" style="margin: 0 auto 50px; display:block">
 		                <?= Html::submitButton('Регистрация', ['class' => 'btn btn-success', 'style' => 'margin: 0 auto',]) ?>

@@ -1,23 +1,387 @@
 @font-face {
   src: url("../fonts/akrobatBold.otf");
   font-family: "akrobatBold"; }
-
 @font-face {
   src: url("../fonts/sportsWorldRegular.otf");
   font-family: "sportsWorldRegular"; }
-
 @font-face {
   src: url("../fonts/helveticaNeueCyrRoman.otf");
   font-family: "helveticaNeueCyrRoman"; }
-
 @font-face {
   src: url("../fonts/proximaNovaBold.ttf");
   font-family: "proximaNovaBold"; }
-
 @font-face {
   src: url("../fonts/proximaNovaSemibold.otf");
   font-family: "proximaNovaSemibold"; }
-
+@font-face {
+  src: url("../fonts/a_AlgeriusNr.TTF");
+  font-family: "a_AlgeriusNr"; }
+@font-face {
+  src: url("../fonts/a_AlternaCmD.TTF");
+  font-family: "a_AlternaCmD"; }
+@font-face {
+  src: url("../fonts/a_AlternaSw.TTF");
+  font-family: "a_AlternaSw"; }
+@font-face {
+  src: url("../fonts/a_AlternaTitulB.TTF");
+  font-family: "a_AlternaTitulB"; }
+@font-face {
+  src: url("../fonts/a_AntiqueTitulGr.TTF");
+  font-family: "a_AntiqueTitulGr"; }
+@font-face {
+  src: url("../fonts/a_AssuanBrk.TTF");
+  font-family: "a_AssuanBrk"; }
+@font-face {
+  src: url("../fonts/a_AvanteCpsL.TTF");
+  font-family: "a_AvanteCpsL"; }
+@font-face {
+  src: url("../fonts/a_BentTitulDcFr.TTF");
+  font-family: "a_BentTitulDcFr"; }
+@font-face {
+  src: url("../fonts/a_BighausTitul.TTF");
+  font-family: "a_BighausTitul"; }
+@font-face {
+  src: url("../fonts/a_BighausTitulBrkHil.TTF");
+  font-family: "a_BighausTitulBrkHil"; }
+@font-face {
+  src: url("../fonts/a_BighausTitulOtlDr.TTF");
+  font-family: "a_BighausTitulOtlDr"; }
+@font-face {
+  src: url("../fonts/a_BosaNovaCp.TTF");
+  font-family: "a_BosaNovaCp"; }
+@font-face {
+  src: url("../fonts/a_BosaNovaDcFr.TTF");
+  font-family: "a_BosaNovaDcFr"; }
+@font-face {
+  src: url("../fonts/a_BosaNovaOtl.TTF");
+  font-family: "a_BosaNovaOtl"; }
+@font-face {
+  src: url("../fonts/a_BraggaOtl.TTF");
+  font-family: "a_BraggaOtl"; }
+@font-face {
+  src: url("../fonts/a_BraggaOtlSh.TTF");
+  font-family: "a_BraggaOtlSh"; }
+@font-face {
+  src: url("../fonts/a_BraggaStrip.TTF");
+  font-family: "a_BraggaStrip"; }
+@font-face {
+  src: url("../fonts/a_BraggaTitul.TTF");
+  font-family: "a_BraggaTitul"; }
+@font-face {
+  src: url("../fonts/a_Bremen.TTF");
+  font-family: "a_Bremen"; }
+@font-face {
+  src: url("../fonts/a_BremenCaps.TTF");
+  font-family: "a_BremenCaps"; }
+@font-face {
+  src: url("../fonts/a_BremenCapsNr.TTF");
+  font-family: "a_BremenCapsNr"; }
+@font-face {
+  src: url("../fonts/a_BremenDcFr.TTF");
+  font-family: "a_BremenDcFr"; }
+@font-face {
+  src: url("../fonts/a_CampusGrav.TTF");
+  font-family: "a_CampusGrav"; }
+@font-face {
+  src: url("../fonts/a_CampusMarine.TTF");
+  font-family: "a_CampusMarine"; }
+@font-face {
+  src: url("../fonts/a_CampusOtl.TTF");
+  font-family: "a_CampusOtl"; }
+@font-face {
+  src: url("../fonts/a_CampusPrLy.TTF");
+  font-family: "a_CampusPrLy"; }
+@font-face {
+  src: url("../fonts/a_CampusPrsp.TTF");
+  font-family: "a_CampusPrsp"; }
+@font-face {
+  src: url("../fonts/a_CampusStrip.TTF");
+  font-family: "a_CampusStrip"; }
+@font-face {
+  src: url("../fonts/a_ConceptoTit.TTF");
+  font-family: "a_ConceptoTit"; }
+@font-face {
+  src: url("../fonts/a_ConceptoTitulNrFy.TTF");
+  font-family: "a_ConceptoTitulNrFy"; }
+@font-face {
+  src: url("../fonts/acquestscript.ttf");
+  font-family: "acquestscript"; }
+@font-face {
+  src: url("../fonts/AdineKirnberg.ttf");
+  font-family: "AdineKirnberg"; }
+@font-face {
+  src: url("../fonts/a_DiscoSerif.TTF");
+  font-family: "a_DiscoSerif"; }
+@font-face {
+  src: url("../fonts/a_DiscoSerifDbl.TTF");
+  font-family: "a_DiscoSerifDbl"; }
+@font-face {
+  src: url("../fonts/Advokat_Modern.ttf");
+  font-family: "Advokat_Modern"; }
+@font-face {
+  src: url("../fonts/a_Empirial.TTF");
+  font-family: "a_Empirial"; }
+@font-face {
+  src: url("../fonts/a_EmpirialCmDn.TTF");
+  font-family: "a_EmpirialCmDn"; }
+@font-face {
+  src: url("../fonts/agatha-modern.ttf");
+  font-family: "agatha-modern"; }
+@font-face {
+  src: url("../fonts/a_GildiaLnBk.TTF");
+  font-family: "a_GildiaLnBk"; }
+@font-face {
+  src: url("../fonts/a_GlobusLnBk.TTF");
+  font-family: "a_GlobusLnBk"; }
+@font-face {
+  src: url("../fonts/a_GlobusOblique.TTF");
+  font-family: "a_GlobusOblique"; }
+@font-face {
+  src: url("../fonts/a_Groto.TTF");
+  font-family: "a_Groto"; }
+@font-face {
+  src: url("../fonts/a_GrotoGr.TTF");
+  font-family: "a_GrotoGr"; }
+@font-face {
+  src: url("../fonts/akrobatBold.otf");
+  font-family: "akrobatBold"; }
+@font-face {
+  src: url("../fonts/aksent.Ttf");
+  font-family: "aksent"; }
+@font-face {
+  src: url("../fonts/a_LatinoTitulBr.TTF");
+  font-family: "a_LatinoTitulBr"; }
+@font-face {
+  src: url("../fonts/a_LCDNova3DCmObl.TTF");
+  font-family: "a_LCDNova3DCmObl"; }
+@font-face {
+  src: url("../fonts/a_LCDNovaObl.TTF");
+  font-family: "a_LCDNovaObl"; }
+@font-face {
+  src: url("../fonts/AleksandraC.otf");
+  font-family: "AleksandraC"; }
+@font-face {
+  src: url("../fonts/Alexandra_Script.ttf");
+  font-family: "Alexandra_Script"; }
+@font-face {
+  src: url("../fonts/AlexandraZeferinoOne.ttf");
+  font-family: "AlexandraZeferinoOne"; }
+@font-face {
+  src: url("../fonts/algerius.Ttf");
+  font-family: "algerius"; }
+@font-face {
+  src: url("../fonts/AllegroScript.otf");
+  font-family: "AllegroScript"; }
+@font-face {
+  src: url("../fonts/a_MachinaOrtoDgStr.TTF");
+  font-family: "a_MachinaOrtoDgStr"; }
+@font-face {
+  src: url("../fonts/a_MachinaOrtoSht.TTF");
+  font-family: "a_MachinaOrtoSht"; }
+@font-face {
+  src: url("../fonts/a_MachinaOrtoSls.TTF");
+  font-family: "a_MachinaOrtoSls"; }
+@font-face {
+  src: url("../fonts/Amadeus.ttf");
+  font-family: "Amadeus"; }
+@font-face {
+  src: url("../fonts/a_ModernoDcFr.TTF");
+  font-family: "a_ModernoDcFr"; }
+@font-face {
+  src: url("../fonts/AndantinoScript.ttf");
+  font-family: "AndantinoScript"; }
+@font-face {
+  src: url("../fonts/Annabelle.ttf");
+  font-family: "Annabelle"; }
+@font-face {
+  src: url("../fonts/a_PlakatTitulHlStr.TTF");
+  font-family: "a_PlakatTitulHlStr"; }
+@font-face {
+  src: url("../fonts/Aquarelle.ttf");
+  font-family: "Aquarelle"; }
+@font-face {
+  src: url("../fonts/arabic.TTF");
+  font-family: "arabic"; }
+@font-face {
+  src: url("../fonts/Archive.otf");
+  font-family: "Archive"; }
+@font-face {
+  src: url("../fonts/AriadnaScript.ttf");
+  font-family: "AriadnaScript"; }
+@font-face {
+  src: url("../fonts/Ariston.ttf");
+  font-family: "Ariston"; }
+@font-face {
+  src: url("../fonts/a_RombyGr.TTF");
+  font-family: "a_RombyGr"; }
+@font-face {
+  src: url("../fonts/a_RombyOtl.TTF");
+  font-family: "a_RombyOtl"; }
+@font-face {
+  src: url("../fonts/a_RombyRndOtl.TTF");
+  font-family: "a_RombyRndOtl"; }
+@font-face {
+  src: url("../fonts/Arsenal-Bold.otf");
+  font-family: "Arsenal-Bold"; }
+@font-face {
+  src: url("../fonts/arthurgothic.ttf");
+  font-family: "arthurgothic"; }
+@font-face {
+  src: url("../fonts/artnouv.ttf");
+  font-family: "artnouv"; }
+@font-face {
+  src: url("../fonts/a_SeriferTitul.TTF");
+  font-family: "a_SeriferTitul"; }
+@font-face {
+  src: url("../fonts/a_Simpler2Otl.TTF");
+  font-family: "a_Simpler2Otl"; }
+@font-face {
+  src: url("../fonts/a_SimplerBrk.TTF");
+  font-family: "a_SimplerBrk"; }
+@font-face {
+  src: url("../fonts/a_SimplerClg.TTF");
+  font-family: "a_SimplerClg"; }
+@font-face {
+  src: url("../fonts/a_SimplerFnt.TTF");
+  font-family: "a_SimplerFnt"; }
+@font-face {
+  src: url("../fonts/a_SimplerGr.TTF");
+  font-family: "a_SimplerGr"; }
+@font-face {
+  src: url("../fonts/a_StamperBrk.TTF");
+  font-family: "a_StamperBrk"; }
+@font-face {
+  src: url("../fonts/astra.Ttf");
+  font-family: "astra"; }
+@font-face {
+  src: url("../fonts/AuroraScript.ttf");
+  font-family: "AuroraScript"; }
+@font-face {
+  src: url("../fonts/AvalonMedium.ttf");
+  font-family: "AvalonMedium"; }
+@font-face {
+  src: url("../fonts/BadScript.ttf");
+  font-family: "BadScript"; }
+@font-face {
+  src: url("../fonts/bagira.ttf");
+  font-family: "bagira"; }
+@font-face {
+  src: url("../fonts/BananaBrick.otf");
+  font-family: "BananaBrick"; }
+@font-face {
+  src: url("../fonts/beastim.TTF");
+  font-family: "beastim"; }
+@font-face {
+  src: url("../fonts/beastvs.TTF");
+  font-family: "beastvs"; }
+@font-face {
+  src: url("../fonts/bedrockc.ttf");
+  font-family: "bedrockc"; }
+@font-face {
+  src: url("../fonts/beresta.TTF");
+  font-family: "beresta"; }
+@font-face {
+  src: url("../fonts/BetinaScriptCTT.TTF");
+  font-family: "BetinaScriptCTT"; }
+@font-face {
+  src: url("../fonts/BetinaScriptExtraCTT.TTF");
+  font-family: "BetinaScriptExtraCTT"; }
+@font-face {
+  src: url("../fonts/bickhamscr2.ttf");
+  font-family: "bickhamscr2"; }
+@font-face {
+  src: url("../fonts/Bickham_Script_One.ttf");
+  font-family: "Bickham_Script_One"; }
+@font-face {
+  src: url("../fonts/BikhamCyrScript.ttf");
+  font-family: "BikhamCyrScript"; }
+@font-face {
+  src: url("../fonts/birch.ttf");
+  font-family: "birch"; }
+@font-face {
+  src: url("../fonts/blaze.TTF");
+  font-family: "blaze"; }
+@font-face {
+  src: url("../fonts/bmspiralcapcyr.ttf");
+  font-family: "bmspiralcapcyr"; }
+@font-face {
+  src: url("../fonts/BoleroScript.ttf");
+  font-family: "BoleroScript"; }
+@font-face {
+  src: url("../fonts/bonzai.ttf");
+  font-family: "bonzai"; }
+@font-face {
+  src: url("../fonts/boyarsky.ttf");
+  font-family: "boyarsky"; }
+@font-face {
+  src: url("../fonts/brag.Ttf");
+  font-family: "brag"; }
+@font-face {
+  src: url("../fonts/Brava.otf");
+  font-family: "Brava"; }
+@font-face {
+  src: url("../fonts/burlak.TTF");
+  font-family: "burlak"; }
+@font-face {
+  src: url("../fonts/butter.ttf");
+  font-family: "butter"; }
+@font-face {
+  src: url("../fonts/calligraph.TTF");
+  font-family: "calligraph"; }
+@font-face {
+  src: url("../fonts/CalligraphiaOne.ttf");
+  font-family: "CalligraphiaOne"; }
+@font-face {
+  src: url("../fonts/camp.TTF");
+  font-family: "camp"; }
+@font-face {
+  src: url("../fonts/Carolina.ttf");
+  font-family: "Carolina"; }
+@font-face {
+  src: url("../fonts/Casper_R.ttf");
+  font-family: "Casper_R"; }
+@font-face {
+  src: url("../fonts/Cassandra.ttf");
+  font-family: "Cassandra"; }
+@font-face {
+  src: url("../fonts/CeremoniousOne.ttf");
+  font-family: "CeremoniousOne"; }
+@font-face {
+  src: url("../fonts/CeremoniousTwo.ttf");
+  font-family: "CeremoniousTwo"; }
+@font-face {
+  src: url("../fonts/Champagnecyr.ttf");
+  font-family: "Champagnecyr"; }
+@font-face {
+  src: url("../fonts/ChinaCyr.ttf");
+  font-family: "ChinaCyr"; }
+@font-face {
+  src: url("../fonts/clip.ttf");
+  font-family: "clip"; }
+@font-face {
+  src: url("../fonts/Comfortaa-Regular.ttf");
+  font-family: "Comfortaa-Regular"; }
+@font-face {
+  src: url("../fonts/Connetable.ttf");
+  font-family: "Connetable"; }
+@font-face {
+  src: url("../fonts/ConyRegular.otf");
+  font-family: "ConyRegular"; }
+@font-face {
+  src: url("../fonts/CopyistThin.ttf");
+  font-family: "CopyistThin"; }
+@font-face {
+  src: url("../fonts/Corinthia.ttf");
+  font-family: "Corinthia"; }
+@font-face {
+  src: url("../fonts/corona.TTF");
+  font-family: "corona"; }
+@font-face {
+  src: url("../fonts/Coronet.ttf");
+  font-family: "Coronet"; }
+@font-face {
+  src: url("../fonts/crackman.TTF");
+  font-family: "crackman"; }
 
 /*TITLE*/
 

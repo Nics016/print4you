@@ -40,13 +40,19 @@ $this->title = 'Print for you! Закажи свой оригинальный п
 
         <!-- LINE2 -->
         <div class="line2">
-            <div class="container">
-                <div class="info-box clearfix">
+            <div class="container clearfix">
+                <a href="<?= Url::to(['uslugi/index']) ?>" class="info-box clearfix">
                     <div class="info-box-btns">
                         <img src="/img/main-line2-right.png" alt="" class="info-box-btns-right">
                         <img src="/img/main-line2-left.png" alt="" class="info-box-btns-left">
                     </div>
-                </div>              
+                </a>
+                <a href="<?= Url::to(['uslugi/index']) ?>" class="info-box clearfix">
+                    <div class="info-box-btns">
+                        <img src="/img/main-line2-right.png" alt="" class="info-box-btns-right">
+                        <img src="/img/main-line2-left.png" alt="" class="info-box-btns-left">
+                    </div>
+                </a>              
             </div>
         </div>
         <!-- END OF LINE2 -->
@@ -151,34 +157,25 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                             Подробнее
                         </a>
                     </div>
-                    <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic5.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки мужские</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-                            Подробнее
-                        </a>
-                    </div>
-                    <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic6.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Футболки женские</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-                            Подробнее
-                        </a>
-                    </div>
-                    <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic7.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки мужские</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-                            Подробнее
-                        </a>
-                    </div>
-                    <div class="elements-item">
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>"><img src="/img/services-pic8.jpg" alt=""></a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="elements-item-title">Свитшоты <br> и толстовки женские</a>
-                        <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">
-                            Подробнее
-                        </a>
-                    </div>
+                    <?php 
+                    for ($i = 0; $i < count($categories); $i++):
+                        $id = $categories[$i]['id'];
+                        $name = $categories[$i]['name'];
+                        $img = $categories[$i]['img'];
+                    ?>
+                        <div class="elements-item">
+                            <a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>">
+                                <img src="<?= $img ?>" alt="">
+                            </a>
+                            <a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>" class="elements-item-title">
+                                <?= $name ?>
+                            </a>
+                            <a href="<?= Url::to(['constructor/', 'cat_id' => $id]) ?>" class="whiteBtn">
+                                Подробнее
+                            </a>
+                        </div>
+
+                    <?php endfor;?>
                 </div>
                 <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn bigBtn">
                     Смотреть весь ассортимент <strong> > </strong>
@@ -291,7 +288,7 @@ $this->title = 'Print for you! Закажи свой оригинальный п
                 </div>
                 <!-- END OF ELEMENTS -->
                 <div class="cities clearfix">
-                    <img src="/img/main-line6-photo.png" alt="" class="cities-left">
+                    <img src="/img/main-line6-photo.jpg" alt="" class="cities-left">
                     <div class="cities-right">
                         <h2 class="title">
                             Футболки Санкт-Петербурга <br>

@@ -172,11 +172,13 @@ AppAsset::register($this);
         <div class="container clearfix">
             <div class="footer-left">
                 <div class="footer-left-contacts">
-                    <p>Студия на Площади Восстания</p>
-                    <a href="tel:89633325632">+7 (963) <strong>332 56 32</strong></a>
+                    <p>Наш номер телефона</p>
+                    <a href="tel:88123092848"><strong>309 28 48</strong></a>
+                    <p class="with-margin">Студия на Площади Восстания</p>
+                    <a href="<?= Url::to(['site/contacts']) ?>">м.Площадь Восстания, ул. Гончарная, 2</a>
                     <p class="with-margin">Студия на Фонтанке</p>
-                    <a href="tel:89633092848"><strong>309 28 48</strong></a>
-                    <a href="#" class="footer-left-callMe" data-toggle="modal" data-target="#makeCallModal">Заказать звонок</a>
+                    <a href="<?= Url::to(['site/contacts']) ?>">м. Гостиный двор, Набережная реки Фонтанки,38</a>
+                    <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">Сделать заказ</a>
                 </div>
             </div>
             <div class="footer-center">

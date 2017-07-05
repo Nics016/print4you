@@ -20,6 +20,7 @@ use common\models\CommonUser;
 use common\models\Orders;
 use common\models\Requests;
 use common\models\Office;
+use common\models\ConstructorCategories;
 use frontend\models\RequestCallForm;
 use frontend\components\Basket;
 use frontend\components\Sms;
@@ -114,7 +115,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'categories' => ConstructorCategories::getCats(),
+        ]);
     }
 
     /**

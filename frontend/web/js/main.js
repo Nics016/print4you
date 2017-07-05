@@ -1,5 +1,8 @@
+var linksVideo = [
+    'ld9A6WVatL0',
+    'ld9A6WVatL0'
+];
 jQuery(document).ready(function($) {
-
 	///////////////
 	// Variables //
 	///////////////
@@ -9,14 +12,12 @@ jQuery(document).ready(function($) {
 	var sections = [];
 	var activeImgSrc = "/img/line3-circle-active.png";
 	var passiveImgSrc = "/img/line3-circle.png";
-	var mainSliderMax = -1;
-	var mainSliderCur = -1;
+	var mainSliderMax1 = -1;
+	var mainSliderMax2 = -1;
+	var mainSliderCur1 = -1;
+	var mainSliderCur2 = -1;
 	var mainSliderIntervalId = -1;
 	var _csrf = $('meta[name="csrf-token"]').attr('content');
-	var linksVideo = [
-        'ld9A6WVatL0',
-        'ld9A6WVatL0'
-    ];
 
 	//////////
 	// Init //
@@ -24,7 +25,7 @@ jQuery(document).ready(function($) {
 	$(document).ready(function(){
 		initLine3Slider();
 
-		initMainLine2Slider(2, 4000);
+		initMainLine2Slider(2, 2, 4000);
 		
 		activateAssortyTabs();
 
@@ -126,19 +127,31 @@ jQuery(document).ready(function($) {
 	/**
 	 * Инициализация mainLine2Slider
 	 */
-	function initMainLine2Slider(maxSlides, timeToChangeSlide)
+	function initMainLine2Slider(maxSlides1, maxSlides2, timeToChangeSlide)
 	{
-		mainSliderMax = maxSlides;
-		mainSliderCur = 1;
-		$('.main .line2 .info-box-btns-right')
+		mainSliderMax1 = maxSlides1;
+		mainSliderMax2 = maxSlides2;
+		mainSliderCur1 = 1;
+		mainSliderCur2 = 1;
+		$('.main .line2 .info-box-btns-right').eq(0)
 		.bind("click", function(){
 			mainSliderClearInterval();
-			mainSliderNext();
+			mainSliderNext(0);
 		});
-		$('.main .line2 .info-box-btns-left')
+		$('.main .line2 .info-box-btns-left').eq(0)
 		.bind("click", function(){
 			mainSliderClearInterval();
-			mainSliderPrev();
+			mainSliderPrev(0);
+		});
+		$('.main .line2 .info-box-btns-right').eq(1)
+		.bind("click", function(){
+			mainSliderClearInterval();
+			mainSliderNext(1);
+		});
+		$('.main .line2 .info-box-btns-left').eq(1)
+		.bind("click", function(){
+			mainSliderClearInterval();
+			mainSliderPrev(1);
 		});
 
 		mainSliderIntervalId = setInterval(function(){
@@ -149,23 +162,55 @@ jQuery(document).ready(function($) {
 	/**
 	 * Функция при нажатии на стрелочку вправо
 	 */
-	function mainSliderNext()
+	function mainSliderNext(j = -1)
 	{
-		mainSliderCur++;
-		if (mainSliderCur > mainSliderMax)
-			mainSliderCur = 1;
-		mainSliderUpdate();
+		switch(j) {
+			case 0:
+				mainSliderCur1++;
+				if (mainSliderCur1 > mainSliderMax1)
+					mainSliderCur1 = 1;
+				mainSliderUpdate(0);
+				break;
+			case 1:
+				mainSliderCur2++;
+				if (mainSliderCur2 > mainSliderMax2)
+					mainSliderCur2 = 1;
+				mainSliderUpdate(1);
+				break;
+			case -1:
+				mainSliderCur1++;
+				if (mainSliderCur1 > mainSliderMax1)
+					mainSliderCur1 = 1;
+				mainSliderCur2++;
+				if (mainSliderCur2 > mainSliderMax2)
+					mainSliderCur2 = 1;
+				mainSliderUpdate();
+				break;
+		}
+		
+		
+		
 	}
 
 	/**
 	 * Функция при нажатии на стрелочку влево
 	 */
-	function mainSliderPrev()
+	function mainSliderPrev(j)
 	{
-		mainSliderCur--;
-		if (mainSliderCur < 1)
-			mainSliderCur = mainSliderMax;
-		mainSliderUpdate();
+		switch(j) {
+			case 0:
+				mainSliderCur1--;
+				if (mainSliderCur1 < 1)
+					mainSliderCur1 = mainSliderMax1;
+				mainSliderUpdate(0);
+				break;
+			case 1:
+				mainSliderCur2--;
+					if (mainSliderCur2 < 1)
+						mainSliderCur2 = mainSliderMax2;
+				mainSliderUpdate(1);
+				break;
+		}
 	}
 
 	/**
@@ -183,18 +228,37 @@ jQuery(document).ready(function($) {
 	/**
 	 * Обновление картинок слайдера с анимацией
 	 */
-	function mainSliderUpdate()
+	function mainSliderUpdate(j = -1)
 	{
-		var bg = '.main .line2';
+		// обновить оба слайдера?
+		var both = (j === -1) ? true : false;
+		// обновить первый слайдер только?
+		var first = (j === 0) ? true : false;
+		// обновить второй слайдер только?
+		var second = (j === 1) ? true : false;
+		// var bg = '.main .line2';
 		var slider = '.main .line2 .info-box';
-		$(bg).fadeTo(0, 1).fadeTo(0, 0.7);
-		$(slider).fadeTo(0, 1).fadeTo(0, 0);
-		$(bg).css("background-image",
-			"url(/img/main-line2-bg" + mainSliderCur + ".jpg")
-			.fadeTo(500, 1);
-		$(slider).css("background-image",
-			"url(/img/main-line2-slider" + mainSliderCur + ".png")
-			.fadeTo(1000, 1);
+		// $(bg).fadeTo(0, 1).fadeTo(0, 0.7);
+		// $(bg).css("background-image",
+		// 	"url(/img/main-line2-bg" + mainSliderCur1 + ".jpg")
+		// 	.fadeTo(500, 1);
+		if (first || both) {
+			$(slider).eq(0).fadeTo(0, 1).fadeTo(0, 0);
+			$(slider).eq(0).css("background-image",
+				"url(/img/main-line2-slider" + mainSliderCur1 + ".png")
+				.fadeTo(1000, 1);
+		}
+		if (second || both) {
+			// время до обновления
+			var msInterval = second ? 0 : 500;
+			setTimeout(function(){
+				$(slider).eq(1).fadeTo(0, 1).fadeTo(0, 0);
+				$(slider).eq(1).css("background-image",
+					"url(/img/main-line2-slider" + mainSliderCur2 + ".png")
+				.fadeTo(1000, 1);
+			}, msInterval);
+		}
+		
 	}
 
 	////////////////////////////////////////////////
@@ -300,19 +364,6 @@ jQuery(document).ready(function($) {
 		$('.line3-carousel-info .active').slideUp(0);
 		$('.line3-carousel-info .active').slideDown(500);
 	}
-
-    ////////////////////
-    // Videos scripts //
-    ////////////////////
-    /**
-     * Triggers when #video-i clicked.
-     */
-    function playVideo(i)
-    {
-        var link = linksVideo[i];
-        document.getElementById('video-' + i).innerHTML = 
-            '<iframe width="1140" height="590" src="https://www.youtube.com/embed/' + link + '?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
-    }
 
 	//////////////////////////////////////////////////////////////
 	// Скрипт подсветки текущей страницы красным цветом в меню  //
@@ -435,3 +486,15 @@ jQuery(document).ready(function($) {
 
 });	
 
+////////////////////
+// Videos scripts //
+////////////////////
+/**
+ * Triggers when #video-i clicked.
+ */
+function playVideo(i)
+{
+    var link = linksVideo[i];
+    document.getElementById('video-' + i).innerHTML = 
+        '<iframe width="1140" height="590" src="https://www.youtube.com/embed/' + link + '?showinfo=0&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
+}

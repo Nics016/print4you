@@ -35,7 +35,6 @@ class UslugiController extends Controller
      */
     public function actionIndex()
     {   
-
         return $this->render("index", [
             'categories' => ConstructorCategories::getCats(), 
         ]);
