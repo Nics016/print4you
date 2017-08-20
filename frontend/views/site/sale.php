@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Акции';
 
 ?>
 
@@ -17,13 +16,22 @@ $this->title = 'Акции';
 				<?= Html::img('@web/assets/images/first-order.jpg') ?>
 			</li>
 			<li>
-				<?= Html::img('@web/assets/images/delivery.jpg') ?>
+				<?= Html::img('@web/assets/images/delivery.png') ?>
 			</li>
 			<li>
 				<?= Html::img('@web/assets/images/prizes.jpg') ?>
 			</li>
 			<li>
 				<?= Html::img('@web/assets/images/20_sale.jpg') ?>
+			</li>
+			<li>
+				<?= Html::img('@web/assets/images/20_sale_2.jpg') ?>
+			</li>
+			<li>
+				<?= Html::img('@web/assets/images/konez-leta.jpg') ?>
+			</li>
+			<li>
+				<?= Html::img('@web/assets/images/sale_design.png') ?>
 			</li>
 		</ul>
 
@@ -36,7 +44,7 @@ $this->title = 'Акции';
 				<?= Html::img('@web/assets/images/first-order.jpg') ?>
 			</a>
 			<div class="sale-info">
-				<span class="sale-title">-30% на первый заказ!</span>
+				<h2 class="sale-title">-30% на первый заказ!</h2>
 				<span class="sale-text">
 					Приносите чек или старую футболку которую вы печатали в других компаниях и получайте -30% на розничный заказ или дополнительно -10% от оптового прайса.
 					<br>
@@ -51,7 +59,7 @@ $this->title = 'Акции';
 				<?= Html::img('@web/assets/images/prizes.jpg') ?>
 			</a>
 			<div class="sale-info">
-				<span class="sale-title">Не покупай ВЕЛОСИПЕД мы тебе его ПОДАРИМ</span>
+				<h2 class="sale-title">Не покупай ВЕЛОСИПЕД мы тебе его ПОДАРИМ</h2>
 				<span class="sale-text">
 					Теперь, при покупке от 800 рублей, каждый из Вас получает шанс выиграть приятные сюрпризы
 					<br>
@@ -71,7 +79,7 @@ $this->title = 'Акции';
 				<?= Html::img('@web/assets/images/20_sale_2.jpg') ?>
 			</a>
 			<div class="sale-info">
-				<span class="sale-title">-20% в Субботу и Воскресение</span>
+				<h2 class="sale-title">-20% в Субботу и Воскресение</h2>
 				<span class="sale-text">
 					Для наших гостей по выходным дням скидка -20% от 1 штуки. Для получения скидки Вам нужно предъявить скидочную карту и сделать репост записи в нашей группе ВКОНТАКТЕ
 					<br>
@@ -83,10 +91,10 @@ $this->title = 'Акции';
 
 		<div class="sale clearfix">
 			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
-				<?= Html::img('@web/assets/images/sale_design.jpg') ?>
+				<?= Html::img('@web/assets/images/sale_design.png') ?>
 			</a>
 			<div class="sale-info">
-				<span class="sale-title">Бесплатный дизайн для Вас</span>
+				<h2 class="sale-title">Бесплатный дизайн для Вас</h2>
 				<span class="sale-text">
 					В наших студиях Вам помогут доработать или разработать дизайн для печати вашего рисунка,надписи - БЕСПЛАТНО до 15 минут!
 					<br>
@@ -98,12 +106,12 @@ $this->title = 'Акции';
 
 		<div class="sale clearfix">
 			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
-				<?= Html::img('@web/assets/images/delivery.jpg') ?>
+				<?= Html::img('@web/assets/images/delivery.png') ?>
 			</a>
 			<div class="sale-info">
-				<span class="sale-title">Бесплатная доставка при заказе от 25.000 тыс. руб.</span>
+				<h2 class="sale-title">Бесплатная доставка при заказе от 10.000 тыс. руб.</h2>
 				<span class="sale-text">
-					Для оптовых клиентов - Бесплатная доставка! Чтобы получить бесплатную доставку Вашего заказа, его сумма должна составить 25.000 тыс. руб.
+					Для оптовых клиентов - Бесплатная доставка! Чтобы получить бесплатную доставку Вашего заказа, его сумма должна составить 10.000 тыс. руб.
 				</span>
 			</div>
 		</div>

@@ -194,7 +194,7 @@ a {
         width: 175px;
         margin-left: 35px; }
         .topmenu-right-above-elem3 span {
-          width: 140px; }
+          width: 145px; }
       .topmenu-right-above-elem2 img, .topmenu-right-above-elem3 img {
         display: block;
         float: left;
@@ -248,11 +248,11 @@ a {
 
 .shelkography .line1 {
   margin-top: 75px; }
-  .shelkography .line1 h2 {
+  .shelkography .line1 h2, .shelkography .line1 h1 {
     padding-top: 45px;
     padding-bottom: 15px;
     font-size: 23px;
-    background-image: url("../img/line1-shelk-bg.png");
+    /* background-image: url("../img/line1-shelk-bg.png"); */
     background-size: cover;
     background-repeat: no-repeat;
     font-family: akrobatBold;
@@ -265,6 +265,8 @@ a {
     float: left;
     margin-top: -60px;
     width: 550px; }
+  .sublimation.shelkography .line1-left {
+    margin-top: -40px; }
     .shelkography .line1-left-description h1 {
       font-family: sportsWorldRegular;
       font-size: 40px;
@@ -319,10 +321,11 @@ a {
 .shelkography .line2 {
   margin-bottom: 100px; }
   .shelkography .line2-video:hover {
-    background-image: url("../img/line2-video-pic-hover.jpg"); }
+    filter: grayscale(0); }
   .shelkography .line2-video {
     margin-top: 80px;
     background-image: url("../img/line2-video-pic.jpg");
+    filter: grayscale(0.7);
     background-size: cover;
     background-repeat: no-repeat;
     width: 1140px;
@@ -352,6 +355,23 @@ a {
     background-size: contain;
     background-position: center;
     padding-bottom: 25px; }
+    .shelkography .line3-title h2 {
+      display: block;
+      font-size: 23px;
+      font-family: akrobatBold;
+      color: #fa413d;
+      letter-spacing: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .shelkography .line3-title h2 span{
+      display: block;
+      font-size: 40px;
+      font-family: sportsWorldRegular;
+      color: #3e3e3e;
+      text-align: center;
+      padding-top: 20px;
+    }
     .shelkography .line3-title-reviews h2 {
       display: block;
       font-size: 40px;
@@ -482,7 +502,7 @@ a {
     float: right;
     margin-left: 46px;
     width: 560px; }
-    .line4-right h3 {
+    .line4-right h2 {
       display: block;
       font-size: 23px;
       font-family: akrobatBold;
@@ -493,7 +513,7 @@ a {
       -webkit-margin-start: 0px;
       -webkit-margin-end: 0px;
       text-transform: uppercase; }
-    .line4-right h2 {
+    .line4-right h2 span {
       display: block;
       font-size: 40px;
       font-family: sportsWorldRegular;
@@ -640,11 +660,6 @@ footer {
   .footer-right-photos {
     display: block;
     margin-top: 20px; }
-    .footer-right-photos a:first-child img {
-      margin-left: 0; }
-    .footer-right-photos a img {
-      margin-left: 20px;
-      border-radius: 50%; }
 
 .assorty {
   margin-top: 100px;
@@ -688,84 +703,6 @@ footer {
       text-align: center;
       font-size: 15px;
       letter-spacing: 1px; }
-  .assorty .assorty-row:first-child {
-    margin-top: 30px; }
-  .assorty .assorty-row {
-    margin-top: 50px; }
-    .assorty .assorty-row img:hover {
-      box-shadow: -4px 4px 20px #aaa; }
-    .assorty .assorty-row img {
-      display: block;
-      float: left;
-      margin-left: 20px;
-      margin-bottom: 20px;
-      width: 260px;
-      height: 350px;
-      border: 1px solid #b9b9b9;
-      transition: 0.3s; }
-    .assorty .assorty-row-description {
-      display: block;
-      float: right;
-      width: 730px;
-      min-height: 270px;
-      padding: 40px;
-      border: 1px solid #b9b9b9; }
-      .assorty .assorty-row-description-title {
-        display: block;
-        float: left;
-        width: 235px;
-        margin: 0;
-        font-family: "sportsWorldRegular";
-        font-size: 18px;
-        color: #383838; }
-      .assorty .assorty-row-description-price {
-        display: block;
-        float: left;
-        margin-left: 35px;
-        margin-top: -10px;
-        width: 60px;
-        color: #7d7d7d;
-        font-size: 29px;
-        font-family: "helveticaNeueCyrRoman";
-        text-transform: uppercase;
-        transition: 0.3s; }
-        .assorty .assorty-row-description-price-link:hover .assorty-row-description-price {
-          color: #eb4441;
-          font-weight: bold; }
-        .assorty .assorty-row-description-price-link:hover .assorty-row-description-rub {
-          background-image: url(../img/assorty-rub-active.png);
-          transition: 0.3s; }
-      .assorty .assorty-row-description-rub {
-        display: block;
-        float: left;
-        margin-left: -8px;
-        width: 16px;
-        height: 21px;
-        margin-top: -5px;
-        background-image: url("../img/assorty-rub.png");
-        background-repeat: no-repeat;
-        background-size: cover; }
-      .assorty .assorty-row-description-text {
-        display: block;
-        margin-top: 25px;
-        font-family: "proximaNovaLight";
-        font-size: 15px;
-        color: #656565;
-        line-height: 25px; }
-      .assorty .assorty-row-description-btn:hover {
-        color: #fff;
-        background-color: #191919; }
-      .assorty .assorty-row-description-btn {
-        display: block;
-        margin-top: 35px;
-        width: 170px;
-        padding: 10px 0;
-        text-align: center;
-        font-family: "proximaNovaSemibold";
-        font-size: 15px;
-        color: #383838;
-        border: 1px solid #4d4d4d;
-        font-weight: bold; }
 
 .contacts h1 {
   text-align: center;
@@ -834,7 +771,8 @@ footer {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center; }
-.contacts-questions h3 {
+.contacts-questions span {
+  display: block;
   margin: 0;
   margin-top: 35px;
   font-family: "proximaNovaBold";
@@ -1056,7 +994,7 @@ footer {
   letter-spacing: 3px;
   text-transform: uppercase;
   font-weight: bold; }
-  .main .line5 .bigBtn strong {
+  .main .line5 .bigBtn .strong {
     color: #4e4e4e;
     margin-left: 30px; }
 
@@ -1074,11 +1012,12 @@ footer {
     display: block;
     margin-top: 80px; }
   .dostavka .schedule {
-    margin-top: 20px; }
+    margin-top: 50px; }
     .dostavka .schedule-title {
       font-family: "sportsWorldRegular";
       font-size: 25px;
-      color: #4b4b4b; }
+      color: #4b4b4b; 
+      text-align: center; }
     .dostavka .schedule-num {
       margin-left: 20px;
       font-family: "helveticaNeueCyrRoman";
@@ -1112,8 +1051,6 @@ footer {
       float: left;
       width: 450px;
       text-align: right; }
-      .franchise .title-line-left h1 {
-        margin-top: -10px; }
     .franchise .title-line-right {
       display: block;
       float: left;
@@ -1151,7 +1088,7 @@ footer {
       .franchise .pluses-plus-title-line img {
         display: block;
         float: left; }
-      .franchise .pluses-plus-title-line h3 {
+      .franchise .pluses-plus-title-line h2, .franchise .pluses-plus-title-line h3 {
         display: block;
         float: left;
         margin: 0;
@@ -1187,7 +1124,8 @@ footer {
       text-align: center; }
     .franchise .line2 .request .underline {
       margin-top: -10px; }
-    .franchise .line2 .request h3 {
+    .franchise .line2 .request span {
+      display: block;
       margin: 0;
       margin-top: 35px;
       font-family: "proximaNovaBold";
@@ -1210,8 +1148,9 @@ footer {
     .main .line1 .left h1 {
       font-family: "sportsWorldRegular";
       font-size: 122px;
+      line-height: 75%;
       color: #d24b48; }
-    .main .line1 .left h2 {
+    .main .line1 .left h1 span {
       font-family: "sportsWorldRegular";
       font-size: 62px;
       color: #2e2e2e; }
@@ -1220,11 +1159,11 @@ footer {
       font-family: "proximaNovaRegular";
       font-size: 21px;
       color: #4c4c4c; }
-      .main .line1 .left h3 strong {
+      .main .line1 .left h3 .strong {
         font-family: "myriadPro";
         color: #2e2e2e;
         font-weight: bold; }
-        .main .line1 .left h3 strong b {
+        .main .line1 .left h3 .strong b {
           color: #e94945; }
     .main .line1 .left a.whiteBtn:hover {
       background-color: #565656; }
@@ -1232,7 +1171,7 @@ footer {
       display: block;
       background-color: #EB4441;
       color: #fff;
-      width: 400px;
+      width: 500px;
       padding: 15px;
       font-size: 22px; }
     .main .line1 .left-elements {
@@ -1259,12 +1198,11 @@ footer {
     float: left;
     width: 580px; }
 .main .line2 {
-  background-image: url("../img/main-line2-bg1.jpg");
+  /* background-image: url("../img/main-line2-bg1.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
   padding: 10px 0; }
   .main .line2 .container {
-    height: 200px;
     padding-top: 20px; }
   .main .line2 .info-box:first-child {
     margin-left: 0; }
@@ -1273,26 +1211,29 @@ footer {
     float: left;
     width: 49%;
     margin-left: 2%;
-    height: 207px;
-    background-image: url("../img/main-line2-slider1.png");
+    height: 270px;
     background-size: contain;
     background-repeat: no-repeat; }
     .main .line2 .info-box-btns {
       display: block;
       float: right;
-      margin-top: 75px; }
+      overflow: hidden;
+      width: 100%;
+      height: 100%; }
       .main .line2 .info-box-btns img {
         display: block;
         margin-top: 5px;
+        width: 100%;
         cursor: pointer; }
 .main .line3 {
   padding-top: 100px; }
   .main .line3 h2 {
-    text-align: center; }
-  .main .line3 h1 {
     text-align: center;
     padding-bottom: 55px;
-    background-image: url("../img/main-line3-title-bg.png"); }
+    background: url("../img/main-line3-title-bg.png") no-repeat;}
+  .main .line3 h2 span {
+    display: block;
+  }
   .main .line3 .underline {
     margin-top: -40px;
     margin-bottom: 40px; }
@@ -1314,13 +1255,13 @@ footer {
         float: left;
         width: 240px;
         margin-left: 30px; }
-        .main .line3 .elements-item-info h2 {
+        .main .line3 .elements-item-info h3 {
           text-align: left;
           font-family: "sportsWorldRegular";
           font-size: 23px;
           color: #373737;
           text-transform: uppercase; }
-        .main .line3 .elements-item-info span {
+        .main .line3 .elements-item-info p {
           display: block;
           margin-top: 15px;
           font-family: "proximaNovaLight";
@@ -1330,7 +1271,7 @@ footer {
 .main .line4 {
   margin-bottom: 100px; }
   .main .line4-video:hover {
-    background-image: url("../img/line2-video-pic-hover.jpg"); }
+    filter: grayscale(0); }
   .main .line4-video {
     margin-top: 80px;
     background-image: url("../img/line2-video-pic.jpg");
@@ -1339,7 +1280,8 @@ footer {
     width: 1140px;
     height: 590px;
     cursor: pointer;
-    transition: 0.3s; }
+    transition: 0.3s; 
+    filter: grayscale(0.7);}
 .main .line6 .tshirt {
   display: block;
   margin: 70px auto; }
@@ -1351,7 +1293,10 @@ footer {
     width: 575px; }
     .main .line6 .title-block-left h1, .main .line6 .title-block-left h2 {
       text-align: right; }
-    .main .line6 .title-block-left h1 {
+    .main .line6 .title-block-left h2 span {
+      display: block;
+      font-size: 30px;
+      text-align: right;
       color: #191919; }
   .main .line6 .title-block-right {
     display: block;
@@ -1418,7 +1363,7 @@ footer {
     .main .line6 .cities-right h2 {
       font-size: 30px;
       color: #404040; }
-      .main .line6 .cities-right h2 strong {
+      .main .line6 .cities-right h2 .strong {
         color: #fe4747; }
     .main .line6 .cities-right p {
       margin-top: 15px;
@@ -1434,7 +1379,7 @@ footer {
           font-size: 21px;
           font-family: "proximaNovaRegular";
           color: #4f4f4f; }
-          .main .line6 .cities-right-list-item span strong {
+          .main .line6 .cities-right-list-item span .strong {
             font-family: "proximaNovaBold"; }
     .main .line6 .cities-right .whiteBtn:hover {
       color: #fff; }
@@ -1610,6 +1555,9 @@ footer {
     float: left;
     width: 57px;
     padding-top: 15px; }
+  .lk .content-titlebox h2:hover {
+    text-decoration: underline;
+  }
   .lk .content-titlebox h2 {
     display: block;
     float: left;
@@ -1617,7 +1565,8 @@ footer {
     margin-left: 30px;
     font-family: "proximaNovaBold";
     font-size: 29px;
-    color: #3e3e3e; }
+    color: #3e3e3e;
+    cursor: pointer; }
   .lk .content-orders {
     margin-top: 40px;
     margin-bottom: 100px; }
@@ -1676,17 +1625,28 @@ footer {
   margin-bottom: 200px;
   text-align: center; }
 
-.sublimation .line1 h2 {
+.sublimation .line1 h1 {
   background-image: url("../img/sublimation-title-bg.png"); }
+  .sublimation .line1 h1 .first-title {
+    display: block;
+    position: relative;
+    z-index: 2; }
+  .sublimation .line1 h1 .second-title {
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+    display: block;
+    margin-top: -15px;
+    position: relative;
+    z-index: 1; }
 .sublimation .line1-right {
   width: 455px;
-  height: 322px;
   background-image: url("../img/sublimation-line1-photo.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  margin-top: 50px;
+  margin-top: 0px;
   padding: 20px 50px; }
-  .sublimation .line1-right h3 {
+  .sublimation .line1-right strong {
     font-family: "sportsWorldRegular";
     font-size: 26px;
     color: #fff;

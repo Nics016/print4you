@@ -31,9 +31,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'color_value', 'colorSizes', 'product_id', 'price', 'gross_price'], 'required'],
-            [['name'], 'string', 'max' => 255],
-            [['color_value'], 'string', 'max' => 50],
-            [['full_front_image', 'full_back_image', 'small_front_image', 'small_back_image'], 'string', 'max' => 255],
+            [['full_front_image', 'full_back_image', 'small_front_image', 'small_back_image', 'name', 'color_value', 'img_alt'], 'string', 'max' => 255],
             ['gross_price', 'string', 'min' => 1],
             [['product_id', 'price'], 'integer', 'min' => 1],
             ['backImage', 'file', 'extensions' => 'png, jpg', 
@@ -56,6 +54,7 @@ class ConstructorColors extends \yii\db\ActiveRecord
             'price' => 'Цена',
             'gross_price' => 'Оптовая цена',
             'is_white' => 'Белый?',
+            'img_alt' => 'Alt Картинки',
         ];
     }
 
@@ -329,6 +328,18 @@ class ConstructorColors extends \yii\db\ActiveRecord
     {   
         return $this->hasMany(ConstructorSizes::className(), ['id' => 'size_id'])
             ->viaTable('constructor_color_sizes', ['color_id' => 'id'])->orderBy('sequence');
+    }
+
+
+    public function getConstructorSides()
+    {   
+        $full_link = ConstructorColorsSides::getFullImageLink();
+        $small_link = ConstructorColorsSides::getSmallImageLink();
+
+        return $this->hasMany(ConstructorColorsSides::className(), ['color_id' => 'id'])
+                ->select("id, color_id, side_id, 
+                    ('$full_link' || '/' || full_image) as full_image,
+                    ('$small_link' || '/' || small_image) as small_image")->with('side');
     }
 
     // перед удалением записи - удалим картинки

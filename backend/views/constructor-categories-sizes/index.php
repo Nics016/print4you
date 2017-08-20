@@ -27,6 +27,7 @@ $this->registerJsFile('/js/constructor-categories-sizes.js?v=' . @filemtime($js_
 			  			value="<?= $categories[$i]['name'] ?>" 
 			  			data-id="<?= $categories[$i]['id'] ?>" 
 			  			class="form-control category-input"
+			  			disabled
 			  		>
 			  	</div>
 			</div>
@@ -36,11 +37,6 @@ $this->registerJsFile('/js/constructor-categories-sizes.js?v=' . @filemtime($js_
 
 	</ul>
 
-	<br>
-	<button class="btn btn-primary glyphicon glyphicon-plus" id="add-category">
-		<span class="btn-span">Добавить категорию</span>
-	</button>
-	
 	<br>
 	<br>
 
@@ -100,6 +96,27 @@ $this->registerJsFile('/js/constructor-categories-sizes.js?v=' . @filemtime($js_
 		</div>
 		<?php endfor; ?>
 		<button id="add-material" class="btn btn-primary" style="margin-top: 10px;">Добавить материал</button>
+
+	</div>
+
+	<br>
+
+	<h3>Стороны:</h3>
+	<div class="product-sides">
+		<?php 
+		for ($i = 0; $i < count($sides); $i++): 
+			$id = $sides[$i]['id'];
+			$name = $sides[$i]['name'];
+		?>
+		<div class="product-side" data-id="<?= $id ?>">
+			<input type="text" class="side-input form-control" value="<?= $name ?>" placeholder="Название материала">
+			<button class="save-side btn btn-success">Сохранить</button>
+			<button class="remove-side btn btn-danger">Удалить</button>
+		</div>
+		<?php endfor; ?>
+		<button id="add-side" class="btn btn-primary" style="margin-top: 10px;">
+			Добавить сторону
+		</button>
 
 	</div>
 

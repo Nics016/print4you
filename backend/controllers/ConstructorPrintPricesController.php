@@ -14,7 +14,10 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
 
+use backend\models\User;
 
 class ConstructorPrintPricesController extends Controller
 {
@@ -26,6 +29,21 @@ class ConstructorPrintPricesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
                 ],
             ],
         ];

@@ -16,6 +16,7 @@ use common\models\Orders;
 
     <?php // TODO: убрать этот ddlist - нельзя задавать статус таким способом ?>
     <?= $form->field($model, 'order_status')->dropDownList([
+            Orders::STATUS_NOT_PAID => 'Не оплачен',
             Orders::STATUS_NEW => 'Новый',
             Orders::STATUS_PROCCESSING => 'В обработке',
             Orders::STATUS_COMPLETED => 'Завершен',

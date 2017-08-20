@@ -1,6 +1,5 @@
 <?php 
 use yii\helpers\Html;
-$this->title = 'Наши гости';
 
 ?>
 

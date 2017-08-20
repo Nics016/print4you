@@ -1,6 +1,7 @@
-<?php 
-	use yii\helpers\Url;
- ?>
+<?php
+use yii\helpers\Url;
+?>
+
 <!-- LINE4 -->
 <div class="line4">
 	<div class="container clearfix">
@@ -10,9 +11,10 @@
 		</div>
 
 		<div class="line4-right">
-			<h3>Мы работаем</h3>
-
-			<h2>По всей России!</h2>
+			<h2>
+				Мы работаем
+				<span>По всей России!</span>
+			</h2>
 
 			<span class="line4-right-text1">
 				Ваш заказ доставят прямо к двери в течении <br>2 часов с момента оформления заказа!
@@ -34,7 +36,7 @@
 				</p>
 				<a href="tel:309 28 48" class="line4-right-text2-number">309 28 48</a>
 			</div>
-			<a href="<?= Url::to(['uslugi/assorty']) ?>" class="line4-right-makeOrder">Заказать</a>
+			<a href="<?= Url::to(['constructor/']) ?>" class="line4-right-makeOrder">Заказать</a>
 		</div>
 	</div>
 </div>

@@ -11,9 +11,17 @@ $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="constructor-colors-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 	
+    <h1><?= Html::encode($this->title) ?></h1>
+		<p>
+			<?= Html::a('Редактор сторон', ['additional-sides', 'id' => $model->id], [
+				'class' => 'btn btn-success',
+			]) ?>
+		</p>
+	<br>
+	<br>
+
+
 	<?= Html::img($model::getSmallFrontImageLink() . '/' . $model->small_front_image, [
 		'alt' => 'Наш логотип',
 		'width' => 320,

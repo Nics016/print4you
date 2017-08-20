@@ -29,6 +29,7 @@ class RequestCallForm extends Model
         return [
             [['name', 'phone'], 'required'],
             [['name', 'phone', 'comment', 'email'], 'string'],
+            ['phone', 'match', 'pattern' => '/^\+7\s*\(9[0-9]{2}\)\s*[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Введите номер в формате +7 (9ХХ) ХХХ-ХХ-ХХ'],
             ['form_type', 'integer'],
         ];
     }

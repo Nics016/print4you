@@ -122,6 +122,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return "<img src='$image' width='320'/>";
                 }
             ],
+            [
+                'attribute' => 'img_alt',
+                'label' => 'Alt Картинки',
+            ],
             
         ],
     ]) ?>

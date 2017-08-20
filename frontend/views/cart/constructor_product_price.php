@@ -29,6 +29,17 @@ if ($price == $discount_price):
 
 			<span class="about-price-span-value">Обратная сторона:</span>
 			<span class="about-price-span-value">1шт. × <?= +$back_print_price ?> руб.</span>
+
+			<?php 
+			for ($i = 0; $i < count($additional_sides); $i++): 
+				$side_name = $additional_sides[$i]['side_name'];
+				$print_price = $additional_sides[$i]['print_price'];
+			?>
+				<span class="about-price-span-value"><?= $side_name ?>:</span>
+				<span class="about-price-span-value">1шт. × <?= +$print_price ?> руб.</span>
+			<?php endfor; ?>
+
+
 		</div>
 
 		<span class="about-price" data-action="open">Подробнее о цене</span>
@@ -68,6 +79,16 @@ else:
 
 			<span class="about-price-span-value">Обратная сторона:</span>
 			<span class="about-price-span-value">1шт. × <?= +$back_print_price ?> руб.</span>
+
+			<?php 
+			for ($i = 0; $i < count($additional_sides); $i++): 
+				$side_name = $additional_sides[$i]['side_name'];
+				$print_price = $additional_sides[$i]['print_price'];
+			?>
+				<span class="about-price-span-value"><?= $side_name ?>:</span>
+				<span class="about-price-span-value">1шт. × <?= +$print_price ?> руб.</span>
+			<?php endfor; ?>
+
 		</div>
 
 		<span class="about-price" data-action="open">Подробнее о цене</span>

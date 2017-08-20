@@ -8,7 +8,6 @@ use frontend\models\RequestCallForm;
 
 $model = new RequestCallForm();
 
-$this->title = 'Print4you - Контакты';
 ?>
 
 <main class="contacts">
@@ -22,11 +21,7 @@ $this->title = 'Print4you - Контакты';
                     <div class="contacts-map-info">
                         <h2>Студия печати PRINT4YOU!</h2>
                         <span>
-                            На Фонтанке
-                            (Центральный район) <br>
-                            м.Гостиный двор (5 минут от метро) <br>
-                            м. Маяковская (10 минут от метро) <br>
-                            Набережная реки Фонтанки,38
+                            М.Площадь Восстания <br> Гончарная,2
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
                             <img src="/img/contacts-alarm.png" alt="">
@@ -53,10 +48,7 @@ $this->title = 'Print4you - Контакты';
                     <div class="contacts-map-info">
                         <h2>Студия печати - цех  PRINT4YOU!</h2>
                         <span>
-                            На Площади Восстания<br>
-                            (Центральный район) <br>
-                            м.Площадь Восстания (2 минуты от метро) <br>
-                            ул. Гончарная,2
+                            М. Гостиный двор <br> Наб.Реки Фонтанки 38 (в арке)
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
                             <img src="/img/contacts-alarm.png" alt="">
@@ -114,9 +106,9 @@ $this->title = 'Print4you - Контакты';
                         Есть вопросы? Задавайте!
                     </h2>
                     <div class="underline"></div>
-                    <h3>
+                    <span>
                         Поговорить, сделать заказ, обсудить сотрудничество
-                    </h3>
+                    </span>
 
                     <div class="contacts-questions-form-wrapper">
                         <?php $form = ActiveForm::begin(['action' => ['site/request-call-sent'], 'method' => 'POST', 'options' => ['class' => 'clearfix contacts-questions-form']]); ?>

@@ -3,6 +3,8 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use backend\models\User;
+use frontend\components\Sms;
+
 /**
  * This is the model class for table "orders".
  *
@@ -20,10 +22,17 @@ class Orders extends \yii\db\ActiveRecord
      * Константы статусов заказа. 
      * Используются в backend\controllers\OrdersController.php
      */
+
+    const YANDEX_CARD = '410011435962196';
+
+    const STATUS_NOT_PAID = 'not_paid';
     const STATUS_NEW = 'new';
     const STATUS_PROCCESSING = 'proccessing';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELLED = 'cancelled';
+
+    // сценарий для подтверждения менеджера
+    const MANAGER_WORKING_SCENARIO = 'manager_working_scenario';
 
     /**
      * Константы местонахождения заказа. 
@@ -44,6 +53,11 @@ class Orders extends \yii\db\ActiveRecord
     const DELIVERY_REQUIRED_PRICE = 300;
     const DELIVERY_NOT_REQUIRED_PRICE = 0;
     const GROSS_PRICE_PRODUCT_COUNT = 20;
+
+    const VALIDATE_SCENARIO = 'validate';
+    const CREATE_SCENARIO = 'create';
+
+    const MAX_EXECUTOR_COLORS_ON_ACCEPT = 5;
 
     /**
      * @inheritdoc
@@ -78,10 +92,75 @@ class Orders extends \yii\db\ActiveRecord
             [['price', 'manager_id', 'created_at', 'updated_at', 'client_id', 'delivery_office_id'], 'integer'],
             ['delivery_required', 'boolean'],
             [['order_status', 'client_name', 'address'], 'string', 'max' => 255],
+            ['phone', 'phoneValidate', 'on' => self::CREATE_SCENARIO],
             [['comment'], 'string', 'max' => 1000],
-            ['phone', 'match', 'pattern' => '/9\d{9}/']
         ];
     }
+
+    /**
+     * Загрузка данных из аякс запроса
+     */
+    public function loadFromAjax()
+    {
+        $this->client_name = Yii::$app->request->post('firstname');
+        $this->phone = Yii::$app->request->post('phone');
+        $this->comment = Yii::$app->request->post('comment');
+        $this->delivery_required = (boolean)Yii::$app->request->post('delivery_required');
+        $this->order_status = self::STATUS_NOT_PAID;
+
+        if ($this->delivery_required) {
+
+            $this->delivery_office_id = null;
+            $this->address = Yii::$app->request->post('address');
+            $distance = (int)Yii::$app->request->post('distance');
+            if (!isset(self::DELIVERY_DISTANCES[$distance])) return false;
+            $this->delivery_price = self::DELIVERY_DISTANCES[$distance]['price'];
+
+        } else {
+
+            $this->delivery_office_id = (int)Yii::$app->request->post('office_id');
+            $this->delivery_price = Orders::DELIVERY_NOT_REQUIRED_PRICE;
+            $office = Office::findOne(["id" => $this->delivery_office_id]);
+            if ($office == null) return false;
+            $this->address = $office->address;
+
+        }
+
+        return true;
+    }
+
+    /**
+     * Проверка телефона  в заказк
+     */
+    public static function checkPhone($phone)
+    {
+        // если пользователь залогинен и это его номер
+        if (!Yii::$app->user->isGuest) {
+            $user_phone = Yii::$app->user->identity->phone;
+            if ($user_phone == $phone) return true;
+        }
+        
+        // если нет, то проверим, существует ли логин по базе
+        $exists = CommonUser::find()->where(['phone' => $phone])->exists();
+
+        return !$exists;
+    }
+
+    public function phoneValidate()
+    {
+        if (!preg_match('/9\d{9}/', $this->phone)) {
+            $this->addError('phone', 'Неправильный формат номера!');
+            return false;
+        }
+
+        if (!self::checkPhone($this->phone)) {
+            $this->addError('phone', 'Телефон уже используется!');
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
@@ -161,9 +240,13 @@ class Orders extends \yii\db\ActiveRecord
     {
         $answ = "";
         // Менеджер 
-        if (Yii::$app->user->identity->role == User::ROLE_MANAGER){
-            $records = self::find()
-                ->where("order_status='new'")->all();
+        if (Yii::$app->user->identity->role == User::ROLE_ADMIN
+                || Yii::$app->user->identity->role == User::ROLE_MANAGER){
+            $records = (new \yii\db\Query())
+                ->select(['id'])
+                ->from('orders')
+                ->where("order_status='not_paid' OR order_status='new'")
+                ->all();
             $answ .= count($records) > 0 ? count($records) : "";
         } 
        // Исполнитель
@@ -226,8 +309,101 @@ class Orders extends \yii\db\ActiveRecord
 
     public function getUser($id)
     { 
-        $user = User::findIdentity($id);
-
-        return $user;
+        return User::findIdentity($id);
     }
+
+    public function orderCreatedSms()
+    {   
+        $message = "Спасибо, Ваш заказ №" . $this->id . " ожидает оплаты!\r\n";
+        $message .= 'Сумма заказа - ' . $this->price . "р.";
+        if ($this->delivery_price != Orders::DELIVERY_NOT_REQUIRED_PRICE) {
+            $message .= " + " . $this->delivery_price . "р. (за доставку)";
+        }
+
+        $message .= "\r\n";
+        $message .= 'Вы можете отлеживать его статус в личном кабинете.';
+
+        Sms::message($this->phone, $message);
+    }
+
+    public function sucessSms() 
+    {
+        $message = "Спасибо за оплату, Ваш заказ №" . $this->id . " принят в обработку!\r\n";
+        $message .= "\r\n";
+        $message .= 'Вы можете отлеживать его статус в личном кабинете.';
+        Sms::message($this->phone, $message);
+    }
+
+
+    const CARD_NUMBER = '5469 5500 2457 4003';
+
+    const DELIVERY_DISTANCES = [
+        [
+            'name' => 'Выборгский район',
+            'price' => 190,
+        ],
+
+        [
+            'name' => 'Калининский район',
+            'price' => 190,
+        ],
+
+        [
+            'name' => 'Центральный район',
+            'price' => 190,
+        ],
+
+        [
+            'name' => 'Адмиралтейский район',
+            'price' => 190,
+        ],
+        [
+            'name' => 'Василеостровский район',
+            'price' => 250,
+        ],
+        [
+            'name' => 'Петроградский район',
+            'price' => 250,
+        ],
+        [
+            'name' => 'Невский район',
+            'price' => 250,
+        ],
+        [
+            'name' => 'Красногвардейский район',
+            'price' => 250,
+        ],
+        [
+            'name' => 'Приморский район',
+            'price' => 250,
+        ],
+        [
+            'name' => 'Фрунзенский район',
+            'price' => 290,
+        ],
+        [
+            'name' => 'Московский район',
+            'price' => 290,
+        ],
+        [
+            'name' => 'Красносельский район',
+            'price' => 290,
+        ],
+        [
+            'name' => 'Кировский район',
+            'price' => 290,
+        ],
+        [
+            'name' => 'За пределами Кад',
+            'price' => 600,
+        ],
+        [
+            'name' => 'По России',
+            'price' => 350,
+        ],
+        [
+            'name' => 'Страны СНГ',
+            'price' => 550,
+        ],
+    ];
 }

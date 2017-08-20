@@ -1,7 +1,5 @@
 <!-- LINE3 -->
 <?php 
-use yii\helpers\Url;
-
 if (count($reviews) > 0): 
 	$active = floor(count($reviews) / 2);
 ?>
@@ -9,13 +7,11 @@ if (count($reviews) > 0):
 	<div class="line3">
 		<div class="container">
 			<div class="line3-title">
-				<h3>
+				<h2>
 					Что говорят о нас
-				</h3>
+					<span>Наши клиенты</span>
+				</h2>
 				<div class="line3-title-reviews">
-					<h2>
-						Наши клиенты
-					</h2>
 					<div class="line3-title-reviews-underline"></div>
 				</div>
 			</div>
@@ -44,7 +40,7 @@ if (count($reviews) > 0):
 				</div>
 			</div>
 
-			<a href="<?= Url::to(['reviews/index']) ?>" class="line3-leaveReview">Оставить отзыв</a>
+			<a href="#" class="line3-leaveReview">Оставить отзыв</a>
 		</div>
 	</div>
 </div>

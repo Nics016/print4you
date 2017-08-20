@@ -35,6 +35,11 @@ return [
                         'yii\web\YiiAsset',
                     ],
                 ],
+                'yii\widgets\ActiveFormAsset' => [
+                    'depends' => [
+                        'frontend\assets\jQueryAsset',
+                    ],
+                ],
             ],
         ],
         'log' => [
@@ -58,6 +63,7 @@ return [
                 'cabinet' => 'site/cabinet',
                 'checkout' => 'cart/checkout',
                 'order-created' => 'cart/order-created',
+                'order-pay' => 'cart/order-pay',
                 'request-call-sent' => 'site/request-call-sent',
                 'dostavka' => 'site/dostavka',
                 'franchise' => 'site/franchise',
@@ -65,7 +71,10 @@ return [
                 'contacts' => 'site/contacts',
                 'sale' => 'site/sale',
                 'nashi-gosti' => 'site/nashi-gosti',
+                'nashi-clienty' => 'site/nashi-clienty',
+                'forgot-password' => 'site/forgot-password',
                 'register-success' => 'site/register-success',
+                'constructor-category/<cat_id:\d+>/' => 'uslugi/constructor-category',
                 'about' => 'site/about',
                 '/reviews/page/<page:\d+>' => 'reviews/index',
                 '/reviews/' => 'reviews/index',

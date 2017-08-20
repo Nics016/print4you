@@ -21,7 +21,8 @@ class ConstructorCategories extends \yii\db\ActiveRecord
     {
         return [
             [['sequence'], 'integer'],
-            [['name', 'img'], 'string', 'max' => 255],
+            [['h1_tag_title', 'menu_title'], 'required'],
+            [['name', 'img', 'seo_title', 'seo_description', 'seo_keywords', 'h1_tag_title', 'menu_title', 'img_alt'], 'string', 'max' => 255],
             [['description'], 'string'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
@@ -37,6 +38,12 @@ class ConstructorCategories extends \yii\db\ActiveRecord
             'sequence' => 'Sequence',
             'description' => 'Описание',
             'imageFile' => 'Картинка',
+            'seo_title' => 'SEO Title',
+            'seo_description' => 'SEO Description',
+            'seo_keywords' => 'SEO Keywords',
+            'h1_tag_title' => 'Тэг H1',
+            'menu_title' => 'Название пункта меню',
+            'img_alt' => 'Alt Картинки',
         ];
     }
 
@@ -136,12 +143,19 @@ class ConstructorCategories extends \yii\db\ActiveRecord
         return $array;
     }
 
+    public function getCategoryProducts()
+    {   
+
+        return $this->hasMany(ConstructorProducts::className(), ['category_id' => 'id'])
+                    ->with('colors'); 
+    }
+
     public function getProducts() 
     {   
         $link = ConstructorProducts::getSmallImagesLink();
 
         return $this->hasMany(ConstructorProducts::className(), ['category_id' => 'id'])
-                    ->select("id, name, description, print_offset_x, print_offset_y, print_width, print_height, category_id, ('$link' || '/' || small_image) as image")
+                    ->select("id, name, description, print_offset_x, print_offset_y, print_width, print_height, category_id, ('$link' || '/' || small_image) as image, img_alt")
                     ->where(['is_published' => true])->with('constructorColors');
     }
 
@@ -151,7 +165,7 @@ class ConstructorCategories extends \yii\db\ActiveRecord
     {   
         $link = self::getImagesLink();
         return self::find()
-                ->select("id, name, description, ('$link' || '/' || img) as img")
+                ->select("id, name, description, ('$link' || '/' || img) as img, img_alt")
                 ->asArray()->orderBy('sequence')->all();
     }
 }

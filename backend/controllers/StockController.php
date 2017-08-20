@@ -33,10 +33,10 @@ class StockController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        // Allow only executor
                         'roles' => [
                             User::ROLE_ADMIN,
                             User::ROLE_MANAGER,
+                            User::ROLE_EXECUTOR,
                         ],
                     ],
                 ],

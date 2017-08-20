@@ -2,7 +2,6 @@
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-$this->title =  'Отзывы';
 ?>
 
 <main id="reviews">
@@ -84,7 +83,7 @@ $this->title =  'Отзывы';
 		</div>
 	
 		<div class="right-column">
-			
+			asdasd
 		</div>
 
 	</div>

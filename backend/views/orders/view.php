@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\models\User;
@@ -11,6 +10,7 @@ use common\models\OrdersProduct;
 use common\models\ConstructorColors;
 use common\models\ConstructorSizes;
 use common\models\ConstructorPrintTypes;
+use common\models\ConstructorPrintAttendance;
 use frontend\components\Basket;
 
 /* @var $this yii\web\View */
@@ -19,6 +19,12 @@ use frontend\components\Basket;
 $this->title = "Заказ №".$model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$js_file_name = Yii::getAlias('@backend') . '/web/js/orders.js';
+$this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
+    'position' => \yii\web\View::POS_END,
+]);
+
 ?>
 <div class="orders-view">
 
@@ -39,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'order_status',
                 'value' => function($model){
                     switch($model['order_status']){
+
+                        case $model::STATUS_NOT_PAID:
+                            return 'Не оплачен';
+                            
                         case $model::STATUS_NEW:
                             return 'Новый';
                             break;
@@ -98,42 +108,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'label' => 'Цена (руб.)',
-                'attribute' => 'price',
-                'value' => function($model) {
-                    $products = OrdersProduct::find()
-                        ->where(['order_id' => $model->id])
-                        ->all();
-                    $totalPrice = 0;
-                    foreach ($products as $product) {
-                        $frontPrintData = json_decode($product->front_print_data, true);
-                        $productPrice = $product->price;
-                        if ($frontPrintData){
-                            $productPrice += $frontPrintData['price'];
-                        }
-                        $totalPrice += $product->count * $productPrice;
-                    }
-                    return $totalPrice;
-                }
+                'label' => 'Скидка (%)',
+                'attribute' => 'discount_percent',
             ],
             [
                 'label' => 'Цена со скидкой (руб.)',
-                'value' => function($model) {
-                    $products = OrdersProduct::find()
-                        ->where(['order_id' => $model->id])
-                        ->all();
-                    $totalPrice = 0;
-                    foreach ($products as $product) {
-                        $frontPrintData = json_decode($product->front_print_data, true);
-                        $productPrice = $product->price;
-                        if ($frontPrintData){
-                            $productPrice += $frontPrintData['price'];
-                        }
-                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
-                        $totalPrice += $productDiscountPrice;
-                    }
-                    return $totalPrice;
-                }
+                'attribute' => 'price',
+            ],
+            [
+                'label' => 'Цена доставки (руб.)',
+                'attribute' => 'delivery_price',
             ],
             [
                 'label' => 'Менеджер',
@@ -148,8 +132,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => '',
                 'value' => function($model){
                     $user = CommonUser::findIdentity($model['client_id']);
-                    return $user->username . ' - ' . $user->firstname 
-                        . ' ' . $user->secondname;
+                    $str = $user != null ? $user->id : 'Неизвестно';
+                    return $str;
                 }
             ],
             [
@@ -160,49 +144,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Заказанные товары',
                 'format' => 'raw',
                 'value' => function($model){
-                    $answ = '';
-                    $products = OrdersProduct::find()
-                        ->where(['order_id' => $model->id])
-                        ->all();
-                    if ($products){
-                        $answ .= '<ol>';
-                        foreach($products as $product) {
-                            $urlFrontImg = OrdersProduct::getImagesLink() . '/' . $product->front_image; 
-                            $urlBackImg = OrdersProduct::getImagesLink() . '/' . $product->back_image; 
-                            $color = ConstructorColors::findOne(['id' => $product->color_id]);
-                            $size = ConstructorSizes::findOne(['id' => $product->size_id]);
-                            $frontPrintData = json_decode($product->front_print_data, true);
-                            $productPrice = $product->price;
-                            if ($frontPrintData){
-                                $productPrice += $frontPrintData['price'];
-                            }
-                            $discountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
-
-                            $liText = $product->count . ' x ' 
-                                . $product->name
-                                . ' (' . $color->name
-                                . ', ' . $size->size . ')';
-                            $liText .= '<br>Цена: ' . $productPrice . ' р';
-                            $liText .= '<br>Количество: ' . $product->count . ' шт';
-                            $liText .= '<br>Сумма: ' . $product->count * $productPrice . ' р';
-                            if ($discountPrice !== $product->count * $productPrice) {
-                                $liText .= '<br>Скидка: ' . $product->discount_percent . ' %';
-                                $liText .= '<br>Сумма (со скидкой): ' . $discountPrice . ' р';
-                            }
-                            if ($frontPrintData){
-                                $printType = ConstructorPrintTypes::findOne(['id' => $frontPrintData['type_id']]);
-                                $liText .= '<br>Тип услуги: ' . $printType->name;
-                            }
-                            $liText .= '<br><br>Принт спереди - '
-                                . Html::a('Ссылка', $urlFrontImg, [ 'target' => 'blank', 'style' => 'color: purple']);
-                            $liText .= '<br>Принт сзади - '
-                                . Html::a('Ссылка', $urlBackImg, ['style' => 'color: purple', 'target' => '_blank']);
-                            $answ .= '<li><h4>' . $liText . '</h4></li>';
-                        } // foreach products
-                        $answ .= '</ol>';
-                    } // if products
-
-                    return $answ;
+                    return Html::button('Показать товары', [
+                            'class' => 'btn btn-primary',
+                            'data-toggle' => 'modal',
+                            'data-target' => '#myModal',
+                            'type' => 'button',
+                        ]); 
                 }
             ],
             [
@@ -210,11 +157,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'value' => function($model){
                     $answ = '';
-                    if ($model->stock_color_liters > 0){
-                        $answ .= '<h3>Краска<h3>';
-                        $answ .= '<h4>';
-                        $answ .= StockColors::findOne(['id' => $model->stock_color_id])->name . " - " . $model->stock_color_liters . " л";
-                        $answ .= '</h4>';
+                    $answ .= '<h3>Краска<h3>';
+
+                    $colorIds = json_decode($model->stock_color_id);
+                    $colorLiters = json_decode($model->stock_color_liters);
+
+                    $i = 0;
+                    foreach($colorIds as $colorId) {
+                        if ($colorLiters[$i] && $colorLiters[$i] > 0) {
+                            $answ .= '<h4>';
+                            $answ .= StockColors::findOne(['id' => $colorId])->name . " - " . $colorLiters[$i] . " л";
+                            $answ .= '</h4>';
+                        }
+                        $i++;
                     }
                     
                     if ($answ === '')
@@ -270,3 +225,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?= $this->render('products-modal', ['model' => $model]) ?>
+

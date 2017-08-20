@@ -45,6 +45,9 @@ $orders = $dataProvider->getModels();
                 'attribute' => 'order_status',
                 'value' => function($model){
                     switch($model['order_status']){
+                        case $model::STATUS_NOT_PAID:
+                            return 'Не оплачен';
+
                         case $model::STATUS_NEW:
                             return 'Новый';
                             break;
@@ -65,7 +68,7 @@ $orders = $dataProvider->getModels();
             ],
             [
                 'label' => 'Местонахождение заказа',
-                'attribute' => 'order_status',
+                'attribute' => 'location',
                 'value' => function($model){
                     switch($model['location']){
                         case $model::LOCATION_MANAGER_NEW:
@@ -106,19 +109,7 @@ $orders = $dataProvider->getModels();
             [
                 'label' => 'Цена со скидкой (руб.)',
                 'value' => function($model) {
-                    $products = OrdersProduct::find()
-                        ->where(['order_id' => $model->id])
-                        ->all();
-                    $totalPrice = 0;
-                    foreach ($products as $product) {
-                        $frontPrintData = json_decode($product->front_print_data, true);
-                        $productPrice = $product->price;
-                        if ($frontPrintData){
-                            $productPrice += $frontPrintData['price'];
-                        }
-                        $productDiscountPrice = Orders::calculateDiscountPrice($product->count * $productPrice, $product->discount_percent);
-                        $totalPrice += $productDiscountPrice;
-                    }
+                    $totalPrice = $model->price;
                     return $totalPrice;
                 }
             ],
@@ -136,9 +127,10 @@ $orders = $dataProvider->getModels();
                             $color = ConstructorColors::findOne(['id' => $product->color_id]);
                             $size = ConstructorSizes::findOne(['id' => $product->size_id]);
                             $liText = $product->count . ' x ' 
-                                . $product->name
-                                . ' (' . $color->name
-                                . ', ' . $size->size . ')';
+                                . $product->name . ' (';
+                            $liText .= $color ? $color->name : '';
+                            $liText .= $size ? ', ' . $size->size : '';
+                            $liText .= ')';
                             $answ .= '<li>' . $liText . '</li>';
                         } // foreach products
                         $answ .= '</ol>';
@@ -152,7 +144,7 @@ $orders = $dataProvider->getModels();
                 'attribute' => 'manager_id',
                 'value' => function($model){
                     $manager = $model->getUser($model['manager_id']);
-                    return $manager['username'];
+                    return $manager ? $manager['username'] : 'Неизвестно';
                 }
             ],
             [
@@ -160,7 +152,7 @@ $orders = $dataProvider->getModels();
                 'attribute' => '',
                 'value' => function($model){
                     $user = CommonUser::findIdentity($model['client_id']);
-                    return $user['username'];
+                    return $user ? $user['id'] : 'Неизвестно';
                 }
             ],
             [
@@ -168,7 +160,7 @@ $orders = $dataProvider->getModels();
                 'attribute' => '',
                 'value' => function($model){
                     $user = $model->getUser($model['courier_id']);
-                    return $user['username'];
+                    return $user ? $user['username'] : 'Неизвестно';
                 }
             ],
             // [
@@ -230,7 +222,7 @@ $orders = $dataProvider->getModels();
 
                     $returnBtns = '';
                     // "Принять" у менеджера
-                    if ($model->order_status == Orders::STATUS_NEW 
+                    if (($model->order_status == Orders::STATUS_NEW || $model->order_status == Orders::STATUS_NOT_PAID)
                             && Yii::$app->user->identity->role == User::ROLE_MANAGER){
                         $returnBtns = $btnAccept;
                     } 
@@ -378,10 +370,13 @@ $orders = $dataProvider->getModels();
         <h4 class="modal-title">Принять заказ</h4>
       </div>
       <div class="modal-body">
+        <p><em>Если краска не используется, оставьте второе поле (литры) пустым</em></p>
         <?php $form = ActiveForm::begin(['action' => ['orders/accept-executor'], 'method' => 'GET']); ?>
             <?php if (Yii::$app->user->identity->role === User::ROLE_EXECUTOR
                 && $order['location'] === Orders::LOCATION_EXECUTOR_NEW): ?>
-                <?= "Количество краски (л): " . "<br>" . Html::dropDownList('stock_color_id', '', $mapColors, ['class' => 'form-control']) . "<br>" . Html::textInput('liters', '', ['class' => 'form-control']) ?>
+                <?php for ($i = 0; $i < Orders::MAX_EXECUTOR_COLORS_ON_ACCEPT; $i++): ?>
+                <?= "Количество краски (л): " . "<br>" . Html::dropDownList('stock_color_id[]', '', $mapColors, ['class' => 'form-control']) . "<br>" . Html::textInput('liters[]', '', ['class' => 'form-control']) . "<br>" ?>
+                <?php endfor; ?>
                 <?= Html::hiddenInput('id', $order['id']); ?>
             <?php endif; ?>
             <br>

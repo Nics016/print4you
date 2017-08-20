@@ -5,7 +5,6 @@
 use frontend\components\ReviewsWidget;
 use yii\helpers\Url;
 
-$this->title = 'Print4you - Услуги - Шелкография';
 ?>
 <main class="shelkography">
         <!-- LINE1 -->
@@ -122,41 +121,11 @@ $this->title = 'Print4you - Услуги - Шелкография';
                         </p>
                         <a href="tel:88129819484" class="line4-right-text2-number">981 94 84</a>
                     </div>
-                    <a href="<?= Url::to(['uslugi/assorty']) ?>" class="line4-right-makeOrder">Заказать</a>
+                    <a href="<?= Url::to(['constructor/']) ?>" class="line4-right-makeOrder">Заказать</a>
                 </div>
             </div>
         </div>
         <!-- END OF LINE4 -->
 
-        <!-- LINE5 -->
-        <div class="line5">
-            <div class="container">
-                <img src="/img/line5-tshirt.png" alt="" class="line5-tshirt">
-                <h2>Примеры работ</h2>
-                <div class="line5-underline"></div>
-                <ul class="line5-slider">
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo2.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo3.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo2.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo3.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo1.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo4.jpg" alt=""></li>
-                    <li><img src="/img/line5-photo2.jpg" alt=""></li>
-                </ul>
-            </div>
-        </div>
-        <!-- END OF LINE5 -->
+       <?= \frontend\widgets\OurWorksSlider::widget() ?>
     </main>

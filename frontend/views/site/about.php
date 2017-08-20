@@ -4,7 +4,6 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Print4you - О нас';
 ?>
 <main class="about">
 		<div class="line1">

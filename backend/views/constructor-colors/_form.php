@@ -37,6 +37,8 @@ $this->registerJsFile('/js/constructor-colors.js?v=' . @filemtime($js_file_name)
 
     <?= $form->field($model, 'frontImage')->label('Лицевая сторона')->fileInput() ?>
 
+    <?= $form->field($model, 'img_alt')->label('Alt картинки')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
     <br>
     <?= $form->field($model, 'gross_price', ['enableClientValidation' => false])->label(false)->textInput([
         'id' => 'gross-price',

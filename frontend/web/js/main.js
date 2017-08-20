@@ -19,30 +19,77 @@ jQuery(document).ready(function($) {
 	var mainSliderIntervalId = -1;
 	var _csrf = $('meta[name="csrf-token"]').attr('content');
 
+	// маска на телефон
+	$('.masked-phone').mask("+7 ?(999) 999-99-99");
+
 	//////////
 	// Init //
 	//////////
-	$(document).ready(function(){
-		initLine3Slider();
 
-		initMainLine2Slider(2, 2, 4000);
+	initLine3Slider();
+
+	// initMainLine2Slider(2, 2, 4000);
 		
-		activateAssortyTabs();
+	activateAssortyTabs();
+	scrollFromUrl();
 
-		// lightgallery
-		$(".footer-right-photos").lightGallery();
+	// lightgallery
+	$(".footer-right-photos").lightGallery();
 
-		// activate bxslider
-		$('.line5-slider').bxSlider({
-			minSlides: 4,
-	 		maxSlides: 4,
-	 		slideWidth: 360,
-	  		slideMargin: 10
+	// activate bxslider
+	$('.line5-slider').bxSlider({
+		minSlides: 4,
+ 		maxSlides: 4,
+ 		slideWidth: 360,
+  		slideMargin: 10
+	});
+
+	$('.sales-slider').bxSlider({
+		maxSlides: 1,
+		auto: true,
+		pause: 4000,
+		pager: false,
+		controls: false
+	});
+
+	initNewOrderCheckbox();
+
+	// логин
+	$('#login-form').on('beforeSubmit', function() {
+		var form = $(this);
+		var btn = form.find('button[type="submit"]');
+		var error = form.find('.login-error');
+
+		if (form.find('.has-error').length) return false;
+
+		btn.prop('disabled', true);
+		error.hide();
+
+		var phone = form.find('.login-phone').val();
+		var password = form.find('.login-password').val();
+		var checkbox = form.find('.login-remember');
+		var rememberMe = $(checkbox).is(':checked') ? 1 : 0;
+
+		$.ajax({
+			url: '/site/login/',
+			data: {'csrf-token': _csrf, phone: phone, password: password, rememberMe: rememberMe},
+			type: 'POST',
+			success: function (response) {
+				if (response['status'] == 'ok') {
+					window.location.reload(true);
+				} else {
+					btn.prop('disabled', false);
+					error.show();
+				}
+			},
+			error: function (err) {
+
+			}
 		});
 
-		initNewOrderCheckbox();
 
-	});
+		return false;
+	})
 
 	/**
 	 * Бинд функции при нажатии на чекбокс "Доставка"
@@ -78,14 +125,15 @@ jQuery(document).ready(function($) {
 		clickAssortyTab(0);
 	}
 
-	var assortyLimit = $('#assorty-limit').val();
-	var assortyOffset = $('#assorty-offset').val();
+	var assortyLimit = parseInt($('#assorty-limit').val());
+	var assortyOffset = parseInt($('#assorty-offset').val());
 
 
 	// кнопка load-more-assorty на странице ассортимента
 	$('#load-more-assorty').bind('click', function (event){
 		event.preventDefault();
 		assortyOffset += assortyLimit;
+		console.log(assortyOffset);
 		var elem = $(this);
 		var data = {'_csrf-frontend': _csrf, offset: assortyOffset, limit: assortyLimit};
 		elem.prop('disabled', true);
@@ -94,7 +142,7 @@ jQuery(document).ready(function($) {
 			data: data,
 			type: 'POST',
 			success: function (msg) {
-				console.log(msg);
+
 				if (msg['status'] == 'ok') {
 					$('#simple_price').append(msg['simple_html']);
 					$('#gross_price').append(msg['gross_html']);
@@ -110,6 +158,31 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
+
+	// scroll to id from url GET parametr data-scroll
+	function scrollFromUrl() {
+		var dataScroll = getUrlParameter('data-scroll');
+		if (typeof dataScroll !== 'undefined') {
+			var offset = $("#" + dataScroll).offset();
+        	var top = offset.top;
+        	$('html, body').animate({scrollTop:top}, 1000);
+		}
+	}
+
+    function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+				return typeof sParameterName[1] === 'undefined' ? true : sParameterName[1];
+			}
+    	}
+    }
 
 	function clickAssortyTab(i)
 	{
@@ -134,22 +207,26 @@ jQuery(document).ready(function($) {
 		mainSliderCur1 = 1;
 		mainSliderCur2 = 1;
 		$('.main .line2 .info-box-btns-right').eq(0)
-		.bind("click", function(){
+		.bind("click", function(e){
+			e.preventDefault();
 			mainSliderClearInterval();
 			mainSliderNext(0);
 		});
 		$('.main .line2 .info-box-btns-left').eq(0)
-		.bind("click", function(){
+		.bind("click", function(e){
+			e.preventDefault();
 			mainSliderClearInterval();
 			mainSliderPrev(0);
 		});
 		$('.main .line2 .info-box-btns-right').eq(1)
-		.bind("click", function(){
+		.bind("click", function(e){
+			e.preventDefault();
 			mainSliderClearInterval();
 			mainSliderNext(1);
 		});
 		$('.main .line2 .info-box-btns-left').eq(1)
-		.bind("click", function(){
+		.bind("click", function(e){
+			e.preventDefault();
 			mainSliderClearInterval();
 			mainSliderPrev(1);
 		});

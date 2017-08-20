@@ -21,14 +21,9 @@ foreach ($records as $record){
 <div class="user-form">
     <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['maxlength' => 32, 'minlength' => 3, 'autocomplete' => 'off'])->label('Имя пользователя') ?>
-        
-       <?= $form->field($model, 'email')->textInput() ?>
-        <?= $form->field($model, 'firstname')->textInput() ?>
-        <?= $form->field($model, 'secondname')->textInput() ?>
-        <?= $form->field($model, 'phone')->textInput() ?>
-        <?= $form->field($model, 'address')->textInput() ?>
-        <?= $form->field($model, 'password')->passwordInput(['value' => '', 'maxlength' => 32, 'minlength' => 5, 'autocomplete' => 'off'])->label('Пароль') ?>
+        <?= $form->field($model, 'firstname')->textInput(['autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'phone')->textInput(['autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'address')->textInput(['autocomplete' => 'off']) ?>
 
         <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'autocomplete' => 'off'])->label('Email') ?>
 

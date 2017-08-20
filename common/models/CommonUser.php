@@ -9,14 +9,14 @@ use yii\web\IdentityInterface;
 
 use common\models\Orders;
 
+use frontend\components\Sms;
+
 /**
  * User model
  *
  * @property integer $id
- * @property string $username
  * 
  * @property string $firstname
- * @property string $secondname
  * @property string $address
  * @property string $phone
  * @property text $profile_pic
@@ -37,6 +37,8 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
     const CREATE_SCENARIO = 'create';
+    const CREATE_BY_ADMIN_SCENARIO = 'create_by_admin';
+    const CREATE_FROM_ORDER = 'create_from_order';
 
     public $password;
 
@@ -170,15 +172,19 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'firstname', 'phone'], 'required'],
+            [['phone', 'auth_key', 'password_hash', 'firstname', 'phone'], 'required'],
+            ['email', 'required', 'except' => [self::CREATE_BY_ADMIN_SCENARIO, self::CREATE_FROM_ORDER]],
             [['status', 'created_at', 'updated_at', 'sum_purchased_retail', 'sum_purchased_gross'], 'integer'],
-            [['username', 'firstname', 'secondname', 'address', 'password', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['phone', 'firstname', 'address', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
-            [['username'], 'unique'],
-            [['password'], 'required', 'on' => self::CREATE_SCENARIO],
-            ['phone', 'match', 'pattern' => '/^9[0-9]{9}$/'],
+            [['phone'], 'unique'],
+            ['phone', 'string'],
+            [['password'], 'required', 'on' => self::CREATE_SCENARIO, 'except' => [self::CREATE_BY_ADMIN_SCENARIO, self::CREATE_FROM_ORDER]],
+            ['password', 'string', 'min' => 8, 'max' => 16, 'message' => 'Пароль должен составлять от 8 до 16 символов!'],
+            ['password', 'match', 'pattern' => '/^[a-zA-Z0-9]+$/', 'message' => 'Пароль должен содержать только латинские символы и/или цифры!'],
+            ['phone', 'match', 'pattern' => '/^9[0-9]{9}$/', 'message' => 'Введите номер в формате +7 (9ХХ) ХХХ-ХХ-ХХ'],
         ];
     }
 
@@ -188,16 +194,33 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username' => 'Имя пользователя',
             'password' => 'Пароль',
             'firstname' => 'Имя',
-            'secondname' => 'Фамилия',
             'email' => 'Email',
             'phone' => 'Номер телефона',
             'address' => 'Адрес (город, улица, дом)',
             'sum_purchased_retail' => 'Сумма покупок в розницу',
             'sum_purchased_gross' => 'Сумма покупок оптом',
         ];
+    }
+
+    /**
+     * Перформировывает номер телефона
+     *
+     * @return string
+     */
+
+    public function calculatePhone()
+    {   
+        // обрежем все ненужные символы
+        $phone = preg_replace('/[^0-9]/', '', $this->phone);
+
+        if (strlen($phone) < 11) return false;
+
+        // вернем номер без 7
+        $this->phone = substr($phone, 1);
+        
+        return true;
     }
 
     /**
@@ -216,15 +239,20 @@ class CommonUser extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
+    public static function findByUsername()
+    {
+        return null;
+    }
+
     /**
-     * Finds user by username
+     * Finds user by phone number
      *
-     * @param string $username
+     * @param string $phone
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByPhone($phone)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['phone' => $phone, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -329,5 +357,67 @@ class CommonUser extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Проверяет, можно ли использовать email
+     */
+
+    public static function checkEmail($email) 
+    {
+        if (!Yii::$app->user->isGuest) {
+            $user_email = Yii::$app->user->identity->email;
+            if ($user_email == $email) return true;
+        }
+
+        $exists = self::find()->where(['email' => $email])->exists();
+        return !$exists;
+    }
+
+    /**
+     * Проверяет, можно ли использовать телефон
+     */
+
+    public static function checkPhone($phone)
+    {
+        if (!Yii::$app->user->isGuest) {
+            $user_phone = Yii::$app->user->identity->phone;
+            if ($user_phone == $phone) return true;
+        }
+
+        $exists = self::find()->where(['phone' => $phone])->exists();
+        return !$exists;
+    }
+
+    /**
+     * Изменяет данные в редакторе кабинета
+     */
+    public static function ajaxChangeUserData()
+    {
+        if (Yii::$app->user->isGuest) return false;
+        $user = self::findIdentity(['id' => Yii::$app->user->identity->id]);
+        $user->email = Yii::$app->request->post('email');
+        $user->phone = Yii::$app->request->post('phone');
+        $user->firstname = Yii::$app->request->post('firstname');
+        $user->address = Yii::$app->request->post('address');
+
+        if ($user->save()) {
+           Yii::$app->user->identity->email = $user->email; 
+           Yii::$app->user->identity->phone = $user->phone; 
+           Yii::$app->user->identity->firstname = $user->firstname; 
+           Yii::$app->user->identity->address = $user->address; 
+           return true;
+        }
+
+        return false;
+    }
+
+    public function successSms($password) 
+    {
+        $message = "Здравствуйте, " . $this->firstname . "!\r\n";
+        $message .= "Ваш логин и пароль для входа на сайт print4you.su: \r\n";
+        $message .= '+7' . $this->phone . "\r\n" . $password;
+
+        Sms::message($this->phone, $message);
     }
 }

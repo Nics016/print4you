@@ -12,6 +12,7 @@ class m170607_114543_constructor_colors extends Migration
             'color_value' => $this->string(50)->notNull(),
             'price' => $this->integer()->notNull(),
             'gross_price' => $this->text()->notNull(),
+            'img_alt' => $this->string(255),
             'full_front_image' => $this->string(255),
             'full_back_image' => $this->string(255),
             'small_front_image' => $this->string(255),

@@ -96,7 +96,7 @@ class UserController extends Controller
             }
         }
         $queryNoOrders = Yii::$app->db->createCommand("
-            SELECT username, common_user.phone as phone FROM common_user
+            SELECT common_user.id, common_user.phone as phone FROM common_user
             INNER JOIN orders ON common_user.id <> orders.client_id
         ");
         $clientsWithoutOrders = $queryNoOrders->queryAll();

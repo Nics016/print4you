@@ -7,9 +7,13 @@ use common\models\ConstructorColors;
 use common\models\ConstructorProducts;
 use common\models\ConstructorSizes;
 use common\models\ConstructorStorage;
+use common\models\ConstructorAdditionalSides;
+use common\models\ConstructorColorsSides;
+
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 
 use backend\models\User;
@@ -143,6 +147,61 @@ class ConstructorColorsController extends Controller
         return $this->redirect(['index', 'id' => $model->product_id]);
     }
 
+    public function actionAdditionalSides($id) 
+    {
+        $color = $this->findModel($id);
+
+        $models = ConstructorColorsSides::find()->where(['color_id' => (int)$id])->all();
+        $sides = ConstructorAdditionalSides::find()->asArray()->all();
+
+        return $this->render('additional-sides', [
+            'models' => $models, 
+            'color' => $color,
+            'sides' => $sides,
+        ]);
+    }
+
+    // выводит форму для изменения стороны
+    public function actionSideForm()
+    {
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $sides = ConstructorAdditionalSides::find()->asArray()->all();
+            return [
+                'html' => $this->renderAjax('_side-form', ['sides' => $sides]), 
+            ];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    public function actionEditSide()
+    {
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            switch (Yii::$app->request->post('action')) {
+                case 'save':
+                    return ConstructorColorsSides::uploadFromAjax();
+                    break;
+                
+                case 'remove':
+                    $id = (int)Yii::$app->request->post('id');
+                    $model = ConstructorColorsSides::findOne($id);
+
+                    if ($model == null) return ['status' => 'fail'];
+                    return $model->delete() ? ['status' => 'ok'] : ['status' => 'fail'];
+
+                    break;
+
+                default:
+                    throw new NotFoundHttpException();
+                    break;
+            }
+            
+        }
+
+        throw new NotFoundHttpException();
+    }
 
     protected function findModel($id)
     {

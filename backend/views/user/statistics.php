@@ -67,7 +67,7 @@
 	<?php foreach($clientsWithoutOrders as $client): ?>
 		<tr>
 			<td><?= $i ?></td>
-			<td><?= $client['username'] ?></td>
+			<td><?= $client['id'] ?></td>
 			<td><?= $client['phone'] ?></td>
 		</tr>
 	<?php $i++; ?>

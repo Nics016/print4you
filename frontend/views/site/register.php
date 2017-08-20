@@ -6,7 +6,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Print4you - Регистрация';
 ?>
 
 <main class="register">
@@ -14,13 +13,16 @@ $this->title = 'Print4you - Регистрация';
 		<h1>Регистрация</h1>
 		<div class="row">
 			<div class="col-sm-8 col-sm-push-2">
-				<?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
-		            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+				<?php $form = ActiveForm::begin([
+					'enableAjaxValidation' => true, 
+					'enableClientValidation' => false
+				]); ?>
+					<?= $form->field($model, 'phone')->textInput([
+						'class' => 'form-control masked-phone'
+					]) ?>
 		            <?= $form->field($model, 'password')->passwordInput() ?>
 		            <?= $form->field($model, 'email')->textInput(['placeholder' => 'info@print4you.su']) ?>
 		            <?= $form->field($model, 'firstname')->textInput(['placeholder' => 'Иван']) ?>
-		            <?= $form->field($model, 'secondname')->textInput(['placeholder' => 'Иванов']) ?>
-		            <?= $form->field($model, 'phone')->textInput(['placeholder' => '9127776655']) ?>
 		            <?= $form->field($model, 'address')->textInput(['placeholder' => 'СПб, м. Гостиный двор, Набережная реки Фонтанки, 38']) ?>
 		            <br>
 		            <div class="form-group" style="margin: 0 auto 50px; display:block">

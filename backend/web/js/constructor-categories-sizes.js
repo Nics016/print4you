@@ -13,41 +13,6 @@ jQuery(document).ready(function($){
 
     $( "#sortable" ).disableSelection();
 
-    // добавление верстки категори
-    $('#add-category').on('click', function() {
-
-    	var li = $(document.createElement('li'));
-    	li.addClass('ui-state-default');
-
-    	var formContainer = $(document.createElement('div'))
-    	formContainer.addClass('form-group clearfix')
-
-    	var moveSpan = $(document.createElement('span'))
-    	moveSpan.addClass('glyphicon glyphicon-resize-vertical icon-container sortable-icon');
-
-    	var removeSpan = $(document.createElement('span'))
-    	removeSpan.addClass('glyphicon glyphicon-remove icon-container category-remove');
-    	$(removeSpan).bind('click', removeCategory);
-
-    	var inputContainer = $(document.createElement('div'))
-    	inputContainer.addClass('input-container');
-
-    	var input = $(document.createElement('input'));
-    	input.attr('type', 'text')
-    	input.val('Название категории');
-    	input.addClass('form-control category-input');
-    	input.attr('data-id', 'new');
-    	$(input).bind('keyup', removeErrorClass);
-
-    	inputContainer.append(input);
-    	formContainer.append(moveSpan);
-    	formContainer.append(removeSpan);
-    	formContainer.append(inputContainer);
-    	li.append(formContainer);
-
-    	$('#sortable').append(li);
-    });
-
 
     // посылает аякс запрос на измененеие категорий
     $('#category-save').bind('click', changeCategories);
@@ -56,9 +21,6 @@ jQuery(document).ready(function($){
 
     // удаление категории
     $('.category-remove').bind('click', removeCategory);
-
-    // удаление класса ошибки при изменение категории
-    $('.category-input').bind('keyup', removeErrorClass);
 
 
     /* Редактор рзмеров */
@@ -150,12 +112,50 @@ jQuery(document).ready(function($){
         materialContainer.insertBefore(this);
     });
 
+    // доабвление стороеы
+    $('#add-side').on('click', function(event) {
+        event.preventDefault();
+        var sideContainer = $(document.createElement('div'));
+        sideContainer.addClass('product-side');
+        sideContainer.attr('data-id', 'new');
+
+        var sideInput = $(document.createElement('input'));
+        sideInput.addClass('side-input form-control');
+        sideInput.attr('type', 'text');
+        sideInput.attr('placeholder', 'Название стороны');
+
+        var saveBtn = $(document.createElement('button'));
+        saveBtn.addClass('save-side btn btn-success');
+        saveBtn.text('Сохранить');
+
+        var removeBtn = $(document.createElement('button'));
+        removeBtn.addClass('remove-side btn btn-danger');
+        removeBtn.text('Удалить');
+
+        sideContainer.append(sideInput);
+        sideContainer.append(saveBtn);
+        sideContainer.append(removeBtn);
+
+        sideInput.bind('keyup', clearErrorSideClass);
+        saveBtn.bind('click', saveSide);
+        removeBtn.bind('click', removeSide);
+
+        sideContainer.insertBefore(this);
+    });
+
     // сохранение и удаление материала
     $('.save-material').bind('click', saveMaterial);
     $('.remove-material').bind('click', removeMaterial);
 
     // очистка класса ошибки материала
     $('.material-input').bind('keyup', clearErrorMaterialClass);
+
+    // охранение и удлаение стороеы
+    $('.save-side').bind('click', saveSide);
+    $('.remove-side').bind('click', removeSide);
+
+    // очистка класса ошибки стороны
+    $('.material-input').bind('keyup', clearErrorSideClass);
 
     // удаление размера
     function removeSizeHandle() {
@@ -290,7 +290,6 @@ jQuery(document).ready(function($){
 
     		categoriesValues.push({
     			id: id,
-    			value: val,
     		})
     	}
 
@@ -462,6 +461,97 @@ jQuery(document).ready(function($){
     // стирание класса ошибки у материала
     function clearErrorMaterialClass() {
         $(this).removeClass('error-material');
+    }
+
+
+    // сохранение стороны
+    function saveSide() {
+        var parent = $(this).closest('.product-side');
+        var id = $(parent).attr('data-id');
+        var input = $(parent).find('.side-input');
+        var saveBtn = this;
+        var removeBtn = $(parent).find('.remove-side');
+
+
+        if ($(input).val().length == 0) {
+            $(input).addClass('error-side');
+            return false;
+        }
+
+        $(input).prop('disabled', true);
+        $(saveBtn).prop('disabled', true);
+        $(removeBtn).prop('disabled', true);
+
+        $.ajax({
+            url: '/constructor-categories-sizes/save-side',
+            data: {'_csrf-backend': csrf, id: id, name: $(input).val()},
+            type: 'POST',
+            success: function (response) {
+                if (response['status'] == 'ok') {
+                    $(parent).attr('data-id', response['id']);
+                    setTimeout(function(){
+                        $(input).prop('disabled', false);
+                        $(saveBtn).prop('disabled', false);
+                        $(removeBtn).prop('disabled', false);
+                    }, 500);
+                } else {
+                    console.log(err);
+                    alert('Произошла ошибка, обновите страницу');
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                alert('Произошла ошибка, обновите страницу');
+            }
+        });
+
+    }
+
+    // удаление материала
+    function removeSide() {
+        var parent = $(this).closest('.product-side');
+        var id = $(parent).attr('data-id');
+        var input = $(parent).find('.side-input');
+        var saveBtn = this;
+        var removeBtn = $(parent).find('.remove-side');
+
+        if (confirm('Точно удалить размер?')) {
+            if (id == 'new') {
+                $(parent).remove();
+                return false;
+            }
+
+            $(input).prop('disabled', true);
+            $(saveBtn).prop('disabled', true);
+            $(removeBtn).prop('disabled', true);
+
+            $.ajax({
+               url: '/constructor-categories-sizes/remove-side',
+                data: {'_csrf-backend': csrf, id: id},
+                type: 'POST',
+                success: function (response) {
+                    if (response['status'] == 'ok') {
+                        setTimeout(function(){
+                            $(parent).remove();
+                        }, 500);
+                    } else {
+                        console.log(err);
+                        alert('Произошла ошибка, обновите страницу');
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                    alert('Произошла ошибка, обновите страницу');
+                } 
+            });
+        }
+
+        
+    }   
+
+    // стирание класса ошибки у стооеы
+    function clearErrorSideClass() {
+        $(this).removeClass('error-side');
     }
 
 });

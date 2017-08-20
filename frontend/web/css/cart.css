@@ -107,6 +107,10 @@
 	float: left;
 }
 
+.main-sides-images-container {
+   width: 420px; 
+}
+
 .constructor-product-image:first-child {
 	margin-left: 0;
 }
@@ -115,10 +119,35 @@
 	width: 200px;
     float: left;
     margin-left: 20px;
+    display: block;
 }
 
 .constructor-product-image img {
 	width: 200px;
+    display: block;
+}
+
+.additional-sides-images-container {
+    width: 420px;
+    margin-top: 10px;
+}
+
+.additional-side-image:first-child, .additional-side-image:nth-child(4n + 1) {
+    margin-left: 0px;
+}
+
+.additional-side-image {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    margin-left: 5px;
+    float: left;
+    display: block;
+}
+
+.additional-side-image img {
+    display: block;
+    width: 100px;
 }
 
 .constructor-product-meta-container {
@@ -222,6 +251,8 @@
     cursor: pointer;
     font-size: 16px;
     font-family: 'helveticaNeueCyrRoman';
+    border: 1px solid #eb4441;
+    padding: 5px 10px;
 }
 
 .product-price-container {
@@ -289,6 +320,8 @@
     width: 180px;
     display: none;
     margin-top: 20px;
+    max-height: 250px;
+    overflow-y: scroll;
 }
 
 .about-price-span-label {
@@ -371,15 +404,20 @@
     margin-top: 20px;
 }
 
-.change-left-print {
-    width: 360px;
-    float: left;
+.change-left-print:nth-child(-n + 2) {
+    margin-top: 0px;
 }
 
-.change-right-print {
-    width: 360px;
-    float: left;
+.change-left-print:nth-child(2n) {
     margin-left: 20px;
+}
+
+.change-left-print {
+    width: 360px;
+    max-height: 250px;
+    min-height: 230px;
+    float: left;
+    margin-top: 20px;
 }
 
 .change-print-label {
@@ -416,6 +454,14 @@
     text-align: center;
 }
 
+.not-avaliable-select {
+    display: block;
+    text-align: center;
+    color: #b1b1b1;
+    font-size: 16px;
+    font-family: 'helveticaNeueCyrRoman';
+}
+
 .change-print-form-select {
     border-radius: 10px;
     padding: 5px;
@@ -446,6 +492,8 @@
     cursor: pointer;
     font-size: 18px;
     font-family: 'helveticaNeueCyrRoman';
+    border: 1px solid #eb4441;
+    padding: 5px 10px;
 }
 
 .product-overlay-loading-container {

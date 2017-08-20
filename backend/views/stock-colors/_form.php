@@ -18,7 +18,7 @@ $map = ArrayHelper::map($models, 'id', 'address');
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'liters')->textInput(['value' => 0]) ?>
+    <?= $form->field($model, 'liters')->textInput(['autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'office_id')->dropDownList($map) ?>
 

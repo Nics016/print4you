@@ -8,6 +8,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\User;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
 
 
 class ConstructorCategoriesController extends Controller
@@ -19,6 +22,21 @@ class ConstructorCategoriesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
                 ],
             ],
         ];

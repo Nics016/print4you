@@ -25,6 +25,7 @@ class m170612_153932_create_orders_product_table extends Migration
             'name' => $this->string(255),
             'price' => $this->integer()->defaultValue(0),
             'is_constructor' => $this->boolean()->defaultValue(false),
+            'folder_name' => $this->string(255),
             'front_image' => $this->string(255),
             'back_image' => $this->string(255),
             'count' => $this->integer()->defaultValue(1),
@@ -32,6 +33,7 @@ class m170612_153932_create_orders_product_table extends Migration
             'color_id' => $this->integer(),
             'back_print_data' => $this->text(),
             'front_print_data' => $this->text(),
+            'additional_print_data' => $this->text(),
             'discount_percent' => $this->integer()->notNull()->defaultValue(0),
         ], $tableOptions);
     }

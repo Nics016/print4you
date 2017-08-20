@@ -10,9 +10,13 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 
+use backend\models\User;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
+
 class ReviewsController extends Controller
 {
-   
+
     public function behaviors()
     {
         return [
@@ -22,9 +26,23 @@ class ReviewsController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        // Allow only admin
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
-
 
     public function actionIndex()
     {

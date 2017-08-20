@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = 'Обновить клиента: ' . $model->username;
+$this->title = 'Обновить клиента: ' . $model->id;
 ?>
 <div class="user-update">
 

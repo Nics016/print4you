@@ -11,6 +11,7 @@ use yii\web\Response;
 use common\models\ConstructorCategories;
 use common\models\ConstructorSizes;
 use common\models\ConstructorProductMaterials;
+use common\models\ConstructorAdditionalSides;
 
 use yii\widgets\ActiveForm;
 
@@ -49,11 +50,13 @@ class ConstructorCategoriesSizesController extends Controller
         $categories = ConstructorCategories::find()->asArray()->orderBy('sequence')->all();
         $sizes = ConstructorSizes::find()->asArray()->orderBy('sequence')->all();
         $materials = ConstructorProductMaterials::find()->asArray()->all();
+        $sides = ConstructorAdditionalSides::find()->asArray()->all();
 
         return $this->render('index', [
             'categories' => $categories,
             'sizes' => $sizes,
             'materials' => $materials,
+            'sides' => $sides,
         ]);
     }
 
@@ -204,6 +207,49 @@ class ConstructorCategoriesSizesController extends Controller
             $id = (int)Yii::$app->request->post('id');
 
             $model = ConstructorProductMaterials::findOne(['id' => $id]);
+            if ($model == null) return ['status' => 'fail'];
+            
+            return $model->delete() ? ['status' => 'ok'] : ['status' => 'fail'];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+
+    // сохранение стороны
+    public function actionSaveSide()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $id = Yii::$app->request->post('id');
+            $name = Yii::$app->request->post('name');
+
+            if ($id == 'new') {
+                $model = new ConstructorAdditionalSides();
+            } else {
+                $model = ConstructorAdditionalSides::findOne(['id' => (int)$id]);
+                if ($model == null) return ['status' => 'fail'];
+            }
+
+            $model->name = $name;
+            return $model->save() ? ['status' => 'ok', 'id' => $model->getPrimaryKey()] : ['status' => 'fail'];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+
+
+    // удаление материала
+    public function actionRemoveSide()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $id = (int)Yii::$app->request->post('id');
+
+            $model = ConstructorAdditionalSides::findOne(['id' => $id]);
             if ($model == null) return ['status' => 'fail'];
             
             return $model->delete() ? ['status' => 'ok'] : ['status' => 'fail'];

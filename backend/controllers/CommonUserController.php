@@ -41,11 +41,19 @@ class CommonUserController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['index', 'update', 'view', 'delete'],
                         'allow' => true,
                         // Allow only admin
                         'roles' => [
                             User::ROLE_ADMIN
+                        ],
+                    ],
+                    [
+                        'actions' => ['create', 'view'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
                         ],
                     ],
                 ],
@@ -89,7 +97,7 @@ class CommonUserController extends Controller
     public function actionCreate()
     {
         $model = new CommonUser();
-        $model->scenario = User::CREATE_SCENARIO;
+        $model->scenario = CommonUser::CREATE_BY_ADMIN_SCENARIO;
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -97,18 +105,23 @@ class CommonUserController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->generatePasswordHash($model['password']);
+            $password = Yii::$app->getSecurity()->generateRandomString(8);
+            $model->generatePasswordHash($password);
             $model->generateAuthKey();
-            if ($model->save())
+
+            if ($model->save()) {
+                $model->successSms($password);
                 return $this->redirect(['view', 'id' => $model->id]);
-            else 
-                print_r($model->getErrors());
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+            }
+
+        } 
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+        
     }
+
 
     /**
      * Updates an existing User model.
@@ -134,7 +147,9 @@ class CommonUserController extends Controller
             if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
             else 
-                print_r($model->getErrors());
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
         } else {
             return $this->render('update', [
                 'model' => $model,

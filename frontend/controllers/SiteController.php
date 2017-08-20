@@ -4,10 +4,11 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -21,15 +22,18 @@ use common\models\Orders;
 use common\models\Requests;
 use common\models\Office;
 use common\models\ConstructorCategories;
+use common\models\PagesSeo;
 use frontend\models\RequestCallForm;
-use frontend\components\Basket;
+use frontend\models\ForgotPassword;
+use frontend\components\basket\Basket;
 use frontend\components\Sms;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
-{
+{   
+
     /**
      * @inheritdoc
      */
@@ -93,19 +97,20 @@ class SiteController extends Controller
             $modelRequest->comment = $model->comment;
             $modelRequest->request_type = $model->form_type;
             $modelRequest->created_at = Yii::$app->formatter->asTimestamp(new \DateTime());
-            if ($modelRequest->save()){
-
-            } else 
-                return $this->renderContent(var_dump($modelRequest->getErrors()));
-            $msg = '<h2>Имя - ' . $model->name . '</h2>';
-            $msg .= '<h2>Телефон - ' . $model->phone . '</h2>';
-            $msg .= '<h2>Комментарий - ' . $model->comment . '</h2>';
-            return $this->render('successful-request',[
-                'name' => $model->name,
-            ]);
-        } else {
-            return $this->render(['site/index']);
+            if ($modelRequest->save()) {
+                $msg = '<h2>Имя - ' . $model->name . '</h2>';
+                $msg .= '<h2>Телефон - ' . $model->phone . '</h2>';
+                $msg .= '<h2>Комментарий - ' . $model->comment . '</h2>';
+                return $this->render('successful-request',[
+                    'name' => $model->name,
+                ]);
+            }
+            
         }
+
+        $this->registerSeo(1);
+        return $this->render(['site/index']);
+        
     }
 
     /**
@@ -114,7 +119,9 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {   
+        $this->registerSeo(1, 'index');
+
         return $this->render('index', [
             'categories' => ConstructorCategories::getCats(),
         ]);
@@ -124,12 +131,12 @@ class SiteController extends Controller
      * Личный кабинет
      */
     public function actionCabinet()
-    {
-        if (Yii::$app->user->isGuest)
+    {   
+        $this->registerSeo(18);
+        if (Yii::$app->user->isGuest) {
             return $this->renderContent(Html::tag('h1','Войдите или зарегистрируйтесь, чтобы просматривать эту страницу'));
+        }
 
-        $msg = "Hello, World";
-        // Sms::message(Yii::$app->user->identity->phone, $msg);
         $orders = Orders::find()
             ->where("client_id=" . Yii::$app->user->identity->id)
             ->all();
@@ -146,10 +153,95 @@ class SiteController extends Controller
     }
 
     /**
+     * Проверка email или телефона в редакторе личного кабинета
+     */
+    public function actionCheckUserData()
+    {
+        if (Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $action = Yii::$app->request->post('action');
+            $value = Yii::$app->request->post('value');
+
+            $check = false;
+            if ($action == 'email')
+                $check = CommonUser::checkEmail($value);
+            elseif ($action == 'phone')
+                $check = CommonUser::checkPhone($value);
+
+            return [
+                'status' => $check ? 'ok' : 'fail',
+            ];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    /**
+     * Изменение пароля в личном кабинете
+     */
+
+    public function actionChangeUserPassword() 
+    {
+        if (Yii::$app->request->isPost && Yii::$app->request->isAjax && !Yii::$app->user->isGuest) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $old = Yii::$app->request->post('old_password'); 
+            $new = Yii::$app->request->post('new_password'); 
+
+            $model = &Yii::$app->user->identity;
+
+            if (!$model->validatePassword($old)) {
+                return [
+                    'status' => 'fail',
+                    'field' => 'old',
+                    'message' => 'Неверный пароль!',
+                ];
+            }
+
+            $model->password = $new;
+
+            if (!$model->validate(['password'])) {
+                return [
+                    'status' => 'fail',
+                    'field' => 'new',
+                    'message' => 'Неверный пароль!',
+                ];
+            }
+            $model->generatePasswordHash($new);
+            if (!$model->save(false)) {
+                return [
+                    'status' => 'fail',
+                    'field' => 'new',
+                    'message' => 'Не удалось сохранить пароль!',
+                ];
+            }
+            return ['status' => 'ok'];
+
+        }
+        
+        throw new NotFoundHttpException();
+    }
+
+    /**
+     * Изменяет данные в редакторе кабинета
+     */
+    public function actionChangeUserData()
+    {
+        if (Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'status' => CommonUser::ajaxChangeUserData() ? 'ok' : 'fail',
+            ];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    /**
      * Оплата и доставка
      */
     public function actionDostavka()
-    {
+    {   
+        $this->registerSeo(3, 'dostavka');
         return $this->render('dostavka');
     }
 
@@ -157,16 +249,9 @@ class SiteController extends Controller
      * Франшиза
      */
     public function actionFranchise()
-    {
+    {   
+        $this->registerSeo(6, 'franchise');
         return $this->render('franchise');
-    }
-
-    /**
-     * Калькулятор
-     */
-    public function actionCalculator()
-    {
-        return $this->render('calculator');
     }
 
     /**
@@ -175,26 +260,28 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    {   
 
-        $model = new LoginForm();
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost && Yii::$app->user->isGuest) {
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+
+            $model = new LoginForm();
+            $model->phone = Yii::$app->request->post('phone');
+            $model->password = Yii::$app->request->post('password');
+            $model->rememberMe = (boolean)Yii::$app->request->post('rememberMe');
+
+            if ($model->login()) {
+                Basket::saveToDb(Yii::$app->user->identity->id);
+                return ['status' => 'ok'];
+            }
+
+            return ['status' => 'fail'];
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Basket::saveToDb(Yii::$app->user->identity->id);
-            return $this->goBack();
-        } else {
-            return $this->render('index', [
-                'loginError' => 'Неверный логин или пароль',
-            ]);
-        }
+        throw new NotFoundHttpException();
+
+        
     }
 
     /**
@@ -202,16 +289,17 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionRegister()
-    {
+    public function actionRegister($redirect = false)
+    {   
+        $this->registerSeo(16, 'register');
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        
         $model = new CommonUser();
         $model->scenario = CommonUser::CREATE_SCENARIO;
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $model->calculatePhone()) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
@@ -219,10 +307,14 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->generatePasswordHash($model['password']);
             $model->generateAuthKey();
-            if ($model->save())
-                return $this->redirect(['site/register-success']);
-            else 
-                print_r($model->getErrors());
+
+            if ($model->calculatePhone() && $model->save()) {
+                if ($redirect === false) 
+                    return $this->redirect(['site/register-success']);
+                else
+                    return $this->redirect($redirect);
+            }
+
         } else {
             return $this->render('register', [
                 'model' => $model,
@@ -230,10 +322,23 @@ class SiteController extends Controller
         }
     }
 
-    public function actionEditProfile($id = -1)
+    // воостановление пароля
+    public function actionForgotPassword()
     {
-        if (Yii::$app->user->isGuest
-                || $id < 0) {
+        if (!Yii::$app->user->isGuest) return $this->goHome();
+
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ForgotPassword::ajaxLoad();
+        }
+
+        return $this->render('forgot-password');
+    }
+
+    // редактирование профиля
+    /*public function actionEditProfile($id = -1)
+    {
+        if (Yii::$app->user->isGuest || $id < 0) {
             return $this->goHome();
         }
 
@@ -258,7 +363,7 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
      * Logs out the current user.
@@ -280,7 +385,8 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionContacts()
-    {
+    {   
+        $this->registerSeo(7, 'contacts');
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -308,7 +414,8 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionAbout()
-    {
+    {   
+        $this->registerSeo(10, 'about');
         return $this->render('about');
     }
 
@@ -384,13 +491,59 @@ class SiteController extends Controller
 
     // страница акций
     public function actionSale()
-    {
+    {   
+        $this->registerSeo(8, 'sale');
         return $this->render('sale');
     }
 
     // страница наших гостей
     public function actionNashiGosti()
-    {
+    {   
+        $this->registerSeo(9, 'nashi-gosti');
         return $this->render('nashi-gosti');
+    }
+
+    public function actionNashiClienty()
+    {   
+        $this->registerSeo(25, 'nashi-clienty');
+        return $this->render('nashi-clienty');
+    }
+
+    // регистрирует сео пола
+    private function registerSeo($page_id, $view_name = null) 
+    {
+        $seo = PagesSeo::findOne(['page_id' => $page_id]);
+        Yii::$app->view->title = $seo->title ?? '';
+
+        Yii::$app->view->registerMetaTag([
+            'name' => 'title',
+            'content' => $seo->title ?? '',
+        ]);
+
+        Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => $seo->description ?? '',
+        ]);
+
+        Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => $seo->keywords ?? '',
+        ]);
+
+        // добавим заголовк последней модификации исходя из редактирования файлов
+        if ($view_name === null) return;
+        
+        $path = $this->getViewPath() . '/' . $view_name . '.php';
+        if (file_exists($path)) {
+
+            $mt = filemtime($path);
+            $mt_str = gmdate('D, d M Y H:i:s', $mt).' GMT';
+            if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) 
+                    && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $mt)
+                header('HTTP/1.1 304 Not Modified');
+            else
+                header('Last-Modified: '.$mt_str);
+
+        } 
     }
 }

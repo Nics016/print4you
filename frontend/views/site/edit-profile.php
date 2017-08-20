@@ -6,7 +6,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Print4you - Изменить данные';
 ?>
 
 <main class="register">

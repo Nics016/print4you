@@ -14,7 +14,7 @@
  ?>
 
 
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <?php $this->beginPage() ?>
 <head>
@@ -139,10 +139,18 @@
                                 <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
                                 <li><a href="<?= Url::toRoute(['stock-requests/index']) ?>"><span class="title">Заявки</span></a></li>
                                 <li><a href="<?= Url::toRoute(['stock-requests/create']) ?>"><span class="title">Новая заявка</span></a></li>
-                                <li><a href="<?= Url::toRoute(['stock-colors/index']) ?>"><span class="title">Цвета краски</span></a></li>
-                                <li><a href="<?= Url::toRoute(['stock-colors/create']) ?>"><span class="title">Новый цвет краски</span></a></li>
                             </ul>
-                        </li>   
+                        </li>    
+                    <?php endif; ?>
+                    <?php if (Yii::$app->user->identity->role == User::ROLE_EXECUTOR): ?>
+                        <li class="has-sub">
+                            <a href="<?= Url::toRoute(['stock/index']) ?>">
+                                <span class="title">Склад</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
+                            </ul>
+                        </li>    
                     <?php endif; ?>                 
                     </ul>
                 </li>
@@ -186,6 +194,11 @@
                                 <span class="title">Склад</span>
                             </a>
                             <ul>
+                                <li>
+                                    <a href="<?= Url::toRoute(['constructor-sklad/']) ?>">
+                                        <span class="title">Склад конструктора</span>
+                                    </a>
+                                </li>
                                 <li><a href="<?= Url::toRoute(['stock/index']) ?>"><span class="title">Наличие</span></a></li>
                                 <li><a href="<?= Url::toRoute(['stock-requests/index']) ?>"><span class="title">Заявки</span></a></li>
                                 <li><a href="<?= Url::toRoute(['stock-requests/create']) ?>"><span class="title">Новая заявка</span></a></li>
@@ -213,7 +226,10 @@
                     <ul>
                         <li>
                             <a href="<?= Url::toRoute(['constructor-categories-sizes/']) ?>">
-                                <span class="title">Категории, размеры и материалы</span>
+                                <span class="title">Последовательность категорий, размеры и материалы</span>
+                            </a>
+                            <a href="<?= Url::toRoute(['constructor-categories/']) ?>">
+                                <span class="title">Категории</span>
                             </a>
                             <a href="<?= Url::toRoute(['constructor-products/']) ?>">
                                 <span class="title">Товары и цвета</span>
@@ -228,25 +244,30 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="<?= Url::toRoute(['pages-seo/']) ?>">
+                        <i class="entypo-feather"></i>
+                        <span class="title">Сео страниц</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?= Url::toRoute(['requests/index']) ?>">
+                        <i class="entypo-mobile"></i>
                         <span class="title">Заявки на звонок</span>
                     </a>
-                </li> 
-            <?php endif ?>
-            <?php if (Yii::$app->user->identity->role == User::ROLE_EXECUTOR): ?>
-                <li class="has-sub">
-                    <a href="layout-api.html">
-                        <i class="entypo-cog"></i>
-                        <span class="title">Склад</span>
+                </li>
+                <li>
+                    <a href="<?= Url::toRoute(['reviews/']) ?>">
+                        <i class="entypo-comment"></i>
+                        <span class="title">Отзывы</span>
                     </a>
-                    <ul>
-                        <li>
-                            <a href="<?= Url::toRoute(['constructor-sklad/']) ?>">
-                                <span class="title">Склад конструктора</span>
-                            </a>
-                          
-                        </li>
-                    </ul>
+                </li>  
+            <?php endif ?>
+            <?php if (Yii::$app->user->identity->role == User::ROLE_MANAGER): ?>
+                <li>
+                    <a href="<?= Url::toRoute(['common-user/create']) ?>">
+                        <i class="entypo-user"></i>
+                        <span class="title">Создать пользователя</span>
+                    </a>
                 </li>
             <?php endif; ?>
             </ul>

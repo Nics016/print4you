@@ -32,9 +32,9 @@ class ConstructorSkladController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        // Allow only executor
+                        // Allow only admin
                         'roles' => [
-                            User::ROLE_EXECUTOR
+                            User::ROLE_ADMIN
                         ],
                     ],
                 ],

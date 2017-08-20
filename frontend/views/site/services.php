@@ -4,8 +4,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-
-$this->title = 'Print4you - Услуги';
 ?>
 
 <main class="main">

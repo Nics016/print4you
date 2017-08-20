@@ -1,3 +1,35 @@
+.footer-img-gallery {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.footer-img-gallery img {
+    display: block;
+    width: 60px;
+}
+
+
+.login-error {
+    display: none;
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-register-btn {
+    background-color: #EB4441;
+    border: 1px solid #f15c59;
+}
+
+.modal-register-btn:hover, .modal-register-btn:active, .modal-register-btn:focus {
+    background-color: #c33836 !important;
+    border: 1px solid #de5451 !important;
+}
+
 .empty-cart {
     display: block;
     text-align: center;
@@ -73,17 +105,26 @@
     transition: .3s all ease-in;
 }
 
+.topmenu-right-below nav:first-child {
+    margin-top: 0px;
+}
+
+.topmenu-right-below nav {
+    margin-top: 10px;
+}
+
 .topmenu-right-below nav .red-label.active {
-    border-bottom: 4px solid #363636;
+    border-bottom: 4px solid #eb4441;
 }
 
 .topmenu-right-below .red-label:hover {
-    background-color: #363636;
+    background-color: #eb4441;
+    color: #fff;
 }
 
 .topmenu-right-below .red-label {
-    background-color: #eb4441;
-    color: #fff;
+    border: 1px solid #eb4441;
+    color: #333333;
 }
 
 .submenu-container:hover {
@@ -93,7 +134,6 @@
 
 .submenu-container {
     display: inline-block;
-    padding: 15px 8px;
     margin-left: 10px;
     font-size: 13px;
     text-transform: uppercase;
@@ -113,7 +153,6 @@
     position: absolute;
     padding: 0px;
     list-style: none;
-    margin-top: 15px;
     margin-left: -8px;
     z-index: 100;
     background-color: #f7f7f7;
@@ -146,10 +185,6 @@
     width: 400px;
     float: left;
     margin-left: 40px;
-}
-
-.reviews-container {
-    width: 1170px;
 }
 
 .reviews-main-title {
@@ -272,7 +307,7 @@
     border-radius: 5px;
     border: 2px solid rgb(142, 138, 138);
     display: block;
-    width: 960px;
+    width: 350px;
     height: 120px;
     margin: 10px 0px 15px 0px;
     padding: 5px 10px;
@@ -328,7 +363,6 @@
     cursor: pointer;
     outline: none;
     transition: all .2s ease-in;
-    width: 300px;
 }
 
 .review-form-error {
@@ -370,16 +404,11 @@
 
 .sale-main-title {
     text-align: center;
-    margin-top: 90px;
-    padding-top: 60px;
-    background-image: url(../img/contacts-title-bg.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
+    padding-top: 40px;
     font-family: sportsWorldRegular;
     font-size: 40px;
     color: #3e3e3e;
-    margin-bottom: 20px; 
+    margin-bottom: 30px; 
 }
 
 .sale-slider-container {
@@ -387,9 +416,15 @@
     margin: 20px auto 0 auto;
 }
 
+#sale-slider li {
+    height: 350px;
+    overflow: hidden;
+}
+
 #sale-slider li img {
     display: block;
     margin: 0 auto;
+    height: 350px;
 }
 
 .sales-container {
@@ -466,15 +501,13 @@
 
 /* GUESTS */
 
-#guests {
+#guests, #clients {
     margin-top: 20px;
 }
 
-.guests-main-title {
+.guests-main-title, .clients-main-title {
     text-align: center;
-    margin-top: 90px;
-    padding-top: 60px;
-    background-image: url(../img/contacts-title-bg.png);
+    margin-top: 50px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
@@ -484,17 +517,17 @@
     margin-bottom: 20px; 
 }
 
-.guests-container {
+.guests-container, .clients-container {
     width: 1060px;
     margin: 0 auto;
     padding-bottom: 60px;
 }
 
-.guest:first-child, .guest:nth-child(4n + 1) {
+.guest:first-child, .guest:nth-child(4n + 1), .client:first-child, .client:nth-child(4n + 1) {
     margin-left: 0px;
 }
 
-.guest {
+.guest, .client {
     width: 238px;
     display: block;
     float: left;
@@ -506,7 +539,622 @@
     padding: 5px;
 }
 
-.guest > img {
+.guest > img, .client > img {
     display: block;
     width: 226px;
 }
+
+
+.main .line1 .left a.whiteBtn, .footer-left-contacts a.whiteBtn {
+    border-radius: 20px;
+}
+
+.topline-elem3:hover {
+    background-color: #C33836;
+}
+
+.topline-elem3 {
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #fff !important;
+    background-color: #EB4441;
+    outline: none;
+}
+
+.elements-item-img-container {
+    display: block;
+    overflow: hidden;
+    height: 350px;
+}
+
+.elements-item-img {
+    display: block;
+}
+
+.main .line5 .elements-item {
+    margin-top: 70px !important;
+    height: 540px;
+    overflow: hidden;
+}
+
+/* DOSTAVKA */
+
+.schedule-img-icon {
+    display: block;
+    width: 300px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.schedule-link a:hover {
+    text-decoration: none;
+}
+
+.schedule-link {
+    text-decoration: underline;
+    display: block;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.schedule-info .cart-number {
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 15px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.schedule-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.schedule-table tr {
+    color: #000;
+    font-size: 16px;
+    font-family: 'proximaNovaRegular';
+}
+
+.schedule-table td {
+    padding: 10px 5px;
+    text-align: center;
+    border: 1px solid #d5d6d7;
+}
+
+.shedule-content {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.shedule-left {
+    width: 450px;
+    float: left;
+}
+
+.shedule-right {
+    width: 600px;
+    float: right;
+}
+
+/* PAYMENT */
+
+.payment-info {
+    background-color: #F7F7F7;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #cec9c9;
+}
+
+.payment-info .icon-container {
+    width: 40%;
+    margin: 0 auto 0 auto;
+    padding-top: 20px;
+}
+
+.payment-info .icon-container img {
+    display: block;
+    width: 100%;
+}
+
+.payment-info .info {
+    display: block;
+    padding: 5px 10px;
+    background-color: #C8FFC6;
+    width: 90%;
+    margin: 15px auto 0px auto;
+    border-radius: 5px;
+    border: 1px solid #ABC9A9;
+    font-family: Helvetica Neue;
+    color: #191717;
+    font-size: 18px;
+}
+
+.payment-info .cart-number {
+    font-family: 'proximaNovaSemibold';
+    color: #333;
+}
+
+/* CHECKOUT */
+
+#checkout-form {
+    padding-bottom: 40px;
+}
+
+#checkout-form .loading {
+    display: none;
+}
+
+/* CABINET */
+
+.cabinet-form-submit .loading {
+    display: none;
+}
+
+
+/* ASSORTY */
+
+.assorty-container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+
+.assorty-row:first-child, .assorty-row:nth-child(3n + 1) {
+    margin-left: 0px;
+}
+
+.assorty-row {
+    width: 300px;
+    margin-left: 48px;
+    border: 1px solid #E5E5E5;
+    float: left;
+    margin-top: 50px;
+}
+
+.assorty-row-link {
+    display: block;
+    height: 330px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.assorty-row-image-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.assorty-row-image-container img {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.assorty-product-name {
+    text-decoration: none;
+    font-family: proximaNovaRegular;
+    color: #000;
+    font-size: 16px;
+    text-align: center;
+    display: block;
+    height: 30px;
+    overflow: hidden;
+}
+
+.assorty-row-link:hover .assorty-row-image-container img {
+    width: 400px;
+    right: 50px;
+}
+
+.assorty-row-link:hover .assorty-product-name {
+    color: #EB4441;
+}
+
+.assorty-row-description {
+    margin-top: 10px;
+}
+
+.assorty-row-description-text {
+    display: block;
+    text-align: center;
+    height: 30px;
+    color: #666666;
+    font-size: 12px;
+    padding: 0px 5px;
+    overflow: hidden;
+}
+
+.assorty-row-description-btn:hover {
+    background-color: #4d4d4d;
+    color: #fff;
+}
+
+.assorty-row-description-btn {
+    display: block;
+    padding: 5px 10px;
+    text-align: center;
+    font-family: "proximaNovaSemibold";
+    font-size: 16px;
+    color: #383838;
+    border: 1px solid #4d4d4d;
+    font-weight: bold;
+    background-color: #fff;
+    outline: none;
+    transition: .3s all ease-in;
+    width: 150px;
+    margin: 20px auto;
+}
+
+/* ORDER PAY */
+
+.total-pay-title {
+    display: block;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    font-family: 'sportsWorldRegular';
+    font-size: 40px;
+    color: #3e3e3e;
+    margin-top: 40px;
+}
+
+.total-pay {
+    display: block;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #333333;
+    font-family: 'proximaNovaSemibold';
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.order-pay-form {
+    display: block;
+    width: 370px;
+    margin: 30px auto;
+}
+
+.order-pay-form .form-title {
+    display: block;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #333333;
+    font-family: 'proximaNovaSemibold';
+    font-weight: bold;
+    text-align: center;
+}
+
+.order-pay-form .payment-types-container {
+    margin-top: 10px;
+}
+
+.order-pay-form .payment-types-container label {
+    color: #333333;
+    font-family: 'proximaNovaSemibold';
+    font-size: 18px;
+}
+
+.order-pay-form .payment-types-container label input {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.order-pay-form .submit-btn:hover {
+    background-color: #565656;
+}
+
+.order-pay-form .submit-btn {
+    display: block;
+    background-color: #EB4441;
+    color: #fff;
+    padding: 10px;
+    font-size: 20px;
+    border: 0px;
+    border-radius: 20px;
+    margin: 15px auto 0 auto;
+    outline: none;
+    cursor: pointer;
+}
+
+/* FORGOT PASSWORD */
+
+.forgot-password-main-title {
+    text-align: center;
+    margin-top: 40px;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+}
+
+.forgot-password-text {
+    display: block;
+    text-align: center;
+    margin: 30px auto 0 auto;
+    width: 500px;
+    font-size: 20px;
+    color: #3e3e3e;
+    font-family: proximaNovaSemibold;
+    font-weight: bold;
+}
+
+#forgot-password-form {
+    display: block;
+    width: 400px;
+    margin: 40px auto 0 auto;
+    padding-bottom: 60px;
+}
+
+.phone-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
+.sms-code-container {
+    width: 200px;
+    margin: 15px auto 0 auto;
+}
+
+#sms-code {
+    display: block;
+    padding: 20px 10px;
+    width: 100px;
+    text-align: center;
+    font-size: 25px;
+    font-family: proximaNovaSemibold;
+    color: #000;
+}
+
+.timer-container {
+    display: none;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 18px;
+    color: #3e3e3e;
+    font-family: proximaNovaSemibold;
+    font-weight: bold;
+}
+
+#timer {
+    display: block;
+    font-size: 20px;
+    font-family: sportsWorldRegular;
+}
+
+#forgot-password-submit {
+    display: block;
+    width: 110px;
+    margin: 20px auto 0 auto;
+    font-size: 16px;
+}
+
+/* Constructor Category */
+
+#constructor-category .main-title {
+    text-align: center;
+    margin-top: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+}
+
+#constructor-category .category-description {
+    display: block;
+    margin-top: 30px;
+    font-family: "proximaNovaBold";
+    font-size: 20px;
+    color: #4f4f4f;
+    font-weight: bold;
+    text-align: center;
+}
+
+#constructor-category .category-products {
+    width: 1140px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+#constructor-category .category-product:nth-child(4n+1) {
+    margin-left: 0px;
+}
+
+#constructor-category .category-product:first-child {
+    margin-left: 0px;
+}
+
+#constructor-category .category-product:hover {
+    border: 1px solid #EB4441;
+}
+
+#constructor-category .category-product {
+    display: block;
+    text-decoration: none;
+    float: left;
+    width: 247px;
+    margin-left: 50px;
+    overflow: hidden;
+    margin-top: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#constructor-category .category-product .img-container {
+    height: 250px;
+    overflow: hidden;
+    width: 100%;
+}
+
+#constructor-category .category-product .img-container img {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#constructor-category .category-product .product-title {
+    display: block;
+    text-align: center;
+    font-family: "proximaNovaSemibold";
+    font-size: 16px;
+    color: #383838;
+    font-weight: bold;
+    outline: none;
+    width: 100%;
+    margin-top: 10px;
+    height: 50px;
+    overflow: hidden;
+}
+
+#constructor-category .category-product .product-color {
+    display: block;
+    text-align: center;
+    font-family: "proximaNovaSemibold";
+    font-size: 16px;
+    color: #383838;
+    font-weight: bold;
+    outline: none;
+    width: 100%;
+    margin-top: 10px;
+    height: 25px;
+    overflow: hidden;
+}
+
+/* MAIN PAGE SALES SLIDERS */
+
+.main-slider-container {
+    width: 1000px;
+    margin: 40px auto -90px auto;
+}
+
+.sales-slider-container:first-child {
+    margin-left: 0;
+}
+
+.sales-slider-container {
+    float: left;
+    width: 480px;
+    margin-left: 40px;
+}
+
+.sales-slider {
+    width:100%;
+}
+
+.sale-slider-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sale-slider-link img {
+    width: 100%;
+}
+
+/* INFO PAGES */
+#info-page {
+    padding-bottom: 40px;
+}
+
+#info-page .main-title {
+    text-align: center;
+    padding-top: 40px;
+    font-family: sportsWorldRegular;
+    font-size: 40px;
+    color: #3e3e3e;
+    margin-bottom: 30px
+}
+
+#info-page .info-text {
+    display: block;
+    font-family: "proximaNovaLight";
+    font-size: 18px;
+    color: #4a4a4a;
+    line-height: 25px;
+    text-align: center;
+}
+
+#info-page .info-text ol {
+    display: block;
+    margin: 15px auto;
+    text-align: center;
+    counter-reset: myCounter;
+}
+
+#info-page .info-text ol li{
+    list-style: none;
+    padding-top: 5px;
+}
+#info-page .info-text ol li:before {
+    counter-increment: myCounter;
+    content: counter(myCounter);
+    display: inline-block;
+    margin-right: 5px;
+    background-color: #1E1E1E;
+    color: #fff;
+    width: 30px;
+}
+
+#info-page .last-title {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-family: "proximaNovaBold";
+    font-size: 20px;
+    color: #4f4f4f;
+    font-weight: bold;
+}
+
+#info-page .info-text-tile {
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+    font-family: "proximaNovaBold";
+    font-size: 20px;
+    color: #4f4f4f;
+    text-transform: uppercase;
+}
+
+#info-page .info-container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#info-page .info-left {
+    float: left;
+    width: 450px;
+}
+
+#info-page .info-right {
+    float: right;
+    width: 450px;
+}
+
+#info-page .info-image-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+#info-page .info-image-container img {
+    width: 100%;
+}
+
+#info-page .sertifikat-prices {
+    display: block;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 21px;
+    font-family: "proximaNovaRegular";
+    color: #4f4f4f;  
+}
+    

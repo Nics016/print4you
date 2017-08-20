@@ -14,12 +14,10 @@ class m170611_160556_common_create_user_table extends Migration
 
         $this->createTable('common_user', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
 
             'firstname' => $this->string()->notNull(),
-            'secondname' => $this->string(),
             'address' => $this->string(),
-            'phone' => $this->string(),
+            'phone' => $this->string()->notNull()->unique(),
             'profile_pic' => $this->text(),
             'sum_purchased_retail' => $this->integer()->defaultValue(0),
             'sum_purchased_gross' => $this->integer()->defaultValue(0),
@@ -27,7 +25,7 @@ class m170611_160556_common_create_user_table extends Migration
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
+            'email' => $this->string()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

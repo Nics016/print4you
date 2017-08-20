@@ -7,10 +7,10 @@ use common\models\Orders;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 
 use common\components\AccessRule;
-use frontend\components\Sms;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -66,7 +66,7 @@ class OrdersController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['accept', 'pick-courier', 'pick-executor'],
+                        'actions' => ['accept', 'pick-courier', 'pick-executor', 'change-product-data'],
                         'allow' => true,
                         // Allow manager
                         'roles' => [
@@ -75,7 +75,7 @@ class OrdersController extends Controller
                     ],
                     [
                         // TODO: убрать "delete" - админ не может удалять заказы
-                        'actions' => ['create', 'delete', 'cancelled', 'index', 'deleted', 'update', 'cancel'],
+                        'actions' => ['create', 'delete', 'cancelled', 'index', 'deleted', 'update', 'cancel', 'change-product-data'],
                         'allow' => true,
                         // Allow only admin
                         'roles' => [
@@ -120,7 +120,7 @@ class OrdersController extends Controller
         if (Yii::$app->user->identity->role == User::ROLE_MANAGER
             || Yii::$app->user->identity->role == User::ROLE_ADMIN){
             $records = Orders::find()
-                ->where("order_status='new'");
+                ->where("order_status='new' OR order_status='not_paid'");
         } 
         // Исполнитель
         elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
@@ -256,9 +256,7 @@ class OrdersController extends Controller
         $model = $this->findModel($id);
         $model->order_status = Orders::STATUS_CANCELLED;
         $model->comment = $comment . ' / ' . $model->comment;
-        $model->save();
-
-        Sms::message($model->phone, 'Здравствуйте, Ваш заказ # ' . $model->id . ' отклонён. Причина: ' . $comment) . '. Подробнее: +7 963 332 56 32';
+        $model->save(false);
 
         return $this->redirect('index');
     }
@@ -286,22 +284,29 @@ class OrdersController extends Controller
      * При нажатии на кнопку "принять" исполнителем.
      * Происходит вычет краски со склада и меняется статус заказа
      */
-    public function actionAcceptExecutor($id, $stock_color_id, $liters = 0)
+    public function actionAcceptExecutor($id, array $stock_color_id, array $liters)
     {
-        $fLiters = 0;
-        try {
-            $fLiters = (float)$liters;
-        } catch(Exception $e) {
-            return $this->renderContent(Html::tag('h1', $e->getMessage()));
+        $i = 0;
+        foreach ($stock_color_id as $color_id) {
+            if ($liters[$i] && $liters[$i] >= 0) {
+                $fLiters = 0;
+                try {
+                    $fLiters = (float)$liters[$i];
+                } catch(Exception $e) {
+                    return $this->renderContent(Html::tag('h1', $e->getMessage()));
+                }
+
+                $stockColor = StockColors::findOne(['id' => $color_id]);
+                if ($stockColor) {
+                    $stockColor->liters -= $fLiters;
+                    $stockColor->save();
+                }
+                $i++;
+            }
         }
-
-        $stockColor = StockColors::findOne(['id' => $stock_color_id]);
-        $stockColor->liters -= $liters;
-        $stockColor->save();
-
         $model = $this->findModel($id);
-        $model->stock_color_id = $stock_color_id;
-        $model->stock_color_liters = $liters;
+        $model->stock_color_id = json_encode($stock_color_id);
+        $model->stock_color_liters = json_encode($liters);
         $model->location = Orders::LOCATION_EXECUTOR_ACCEPTED;
         $model->save();
 
@@ -319,11 +324,8 @@ class OrdersController extends Controller
 
         // Если нет курьера, заказ готов
         if ($model->courier_id == NULL){
-            $model->order_status = Orders::STATUS_COMPLETED;
             $model->location = Orders::LOCATION_EXECUTOR_COMPLETED;
             $model->save();
-
-            Sms::message($model->phone, 'Здравствуйте! Ваш заказ #' . $model->id . ' готов и ожидает Вас в офисе по адресу:' . $model->address);
         }
 
         return $this->redirect('proccessing');
@@ -335,11 +337,10 @@ class OrdersController extends Controller
     public function actionAcceptCourier($id)
     {
         $model = $this->findModel($id);
+        $model->order_status = Orders::STATUS_COMPLETED;
         $model->location = Orders::LOCATION_COURIER_ACCEPTED;
         $model->save();
 
-        Sms::message($model->phone, 'Здравствуйте! Ваш заказ #' . $model->id . ' готов и готовится к доставке');
-        
         return $this->redirect('proccessing');
     }
 
@@ -460,6 +461,21 @@ class OrdersController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+
+    /**
+     * Change order product data as type print id or total price
+     */
+
+    public function actionChangeProductData()
+    {
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return OrdersProduct::ajaxChangeProductData();
+        }
+
+        throw new NotFoundHttpException();
     }
 
     /**

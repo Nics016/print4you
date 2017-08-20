@@ -26,7 +26,7 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height', 'material_id'], 'required'],
             [['description'], 'string'],
             [['category_id', 'material_id'], 'integer'],
-            [['name', 'full_image', 'small_image'], 'string', 'max' => 255],
+            [['name', 'full_image', 'small_image', 'seo_title', 'seo_description', 'seo_keywords', 'img_alt'], 'string', 'max' => 255],
             ['is_published', 'boolean'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
@@ -53,6 +53,7 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             'print_offset_y' => 'Отсутп принта сверху',
             'print_width' => 'Ширина принта',
             'print_height' => 'Высота принта',
+            'img_alt' => 'Alt Картинки',
         ];
     }
 
@@ -184,6 +185,17 @@ class ConstructorProducts extends \yii\db\ActiveRecord
                 )->orderBy('id');
     }
 
+    // используется для вывода на странице категории конструктора
+    public function getColors()
+    {   
+        $front_full_link = ConstructorColors::getFullFrontImageLink();
+
+        return $this->hasMany(ConstructorColors::className(), ['product_id' => 'id'])
+                ->select("id, name, product_id, img_alt, price, gross_price,
+                    ('$front_full_link' || '/' || full_front_image) as front_image"
+                )->orderBy('id ASC');
+    }
+
     // свзязь для вывода во фронтенд конструктора
     public function getConstructorColors()
     {   
@@ -199,6 +211,6 @@ class ConstructorProducts extends \yii\db\ActiveRecord
                     ('$back_small_link' || '/' || small_back_image) as small_back_image, 
                     ('$front_full_link' || '/' || full_front_image) as full_front_image, 
                     ('$back_full_link' || '/' || full_back_image) as full_back_image"
-                )->with('constructorSizes');
+                )->with('constructorSizes')->orderBy('id ASC')->with('constructorSides');
     }
 }

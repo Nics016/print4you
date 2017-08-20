@@ -74,13 +74,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays test page.
-     */
-    public function actionTest()
-    {
-        return $this->renderContent("<h1>Вот так будет отображаться</h1> <h4>контент, находящийся в \$content</h4>");
-    }
 
     /**
      * Displays homepage.

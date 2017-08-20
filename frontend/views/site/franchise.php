@@ -8,7 +8,6 @@ use frontend\models\RequestCallForm;
 
 $model = new RequestCallForm();
 
-$this->title = 'Print4you - Франшиза';
 ?>
 
 <main class="franchise">
@@ -19,11 +18,9 @@ $this->title = 'Print4you - Франшиза';
 				<!-- TITLE-LINE -->
 				<div class="title-line clearfix">
 					<div class="title-line-left">
-						<h2 class="subtitle">
+						<h1 class="subtitle">
 							Печать на футболках print4you
-						</h2>
-						<h1 class="title">
-							Франшиза
+							<span class="title">Франшиза</span>
 						</h1>
 					</div>
 
@@ -48,10 +45,10 @@ $this->title = 'Print4you - Франшиза';
 					<div class="pluses-plus">
 						<div class="pluses-plus-title-line clearfix">
 							<img src="/img/franchise-01.png" alt="">
-							<h3 class="title">
+							<h2 class="title">
 								Инвестиции для регионов <br>
 								390.000 тысяч рублей
-							</h3>
+							</h2>
 						</div>
 						<div class="pluses-plus-info">
 							<ul>
@@ -98,7 +95,7 @@ $this->title = 'Print4you - Франшиза';
 						Заявка на франшизу
 					</h2>
 					<div class="underline"></div>
-					<h3>В поле "примечание" укажите ваш город</h3>
+					<span>В поле "примечание" укажите ваш город</span>
 
 					<div class="contacts-questions-form-wrapper">
 						<?php $form = ActiveForm::begin(['action' => ['site/request-call-sent'], 'method' => 'POST', 'options' => ['class' => 'clearfix contacts-questions-form']]); ?>

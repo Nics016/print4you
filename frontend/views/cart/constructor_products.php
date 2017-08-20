@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use frontend\components\Basket;
+use frontend\components\basket\Basket;
 ?>
 
 
@@ -15,18 +15,40 @@ use frontend\components\Basket;
 	</div>
 	
 	<div class="constructor-main-info clearfix">
-		<div class="constructor-product-images clearfix">
-			<div class="constructor-product-image">
-				<?= Html::img($product['front_image'], [
-					'alt' => 'Лицевая сторона'
-				]) ?>
+		<div class="constructor-product-images">
+
+			<div class="main-sides-images-container clearfix">
+				<a href="<?= $product['front_image'] ?>" class="constructor-product-image">
+					<?= Html::img($product['front_image'], [
+						'alt' => 'Лицевая сторона'
+					]) ?>
+				</a>
+
+				<a href="<?= $product['back_image'] ?>" class="constructor-product-image">
+					<?= Html::img($product['back_image'], [
+						'alt' => 'Обратная сторона'
+					]) ?>
+				</a>
 			</div>
 
-			<div class="constructor-product-image">
-				<?= Html::img($product['back_image'], [
-					'alt' => 'Обратная сторона'
-				]) ?>
+			<div class="additional-sides-images-container clearfix">
+				
+				<?php 
+				for($i = 0; $i < count($product['additional_sides']); $i++):
+					$link = $product['additional_sides'][$i]['print_image'];
+					$alt = $product['additional_sides'][$i]['side_name'];
+				?>	
+
+					<a href="<?= $link ?>" class="additional-side-image">
+						<?= Html::img($link, [
+							'alt' => $alt,
+						]) ?>
+					</a>
+
+				<?php endfor; ?>
+
 			</div>
+		
 		</div>
 
 		<div class="constructor-product-meta-container">
@@ -86,7 +108,7 @@ use frontend\components\Basket;
 			</div>
 
 		</div>
-		<div class="change-right-print">
+		<div class="change-left-print">
 			<span class="change-print-label">Обратная сторона</span>
 
 			<div class="change-print-side" data-side="back">
@@ -97,6 +119,26 @@ use frontend\components\Basket;
 			</div>
 
 		</div>
+
+		<?php 
+		for ($i = 0; $i < count($product['additional_sides']); $i++): 
+			$current = $product['additional_sides'][$i];
+		?>
+			
+			<div class="change-left-print">
+				<span class="change-print-label"><?= $current['side_name'] ?></span>
+
+				<div class="change-print-side" data-side="additional" data-side-id="<?= $current['side_id'] ?>">
+					<?= $this->render('constructor_change_print', [
+						'print' =>  $current['print'],
+						'print_avaliable_prices' => $current['avaliable_prices'],
+					]) ?>
+				</div>
+
+			</div>
+
+
+		<?php endfor; ?>
 
 		<div class="change-meta-container">
 			<span class="change-meta">Вернуться</span>
@@ -111,6 +153,7 @@ use frontend\components\Basket;
 			'product_price' => $product['product_price'],
 			'front_print_price' => $product['front_print_price'],
 			'back_print_price' => $product['back_print_price'],
+			'additional_sides' => $product['additional_sides'],
 			'count' => $product['count'],
 		]) ?>
 	</div>

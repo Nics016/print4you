@@ -22,6 +22,15 @@ jQuery(document).ready(function($){
 		
 	});
 
+	// показ галереи
+	$('.additional-sides-images-container').lightGallery({
+	    thumbnail: true,
+	}); 
+
+	$('.main-sides-images-container').lightGallery({
+	    thumbnail: true,
+	}); 
+
 	// показ информации о цене
 	$(document).on('click', '.about-price', function(){
 		var action = $(this).attr('data-action');
@@ -79,7 +88,7 @@ jQuery(document).ready(function($){
 				data: {'_csrf-frontend': _csrf, id: id, size_id: sizeId},
 				type: 'POST',
 				success: function (response) {
-
+					console.log(response);
 					if (response['status'] == 'ok') {
 						setTimeout(function (){
 							$(loadingOverlay).hide();
@@ -91,6 +100,7 @@ jQuery(document).ready(function($){
 					
 				},
 				error: function (err) {
+					console.log(err);
 					$(loadingText).text('Произошла ошибка, обновите страницу!');
 				}
 			});
@@ -130,6 +140,7 @@ jQuery(document).ready(function($){
 				data: {'_csrf-frontend': _csrf, id: id},
 				type: 'POST',
 				success: function (msg) {
+					console.log(msg);
 					if (msg['status'] == 'ok') {
 
 						setTimeout(function(){
@@ -149,8 +160,9 @@ jQuery(document).ready(function($){
 								changeFullPrice(msg['basket_price']);
 
 								$(parent).remove();
-
 							}
+							var basketText = msg['count'] > 0 ? ' ( ' + msg['count'] + ' ) ' : '';
+							$('#basket-count').text(basketText); 
 						}, 500);
 
 					} else {
@@ -187,10 +199,16 @@ jQuery(document).ready(function($){
 		$(loadingText).text('Меняем ' +  action +', подождите...');
 		$(loadingOverlay).show();
 		
+		var data = {};
+
+		if (side == 'additional')
+			data = {'_csrf-frontend': _csrf, id: id, side: side, side_id: $(parent).data('side-id'), value: value, name: name};
+		else
+			data = {'_csrf-frontend': _csrf, id: id, side: side, value: value, name: name};
 
 		$.ajax({
 			url: '/cart/change-print-option/',
-			data: {'_csrf-frontend': _csrf, id: id, side: side, value: value, name: name},
+			data: data,
 			type: 'POST',
 			success: function (response) {
 				if (response['status'] == 'ok') {
@@ -214,7 +232,6 @@ jQuery(document).ready(function($){
 				}
 			},
 			error: function (err) {
-				console.log(err);
 				$(loadingText).text('Произошла ошибка, обновите страницу');
 			}
 		});
@@ -227,7 +244,7 @@ jQuery(document).ready(function($){
 		var id = parseInt($(parent).find('.product-id').val());
 		var loadingOverlay = $(parent).find('.loading-product-container');
 		var loadingText = $(loadingOverlay).find('.loading-text');
-
+		
 		if (isNaN(id)) {
 			$(parent).remove();
 		} else {
@@ -239,7 +256,9 @@ jQuery(document).ready(function($){
 				data: {'_csrf-frontend': _csrf, id: id, action: action, count: count},
 				type: 'POST',
 				success: function (response) {
-					//console.log(response);
+					/*console.log(response);
+					$(loadingOverlay).hide();
+					return;*/
 					if (response['status'] == 'ok') {
 
 						// изменяем цену коризны
@@ -254,6 +273,15 @@ jQuery(document).ready(function($){
 						// изменим html сторон
 						$(parent).find('.change-print-side[data-side="front"]').html(response['front_print_html']);
 						$(parent).find('.change-print-side[data-side="back"]').html(response['back_print_html']);
+
+						// изменим html дополнительных сторон
+						for (var i = 0; i < response['additonal_html'].length; i++) {
+							var current = response['additonal_html'][i];
+							var sideId = current['side_id'];
+							var html = current['html'];
+							var selector = '.change-print-side[data-side="additional"][data-side-id="' + sideId+ '"]';
+							$(parent).find(selector).html(html);
+						}
 
 						setTimeout(function (){
 							$(loadingOverlay).hide();

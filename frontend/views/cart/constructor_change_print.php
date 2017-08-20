@@ -1,8 +1,7 @@
-<?php 
-if (!empty($print)):
-?>
-	<div class="change-print-form-row">
-		<span class="change-print-form-label">Метод печати</span>
+
+<div class="change-print-form-row">
+	<span class="change-print-form-label">Метод печати</span>
+	<?php if (!empty($print)): ?>
 		<select name="type" class="change-print-form-select" data-action="метод печати">
 			
 			<?php
@@ -17,16 +16,20 @@ if (!empty($print)):
 				<option value="<?= $id ?>" <?= $selected ?>><?= $name ?></option>
 			<?php endfor; ?>
 		</select>
-	</div>
+	<?php else: ?>
+		<span class="not-avaliable-select">Выбор недоступен</span>
+	<?php endif; ?>
+</div>
 		
+	
+
+<div class="change-print-form-row">
+	<span class="change-print-form-label">Цветность</span>
 	<?php
-	$colors = $print_avaliable_prices['colors'];
+	$colors = $print_avaliable_prices['colors'] ?? [];
 	if(!empty($colors)):
 		$current_color = $print['color'];
 	?>
-
-	<div class="change-print-form-row">
-		<span class="change-print-form-label">Цветность</span>
 		<select name="color" class="change-print-form-select" data-action="цветность печати">
 			<?php
 			for ($i = 0; $i < count($colors); $i++):
@@ -37,18 +40,22 @@ if (!empty($print)):
 				<option value="<?= $color ?>" <?= $selected ?>><?= $color ?></option>
 			<?php endfor; ?>
 		</select>
-	</div>
-
+	<?php else: ?>
+		<span class="not-avaliable-select">Выбор недоступен</span>
 	<?php endif; ?>
+</div>
 
+
+
+
+<div class="change-print-form-row">
+	<span class="change-print-form-label">Доп. услуги</span>
 	<?php
-	$attendances = $print_avaliable_prices['attendances'];
+	$attendances = $print_avaliable_prices['attendances'] ?? [];
 	if(!empty($attendances)):
 		$current_attendance = $print['attendance']['id'];
 	?>
 
-	<div class="change-print-form-row">
-		<span class="change-print-form-label">Доп. услуги</span>
 		<select name="attendance" class="change-print-form-select" data-action="доп. услугу">
 			<option value="">Выберите услугу</option>
 			<?php
@@ -62,11 +69,15 @@ if (!empty($print)):
 				<option value="<?= $id ?>" <?= $selected ?>><?= $name ?> (+<?= $percent ?>%)</option>
 			<?php endfor; ?>
 		</select>
-	</div>
 
+	<?php else: ?>
+		<span class="not-avaliable-select">Выбор недоступен</span>
 	<?php endif; ?>
+	
+</div>
 
-<?php endif; ?>
+
+
 
 
 	

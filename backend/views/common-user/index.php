@@ -27,7 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'label' => 'Имя пользователя',
-                'attribute' => 'username',
+                'attribute' => 'firstname',
+            ],
+            [
+                'label' => 'Номер телефона',
+                'attribute' => 'phone',
             ],
             // 'auth_key',
             // 'password_hash',

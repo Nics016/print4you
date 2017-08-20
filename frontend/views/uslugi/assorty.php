@@ -5,7 +5,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Print4you - Услуги - Ассортимент';
 ?>
 
 <main class="assorty">
@@ -22,19 +21,40 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 		<div class="line2-tabs">
 			<div class="line2-tabs-tab">
 				<div class="line2">
-					<div class="container" id="simple_price">
+					<div class="assorty-container clearfix" id="simple_price">
 						<?php 
-							for ($i = 0; $i < count($content); $i++) {
-								$item = $content[$i];
+						$current_cat_id = null;
+						for ($x = 0; $x < count($content); $x++) {
+							$item = $content[$x];
+							$colors = $item['colors'];
+							$product_id = $item['id'];
+							$name = $item['name'];
+							$description = $item['description'];
+
+							$id_tag = false;
+							$cat_id = $item['category_id'];
+							if ($current_cat_id === null || $cat_id != $current_cat_id) {
+								$current_cat_id = $cat_id;
+								$id_tag = 'cat-' . $cat_id;
+							}
+
+							for ($y = 0; $y < count($colors); $y++) {
+								$image = $colors[$y]['front_image'];
+								$price = $colors[$y]['price'];
+								$img_alt = $colors[$y]['img_alt'];
+
 								echo $this->render('assorty_row', [
-									'product_id' => $item['id'],
-									'name' => $item['name'],
-									'image' => $item['firstColor']['image'],
+									'product_id' => $product_id,
+									'name' => $name,
+									'image' => $image,
 									'count' => 1,
-									'price' => $item['firstColor']['price'],
-									'description' => $item['description'],
+									'price' => $price,
+									'description' => $description,
+									'id_tag' => $id_tag,
+									'alt' => $img_alt,
 								]);
 							}
+						}
 						?>
 					</div> 
 					<!-- END OF .container -->
@@ -43,25 +63,44 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 			</div>
 			<!-- ./tab -->
 
-<!-- ------------------------------------ -->
 
 			<div class="line2-tabs-tab">
 				<div class="line2">
-					<div class="container" id="gross_price">
+					<div class="assorty-container clearfix" id="gross_price">
 						<?php 
-							for ($i = 0; $i < count($content); $i++) {
-								$item = $content[$i];
-								$gross_price = json_decode($item['firstColor']['gross_price'], true);
+						$current_cat_id = null;
+						for ($x = 0; $x < count($content); $x++) {
+							$item = $content[$x];
+							$colors = $item['colors'];
+							$product_id = $item['id'];
+							$name = $item['name'];
+							$description = $item['description'];
+
+							$id_tag = false;
+							$cat_id = $item['category_id'];
+							if ($current_cat_id === null || $cat_id != $current_cat_id) {
+								$current_cat_id = $cat_id;
+								$id_tag = 'cat-' . $cat_id;
+							}
+
+							for ($y = 0; $y < count($colors); $y++) {
+								$image = $colors[$y]['front_image'];
+								$gross_price = json_decode($colors[$y]['gross_price'], true);
 								$gross_price = $gross_price[0]["price"];
+								$img_alt = $colors[$y]['img_alt'];
+
 								echo $this->render('assorty_row', [
-									'product_id' => $item['id'],
-									'name' => $item['name'],
-									'image' => $item['firstColor']['image'],
+									'product_id' => $product_id,
+									'name' => $name,
+									'image' => $image,
 									'count' => $groos_count,
 									'price' => $gross_price,
-									'description' => $item['description'],
+									'description' => $description,
+									'id_tag' => $id_tag,
+									'alt' => $img_alt,
 								]);
 							}
+						}
 						?>
 					</div> 
 					<!-- END OF .container -->
@@ -73,7 +112,7 @@ $this->title = 'Print4you - Услуги - Ассортимент';
 		<!-- ./tabs -->
 		<div class="container">
 			<button id="load-more-assorty">Показать еще</button>
-		</div>
+		</div> 
 		<input type="hidden" id="assorty-limit" value="<?= $limit ?>">
 		<input type="hidden" id="assorty-offset" value="<?= $offset ?>">
 	</main>

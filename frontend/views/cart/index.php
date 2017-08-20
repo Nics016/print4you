@@ -4,9 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-use frontend\components\Basket;
+use frontend\components\basket\Basket;
 
-$this->title = 'Корзина';
 
 // common style.css
 $css_file_name = Yii::getAlias('@frontend') . '/web/css/cart.css';
@@ -32,7 +31,9 @@ $this->registerJsFile('/js/cart.js?v=' . filemtime($js_file_name), [
 	<h3 class="your-order">Ваш заказ: </h3>
 	
 	<span class="about-big-order">
-		(Заказ более <?= Basket::PRODUCT_MAX_COUNT  ?>шт. за товар обговаривается индивидуально)
+		Заказ более <?= Basket::PRODUCT_MAX_COUNT  ?> штук за товар обговаривается индивидуально.
+		<br>
+		Для кружек заказ свыше 500 штук обсуждается отдельно.
 	</span>
 
 	<?php

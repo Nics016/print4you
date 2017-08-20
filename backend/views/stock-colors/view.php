@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\models\Office;
+use backend\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\StockColors */
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if (Yii::$app->user->identity->role == User::ROLE_ADMIN): ?>
     <p>
         <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -25,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,

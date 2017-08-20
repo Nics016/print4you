@@ -35,6 +35,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'print_height')->label('Высота принта')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
+    <?= $form->field($model, 'img_alt')->label('Alt картинки')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+
     <?= $form->field($model, 'is_published')->label('Опубликовать?')->checkbox() ?>
     
     <?php 
@@ -52,7 +54,10 @@ use yii\widgets\ActiveForm;
 
     echo $form->field($model, 'material_id')->label('Материал')->dropDownList($dropdown_materials);
     ?>
-
+    
+    <?= $form->field($model, 'seo_title')->label('SEO Title')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    <?= $form->field($model, 'seo_description')->label('SEO Description')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    <?= $form->field($model, 'seo_keywords')->label('SEO Keywords')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

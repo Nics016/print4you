@@ -53,6 +53,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->category->name;
                 }
             ],
+            [
+                'attribute' => 'seo_title',
+                'label' => 'SEO Title',
+            ],
+            [
+                'attribute' => 'seo_description',
+                'label' => 'SEO Description',
+            ],
+            [
+                'attribute' => 'seo_keywords',
+                'label' => 'SEO Keywords',
+            ],
+            [
+                'attribute' => 'img_alt',
+                'label' => 'Alt Картинки',
+            ],
         ],
     ]) ?>
 
