@@ -21,8 +21,10 @@ class ConstructorCategories extends \yii\db\ActiveRecord
     {
         return [
             [['sequence'], 'integer'],
-            [['h1_tag_title', 'menu_title'], 'required'],
-            [['name', 'img', 'seo_title', 'seo_description', 'seo_keywords', 'h1_tag_title', 'menu_title', 'img_alt'], 'string', 'max' => 255],
+            [['h1_tag_title', 'menu_title', 'alias'], 'required'],
+            [['name', 'img', 'seo_title', 'seo_description', 'seo_keywords', 'h1_tag_title', 'menu_title', 'img_alt', 'alias'], 'string', 'max' => 255],
+            ['alias', 'unique'],
+            ['alias', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/', 'message' => 'Поле алиаса не должно содержать пробелов и прочих знаков, которые не подойдут ссылке'],
             [['description'], 'string'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
@@ -44,6 +46,7 @@ class ConstructorCategories extends \yii\db\ActiveRecord
             'h1_tag_title' => 'Тэг H1',
             'menu_title' => 'Название пункта меню',
             'img_alt' => 'Alt Картинки',
+            'alias' => 'Алиас',
         ];
     }
 
@@ -165,7 +168,7 @@ class ConstructorCategories extends \yii\db\ActiveRecord
     {   
         $link = self::getImagesLink();
         return self::find()
-                ->select("id, name, description, ('$link' || '/' || img) as img, img_alt")
+                ->select("id, name, description, ('$link' || '/' || img) as img, img_alt, alias")
                 ->asArray()->orderBy('sequence')->all();
     }
 }

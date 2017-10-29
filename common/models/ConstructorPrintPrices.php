@@ -21,8 +21,9 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
         return [
             [['type_id', 'material_id', 'price', 'min_count'], 'required'],
             [['type_id', 'material_id', 'size_id', 'price', 'min_count', 'color'], 'integer'],
-            ['gross_price', 'string'],
+            [['gross_price', 'gross_price_white'], 'string'],
             ['gross_price', 'grossPriceValidate'],
+            ['gross_price_white', 'grossPriceWhiteValidate'],
             ['priceAttendances', 'safe'],
         ];
     }
@@ -50,6 +51,32 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
         }
 
         $this->addError('gross_price', 'Нет ни 1 цены');
+        return false;
+    }
+
+    // сохрание оптовой цени (белый текстиль) из json (приходит из админки)
+    public function grossPriceWhiteValidate()
+    {
+        $array = json_decode($this->gross_price_white, true);
+        $count = count($array);
+        if ($count > 0) {
+
+            for ($i = 0; $i < $count; $i++ ) {
+                $item = $array[$i];
+                $from = (int)$item['from'];
+                $to = (int)$item['to'];
+                $price = (int)$item['price'];
+
+                if ($from < 1 || $to < 1 || $price < 1) {
+                    $this->addError('gross_price_white', 'Одно из полей заполнено не верно');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        $this->addError('gross_price_white', 'Нет ни 1 цены');
         return false;
     }
 
@@ -123,12 +150,12 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
 
     public static function getPriceData($material_id, $size_id, $count, $color = null)
     {
-        if ($color == null) {
+        if ($color === null) {
             $model = self::find()->where('material_id = :material_id AND size_id = :size_id AND min_count <= :count', [
                     ':material_id' => $material_id,
                     ':size_id' => $size_id,
                     ':count' => $count,
-                ])->asArray()->one();
+                ])->orderBy('type_id ASC')->asArray()->one();
         } else {
             $model = self::find()
                 ->where('material_id = :material_id AND size_id = :size_id AND min_count <= :count AND color = :color', [
@@ -136,7 +163,7 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
                     ':size_id' => $size_id,
                     ':count' => $count,
                     ':color' => $color,
-                ])->asArray()->one();
+                ])->orderBy('type_id ASC')->asArray()->one();
         }
 
         return $model == false ? [] : $model;
@@ -174,7 +201,8 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
     // доступная услуга для принта
     public static function getPrintAttendance($material_id, $size_id, $count, $type_id, $color = null, $attendance_id)
     {   
-        if ($color != null) {
+       
+        if ($color !== null) {
             $sql = 'material_id = :material_id AND size_id = :size_id 
                 AND min_count <= :count AND type_id = :type_id AND color = :color';
             $price = self::find()->where($sql, [
@@ -184,6 +212,8 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
                                     ':type_id' => $type_id,
                                     ':color' => $color,
                                 ])->limit(1)->one();
+
+
         } else {
             // поменяем sql запрос
             $sql = 'material_id = :material_id AND size_id = :size_id AND min_count <= :count 
@@ -197,14 +227,14 @@ class ConstructorPrintPrices extends \yii\db\ActiveRecord
         }
         
 
-        if ($price == false) return false;
+        if ($price == null) return null;
 
         $expression = ConstructorPrintPriceAttendance::find()
                         ->where(['price_id' => $price->id, 'attendance_id' => $attendance_id])->exists();
         if ($expression)
             return ConstructorPrintAttendance::find()->where(['id' => $attendance_id])->asArray()->one();
 
-        return false;
+        return null;
     }
 
     // находит доступные метода печати, цветности и услуги

@@ -1,5 +1,13 @@
-User-agent: Yandex
-Disallow: /
+User-agent: *
 
-User-agent: Google
-Disallow: / 
+Disallow: /constructor/*/*
+Disallow: /images/*
+Disallow: /products/*
+Disallow: /cart/*
+Disallow: /register/*
+Disallow: /checkout/*
+Disallow: /register-success/*
+Disallow: /forgot-password/*									
+
+Host: http://www.print4you.su/
+Sitemap: http://www.print4you.su/sitemap.xml

@@ -4,3 +4,39 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 # Otherwise forward it to index.php
 RewriteRule . index.php
+
+Redirect 301 /about	/contacts/
+Redirect 301 /clients1	/nashi-clienty/
+Redirect 301 /franshiza	/franchise/
+Redirect 301 /nashi-gosti	/nashi-gosti/
+Redirect 301 /payment-and-delivery	/dostavka/
+Redirect 301 /pechat-na-futbolkah	/constructor/
+Redirect 301 /pechat-na-futbolkah-spb-print4you	/about/
+Redirect 301 /pechat-na-futbolkah-spb-print4you/deshevo-print4you	/info/deshevo-print4you/
+Redirect 301 /pechat-na-futbolkah-spb-print4you/futbolki-optom	/info/futbolki-optom/
+Redirect 301 /pechat-na-futbolkah-spb-print4you/nedorogo	/info/nedorogo/
+Redirect 301 /pechat-na-futbolkah-spb-print4you/za-15-minut	/info/za-15-minut/
+Redirect 301 /sale	/sale/
+Redirect 301 /services	/uslugi/
+Redirect 301 /services/categories/pechat-na-kruzhkak	/constructor-category/kruzhki/
+Redirect 301 /services/categories/sertifikat	/info/sertifikat/
+Redirect 301 /services/categories/tekstil	/uslugi/tekstil/
+Redirect 301 /services/categories/uslugi-po-pechati	/uslugi/
+Redirect 301 /services/futbolki-girl	/constructor-category/zhenskie-futbolki/
+Redirect 301 /services/futbolki-man	/constructor-category/muzhskie-futbolki/
+Redirect 301 /services/kepki	/constructor-category/kepki/
+Redirect 301 /services/kruzhki-s-foto	/constructor-category/kruzhki/
+Redirect 301 /services/mayki-muzhskie	/constructor-category/muzhskie-futbolki/
+Redirect 301 /services/mayki-zhenskie	/constructor-category/maiky-zhenskie/
+Redirect 301 /services/muzhskie-rubashki-polo	/constructor-category/muzhskie-polo/
+Redirect 301 /services/pechat-na-futbolkah-print-printer	/uslugi/cifrovaya/
+Redirect 301 /services/sertifikat	/info/sertifikat/
+Redirect 301 /services/shelkografiya	/uslugi/shelkography/
+Redirect 301 /services/sublimatsiya	/uslugi/sublimation/
+Redirect 301 /services/termoperenos	/uslugi/termoperenos/
+Redirect 301 /services/tolstovka-girl	/constructor-category/tolsotovki-zhenslkie/
+Redirect 301 /services/tolstovka-man	/constructor-category/tolsotovki-muzhskie/
+Redirect 301 /services/zhenskie-rubashki-polo	/constructor-category/zhenskie-polo/
+Redirect 301 /sotrudnichestvo	/
+Redirect 301 /stanki-dlya-pechati-na-kruzhkah-i-drugih-tsilindricheskih-poverhnostyah	/info/oborudovanie/
+Redirect 301 /testimonials	/reviews/

@@ -19,6 +19,8 @@ use backend\models\User;
 use common\models\OrdersProduct;
 use common\models\ConstructorStorage;
 
+use frontend\components\Sms;
+
 /**
  * OrdersController implements the CRUD actions for Orders model.
  */
@@ -50,7 +52,7 @@ class OrdersController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['accept-executor', 'complete-executor', 'complete'],
+                        'actions' => ['accept-executor', 'complete-executor', 'complete', 'create'],
                         'allow' => true,
                         // Allow executor
                         'roles' => [
@@ -66,7 +68,7 @@ class OrdersController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['accept', 'pick-courier', 'pick-executor', 'change-product-data'],
+                        'actions' => ['accept', 'pick-courier', 'pick-executor', 'change-product-data', 'create'],
                         'allow' => true,
                         // Allow manager
                         'roles' => [
@@ -100,7 +102,7 @@ class OrdersController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Orders::find(),
+            'query' => Orders::find()->orderBy('id DESC'),
         ]);
 
         return $this->render('index', [
@@ -116,31 +118,43 @@ class OrdersController extends Controller
     {
         $records = [];
         $mapColors = [];
-        // Менеджер и админ
-        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
-            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
-            $records = Orders::find()
-                ->where("order_status='new' OR order_status='not_paid'");
-        } 
-        // Исполнитель
-        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND executor_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_EXECUTOR_NEW);
-            $colors = StockColors::find()
-                ->where(['office_id' => Yii::$app->user->identity->office_id])
-                ->asArray()->all();
-            $mapColors = ArrayHelper::map($colors, 'id', 'name');
-        }
-        // Курьер
-        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND courier_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_COURIER_NEW);
+
+        switch (Yii::$app->user->identity->role) {
+
+            case User::ROLE_ADMIN:
+                $records = Orders::find() 
+                            ->where(['order_status'=> [Orders::STATUS_NEW, Orders::STATUS_NOT_PAID]])
+                            ->orderBy('id DESC');
+                break;
+            
+            case User::ROLE_MANAGER:
+                $records = Orders::find() 
+                            ->where(['order_status'=> [Orders::STATUS_NEW, Orders::STATUS_NOT_PAID]])
+                            ->orderBy('id DESC');
+                break;
+
+            case User::ROLE_EXECUTOR:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_PROCCESSING,
+                    'executor_id' => Yii::$app->user->identity->id,
+                    'location' => Orders::LOCATION_EXECUTOR_NEW,
+                ])->orderBy('id DESC');
+
+                $colors = StockColors::find()
+                    ->where(['office_id' => Yii::$app->user->identity->office_id])
+                    ->asArray()->all();
+                $mapColors = ArrayHelper::map($colors, 'id', 'name');
+
+                break;
+
+            case User::ROLE_COURIER:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_PROCCESSING,
+                    'courier_id' => Yii::$app->user->identity->id,
+                    'location' => Orders::LOCATION_COURIER_NEW,
+                ])->orderBy('id DESC');
+                break;
+            
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -160,27 +174,37 @@ class OrdersController extends Controller
     public function actionProccessing()
     {
         $records = [];
-        // Менеджер и админ
-        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
-            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
-            $records = Orders::find()
-                ->where("order_status='proccessing'");
-        } 
-        // Исполнитель
-        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND executor_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_EXECUTOR_ACCEPTED);
-        }
-        // Курьер
-        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND courier_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_COURIER_ACCEPTED);
+
+        switch (Yii::$app->user->identity->role) {
+
+            case User::ROLE_ADMIN:
+                $records = Orders::find()->where(['order_status' => Orders::STATUS_PROCCESSING])
+                                    ->orderBy('id DESC');
+                break;
+            
+            case User::ROLE_MANAGER:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_PROCCESSING,
+                    'manager_id' => Yii::$app->user->identity->id,
+                ])->orderBy('id DESC');
+                break;
+
+            case User::ROLE_EXECUTOR:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_PROCCESSING,
+                    'executor_id' => Yii::$app->user->identity->id,
+                    'location' => Orders::LOCATION_EXECUTOR_ACCEPTED,
+                ])->orderBy('id DESC');
+                break;
+
+            case User::ROLE_COURIER:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_PROCCESSING,
+                    'courier_id' => Yii::$app->user->identity->id,
+                    'location' => Orders::LOCATION_COURIER_ACCEPTED,
+                ])->orderBy('id DESC');
+                break;
+            
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -199,23 +223,43 @@ class OrdersController extends Controller
     public function actionCompleted()
     {
         $records = [];
-        // Менеджер и админ
-        if (Yii::$app->user->identity->role == User::ROLE_MANAGER
-            || Yii::$app->user->identity->role == User::ROLE_ADMIN){
-            $records = Orders::find()
-                ->where("order_status='completed'");
-        } 
-        // Исполнитель
-        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
-            $records = Orders::find()
-                ->where("order_status='completed' AND executor_id="
-                    . Yii::$app->user->identity->id);
-        }
-        // Курьер
-        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
-            $records = Orders::find()
-                ->where("order_status='completed' AND courier_id="
-                    . Yii::$app->user->identity->id);
+
+
+        switch (Yii::$app->user->identity->role) {
+
+            case User::ROLE_ADMIN:
+                $records = Orders::find()->where(['order_status' => Orders::STATUS_COMPLETED])
+                                    ->orderBy('id DESC');
+                break;
+            
+            case User::ROLE_MANAGER:
+                $records = Orders::find()->where([
+                    'order_status' => Orders::STATUS_COMPLETED,
+                    'manager_id' => Yii::$app->user->identity->id,
+                ])->orderBy('id DESC');
+                break;
+
+            case User::ROLE_EXECUTOR:
+                $records = Orders::find()->where([
+                    'location' => [
+                        Orders::LOCATION_COURIER_NEW,
+                        Orders::LOCATION_COURIER_ACCEPTED,
+                        Orders::LOCATION_COURIER_COMPLETED,
+                        Orders::LOCATION_EXECUTOR_COMPLETED,
+                    ],
+                    'executor_id' => Yii::$app->user->identity->id,
+                ])->orderBy('id DESC');
+                break;
+
+            case User::ROLE_COURIER:
+                $records = Orders::find()->where([
+                    'location' => [
+                        Orders::LOCATION_COURIER_COMPLETED,
+                    ],
+                    'courier_id' => Yii::$app->user->identity->id,
+                ])->orderBy('id DESC');
+                break;
+            
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -234,7 +278,7 @@ class OrdersController extends Controller
     public function actionCancelled()
     {
         $records = Orders::find()
-            ->where("order_status='cancelled'");
+            ->where(['order_status' => Orders::STATUS_CANCELLED])->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $records,
@@ -319,16 +363,23 @@ class OrdersController extends Controller
     public function actionCompleteExecutor($id)
     {
         $model = $this->findModel($id);
+
+        if (!$model->delivery_required){
+            $model->location = Orders::LOCATION_EXECUTOR_COMPLETED;
+            $model->order_status = Orders::STATUS_COMPLETED;
+            $model->save();
+
+            // отправим СМС
+            $message = 'Ваш заказ №' . $model->id . ' готов. Заберите его из точки самовывоза!';
+            Sms::message($model->phone, $message);
+            return $this->redirect('completed');
+
+        } 
+
         $model->location = Orders::LOCATION_COURIER_NEW;
         $model->save();
-
-        // Если нет курьера, заказ готов
-        if ($model->courier_id == NULL){
-            $model->location = Orders::LOCATION_EXECUTOR_COMPLETED;
-            $model->save();
-        }
-
         return $this->redirect('proccessing');
+         
     }
 
     /**
@@ -337,9 +388,11 @@ class OrdersController extends Controller
     public function actionAcceptCourier($id)
     {
         $model = $this->findModel($id);
-        $model->order_status = Orders::STATUS_COMPLETED;
         $model->location = Orders::LOCATION_COURIER_ACCEPTED;
         $model->save();
+
+        $message = 'Ваш заказ №' . $model->id . ' уже выехал к Вам!';
+        Sms::message($model->phone, $message);
 
         return $this->redirect('proccessing');
     }
@@ -359,6 +412,9 @@ class OrdersController extends Controller
             $model->order_status = Orders::STATUS_COMPLETED;
             $model->location = Orders::LOCATION_COURIER_COMPLETED;
             $model->save();
+
+            return $this->redirect('completed');
+
         } else {
             return $this->renderContent(Html::tag('h1','Ошибка - этот заказ был создан не вами!'));
         }
@@ -382,7 +438,7 @@ class OrdersController extends Controller
         } else {
             $model->order_status = Orders::STATUS_PROCCESSING;
             $model->courier_id = $courier_id;
-            $model->comment = $comment;
+            $model->courier_comment = $comment;
             $model->save();
         }
 
@@ -442,24 +498,16 @@ class OrdersController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $forbidden = false;
 
-        // Исполнитель
-        if (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
-            if ($model->executor_id != Yii::$app->user->identity->id)
-                $forbidden = true;
-        }
         // Курьер
-        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
-            if ($model->courier_id != Yii::$app->user->identity->id)
-                $forbidden = true;
+        if (Yii::$app->user->identity->role == User::ROLE_COURIER){
+            if ($model->courier_id != Yii::$app->user->identity->id) {
+                return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
+            }
         }
-
-        if ($forbidden)
-            return $this->renderContent(Html::tag('h1','Ошибка - у вас нет доступа к этому заказу'));
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -487,13 +535,17 @@ class OrdersController extends Controller
     {
         $model = new Orders();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->scenario = Orders::ORDER_CREATE_SCENARIO;
+            $model->delivery_required = $model->address == '' ? false : true;
+            if ($model->save()) 
+              return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+        
     }
 
     /**
@@ -538,6 +590,7 @@ class OrdersController extends Controller
     protected function findModel($id)
     {
         if (($model = Orders::findOne($id)) !== null) {
+            $model->scenario = $model::ADMIN_EDIT_SCENARIO;
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

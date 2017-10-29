@@ -105,9 +105,15 @@ AppAsset::register($this);
                     <p>Наш номер телефона</p>
                     <a href="tel:88123092848"><strong>309 28 48</strong></a>
                     <p class="with-margin">Студия на Площади Восстания</p>
-                    <a href="<?= Url::to(['site/contacts']) ?>">м.Площадь Восстания, ул. Гончарная, 2</a>
+                    <a href="<?= Url::to(['site/contacts']) ?>">
+                        М.Площадь Восстания <br>
+                        Гончарная,2
+                    </a>
                     <p class="with-margin">Студия на Фонтанке</p>
-                    <a href="<?= Url::to(['site/contacts']) ?>">м. Гостиный двор, Набережная реки Фонтанки,38</a>
+                    <a href="<?= Url::to(['site/contacts']) ?>">
+                        М. Гостиный двор <br>
+                        Наб.Реки Фонтанки 38 (в арке)
+                    </a>
                     <a href="<?= Url::to(['uslugi/assorty']) ?>" class="whiteBtn">Сделать заказ</a>
                 </div>
             </div>
@@ -141,6 +147,10 @@ AppAsset::register($this);
                     </a>
 
                 </div>
+
+                <a href="<?= Url::to(['site/confidential']) ?>" class="confidential-link">
+                    Политика конфиденциальности
+                </a>
             </div>
         </div>
 
@@ -253,6 +263,37 @@ AppAsset::register($this);
     <script type="text/javascript"> 
     VK.init({apiId: 5494307, onlyWidgets: true}); 
     </script> -->
+	
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter28610796 = new Ya.Metrika2({
+                    id:28610796,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    ut:"noindex"
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/tag.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks2");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/28610796?ut=noindex" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 <?php $this->endBody() ?>
 </body>

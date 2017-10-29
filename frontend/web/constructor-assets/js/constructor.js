@@ -1017,7 +1017,6 @@
             xhr.send(data);
 
             xhr.onload = function () {
-                console.log(xhr.responseText);
                 hideLoader();
                 if (xhr.status == 200) {
                     hideLoader();
@@ -1035,7 +1034,6 @@
             }
 
             xhr.onerror = function() {
-                console.log(xhr.responseText);
                 hideLoader();
                 addConstructorError('Извините, произошла ошибка, попробуйте позже!');
             }

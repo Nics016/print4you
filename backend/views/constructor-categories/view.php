@@ -34,6 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Имя',
             ],
             [
+                'attribute' => 'alias',
+                'label' => 'Алиас',
+            ],
+            [
                'attribute' => 'description',
                'format' => 'html',
                 'label' => 'Описание',

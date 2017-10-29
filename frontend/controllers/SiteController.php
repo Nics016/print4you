@@ -509,6 +509,12 @@ class SiteController extends Controller
         return $this->render('nashi-clienty');
     }
 
+    public function actionConfidential()
+    {
+        $this->registerSeo(29, 'nashi-clienty');
+        return $this->render('confidential');
+    }
+
     // регистрирует сео пола
     private function registerSeo($page_id, $view_name = null) 
     {

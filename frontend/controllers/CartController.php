@@ -215,16 +215,15 @@ class CartController extends Controller {
 
         	if (!$model->loadFromAjax()) return ['status' => 'fail'];
             $discountVal = CommonUser::getDiscount($basket_data['count']);
-            $totalSum = $basket_data['price'];
+            $totalSum = ceil($basket_data['price']); // если попадутся копейки
             $model->discount_percent = $discountVal;
             $model->price = $totalSum;
 
             // gross
-            if ($basket_data['count'] >= Orders::GROSS_PRICE_PRODUCT_COUNT){
+            if ($basket_data['count'] >= Orders::GROSS_PRICE_PRODUCT_COUNT)
             	$model->is_gross = true;
-            } else {
+            else
             	$model->is_gross = false;
-            }
 
             // свалидируем, чтобы понять, что номер уникальный и больше не валидиировать
             // потому что, возможно придется регать пользователя
@@ -272,7 +271,7 @@ class CartController extends Controller {
         }
        
         $offices = [];
-        foreach ($records as $record){
+        foreach ($records as $record) {
             $offices[$record['id']] = $record['address'];
         }
 

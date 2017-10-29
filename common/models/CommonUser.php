@@ -77,16 +77,21 @@ class CommonUser extends ActiveRecord implements IdentityInterface
                     $discountVal = 20;
                 } else { // 1-9 items
                     $numOrders = Orders::getClientCompletedOrdersCount($user);
+
                     if ($numOrders >= 1){
                         $discountVal = 5;
                     }
                     if ($numOrders >= 2){
                         $discountVal = 10;
                     }
-                    if ($user->identity->getRetailPurchasedSum() >= 50000){
+
+                    $user_sum = $user->identity->getRetailPurchasedSum();
+
+                    if ($user_sum >= 50000 && $user_sum < 150000){
                         $discountVal = 15;
                     }
-                    if ($user->identity->getRetailPurchasedSum() >= 150000){
+                    
+                    if ($user_sum >= 150000){
                         $discountVal = 20;
                     }
                 }
@@ -94,12 +99,17 @@ class CommonUser extends ActiveRecord implements IdentityInterface
             } 
             // gross
             else {
-                if ($user->identity->getTotalPurchasedSum() >= 50000){
+
+                $user_sum = $user->identity->getTotalPurchasedSum();
+
+                if ($user_sum >= 50000 && $user_sum < 150000){
                     $discountVal = 3;
                 }
-                if ($user->identity->getTotalPurchasedSum() >= 150000){
+                
+                if ($user_sum >= 150000){
                     $discountVal = 5;
                 }
+                
             }
         }
 
@@ -113,7 +123,11 @@ class CommonUser extends ActiveRecord implements IdentityInterface
      */
     public function getRetailPurchasedSum()
     {
-        $orders = Orders::find()->where(['is_gross' => false, 'order_status' => Orders::STATUS_COMPLETED])->all();
+        $orders = Orders::find()->where([
+                'is_gross' => false, 
+                'order_status' => Orders::STATUS_COMPLETED,
+                'client_id' => $this->id,
+            ])->all();
         $sum = 0;
         foreach($orders as $order){
             $sum += Orders::calculateDiscountPrice($order['price'], $order['discount_percent']);
@@ -128,7 +142,11 @@ class CommonUser extends ActiveRecord implements IdentityInterface
      */
     public function getGrossPurchasedSum()
     {
-        $orders = Orders::find()->where(['is_gross' => true, 'order_status' => Orders::STATUS_COMPLETED])->all();
+        $orders = Orders::find()->where([
+                'is_gross' => true, 
+                'order_status' => Orders::STATUS_COMPLETED,
+                'client_id' => $this->id,
+            ])->all();
         $sum = 0;
         foreach($orders as $order){
             $sum += Orders::calculateDiscountPrice($order['price'], $order['discount_percent']);
@@ -178,6 +196,7 @@ class CommonUser extends ActiveRecord implements IdentityInterface
             [['phone', 'firstname', 'address', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
+            ['email', 'required', 'on' => self::CREATE_BY_ADMIN_SCENARIO],
             [['password_reset_token'], 'unique'],
             [['phone'], 'unique'],
             ['phone', 'string'],

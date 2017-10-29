@@ -10,6 +10,7 @@ use yii\helpers\Url;
 <main class="main">
 	<div class="line5">
 		<div class="container">
+
 			<h1 class="title">Текстиль</h1>
 			<div class="underline"></div>
 			<div class="elements clearfix">
@@ -19,17 +20,18 @@ use yii\helpers\Url;
 				$id = $categories[$i]['id'];
 				if ($id == $skip_id) continue;
 				$name = $categories[$i]['name'];
+				$alias = $categories[$i]['alias'];
 				$img = $categories[$i]['img'];
 				$alt = $categories[$i]['img_alt'];
 			?>
 				<div class="elements-item">
-					<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-img-container">
+					<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-img-container">
 						<img src="<?= $img ?>" alt="<?= $alt ?>" class="elements-item-img">
 					</a>
-					<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-title">
-						<?= $name ?>
+					<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-title">
+						<?//= $name ?><?= $alt ?>
 					</a>
-					<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="whiteBtn">
+					<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="whiteBtn">
 						Подробнее
 					</a>
 				</div>

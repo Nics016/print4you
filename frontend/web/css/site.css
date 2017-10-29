@@ -1158,3 +1158,47 @@
     color: #4f4f4f;  
 }
     
+.price-image-container {
+    width: 900px;
+    margin: 20px auto 0 auto;
+    overflow: hidden;
+}
+
+.price-image-container img {
+    display: block;
+    width: 100%;
+}
+
+.confidential {
+    width: 900px;
+    margin: 40px auto 0 auto;
+    padding-bottom: 40px;
+}
+
+.confidential .command {
+    display: block;
+    text-align: right;
+    color: #242425;
+    font-size: 12px;
+}
+
+.confidential h1 {
+    text-align: center;
+}
+
+.confidential h3 {
+    margin-top: 25px;
+}
+
+.confidential p {
+    font-size: 12px;
+}
+
+.confidential-link {
+    color: #aaaaaa;
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 80px;
+    text-decoration: underline;
+}

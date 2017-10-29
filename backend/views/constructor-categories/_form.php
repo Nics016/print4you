@@ -22,6 +22,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->label('Имя')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+    <?= $form->field($model, 'alias')->label('Алиас')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
 
     <?= $form->field($model, 'description')->label('Описание')->widget(CKEditor::className(),[
         'editorOptions' => [

@@ -4,9 +4,17 @@
 
 use frontend\components\ReviewsWidget;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 ?>
 <main class="shelkography">
+        
+        <div class="price-image-container">
+            <?= Html::img('@web/img/shelkografia-price.jpg', [
+                'alt' => 'Прамая печать прайс'
+            ]) ?>
+        </div>
+
         <!-- LINE1 -->
         <div class="line1">
             <div class="container clearfix">

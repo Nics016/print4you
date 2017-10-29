@@ -33,6 +33,10 @@ class Orders extends \yii\db\ActiveRecord
 
     // сценарий для подтверждения менеджера
     const MANAGER_WORKING_SCENARIO = 'manager_working_scenario';
+    const VALIDATE_SCENARIO = 'validate';
+    const ADMIN_EDIT_SCENARIO = 'admin_edit';
+    const ORDER_CREATE_SCENARIO = 'order_create';
+
 
     /**
      * Константы местонахождения заказа. 
@@ -42,6 +46,7 @@ class Orders extends \yii\db\ActiveRecord
     const LOCATION_MANAGER_ACCEPTED = 20;
     const LOCATION_EXECUTOR_NEW = 30;
     const LOCATION_EXECUTOR_ACCEPTED = 40;
+    const LOCATION_EXECUTOR_COMPLETED_ORDER = 45; // Исполнитель сделал заказ
     const LOCATION_COURIER_NEW = 50;
     const LOCATION_COURIER_ACCEPTED = 60;
     const LOCATION_COURIER_COMPLETED = 70;
@@ -54,11 +59,7 @@ class Orders extends \yii\db\ActiveRecord
     const DELIVERY_NOT_REQUIRED_PRICE = 0;
     const GROSS_PRICE_PRODUCT_COUNT = 20;
 
-    const VALIDATE_SCENARIO = 'validate';
-    const CREATE_SCENARIO = 'create';
-
-    const MAX_EXECUTOR_COLORS_ON_ACCEPT = 5;
-
+    
     /**
      * @inheritdoc
      */
@@ -68,7 +69,7 @@ class Orders extends \yii\db\ActiveRecord
     }
 
     /**
-     * Считает цену со скидкой
+     * Мя боюсь егоетод нах не нужен, но я боюсь его удалить))
      * 
      * @param  integer $price - начальная цена
      * @param  integer $discount - скидка в %
@@ -76,11 +77,7 @@ class Orders extends \yii\db\ActiveRecord
      */
     public static function calculateDiscountPrice($price, $discount = null)
     {
-        if (!$discount)
-            return $price;
-        $answ = $price * (100 - $discount) / 100;
-
-        return $answ;
+        return $price;
     }
     /**
      * @inheritdoc
@@ -92,8 +89,9 @@ class Orders extends \yii\db\ActiveRecord
             [['price', 'manager_id', 'created_at', 'updated_at', 'client_id', 'delivery_office_id'], 'integer'],
             ['delivery_required', 'boolean'],
             [['order_status', 'client_name', 'address'], 'string', 'max' => 255],
-            ['phone', 'phoneValidate', 'on' => self::CREATE_SCENARIO],
-            [['comment'], 'string', 'max' => 1000],
+            ['phone', 'phoneValidate', 'except' => [self::MANAGER_WORKING_SCENARIO, self::ADMIN_EDIT_SCENARIO, self::ORDER_CREATE_SCENARIO]],
+            ['phone', 'match', 'pattern' => '/9\d{9}/','on' => self::ORDER_CREATE_SCENARIO],
+            [['comment', 'courier_comment'], 'string', 'max' => 1000],
         ];
     }
 
@@ -238,39 +236,41 @@ class Orders extends \yii\db\ActiveRecord
      */
     public static function getNewOrdersCount($user)
     {
-        $answ = "";
-        // Менеджер 
-        if (Yii::$app->user->identity->role == User::ROLE_ADMIN
-                || Yii::$app->user->identity->role == User::ROLE_MANAGER){
-            $records = (new \yii\db\Query())
-                ->select(['id'])
-                ->from('orders')
-                ->where("order_status='not_paid' OR order_status='new'")
-                ->all();
-            $answ .= count($records) > 0 ? count($records) : "";
-        } 
-       // Исполнитель
-        elseif (Yii::$app->user->identity->role == User::ROLE_EXECUTOR){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND executor_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_EXECUTOR_NEW)
-                ->all();
-            $answ .= count($records) > 0 ? count($records) : "";
-        }
-        // Курьер
-        elseif (Yii::$app->user->identity->role == User::ROLE_COURIER){
-            $records = Orders::find()
-                ->where("order_status='proccessing' AND courier_id="
-                    . Yii::$app->user->identity->id
-                    . " AND location="
-                    . Orders::LOCATION_COURIER_NEW)
-                ->all();
-            $answ .= count($records) > 0 ? count($records) : "";
+        $records = [];
+
+        switch (Yii::$app->user->identity->role) {
+
+            case User::ROLE_ADMIN:
+                $records = self::find() 
+                            ->where(['order_status'=> [Orders::STATUS_NEW, Orders::STATUS_NOT_PAID]])
+                            ->asArray()->all();
+                break;
+            
+            case User::ROLE_MANAGER:
+                $records = self::find() 
+                            ->where(['order_status'=> [Orders::STATUS_NEW, Orders::STATUS_NOT_PAID]])
+                            ->asArray()->all();
+                break;
+
+            case User::ROLE_EXECUTOR:
+                $records = self::find()->where([
+                    'order_status' => self::STATUS_PROCCESSING,
+                    'executor_id' => Yii::$app->user->identity->id,
+                    'location' => self::LOCATION_EXECUTOR_NEW,
+                ])->asArray()->all();
+                break;
+
+            case User::ROLE_COURIER:
+                $records = Orders::find()->where([
+                    'order_status' => self::STATUS_PROCCESSING,
+                    'courier_id' => Yii::$app->user->identity->id,
+                    'location' => self::LOCATION_COURIER_NEW,
+                ])->asArray()->all();
+                break;
+            
         }
 
-        return $answ;
+        return count($records) > 0 ? count($records) : "";
     }
 
     public function getNewOrdersCountNew()
@@ -310,6 +310,11 @@ class Orders extends \yii\db\ActiveRecord
     public function getUser($id)
     { 
         return User::findIdentity($id);
+    }
+
+    public function getClient()
+    {
+        return $this->hasOne(CommonUser::className(), ['id' => 'client_id']);
     }
 
     public function orderCreatedSms()

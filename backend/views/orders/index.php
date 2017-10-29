@@ -163,10 +163,10 @@ $orders = $dataProvider->getModels();
                     return $user ? $user['username'] : 'Неизвестно';
                 }
             ],
-            // [
-            //     'label' => 'Комментарий',
-            //     'attribute' => 'comment',
-            // ],
+            [
+                'label' => 'Комментарий курьеру',
+                'attribute' => 'courier_comment',
+            ],
             [
                 'label' => 'Дата',
                 'attribute' => 'created_at',
@@ -374,8 +374,16 @@ $orders = $dataProvider->getModels();
         <?php $form = ActiveForm::begin(['action' => ['orders/accept-executor'], 'method' => 'GET']); ?>
             <?php if (Yii::$app->user->identity->role === User::ROLE_EXECUTOR
                 && $order['location'] === Orders::LOCATION_EXECUTOR_NEW): ?>
-                <?php for ($i = 0; $i < Orders::MAX_EXECUTOR_COLORS_ON_ACCEPT; $i++): ?>
-                <?= "Количество краски (л): " . "<br>" . Html::dropDownList('stock_color_id[]', '', $mapColors, ['class' => 'form-control']) . "<br>" . Html::textInput('liters[]', '', ['class' => 'form-control']) . "<br>" ?>
+                <?php for ($i = 0; $i < count($mapColors); $i++): ?>
+
+                <?= 
+                    "Количество краски (л): " 
+                    . "<br>" 
+                    . Html::dropDownList('stock_color_id[]', '', $mapColors, ['class' => 'form-control']) 
+                    . "<br>" 
+                    . Html::textInput('liters[]', '', ['class' => 'form-control']) . "<br>" 
+                ?>
+
                 <?php endfor; ?>
                 <?= Html::hiddenInput('id', $order['id']); ?>
             <?php endif; ?>

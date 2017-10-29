@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ConstructorPrintPrices */
 
-$this->title = 'Обновиь цену на печать: ' . $model->id;
+$this->title = 'Обновить цену на печать: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Constructor Print Prices', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

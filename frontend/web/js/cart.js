@@ -211,6 +211,7 @@ jQuery(document).ready(function($){
 			data: data,
 			type: 'POST',
 			success: function (response) {
+
 				if (response['status'] == 'ok') {
 
 					// изменяем цену коризны
@@ -232,6 +233,7 @@ jQuery(document).ready(function($){
 				}
 			},
 			error: function (err) {
+				console.log(err);
 				$(loadingText).text('Произошла ошибка, обновите страницу');
 			}
 		});

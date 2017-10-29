@@ -55,6 +55,7 @@ jQuery(document).ready(function($){
 					$('#sms-code').prop('disabled', false);
 					showTimer(response['seconds']);
 				} else if (response['status'] == 'fail'){
+					console.log(response);
 					// подсветим ошибки в полях
 					showErrors(response);
 					submitBtn.prop('disabled', false);

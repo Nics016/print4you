@@ -184,17 +184,17 @@ a {
       .topmenu-right-above-elem2 {
         display: block;
         float: left;
-        width: 200px;
+        width: 260px;
         margin-left: 45px; }
         .topmenu-right-above-elem2 span {
-          width: 170px; }
+          width: 230px; }
       .topmenu-right-above-elem3 {
         display: block;
         float: left;
-        width: 175px;
+        width: 210px;
         margin-left: 35px; }
         .topmenu-right-above-elem3 span {
-          width: 145px; }
+          width: 180px; }
       .topmenu-right-above-elem2 img, .topmenu-right-above-elem3 img {
         display: block;
         float: left;
@@ -247,12 +247,12 @@ a {
         margin-top: 15px; }
 
 .shelkography .line1 {
-  margin-top: 75px; }
-  .shelkography .line1 h2, .shelkography .line1 h1 {
+  margin-top: 20px; }
+  .shelkography .line1 h2/* , .shelkography .line1 h1 */ {
     padding-top: 45px;
     padding-bottom: 15px;
     font-size: 23px;
-    /* background-image: url("../img/line1-shelk-bg.png"); */
+    background-image: url("../img/line1-shelk-bg.png");
     background-size: cover;
     background-repeat: no-repeat;
     font-family: akrobatBold;

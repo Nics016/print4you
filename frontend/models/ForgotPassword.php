@@ -70,7 +70,7 @@ class ForgotPassword extends Model
 	// валидация на отправку смс
 	public function sendSmsValidate()
 	{
-		if ($this->sms_code !== null && $this->sms_code['expired'] > time()) {
+		if ($this->sms_code !== null && isset($this->sms_code['expired']) && $this->sms_code['expired'] > time()) {
 			$this->response = [
 				'status' => 'fail',
 				'field' => 'timer',
@@ -154,7 +154,7 @@ class ForgotPassword extends Model
 		$new_password = Yii::$app->security->generateRandomString(8);
 		$user->generatePasswordHash($new_password);
 
-		if ($user->save()) {
+		if ($user->save(false)) {
 
 			$this->response = [
 				'status' => 'ok',

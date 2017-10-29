@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use frontend\components\basket\Basket;
 use common\models\ConstructorCategories;
 
-$constructor_cats = ConstructorCategories::find()->orderBy('sequence')->asArray()->all();
+$mug_alias = ConstructorCategories::find()->select('alias')->where(['id' => 49])->one();
 ?>
 
 <div class="topmenu">
@@ -24,15 +24,15 @@ $constructor_cats = ConstructorCategories::find()->orderBy('sequence')->asArray(
                     <a href="https://www.google.com/maps?ll=59.934104,30.344623&z=16&t=m&hl=ru-RU&gl=RU&mapclient=embed&q=naberezhnaya+reki+Fontanki,+38+Sankt-Peterburg+191025" class="topmenu-right-above-elem2 clearfix" target="_blank" rel="nofollow">
                         <img src="/img/header-pin.png" alt="location">
                         <span>
-                            Наб. реки Фонтанки, 38 
-                            Гостиный двор (в арке)
+                            М. Гостиный двор <br>
+                            Наб.Реки Фонтанки 38 (в арке)
                         </span>
                     </a>
                     <a href="https://www.google.com/maps/place/Goncharnaya+ul.,+2,+Sankt-Peterburg,+Russia,+191036/@59.930385,30.363689,16z/data=!4m5!3m4!1s0x469631bb14d4731d:0x545b6687b2935d3d!8m2!3d59.9303848!4d30.3636887?hl=ru-RU" class="topmenu-right-above-elem3 clearfix" target="_blank" rel="nofollow">
                         <img src="/img/header-pin.png" alt="location">
                         <span>
-                            Площадь Восстания 
-                            Гончарная, 2
+                            М.Площадь Восстания <br>
+                            Гончарная,2
                         </span>
                     </a>
                 </noindex>
@@ -57,7 +57,7 @@ $constructor_cats = ConstructorCategories::find()->orderBy('sequence')->asArray(
                                 <?= Html::a('Технологии и цены', ['uslugi/technologii-i-ceny']) ?>
                             </li>
                             <li>
-                                <?= Html::a('Кружки', ['uslugi/constructor-category', 'cat_id' => 49]) ?>
+                                <?= Html::a('Кружки', ['uslugi/constructor-category', 'alias' => $mug_alias->alias]) ?>
                             </li>
                             <li>
                                 <?= Html::a('Текстиль', ['uslugi/tekstil']) ?>

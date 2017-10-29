@@ -40,6 +40,13 @@ class RequestsController extends Controller
                             User::ROLE_ADMIN
                         ],
                     ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_MANAGER
+                        ],
+                    ],
                 ],
             ],
             'verbs' => [
@@ -58,7 +65,7 @@ class RequestsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Requests::find(),
+            'query' => Requests::find()->orderBy('id DESC'),
         ]);
 
         return $this->render('index', [

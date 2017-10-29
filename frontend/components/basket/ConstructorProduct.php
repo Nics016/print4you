@@ -596,6 +596,8 @@ class ConstructorProduct implements IProduct
 		}
 		if (empty($print)) return false;
 
+
+
 		$material_id = $item['material_id'];
 		$size_id = $print['size_id'];
 		$count = $item['count'];
@@ -619,8 +621,10 @@ class ConstructorProduct implements IProduct
 			case 'attendance':
 				if ($option_value != false) {
 					$attendance = self::changePrintAttendance($material_id, $size_id, $count, $type_id, $color, (int)$option_value);
-					if ($attendance == false) return false;
+
+					if ($attendance == null) return false;
 					$print['attendance'] = $attendance;	
+
 
 				} else {
 					$print['attendance'] = null;
@@ -634,6 +638,7 @@ class ConstructorProduct implements IProduct
 		$color = $print['color'];
 		$type_id = $print['type_id'];
 		$print_avaliable_prices = ConstructorPrintPrices::getAvaliablePrices($material_id, $size_id, $count, $type_id, $color);
+
 		return [
 			'item' => $item,
 			'print' => $print,

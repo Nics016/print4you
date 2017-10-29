@@ -54,6 +54,7 @@ class CommonUserController extends Controller
                         'roles' => [
                             User::ROLE_ADMIN,
                             User::ROLE_MANAGER,
+                            User::ROLE_EXECUTOR,
                         ],
                     ],
                 ],

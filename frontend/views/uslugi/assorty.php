@@ -28,6 +28,7 @@ use yii\helpers\Url;
 							$item = $content[$x];
 							$colors = $item['colors'];
 							$product_id = $item['id'];
+							$alias = $item['alias'];
 							$name = $item['name'];
 							$description = $item['description'];
 
@@ -44,7 +45,7 @@ use yii\helpers\Url;
 								$img_alt = $colors[$y]['img_alt'];
 
 								echo $this->render('assorty_row', [
-									'product_id' => $product_id,
+									'alias' => $alias,
 									'name' => $name,
 									'image' => $image,
 									'count' => 1,
@@ -72,7 +73,7 @@ use yii\helpers\Url;
 						for ($x = 0; $x < count($content); $x++) {
 							$item = $content[$x];
 							$colors = $item['colors'];
-							$product_id = $item['id'];
+							$alias = $item['alias'];
 							$name = $item['name'];
 							$description = $item['description'];
 
@@ -90,7 +91,7 @@ use yii\helpers\Url;
 								$img_alt = $colors[$y]['img_alt'];
 
 								echo $this->render('assorty_row', [
-									'product_id' => $product_id,
+									'alias' => $alias,
 									'name' => $name,
 									'image' => $image,
 									'count' => $groos_count,

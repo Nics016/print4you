@@ -40,6 +40,7 @@ jQuery(document).ready(function($) {
 					if (typeId !== false)
 						$(parent).find('.current-type').text(response['current_type']);
 					$(tr).find('.product-price').html(response['price'] + 'Р');
+					$('#order-full-price').html(response['order_price']);
 
 				} else {
 					$(error).text(response['message']);
@@ -48,6 +49,7 @@ jQuery(document).ready(function($) {
 				elem.prop('disabled', false);
 			},
 			error: function (err) {
+				console.log(err);
 				alert('Возникла ошибка, обновите страницу!');
 			}
 		});

@@ -50,8 +50,17 @@ class ConstructorController extends Controller {
 		return ConstructorCategories::getConstructorArray();
 	}
 
-	public function actionIndex($product_id = false, $cat_id = false) {
+	public function actionIndex($alias = null, $cat_id = false) {
 		$print_sizes = json_encode(ConstructorPrintSizes::find()->asArray()->all());
+        $product_id = 0;
+
+        if ($alias !== null) {
+            $product = ConstructorProducts::find()->where(['alias' => $alias])->asArray()->one();
+            
+            if (!empty($product))
+                $product_id = $product['id'];
+        }
+
 
 		return $this->render('index', [
 			'print_sizes' => $print_sizes,

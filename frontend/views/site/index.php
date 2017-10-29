@@ -71,11 +71,6 @@ use yii\helpers\Url;
                     </li>
                     <li>
                         <a href="<?= Url::to(['/sale/']) ?>" class="sale-slider-link" target="_blank">
-                            <img src="/assets/images/konez-leta.jpg" alt="konez-leta">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/sale/']) ?>" class="sale-slider-link" target="_blank">
                             <img src="/assets/images/20_sale_2.jpg" alt="20_sale_2">
                         </a>
                     </li>
@@ -200,19 +195,19 @@ use yii\helpers\Url;
                     </div>
                     <?php 
                     for ($i = 0; $i < count($categories); $i++):
-                        $id = $categories[$i]['id'];
+                        $alias = $categories[$i]['alias'];
                         $name = $categories[$i]['name'];
                         $img = $categories[$i]['img'];
                         $alt = $categories[$i]['img_alt'];
                     ?>
                         <div class="elements-item">
-                            <a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-img-container">
+                            <a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-img-container">
                                 <img src="<?= $img ?>" alt="<?= $alt ?>" class="elements-item-img">
                             </a>
-                            <a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-title">
+                            <a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-title">
                                 <?= $name ?>
                             </a>
-                            <a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="whiteBtn">
+                            <a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="whiteBtn">
                                 Подробнее
                             </a>
                         </div>

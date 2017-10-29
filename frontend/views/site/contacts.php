@@ -21,7 +21,11 @@ $model = new RequestCallForm();
                     <div class="contacts-map-info">
                         <h2>Студия печати PRINT4YOU!</h2>
                         <span>
-                            М.Площадь Восстания <br> Гончарная,2
+                            На Фонтанке
+                            (Центральный район) <br>
+                            м.Гостиный двор (5 минут от метро) <br>
+                            м. Маяковская (10 минут от метро) <br>
+                            Набережная реки Фонтанки,38
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
                             <img src="/img/contacts-alarm.png" alt="">
@@ -48,7 +52,10 @@ $model = new RequestCallForm();
                     <div class="contacts-map-info">
                         <h2>Студия печати - цех  PRINT4YOU!</h2>
                         <span>
-                            М. Гостиный двор <br> Наб.Реки Фонтанки 38 (в арке)
+                            На Площади Восстания<br>
+                            (Центральный район) <br>
+                            м.Площадь Восстания (2 минуты от метро) <br>
+                            ул. Гончарная,2
                         </span>
                         <div class="contacts-map-info-element clearfix info-element1">
                             <img src="/img/contacts-alarm.png" alt="">
@@ -68,7 +75,7 @@ $model = new RequestCallForm();
                     </div>
                 </div>
 
-                <div class="contacts-map clearfix">
+                <!-- <div class="contacts-map clearfix">
                     <div class="contacts-map-google">
                         <img src="/img/contacts-othercity-map.png" alt="">
                     </div>
@@ -95,7 +102,7 @@ $model = new RequestCallForm();
                             </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 

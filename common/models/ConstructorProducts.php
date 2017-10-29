@@ -23,11 +23,13 @@ class ConstructorProducts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height', 'material_id'], 'required'],
+            [['name', 'category_id', 'is_published', 'print_offset_x', 'print_offset_y', 'print_width', 'print_height', 'material_id', 'alias'], 'required'],
             [['description'], 'string'],
             [['category_id', 'material_id'], 'integer'],
-            [['name', 'full_image', 'small_image', 'seo_title', 'seo_description', 'seo_keywords', 'img_alt'], 'string', 'max' => 255],
+            [['name', 'full_image', 'small_image', 'seo_title', 'seo_description', 'seo_keywords', 'img_alt', 'alias'], 'string', 'max' => 255],
             ['is_published', 'boolean'],
+            ['alias', 'unique'],
+            ['alias', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/', 'message' => 'Поле алиаса не должно содержать пробелов и прочих знаков, которые не подойдут ссылке'],
             ['imageFile', 'file', 'extensions' => 'png, jpg', 
                     'skipOnEmpty' => true],
 
@@ -54,6 +56,7 @@ class ConstructorProducts extends \yii\db\ActiveRecord
             'print_width' => 'Ширина принта',
             'print_height' => 'Высота принта',
             'img_alt' => 'Alt Картинки',
+            'alias' => 'Алиас',
         ];
     }
 

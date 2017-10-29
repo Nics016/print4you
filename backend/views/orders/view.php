@@ -51,19 +51,15 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
                             
                         case $model::STATUS_NEW:
                             return 'Новый';
-                            break;
 
                         case $model::STATUS_PROCCESSING:
                             return 'В обработке';
-                            break;
 
                         case $model::STATUS_COMPLETED:
                             return 'Завершен';
-                            break;
 
                         case $model::STATUS_CANCELLED:
                             return 'Отменен';
-                            break;
                     }
                 }
             ],
@@ -74,35 +70,27 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
                     switch($model['location']){
                         case $model::LOCATION_MANAGER_NEW:
                             return 'Ожидает принятия менеджером';
-                            break;
 
                         case $model::LOCATION_MANAGER_ACCEPTED:
                             return 'Менеджер принял заказ';
-                            break;
 
                         case $model::LOCATION_EXECUTOR_NEW:
                             return 'Исполнитель назначен. Ожидается подтверждение исполнителя';
-                            break;
 
                         case $model::LOCATION_EXECUTOR_ACCEPTED:
                             return 'Исполнитель выполняет заказ';
-                            break;
 
                         case $model::LOCATION_COURIER_NEW:
                             return 'Заказ готов. Ожидает подтверждения курьера';
-                            break;
 
                         case $model::LOCATION_COURIER_ACCEPTED:
                             return 'Курьер принял заказ';
-                            break;
 
                         case $model::LOCATION_COURIER_COMPLETED:
                             return 'Заказ доставлен клиенту';
-                            break;
 
                         case $model::LOCATION_EXECUTOR_COMPLETED:
                             return 'Исполнитель завершил выполнение';
-                            break;
 
                     }
                 }
@@ -114,6 +102,7 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
             [
                 'label' => 'Цена со скидкой (руб.)',
                 'attribute' => 'price',
+                'contentOptions' => ['id' => 'order-full-price'],
             ],
             [
                 'label' => 'Цена доставки (руб.)',
@@ -130,9 +119,22 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
             [
                 'label' => 'Клиент',
                 'attribute' => '',
+                'format' => 'html',
                 'value' => function($model){
                     $user = CommonUser::findIdentity($model['client_id']);
-                    $str = $user != null ? $user->id : 'Неизвестно';
+
+                    $str = '<div>';
+                    $str .= $user != null ? 'ID: ' . $user->id : 'ID: Неизвестно';
+                    $str .= '</div>';
+
+                    $str .= '<div>';
+                    $str .= $user != null ? 'Имя: ' . $user->firstname : 'Имя: Неизвестно';
+                    $str .= '</div>';
+
+                    $str .= '<div>';
+                    $str .= $user != null ? 'Email: ' . $user->email : 'Email: Неизвестно';
+                    $str .= '</div>';
+
                     return $str;
                 }
             ],
@@ -163,13 +165,17 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
                     $colorLiters = json_decode($model->stock_color_liters);
 
                     $i = 0;
-                    foreach($colorIds as $colorId) {
-                        if ($colorLiters[$i] && $colorLiters[$i] > 0) {
-                            $answ .= '<h4>';
-                            $answ .= StockColors::findOne(['id' => $colorId])->name . " - " . $colorLiters[$i] . " л";
-                            $answ .= '</h4>';
+                    
+                    if ($colorIds !== null && $colorLiters !== null) {
+
+                        foreach($colorIds as $colorId) {
+                            if ($colorLiters[$i] && $colorLiters[$i] > 0) {
+                                $answ .= '<h4>';
+                                $answ .= StockColors::findOne(['id' => $colorId])->name . " - " . $colorLiters[$i] . " л";
+                                $answ .= '</h4>';
+                            }
+                            $i++;
                         }
-                        $i++;
                     }
                     
                     if ($answ === '')
@@ -211,8 +217,12 @@ $this->registerJsFile('/js/orders.js?v=' . @filemtime($js_file_name), [
             ],*/
             'address',
             [
-                'label' => 'Комментарий',
+                'label' => 'Комментарий к заказу',
                 'attribute' => 'comment',
+            ],
+            [
+                'label' => 'Комментарий курьеру',
+                'attribute' => 'courier_comment',
             ],
             [
                 'label' => 'Дата создания',

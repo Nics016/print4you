@@ -27,9 +27,9 @@ use yii\helpers\Url;
 			<li>
 				<?= Html::img('@web/assets/images/20_sale_2.jpg') ?>
 			</li>
-			<li>
+			<!-- <li>
 				<?= Html::img('@web/assets/images/konez-leta.jpg') ?>
-			</li>
+			</li> -->
 			<li>
 				<?= Html::img('@web/assets/images/sale_design.png') ?>
 			</li>
@@ -54,7 +54,7 @@ use yii\helpers\Url;
 			</div>
 		</div>
 
-		<div class="sale clearfix">
+		<!-- <div class="sale clearfix">
 			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">
 				<?= Html::img('@web/assets/images/prizes.jpg') ?>
 			</a>
@@ -72,7 +72,7 @@ use yii\helpers\Url;
 					Итоги розыгрыша будут 15 июля
 				</span>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="sale clearfix">
 			<a href="<?= Url::to(['uslugi/index']) ?>" class="sale-image">

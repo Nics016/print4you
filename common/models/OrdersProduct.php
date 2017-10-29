@@ -155,19 +155,101 @@ class OrdersProduct extends \yii\db\ActiveRecord
                 break;
         }
 
-        $model->price = ceil($total_price / $model->count);
+        // изменим общую стоимость
+        $order = Orders::findOne(['id' => $model->order_id]);
 
-        if ($model->save()) {
+        if ($order == null)
+            return ['status' => 'fail', 'message' => 'Что то пошло не так, попробуйте позже!'];
+
+        // отнимем бывшую стоиость товара
+        $order->scenario = $order::ADMIN_EDIT_SCENARIO;
+        $order->price -= $model->getProductFullPrice();
+
+        // изменим цену
+        $model->resetPrice();
+        $model->price = floor($total_price / $model->count);
+        // поменяем на новую стоимость товара
+        $order->price += $model->price * $model->count;
+
+        /*
+        1000 = x - (x * 0.1)
+        1000 = 0.9x
+        10000 / 9 = x
+        */
+        // учтем еще и скидку
+        $model->price = floor($model->price * 100 / (100 - $model->discount_percent));
+
+        if ($order->save() && $model->save()) {
             self::sendSuccessChangeSms($model, $full_side_name, $type);
             return [
                 'status' => 'ok',
                 'current_type' => $type == null ? '' : $type->name,
-                'price' => $model->price,
+                'price' => $model->price * $model->count,
+                'order_price' => $order->price,
             ];
         }
 
         return ['status' => 'fail', 'message' => 'Что то пошло не так, попробуйте позже!'];
 
+    }
+
+    // сбрасывает цену
+    public function resetPrice()
+    {
+        if ($this->is_constructor) {
+
+            $front = json_decode($this->front_print_data, true);
+            if (is_array($front) && isset($front['price'])) {
+                $front['price'] = 0;
+                $this->front_print_data = json_encode($front);
+            }
+
+            $back = json_decode($this->back_print_data, true);
+            if (is_array($back) && isset($front['price'])) {
+                $back['price'] = 0;
+                $this->back_print_data = json_encode($back);
+            }
+
+            $additional = json_decode($this->additional_print_data, true);
+            if (is_array($additional)) {
+                for ($i = 0; $i < count($additional); $i++) {
+                    if (isset($additional[$i]['price'])) {
+                        $additional[$i]['price']  = 0;
+                    }
+                }
+                
+                $this->additional_print_data = json_encode($additional);
+            }
+            
+        }
+
+        $this->price = 0;
+    }
+
+    // возвращает полную стоимость товара, учитывая количество
+    public function getProductFullPrice()
+    {   
+        $price = $this->price;
+
+        if ($this->is_constructor) {
+            $front = json_decode($this->front_print_data, true);
+            if (is_array($front)) $price += $front['price'] ?? 0;
+
+            $back = json_decode($this->back_print_data, true);
+            if (is_array($back)) $price += $back['price'] ?? 0;
+
+            $additional = json_decode($this->additional_print_data, true);
+
+            if (is_array($additional)) {
+                for ($i = 0; $i < count($additional); $i++)
+                    $price += $additional[$i]['price'] ?? 0;
+            }
+            
+        }
+
+        $full_price = ($price - floor($price / 100 * $this->discount_percent)) * $this->count;
+
+        return $full_price;
     }
 
     private static function sendSuccessChangeSms($product, $side_name, $type)

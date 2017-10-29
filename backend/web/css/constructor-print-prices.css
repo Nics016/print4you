@@ -1,4 +1,5 @@
-#add-gross-price {
+#add-gross-price,
+#add-gross-price2 {
     display: block;
     margin: 25px auto 0 auto !important;
     border: 1px solid #555;
@@ -14,7 +15,8 @@
     cursor: pointer;
 }
 
-.add-btn-container {
+.add-btn-container,
+.add-btn-container2 {
     float: left;
     width: 220px;
     height: 130px;
@@ -22,19 +24,23 @@
     margin-top: 20px;
 }
 
-.gross-prices-container {
+.gross-prices-container,
+.gross-prices-container2 {
     width: 950px;
 }
 
-.gross-prices {
+.gross-prices,
+.gross-prices2 {
     float: left;
 }
 
-.gross-price:first-child, .gross-price:nth-child(4n+1) {
+.gross-price:first-child, .gross-price:nth-child(4n+1),
+.gross-price2:first-child, .gross-price2:nth-child(4n+1) {
     margin-left: 0;
 }
 
-.gross-price {
+.gross-price,
+.gross-price2 {
     float: left;
     margin-left: 20px;
     width: 220px;
@@ -42,7 +48,8 @@
     margin-top: 20px;
 }
 
-.input-err {
+.input-err,
+.input-err2 {
     border: 1px solid red !important;
 }
 
@@ -50,11 +57,13 @@
     color: red;
 }
 
-.gross-max {
+.gross-max,
+.gross-max2 {
     margin-left: 25px;
 }
 
-.gross-min, .gross-max {
+.gross-min, .gross-max,
+.gross-min2, .gross-max2 {
     display: inline-block;
     width: 85px;
     padding: 5px;
@@ -66,7 +75,8 @@
     outline: none;
 }
 
-.gross-value {
+.gross-value,
+.gross-value2 {
     display: block;
     color: #555555;
     background-color: #fff;
@@ -78,7 +88,8 @@
     width: 100%;
 }
 
-.remove-gross-price {
+.remove-gross-price,
+.remove-gross-price2 {
     display: block !important;
     width: 100px !important;
     margin: 10px auto 0 auto;

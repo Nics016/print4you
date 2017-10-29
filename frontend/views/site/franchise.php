@@ -8,6 +8,10 @@ use frontend\models\RequestCallForm;
 
 $model = new RequestCallForm();
 
+$firstname = Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->firstname;
+$phone = Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->phone;
+$email = Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email;
+
 ?>
 
 <main class="franchise">
@@ -101,15 +105,30 @@ $model = new RequestCallForm();
 						<?php $form = ActiveForm::begin(['action' => ['site/request-call-sent'], 'method' => 'POST', 'options' => ['class' => 'clearfix contacts-questions-form']]); ?>
 							<div class="contacts-questions-form-left">
 								<div class="contacts-questions-form-left-line">
-									<?= $form->field($model, 'name')->textInput(['placeholder' => 'Ваше имя', 'class' => '', 'style' => ''])->label(false) ?>		
+									<?= $form->field($model, 'name')->textInput([
+										'placeholder' => 'Ваше имя', 
+										'class' => '', 
+										'style' => '',
+										'value' => $firstname
+									])->label(false) ?>		
 									<img src="/img/topline-lk.png" alt="">
 								</div>
 								<div class="contacts-questions-form-left-line">
-									<?= $form->field($model, 'phone')->textInput(['placeholder' => 'Ваш телефон', 'class' => '', 'style' => ''])->label(false) ?>
+									<?= $form->field($model, 'phone')->textInput([
+										'placeholder' => 'Ваш телефон', 
+										'class' => 'masked-phone', 
+										'style' => '',
+										'value' => $phone
+									])->label(false) ?>
 									<img src="/img/topline-phone.png" alt="">
 								</div>
 								<div class="contacts-questions-form-left-line">
-									<?= $form->field($model, 'email')->textInput(['placeholder' => 'Ваше Email', 'class' => '', 'style' => ''])->label(false) ?>
+									<?= $form->field($model, 'email')->textInput([
+										'placeholder' => 'Ваше Email', 
+										'class' => '', 
+										'style' => '',
+										'value' => $email,
+									])->label(false) ?>
 									<img src="/img/topline-mail.png" alt="">
 								</div>
 							</div>

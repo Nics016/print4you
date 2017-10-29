@@ -89,6 +89,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute' => 'gross_price_white',
+                'label' => 'Оптовые цены (белый текстиль)',
+                'format' => 'html',
+                'value' => function ($data) {
+                    $html = '
+                        <table class="table table-hover table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>От</th>
+                                    <th>До</th>
+                                    <th>Цена</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    ';
+                    $prices = json_decode($data->gross_price_white, true);
+                    for ($i = 0; $i < count($prices); $i++) {
+                        $html .= '<tr>';
+                        $html.= '<td>' . $prices[$i]['from'] .' шт.</td>';
+                        $html.= '<td>' . $prices[$i]['to'] .' шт.</td>';
+                        $html.= '<td>' . $prices[$i]['price'] .' руб.</td>';
+                        $html .= '</tr>';
+                    }
+                    $html .= '
+                            </tbody>
+                        </table>
+                    ';
+                    return $html;
+                }
+            ],
+            [
                 'attribute' => 'min_count',
                 'label' => 'Минимальное количество товара',
             ],

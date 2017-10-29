@@ -26,6 +26,7 @@ class m170415_161527_create_orders_table extends Migration
             'price' => $this->integer()->notNull()->defaultValue(0),
             'manager_id' => $this->integer(),
             'comment' => $this->string(1000)->notNull()->defaultValue(""),
+            'courier_comment' => $this->string(1000)->notNull()->defaultValue(""),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
             'executor_id' => $this->integer(),

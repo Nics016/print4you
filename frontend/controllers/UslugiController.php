@@ -64,10 +64,10 @@ class UslugiController extends Controller
         ]);
     }
 
-    public function actionConstructorCategory($cat_id = null)
+    public function actionConstructorCategory($alias = null)
     {   
-        if ($cat_id === null) throw new NotFoundHttpException();
-        $model = ConstructorCategories::find()->where(['id' => (int)$cat_id])
+        if ($alias === null) throw new NotFoundHttpException();
+        $model = ConstructorCategories::find()->where(['alias' => $alias])
                 ->with('categoryProducts')->asArray()->one();
         if (empty($model)) throw new NotFoundHttpException();
         return $this->render('constructor-category', ['model' => $model]);
@@ -92,7 +92,7 @@ class UslugiController extends Controller
             for ($x = 0; $x < count($content); $x++) {
                 $item = $content[$x];
                 $colors = $item['colors'];
-                $product_id = $item['id'];
+                $alias = $item['alias'];
                 $name = $item['name'];
                 $description = $item['description'];
 
@@ -111,7 +111,7 @@ class UslugiController extends Controller
                     $img_alt = $colors[$y]['img_alt'];
 
                     $simple_html .= $this->renderAjax('assorty_row', [
-                        'product_id' => $product_id,
+                        'alias' => $alias,
                         'name' => $name,
                         'image' => $image,
                         'count' => 1,
@@ -122,7 +122,7 @@ class UslugiController extends Controller
                     ]);
 
                     $gross_html .= $this->renderAjax('assorty_row', [
-                        'product_id' => $product_id,
+                        'alias' => $alias,
                         'name' => $name,
                         'image' => $image,
                         'count' => Orders::GROSS_PRICE_PRODUCT_COUNT,

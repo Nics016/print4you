@@ -2,7 +2,7 @@
 use common\models\OrdersProduct;
 use common\models\ConstructorPrintTypes;
 
-$products = OrdersProduct::find()->where(['order_id' => $model->id])->asArray()->all();
+$products = OrdersProduct::find()->where(['order_id' => $model->id])->asArray()->orderBy('id')->all();
 $types = ConstructorPrintTypes::find()->asArray()->all();
 ?>
 

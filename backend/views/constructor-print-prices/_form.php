@@ -51,6 +51,11 @@ $this->registerJsFile('/js/constructor-print-prices.js?v=' . @filemtime($js_file
         'type' => 'hidden',
     ]) ?>
 
+    <?= $form->field($model, 'gross_price_white', ['enableClientValidation' => false])->label(false)->textInput([
+        'id' => 'gross-price2',
+        'type' => 'hidden',
+    ]) ?>
+
 
     <?= $form->field($model, 'price')->label('Розничная цена')->textInput(['autocomplete' => 'off']) ?>
 
@@ -85,6 +90,47 @@ $this->registerJsFile('/js/constructor-print-prices.js?v=' . @filemtime($js_file
             
             <div class="add-btn-container">
                 <button class="btn btn-primary glyphicon glyphicon-plus" id="add-gross-price"></button>
+            </div>
+            
+
+        </div>
+
+        
+    </div>
+
+    <br>
+
+    <label id="gross-price-label2">Оптовая цена (белый текстиль)</label>
+
+    <div class="gross-prices-container2 clearfix">
+        
+        <div class="gross-prices2 clearfix">
+            
+            <?php 
+            if (!$model->isNewRecord):
+                $gross_price_white = json_decode($model->gross_price_white, true);
+                for ($i = 0; $i < count($gross_price_white); $i++):
+                    $from = $gross_price_white[$i]['from'];
+                    $to = $gross_price_white[$i]['to'];
+                    $price = $gross_price_white[$i]['price'];
+            ?>
+                    <div class="gross-price2">
+                        <div class="gross-top">
+                            <input type="number" class="gross-min2" min="1" value="<?= $from ?>" placeholder="От">
+                            <input type="number" class="gross-max2" min="1" value="<?= $to ?>" placeholder="До">
+                        </div>
+                        <div class="gross-bottom">
+                            <input type="number" class="gross-value2" min="1" value="<?= $price ?>" placeholder="Цена">
+                            <button class="btn btn-danger remove-gross-price2">Удалить</button>
+                        </div>
+                    </div>
+            <?php
+                endfor;
+            endif;
+            ?>
+            
+            <div class="add-btn-container2">
+                <button class="btn btn-primary glyphicon glyphicon-plus" id="add-gross-price2"></button>
             </div>
             
 

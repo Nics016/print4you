@@ -43,6 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Название товара', 
             ],
             [
+                'attribute' => 'alias',
+                'label' => 'Алиас',
+            ],
+            [
                 'attribute' => 'description',
                 'label' => 'Описание товара',
                 'format' => 'ntext',

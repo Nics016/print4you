@@ -133,7 +133,6 @@ jQuery(document).ready(function($) {
 	$('#load-more-assorty').bind('click', function (event){
 		event.preventDefault();
 		assortyOffset += assortyLimit;
-		console.log(assortyOffset);
 		var elem = $(this);
 		var data = {'_csrf-frontend': _csrf, offset: assortyOffset, limit: assortyLimit};
 		elem.prop('disabled', true);
@@ -509,7 +508,6 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			data: {'_csrf-frontend': _csrf, text: val, is_like: isLike},
 			success: function (response) {
-				console.log(response);
 
 				switch (response['status']) {
 					case 'ok':
@@ -541,7 +539,6 @@ jQuery(document).ready(function($) {
 
 			},
 			error: function (err) {
-				console.log(err);
 				elem.prop('disabled', false);
 			}
 

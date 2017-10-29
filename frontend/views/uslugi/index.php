@@ -56,19 +56,19 @@ use yii\helpers\Url;
 
 					<?php 
 					for ($i = 0; $i < count($categories); $i++):
-						$id = $categories[$i]['id'];
 						$name = $categories[$i]['name'];
 						$img = $categories[$i]['img'];
 						$alt = $categories[$i]['img_alt'];
+						$alias = $categories[$i]['alias'];
 					?>
 						<div class="elements-item">
-							<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-img-container">
+							<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-img-container">
 								<img src="<?= $img ?>" alt="<?= $alt ?>" class="elements-item-img">
 							</a>
-							<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="elements-item-title">
+							<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="elements-item-title">
 								<?= $name ?>
 							</a>
-							<a href="<?= Url::to(['uslugi/constructor-category', 'cat_id' => $id]) ?>" class="whiteBtn">
+							<a href="<?= Url::to(['uslugi/constructor-category', 'alias' => $alias]) ?>" class="whiteBtn">
 								Подробнее
 							</a>
 						</div>

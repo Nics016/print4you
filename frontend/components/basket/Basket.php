@@ -83,11 +83,16 @@ class Basket {
 
 	public function changePrintOption($id, $side_name, $side_id = null, $option_name, $option_value)
 	{
+
 		if (!isset($this->basket[$id])) return false;
 		if ($side_name == 'additional' && $side_id === null) return false;
 		$item = &$this->basket[$id];
 		if (!$this->isConstructorProduct($id)) return false;
+
 		$result = ConstructorProduct::changePrintOption($item, $side_name, $side_id, $option_name, $option_value);
+
+		if ($result == false) return false;
+
 		$item = $result['item'];
 		if ($this->save())
 			return [
@@ -246,12 +251,12 @@ class Basket {
 		$products_count = 0;
 
 		for ($i = 0; $i < count($basket); $i++) {
-
-			if ($basket[$i]['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) 
+			if ($basket[$i]['product_type'] == self::PRODUCT_CONSTRUCTOR_TYPE) {
 				$data = ConstructorProduct::renderFrontendCart($basket[$i], $i);
-				
-			$result_basket[] = $data['data'];
-			$basket_price += $data['price'];
+				$result_basket[] = $data['data'];
+				$basket_price += $data['price'];
+			}
+			
 		}
 
 		return [
